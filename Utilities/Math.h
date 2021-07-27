@@ -3,6 +3,7 @@
 #include "esUtil.h"
 
 //Vector2
+#define PI 3.14159265359
 
 class Vector2
 {

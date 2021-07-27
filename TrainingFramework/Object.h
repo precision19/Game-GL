@@ -1,40 +1,44 @@
 #pragma once
-#include "../Utilities/Math.h"
-#include <vector>
-#include "Camera.h"
+#include "../Utilities/utilities.h"
 #include "Model.h"
 #include "Texture.h"
 #include "Shaders.h"
-#include "CubeTexture.h"
+#include "Camera.h"
+#include "ResourceManager.h"
 
-class Object {
-private:
-	Matrix worldMatrix;
-	Matrix scaleMatrix;
+class Object
+{
+protected: 
+	int m_modelId;
+	int m_textureId;
+	vector<int> m_TextureIds;
+	int m_textureCubeId;
+	vector<int> m_CubeTextureIds;
+	int m_shadersId;
+
+	Model* m_Model;
+	Texture* m_Texture;
+	vector<Texture*> m_Textures;
+	Shaders* m_Shaders;
+
+	Vector3 m_Scale;
+	Vector3 m_Rotation;
+	Vector3 m_Translation;
+
+	Matrix GetWVP();
 public:
-	char type[20]; 
-	GLuint vboId, iboID;
-	GLuint textureID[5];
-	Model* model;
-	Shaders* shader;
-	std::vector<Texture*>textures;
-	CubeTexture* cube;
-	int modelID, numTextures, cubetexturesID, shaderID, numLights, objectID, numCubes, tiling;
-	float fog_start, fog_length;
-	Vector3 fog_color;;
-	std::vector<int>texturedID;
-	std::vector<int>lightID;
-	Vector3 position = { 0.0f, 0.0f, 0.0f };
-	Vector3 scale{ 1.0f, 1.0f, 1.0f };
-	Vector3 rotation{ 0.0f, 0.0f, 0.0f };
-	float angleX = 0;
-	float angleY = 0;			
-	float angleZ = 0; 
-	Matrix WVP;	
 	Object();
-	~Object();
-	void InitWVP();
+	void Init();
+	Object(const char*, const char*);
+	void SetModelId(int);
+	void SetTextureId(int);
+	void SetTextureCubeId(int);
+	void SetShadersId(int);
+	void SetScale(Vector3);
+	void SetRotation(Vector3);
+	void SetTranslation(Vector3);
 	void Draw();
-	void Update(float deltaTime);
-	void LoadCubeTexture();
+	void Update(float);
+	~Object();
 };
+

@@ -1,4 +1,4 @@
-#Models: 4
+#Models: 6
 ID 0
 FILE Models/Woman1.nfg
 ID 1
@@ -6,66 +6,85 @@ FILE Models/Woman2.nfg
 ID 2
 FILE Models/SkyBox.nfg
 ID 3
-FILE Models/Terrain.nfg
+TERRAIN_FILE Models/Terrain.nfg 
+Textures/heightmap.tga
+ID 4
+FILE Models/Bila.nfg
+ID 5
+FILE Models/fire.nfg
 
-#2D Textures: 7
+#2D Textures: 10
 ID 0
-FILE ../ResourcesPacket/Textures/Woman1.tga
+FILE Textures/Woman1.tga
 WRAP REPEAT
 FILTER LINEAR LINEAR
 ID 1
-FILE ../ResourcesPacket/Textures/Woman2.tga
+FILE Textures/Woman2.tga
 WRAP REPEAT
-FILTER NEAREST LINEAR
+FILTER LINEAR LINEAR
 ID 2
-FILE ../ResourcesPacket/Textures/Terrain_blendmap_1.tga
+FILE Textures/Terrain_blendmap_1.tga
 WRAP REPEAT
 FILTER LINEAR LINEAR
 ID 3
-FILE ../ResourcesPacket/Textures/Dirt.tga
+FILE Textures/Dirt.tga
 WRAP REPEAT
 FILTER LINEAR LINEAR
 ID 4
-FILE ../ResourcesPacket/Textures/Grass.tga
+FILE Textures/Grass.tga
 WRAP REPEAT
 FILTER LINEAR LINEAR
 ID 5
-FILE ../ResourcesPacket/Textures/Rock.tga
+FILE Textures/Rock.tga
 WRAP REPEAT
 FILTER LINEAR LINEAR
 ID 6
-FILE ../ResourcesPacket/Textures/heightmap.tga
+FILE Textures/fire3.tga
+WRAP CLAMP
+FILTER LINEAR LINEAR
+ID 7
+FILE Textures/DisplacementMap.tga
+WRAP REPEAT
+FILTER LINEAR LINEAR
+ID 8
+FILE Textures/fire_mask.tga
+WRAP CLAMP
+FILTER LINEAR LINEAR
+ID 9
+FILE Textures/NormalMap.tga
 WRAP REPEAT
 FILTER LINEAR LINEAR
 
 #Cube Textures: 1
 ID 0
-FILE ../ResourcesPacket/Textures/envMap.tga
-COMPONENT  ../ResourcesPacket/SkyboxTextures/right.tga
-COMPONENT  ../ResourcesPacket/SkyboxTextures/left.tga
-COMPONENT  ../ResourcesPacket/SkyboxTextures/top.tga
-COMPONENT  ../ResourcesPacket/SkyboxTextures/bottom.tga
-COMPONENT  ../ResourcesPacket/SkyboxTextures/back.tga
-COMPONENT  ../ResourcesPacket/SkyboxTextures/front.tga
+FILE Textures/Skymapping
 WRAP CLAMP
 FILTER LINEAR LINEAR
 
-#Shaders: 3
+#Shaders: 4
 ID 0
-VS ../Resources/Shaders/TriangleShaderVS.vs
-FS ../Resources/Shaders/TriangleShaderFS.fs
+VS Shaders/Object.vs
+FS Shaders/Object.fs
 STATES 2
 GL_DEPTH_TEST 1
 GL_CULL_FACE 1
 ID 1
-VS ../Resources/Shaders/Skybox.vs
-FS ../Resources/Shaders/Skybox.fs
+VS Shaders/Skybox.vs
+FS Shaders/Skybox.fs
 STATES 2
 GL_DEPTH_TEST 1
 GL_CULL_FACE 0
 ID 2
-VS ../Resources/Shaders/Terrain.vs
-FS ../Resources/Shaders/Terrain.fs
+VS Shaders/Terrain.vs
+FS Shaders/Terrain.fs
 STATES 2
 GL_DEPTH_TEST 1
 GL_CULL_FACE 1
+ID 3
+VS Shaders/UvDisplacement.vs
+FS Shaders/UvDisplacement.fs
+STATES 3
+GL_DEPTH_TEST 1
+GL_CULL_FACE 0
+GL_BLEND 1
+GL_SRC_ALPHA GL_ONE_MINUS_SRC_ALPHA

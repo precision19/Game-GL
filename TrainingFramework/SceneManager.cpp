@@ -1,336 +1,274 @@
 #include "stdafx.h"
 #include "SceneManager.h"
-#include "Object.h"
-#include <map>
 
-SceneManager* SceneManager::s_Instance = NULL;
-SceneManager::SceneManager(void) {
-	this->Init();
+SceneManager* SceneManager::ms_Instance = NULL;
+
+SceneManager::SceneManager()
+{
+	ResourceManager::CreateInstance();
 }
 
-SceneManager::~SceneManager(void) {
-	printf("%s\n", "Destructor SceneManager");
-}
+int SceneManager::Init()
+{
+	//Object* object = new Object("Models/Woman1.nfg", "Textures/Woman1.tga");
+	//m_vObjects.push_back(object);
+	
+	ifstream ifile;
+	ifile.open("../Resources/SM.txt");
 
-SceneManager* SceneManager::GetInstance() {
-	if (!s_Instance) {
-		s_Instance = new SceneManager();
+	if (ifile.fail())
+	{
+		printf("Invalid File Name!");
+		exit(1);
 	}
-	return s_Instance;
-}
 
-void SceneManager::Render() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	for (int i = 0; i < obj.size(); i++) {
-		glUseProgram(obj[i]->shader->program);
-		glBindBuffer(GL_ARRAY_BUFFER, obj[i]->vboId);
-		if (obj[i]->numTextures >= 1) {
-			int n = obj[i]->numTextures;
-			map<int, char[10]> tex;
-			for (int j = 0; j < n; j++) {
-				memset(tex[j], 0, sizeof(tex[j]));
-				strcpy(tex[j], "u_texture");
-				tex[j][9] = j + '0';
-				tex[j][10] = '\0';
-				//printf("%s\n", tex[j]);
-			}
-			GLuint *l = new GLuint[n];
-			for (int j = 0; j < obj[i]->numTextures; j++) {
-				glActiveTexture(GL_TEXTURE0 + j);
-				glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[j]);
-				l[j] = glGetUniformLocation(obj[i]->shader->program, tex[j]);
-				glUniform1i(l[j], j);
-			}
-			GLint lerp = glGetUniformLocation(obj[i]->shader->program, "lerp");
-			if (lerp != -1) {
-				Vector3 posCam = Camera::GetInstance()->pos;
-				Vector3 posObj = obj[i]->position;
-				float disToCamera = sqrt((posCam.x - posObj.x) * (posCam.x - posObj.x) + (posCam.y - posObj.y) * (posCam.y - posObj.y) + (posCam.z - posObj.z));
-				float fog_start = obj[i]->fog_start;
-				float fog_length = obj[i]->fog_length;
-				glUniform1f(lerp, (disToCamera-fog_start)/fog_length);
-			}
-			GLint fogColor = glGetUniformLocation(obj[i]->shader->program, "fogColor");
-			if (fogColor != -1) {
-				Vector3 color = obj[i]->fog_color;
-				glUniform4f(fogColor, color.x, color.y, color.z, 1.0);
-			}
-			delete[] l;
-			//printf("%f %f\n", obj[i]->fog_start, obj[i]->fog_length);
-		}
-		if (obj[i]->numCubes > 0) {
-			glEnable(GL_TEXTURE_CUBE_MAP);
-			glBindTexture(GL_TEXTURE_CUBE_MAP, obj[i]->textureID[0]);
-			GLuint iTextureLoc = glGetUniformLocation(obj[i]->shader->program, "u_samplerCubeMap");
-			glUniform1i(iTextureLoc, 0);
-		}
+	string str = "";
+	char keyword[20];
+	int count, id;
 
-		GLint MatrixID = glGetUniformLocation(obj[i]->shader->program, "u_WVP");
-		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &(obj[i]->WVP.m[0][0]));
-		if (obj[i]->shader->positionAttribute != -1)
+	getline(ifile, str);
+	sscanf(str.c_str(), "%s %d", keyword, &count);
+	if (strcmp(keyword, "#Cameras:"))
+	{
+		printf("ERROR: Invalid File Format - Expected #Cameras:");
+		return -1;
+	}
+	for (int i = 0; i < count; i++)
+	{
+		getline(ifile, str);
+
+		sscanf(str.c_str(), "%s %d", keyword, &id);
+		if (id != i)
 		{
-			glEnableVertexAttribArray(obj[i]->shader->positionAttribute);
-			glVertexAttribPointer(obj[i]->shader->positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+			printf("WARNING: cameraId is incorrect");
 		}
-		if (obj[i]->shader->uvAttribute != -1) {	
-			glEnableVertexAttribArray(obj[i]->shader->uvAttribute);
-			glVertexAttribPointer(obj[i]->shader->uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3 * sizeof(GLfloat)));
-		}
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj[i]->iboID);
-		//glDrawArrays(GL_TRIANGLES, 0, 3);
-		glDrawElements(GL_TRIANGLES, obj[i]->model->NrIndices, GL_UNSIGNED_INT, (void*)0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glDisable(GL_TEXTURE_2D);
-	}
-}
+		Camera::CreateInstance();
 
-void SceneManager::Update(float deltaTime) {
-	Camera::GetInstance()->Update(deltaTime);
-	for (int i = 0; i < obj.size(); i++) {
-		obj[i]->Update(deltaTime);
-	}
-	Camera::GetInstance()->isDirty = 0;
-}
+		int x, y, z;
+		float f;
 
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %d %d %d", keyword, &x, &y, &z);
+		Camera::GetInstance()->SetPosition(Vector3(x, y, z));
 
-int SceneManager::InitShader() {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	//triangle data (heap)
-	glEnable(GL_DEPTH_TEST);
-	glDisable(GL_CULL_FACE);
-	glEnable(GL_BLEND);
-	for (int i = 0; i < obj.size(); i++) {
-		obj[i]->InitWVP();
-		obj[i]->model->LoadModel();
-		//buffer object
-		glGenBuffers(1, &(obj[i]->vboId));
-		glBindBuffer(GL_ARRAY_BUFFER, obj[i]->vboId);
-		glBufferData(GL_ARRAY_BUFFER, obj[i]->model->NrVertices * sizeof(Vertex), obj[i]->model->verticesData, GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glGenBuffers(1, &(obj[i]->iboID));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj[i]->iboID);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj[i]->model->NrIndices * sizeof(unsigned int), obj[i]->model->indices, GL_STATIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		if (obj[i]->textures.size() > 0) {
-			for (int j = 0; j < obj[i]->textures.size(); j++) {
-				//glActiveTexture(GL_TEXTURE0 + j);
-				glGenTextures(1, &(obj[i]->textureID[j]));
-				glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[j]);
-				char* imageData = LoadTGA(obj[i]->textures[j]->filepath, &width, &height, &bpp);
-				GLuint bppType = GL_RGB;
-				if (bpp == 32) bppType = GL_RGBA;
-				if (strcmp(obj[i]->textures[j]->wrap, "REPEAT") == 0) {
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-				}
-				if (strcmp(obj[i]->textures[j]->filter_min, "LINEAR") == 0) {
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-				}
-				else if (strcmp(obj[i]->textures[j]->filter_min, "NEAREST") == 0) {
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-				}
-				if (strcmp(obj[i]->textures[j]->filter_mag, "LINEAR") == 0) {
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				}
-				else if (strcmp(obj[i]->textures[j]->filter_mag, "NEAREST") == 0) {
-					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-				}
-				glTexImage2D(GL_TEXTURE_2D, 0, bppType, width, height, 0, bppType, GL_UNSIGNED_BYTE, imageData);
-				delete imageData;
-				glBindTexture(GL_TEXTURE_2D, 0);
-			}
-			//creation of shaders and program 
-		}
-		if (obj[i]->numCubes > 0) {
-			glGenTextures(1, &(obj[i]->textureID[0]));
-			glBindTexture(GL_TEXTURE_CUBE_MAP, obj[i]->textureID[0]);
-			char* cubePixels[6];
-			for (int j = 0; j < 6; j++)
-			{
-				cubePixels[j] = LoadTGA(obj[i]->cube->fileComponent[j], &width, &height, &bpp);
-				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + j, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, cubePixels[j]);
-			}
-			if (strcmp(obj[i]->cube->wrap, "REPEAT") == 0) {
-				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_REPEAT);
-				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			}
-			else if (strcmp(obj[i]->cube->wrap, "CLAMP") == 0) {
-				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-			}
-			if (strcmp(obj[i]->cube->filter_min, "LINEAR") == 0) {
-				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			}
-			else if (strcmp(obj[i]->cube->filter_min, "NEAREST") == 0) {
-				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			}
-			if (strcmp(obj[i]->cube->filter_mag, "LINEAR") == 0) {
-				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			}
-			else if (strcmp(obj[i]->cube->filter_mag, "NEAREST") == 0) {
-				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			}
-			for (int j = 0; j < 6; j++) {
-				delete cubePixels[j];
-			}
-			glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
-			//obj[i]->cube->LoadCubeTexture();
-		}
-		obj[i]->shader->Init(obj[i]->shader->fileVS, obj[i]->shader->fileFS);
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %d %d %d", keyword, &x, &y, &z);
+		Camera::GetInstance()->SetTarget(Vector3(x, y, z));
+
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %d %d %d", keyword, &x, &y, &z);
+		Camera::GetInstance()->SetUpVector(Vector3(x, y, z));
+
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %f", keyword, &f);
+		Camera::GetInstance()->SetFOVY(f);
+
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %f", keyword, &f);
+		Camera::GetInstance()->SetNear(f);
+
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %f", keyword, &f);
+		Camera::GetInstance()->SetFar(f);
+
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %f", keyword, &f);
+		Camera::GetInstance()->SetMoveSpeed(f);
+
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %f", keyword, &f);
+		Camera::GetInstance()->SetRotateSpeed(f);
+
+		Camera::GetInstance()->Init();
 	}
+	getline(ifile, str);
+	// Load light
+	getline(ifile, str);
+	sscanf(str.c_str(), "%s %d", keyword, &count);
+	if (strcmp(keyword, "#Lights:"))
+	{
+		printf("ERROR: Invalid File Format - Expected #Lights:");
+		return -1;
+	}
+	for (int i = 0; i < count; i++)
+	{
+		getline(ifile, str);
+		getline(ifile, str);
+		getline(ifile, str);
+		getline(ifile, str);
+
+	}
+	getline(ifile, str);
+	// Load Object
+	getline(ifile, str);
+	sscanf(str.c_str(), "%s %d", keyword, &count);
+	if (strcmp(keyword, "#Objects:"))
+	{
+		printf("ERROR: Invalid File Format - Expected #Objects:");
+		return -1;
+	}
+	for (int i = 0; i < count; i++)
+	{
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %d ", keyword, &id);
+		if (id != i)
+		{
+			printf("WARNING: objectId is incorrect");
+		}
+		Object* object = new Object();
+		// MODEL
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %d", keyword, &id);
+		object->SetModelId(id);
+		// TEXTURES
+		int count2;
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %d", keyword, &count2);
+		for (int i = 0; i < count2; i++)
+		{
+			getline(ifile, str);
+			sscanf(str.c_str(), "%s %d", keyword, &id);
+			object->SetTextureId(id);
+		}
+		// CUBETEXTURE
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %d", keyword, &count2);
+		for (int i = 0; i < count2; i++)
+		{
+			getline(ifile, str);
+			sscanf(str.c_str(), "%s %d", keyword, &id);
+			object->SetTextureCubeId(id);
+		}
+		// SHADERS
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %d", keyword, &id);
+		object->SetShadersId(id);
+		// LIGHTS
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %d", keyword, &count2);
+		for (int i = 0; i < count2; i++)
+		{
+			getline(ifile, str);
+		}
+		float x, y, z;
+		// POSITION
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %f %f %f", keyword, &x, &y, &z);
+		object->SetTranslation(Vector3(x, y, z));
+		// ROTATION
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %f %f %f", keyword, &x, &y, &z);
+		object->SetRotation(Vector3(x, y, z));
+		// SCALE
+		getline(ifile, str);
+		sscanf(str.c_str(), "%s %f %f %f", keyword, &x, &y, &z);
+		object->SetScale(Vector3(x, y, z));
+
+		object->Init();
+		m_vObjects.push_back(object);
+	}
+	
 	return 0;
 }
 
-void SceneManager::CleanUp() {
-	for (int i = 0; i < obj.size(); i++) {
-		glDeleteBuffers(1, &(obj[i]->vboId));
-		glDeleteBuffers(1, &(obj[i]->iboID));
-		delete obj[i];
-	}
-	delete s_Instance;
-	delete ResourceManager::r_Instance;
-	delete Camera::c_Instance;
-}
-
-void SceneManager::Key(unsigned char key, bool bIsPressed) {
-	//printf("%c\n", key);
-	if (key == 'W') {
-		if (bIsPressed) {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed | Camera::GetInstance()->w;
-		}
-		else {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed ^ Camera::GetInstance()->w;
-		}
-	}
-	if (key == 'A') {
-		if (bIsPressed) {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed | Camera::GetInstance()->a;
-		}
-		else {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed ^ Camera::GetInstance()->a;
-		}
-	}
-	if (key == 'S') {
-		if (bIsPressed) {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed | Camera::GetInstance()->s;
-		}
-		else {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed ^ Camera::GetInstance()->s;
-		}
-	}
-	if (key == 'D') {
-		if (bIsPressed) {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed | Camera::GetInstance()->d;
-		}
-		else {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed ^ Camera::GetInstance()->d;
-		}
-	}
-	if (key == VK_LEFT) {
-		if (bIsPressed) {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed | Camera::GetInstance()->leftKey;
-		}
-		else {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed ^ Camera::GetInstance()->leftKey;
-		}
-	}
-	if (key == VK_RIGHT) {
-		if (bIsPressed) {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed | Camera::GetInstance()->rightKey;
-		}
-		else {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed ^ Camera::GetInstance()->rightKey;
-		}
-	}
-	if (key == VK_UP) {
-		if (bIsPressed) {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed | Camera::GetInstance()->upKey;
-		}
-		else {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed ^ Camera::GetInstance()->upKey;
-		}
-	}
-	if (key == VK_DOWN) {
-		if (bIsPressed) {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed | Camera::GetInstance()->downKey;
-		}
-		else {
-			Camera::GetInstance()->keyPressed = Camera::GetInstance()->keyPressed ^ Camera::GetInstance()->downKey;
-		}
+void SceneManager::KeyEventHandle(unsigned char key, bool isPressed)
+{
+	switch (key)
+	{
+	case 'W':
+	case 'w':
+		keyPressed = isPressed ? (keyPressed | MOVE_FORWARD) : (keyPressed ^ MOVE_FORWARD);
+		break;
+	case 'A':
+	case 'a':
+		keyPressed = isPressed ? (keyPressed | MOVE_LEFT) : (keyPressed ^ MOVE_LEFT);
+		break;
+	case 'S':
+	case 's':
+		keyPressed = isPressed ? (keyPressed | MOVE_BACKWARD) : (keyPressed ^ MOVE_BACKWARD);
+		break;
+	case 'D':
+	case 'd':
+		keyPressed = isPressed ? (keyPressed | MOVE_RIGHT) : (keyPressed ^ MOVE_RIGHT);
+		break;
+	case 'J':
+	case 'j':
+		keyPressed = isPressed ? (keyPressed | MOVE_UP) : (keyPressed ^ MOVE_UP);
+		break;
+	case 'K':
+	case 'k':
+		keyPressed = isPressed ? (keyPressed | MOVE_DOWN) : (keyPressed ^ MOVE_DOWN);
+		break;
+	case 'Q':
+	case 'q':
+		keyPressed = isPressed ? (keyPressed | ROTATE_LEFT) : (keyPressed ^ ROTATE_LEFT);
+		break;
+	case 'E':
+	case 'e':
+		keyPressed = isPressed ? (keyPressed | ROTATE_RIGHT) : (keyPressed ^ ROTATE_RIGHT);
+		break;
+	case 'U':
+	case 'u':
+		keyPressed = isPressed ? (keyPressed | LOOK_UP) : (keyPressed ^ LOOK_UP);
+		break;
+	case 'I':
+	case 'i':
+		keyPressed = isPressed ? (keyPressed | LOOK_DOWN) : (keyPressed ^ LOOK_DOWN);
+		break;
+	default:
+		break;
 	}
 }
 
+void SceneManager::CreateInstance()
+{
+	if (ms_Instance == NULL)
+		ms_Instance = new SceneManager();
+}
 
-void SceneManager::Init() {
-	FILE* f;
-	f = fopen("../Resources/SM.txt", "r+");
-	char buffer[1024];
-	memset(buffer, 0, sizeof(buffer));
-	if (!f) {
-		printf("Can't find file\n");
+SceneManager* SceneManager::GetInstance()
+{
+	if (ms_Instance == NULL)
+		ms_Instance = new SceneManager();
+	return ms_Instance;
+}
+
+void SceneManager::DestroyInstance()
+{
+	if (ms_Instance)
+	{
+		delete ms_Instance;
+		ms_Instance = NULL;
 	}
-	else {
-		int numCamera;
-		fscanf(f, "#Cameras: %d\n", &numCamera);
-		while (numCamera--) {
-			int cameraID;
-			fscanf(f, "ID %d\n", &cameraID);
-			fscanf(f, "POSITION %f %f %f\n", &(Camera::GetInstance()->pos.x), &(Camera::GetInstance()->pos.y), &(Camera::GetInstance()->pos.z));
-			fscanf(f, "TARGET %f %f %f\n", &(Camera::GetInstance()->target.x), &(Camera::GetInstance()->target.y), &(Camera::GetInstance()->target.z));
-			fscanf(f, "UP %f %f %f\n", &(Camera::GetInstance()->up.x), &(Camera::GetInstance()->up.y), &(Camera::GetInstance()->up.z));
-			fscanf(f, "FOVY %f\n", &(Camera::GetInstance()->m_FOV));
-			fscanf(f, "NEAR %f\n", &(Camera::GetInstance()->m_Near));
-			fscanf(f, "FAR %f\n", &(Camera::GetInstance()->m_Far));
-			fscanf(f, "MOVE_SPEED %f\n", &(Camera::GetInstance()->speedCamera));
-			fscanf(f, "ROTATE_SPEED %f\n", &(Camera::GetInstance()->speedRotation));
-		}
-		int numObj;
-		fscanf(f, "#Objects: %d\n", &numObj);
-		int ID = 0; char tmp[20];
-		int index = 0;
-		while (numObj--) {
-			obj.push_back(new Object());
-			fscanf(f, "ID %d %s\n", &obj[index]->objectID, tmp);
-			strcpy(obj[index]->type, tmp);
-			fscanf(f, "MODEL %d\n", &obj[index]->modelID);
-			fscanf(f, "TEXTURES %d\n", &obj[index]->numTextures);
-			for (int i = 0; i < obj[index]->numTextures; i++) {
-				int indexTexture;
-				fscanf(f, "TEXTURE %d\n", &indexTexture);
-				obj[index]->texturedID.push_back(indexTexture);
-			}
-			fscanf(f, "CUBETEXTURES %d\n", &obj[index]->numCubes);
-			fscanf(f, "SHADER %d\n", &obj[index]->shaderID);
-			fscanf(f, "LIGHTS %d\n", &obj[index]->numLights);
-			for (int i = 0; i < obj[index]->numLights; i++) {
-				int indexLight;
-				fscanf(f, "LIGHT %d\n", &indexLight);
-				obj[index]->lightID.push_back(indexLight);
-			}
-			fscanf(f, "POSITION %f %f %f\n", &(obj[index]->position.x), &(obj[index]->position.y), &(obj[index]->position.z));
-			fscanf(f, "ROTATION %f %f %f\n", &(obj[index]->rotation.x), &(obj[index]->rotation.y), &(obj[index]->rotation.z));
-			fscanf(f, "SCALE %f %f %f\n", &(obj[index]->scale.x), &(obj[index]->scale.y), &(obj[index]->scale.z));
-			if (strcmp(obj[index]->type, "Terrain") == 0) {
-				fscanf(f, "TILING %d\n", &obj[index]->tiling);
-				fscanf(f, "FOG_START %f\n", &obj[index]->fog_start);
-				fscanf(f, "FOG_LENGTH %f\n", &obj[index]->fog_length);
-				fscanf(f, "FOG_COLOR %f %f %f\n", &obj[index]->fog_color.x, &obj[index]->fog_color.y, &obj[index]->fog_color.z);
-				printf("%f %f\n", obj[index]->fog_start, obj[index]->fog_length);
-			}
-			index++;
-		}
+}
+
+void SceneManager::Draw()
+{
+	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
+	{
+		(*it)->Draw();
 	}
-	for (int i = 0; i < obj.size(); i++) {
-		obj[i]->model = ResourceManager::GetInstance()->model[obj[i]->modelID];
-		obj[i]->shader = ResourceManager::GetInstance()->shader[obj[i]->shaderID];
-		for (int j = 0; j < obj[i]->texturedID.size(); j++) {
-			obj[i]->textures.push_back(ResourceManager::GetInstance()->texture[obj[i]->texturedID[j]]);
-		}
-		if (obj[i]->numCubes > 0) {
-			obj[i]->cube = ResourceManager::GetInstance()->cube;
-			printf(obj[i]->cube->wrap);
-		}
+}
+
+void SceneManager::Update(float deltaTime)
+{
+	Camera::GetInstance()->Update(keyPressed, deltaTime);
+
+	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
+	{
+		(*it)->Update(deltaTime);
+	}
+}
+
+SceneManager::~SceneManager()
+{
+	Camera::DestroyInstance();
+	ResourceManager::DestroyInstance();
+
+	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
+	{
+		delete (*it);
 	}
 
+	m_vObjects.clear();
 }

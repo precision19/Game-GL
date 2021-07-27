@@ -95,7 +95,6 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CubeTexture.cpp" />
-    <ClCompile Include="HeightMap.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -112,7 +111,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CubeTexture.h" />
     <ClInclude Include="Globals.h" />
-    <ClInclude Include="HeightMap.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ResourceManager.h" />

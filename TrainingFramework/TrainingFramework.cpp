@@ -6,21 +6,28 @@
 #include "Vertex.h"
 #include "Shaders.h"
 #include "Globals.h"
-#include "Model.h"
 #include <conio.h>
 #include <fstream>
-#include "Object.h"
+#include <string>
+#include <iostream>
 #include "SceneManager.h"
-#include "ResourceManager.h"
 
 int Init ( ESContext *esContext )
 {
-	return SceneManager::GetInstance()->InitShader();
+	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+	//glEnable(GL_DEPTH_TEST);
+
+	SceneManager::CreateInstance();
+
+	return SceneManager::GetInstance()->Init();
 }
 
 void Draw ( ESContext *esContext )
 {
-	SceneManager::GetInstance()->Render();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	SceneManager::GetInstance()->Draw();
+
 	eglSwapBuffers ( esContext->eglDisplay, esContext->eglSurface );
 }
 
@@ -31,17 +38,12 @@ void Update ( ESContext *esContext, float deltaTime )
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 {
-	SceneManager::GetInstance()->Key(key, bIsPressed);
+	SceneManager::GetInstance()->KeyEventHandle(key, bIsPressed);
 }
 
 void CleanUp()
 {
-	//printf("%s\n", "bac");
-	//model = NULL;
-	/*for (int i = 0; i < scenemanager::getinstance()->obj.size(); i++) {
-		scenemanager::getinstance()->obj[i]->model->~model();
-	}*/
-	SceneManager::GetInstance()->CleanUp();
+	SceneManager::DestroyInstance();
 }
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -50,7 +52,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
     esInitContext ( &esContext );
 
-	esCreateWindow ( &esContext, "Triangle Texture", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
+	esCreateWindow ( &esContext, "Hello Triangle", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
 
 	if ( Init ( &esContext ) != 0 )
 		return 0;

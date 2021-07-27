@@ -1,50 +1,68 @@
 #pragma once
-#include "../Utilities/Math.h"
+#include "Vertex.h"
 #include "Globals.h"
-#define pi 3.14159265359
+#include <string>
 
-class Camera {
-private: 
-	Matrix viewMatrix;
-	Matrix worldMatrix;
-	Matrix perspectiveMatrix;
-	Matrix mRotation;
-	Matrix inverseRotation;
-	Matrix mTranslation;
-	Matrix inverseTranslation;
+using namespace std;
+
+#define MOVE_FORWARD 1
+#define MOVE_BACKWARD 1 << 1
+#define MOVE_LEFT 1 << 2
+#define MOVE_RIGHT 1 << 3
+
+#define MOVE_UP 1 << 4
+#define MOVE_DOWN 1 << 5
+
+#define ROTATE_LEFT 1 << 6
+#define ROTATE_RIGHT 1 << 7
+
+#define LOOK_UP 1 << 8
+#define LOOK_DOWN 1 << 9
+
+class Camera
+{
+protected:
+	static Camera * ms_Instance;
+
+	Vector3 m_Position;
+	Vector3 m_Target;
+	Vector3 m_Up;
+
+	Matrix m_WorldMatrix;
+	Matrix m_ViewMatrix;
+	Matrix m_Perspective;
+
+	float m_Near;
+	float m_Far;
+	float m_FOV;
+
+	float m_Speed;
+	float m_RotateSpeed;
+
+	float m_FaceAngle;
+
+	void SetWorldMatrix();
+	void SetViewMatrix();
 public:
-	static Camera* c_Instance;
+	static void CreateInstance();
 	static Camera* GetInstance();
-	float speedCamera = 1.0f;
-	float speedRotation = 1.2f;
-	GLfloat m_FOV = 1.2f;
-	GLfloat m_Near = 1.0f;
-	GLfloat m_Far = 500.0f;
-	Camera(void);
-	~Camera(void);
-	bool isDirty;
-	int keyPressed;
-	float maxAngleX = 90.0f * pi / 180;
-	float minAngleX = -90.0f * pi / 180;
-	float angleRotaX;
-	int w, a, s, d, leftKey, rightKey, upKey, downKey;
-	Vector3 pos = Vector3( 0.0f, 1.0f, 5.0f );
-	Vector3 target = Vector3( 0.0f, -1.0f, -1.0f );
-	Vector3 up = Vector3( 0.0f, 1.0f, 0.0f );
-	Matrix getViewMatrix();
-	Matrix getWorldMatrix();
-	Matrix getPerspectiveMatrix();
-	Matrix caculatePerspectiveMatrix();
-	Matrix caculateViewMatrix();
-	Matrix caculateWorldMatrix();
-	void setRnTMatrix();
-	Vector3 moveForward(float);
-	Vector3 moveBack(float);
-	Vector3 moveLeft(float);
-	Vector3 moveRight(float);
-	Vector4 rotaRight(float);
-	Vector4 rotaLeft(float);
-	Vector4 rotaUp(float);
-	Vector4 rotaDown(float);
-	void Update(float);
+	static void DestroyInstance();
+
+	Camera();
+	Camera(Vector3, Vector3, bool);
+	void Init();
+	Vector3 GetPosition();
+	void SetPosition(Vector3);
+	void SetTarget(Vector3);
+	void SetUpVector(Vector3);
+	void SetFOVY(float);
+	void SetNear(float);
+	void SetFar(float);
+	void SetMoveSpeed(float);
+	void SetRotateSpeed(float);
+	Matrix GetWorldMatrix();
+	Matrix GetViewMatrix();
+	Matrix GetPerspective();
+	void Update(int, float);
 };
+

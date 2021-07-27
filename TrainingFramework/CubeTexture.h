@@ -1,12 +1,16 @@
 #pragma once
-class CubeTexture {
+#include "Texture.h"
+
+using namespace std;
+
+class CubeTexture :
+	public Texture
+{
+protected:
+	GLuint textureId;
 public:
-	char filepath[200];
-	char wrap[50];
-	char filter_min[50];
-	char filter_mag[50];
-	char fileComponent[6][200];
-	int cubeTextureID;
-	CubeTexture();
-	~CubeTexture();
+	CubeTexture(const char*);
+	CubeTexture(const char*, string, string, string);
+	void BindBuffer(int, bool = true);
 };
+

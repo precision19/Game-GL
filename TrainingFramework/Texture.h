@@ -1,11 +1,18 @@
 #pragma once
-class Texture {
+#include "../Utilities/utilities.h"
+#include <string>
+
+using namespace std;
+
+class Texture
+{
+protected:
+	GLuint textureId;
 public:
-	char filepath[200];
-	char wrap[50];
-	char filter_min[50];
-	char filter_mag[50];
-	int textureID;
-	Texture();
+	Texture() { textureId = -1; };
+	Texture(const char*);
+	Texture(const char*, string, string, string);
+	virtual void BindBuffer(int, bool = true);
 	~Texture();
 };
+

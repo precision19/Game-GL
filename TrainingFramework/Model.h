@@ -1,15 +1,28 @@
 #pragma once
+#include "../Utilities/utilities.h"
+#include <string>
+#include <fstream>
+#include "Texture.h"
 #include "Vertex.h"
-class Model {
-public:
-	float scale;
-	int offset;
-	int modelID;
-	char filepath[200];
-	int NrVertices;
-	int NrIndices;
-	Vertex* verticesData;
+
+using namespace std;
+
+class Model
+{
+protected:
+	GLuint vboId;
+	GLuint iboId;
+
+	int amountOfVertexs;
+	Vertex* vertices;
+	int amountOfIndices;
 	unsigned int* indices;
-	void LoadModel();
+public:
+	Model(const char* path);
+	Model(const char* path, const char* pathHeightmap);
+	void SetHeightmap(const char* path);
+	void BindBuffer(bool = true);
+	void Draw();
 	~Model();
 };
+

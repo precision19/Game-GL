@@ -1,22 +1,25 @@
 #pragma once
 #include <vector>
 #include "Object.h"
+#include "Camera.h"
 #include "ResourceManager.h"
-using namespace std;
-class SceneManager {
+
+class SceneManager
+{
+protected:
+	static SceneManager* ms_Instance;
+	std::vector<Object*> m_vObjects;
+	int keyPressed = 0;
 public:
-	GLint height, width, bpp;
-	static SceneManager* s_Instance;
+	static void CreateInstance();
 	static SceneManager* GetInstance();
-	//Constructor
-	SceneManager(void);
-	//Destructor
-	~SceneManager(void);
-	vector<Object*>obj;
-	virtual void Render();
-	void Init();
-	int InitShader();
-	void Key(unsigned char, bool);
+	static void DestroyInstance();
+
+	SceneManager();
+	int Init();
+	void KeyEventHandle(unsigned char, bool);
+	void Draw();
 	void Update(float);
-	void CleanUp();
+	~SceneManager();
 };
+

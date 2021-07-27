@@ -1,20 +1,30 @@
 #pragma once
 #include <vector>
+#include "Shaders.h"
 #include "Model.h"
 #include "Texture.h"
-#include "Shaders.h"
 #include "CubeTexture.h"
-class ResourceManager {
+
+class ResourceManager
+{
+protected:
+	vector<Model*> m_Models;
+	vector<Texture*> m_Textures;
+	vector<CubeTexture*> m_CubeTextures;
+	vector<Shaders*> m_vShaders;
+
+	static ResourceManager* ms_Instance;
 public:
-	static ResourceManager* r_Instance;
+	static void CreateInstance();
 	static ResourceManager* GetInstance();
-	CubeTexture* cube;
-	std::vector<Model*>model;
-	std::vector<Texture*>texture;
-	std::vector<Shaders*>shader;
-	void Init();
-	//Constructor
+	static void DestroyInstance();
+
 	ResourceManager();
-	//Destructor
 	~ResourceManager();
+
+	Model* GetModel(int);
+	Texture* GetTexture(int);
+	Shaders* GetShaders(int);
+	CubeTexture* GetCubeTexture(int);
 };
+
