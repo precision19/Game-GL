@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "Texture.h"
 #include "CubeTexture.h"
+#include "Helper.h"
 
 class ResourceManager
 {

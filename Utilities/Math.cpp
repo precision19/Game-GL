@@ -106,6 +106,8 @@ GLfloat Vector3::Length()
 
 Vector3 & Vector3::Normalize()
 {
+	if (Length() == 0) return *this;
+
 	GLfloat lenInv = 1.0f / Length();
 	x *= lenInv;
 	y *= lenInv;

@@ -193,26 +193,32 @@ void SceneManager::KeyEventHandle(unsigned char key, bool isPressed)
 		break;
 	case 'J':
 	case 'j':
+	case VK_SPACE:
 		keyPressed = isPressed ? (keyPressed | MOVE_UP) : (keyPressed ^ MOVE_UP);
 		break;
 	case 'K':
 	case 'k':
+	case VK_CONTROL:
 		keyPressed = isPressed ? (keyPressed | MOVE_DOWN) : (keyPressed ^ MOVE_DOWN);
 		break;
 	case 'Q':
 	case 'q':
+	case VK_LEFT:
 		keyPressed = isPressed ? (keyPressed | ROTATE_LEFT) : (keyPressed ^ ROTATE_LEFT);
 		break;
 	case 'E':
 	case 'e':
+	case VK_RIGHT:
 		keyPressed = isPressed ? (keyPressed | ROTATE_RIGHT) : (keyPressed ^ ROTATE_RIGHT);
 		break;
 	case 'U':
 	case 'u':
+	case VK_UP:
 		keyPressed = isPressed ? (keyPressed | LOOK_UP) : (keyPressed ^ LOOK_UP);
 		break;
 	case 'I':
 	case 'i':
+	case VK_DOWN:
 		keyPressed = isPressed ? (keyPressed | LOOK_DOWN) : (keyPressed ^ LOOK_DOWN);
 		break;
 	default:

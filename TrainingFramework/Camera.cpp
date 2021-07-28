@@ -210,13 +210,13 @@ void Camera::Update(int input, float deltaTime)
 	float angle2 = 0;
 	if (input & LOOK_UP)
 	{
-		m_FaceAngle += m_RotateSpeed * deltaTime;
-		angle2 += m_RotateSpeed * deltaTime;
+		m_FaceAngle -= m_RotateSpeed * deltaTime;
+		angle2 -= m_RotateSpeed * deltaTime;
 	}
 	if (input & LOOK_DOWN)
 	{
-		m_FaceAngle -= m_RotateSpeed * deltaTime;
-		angle2 -= m_RotateSpeed * deltaTime;
+		m_FaceAngle += m_RotateSpeed * deltaTime;
+		angle2 += m_RotateSpeed * deltaTime;
 	}
 
 	if (m_FaceAngle > 89 * (PI / 180))
@@ -251,6 +251,4 @@ void Camera::Update(int input, float deltaTime)
 
 	SetWorldMatrix();
 	SetViewMatrix();
-
-
 }
