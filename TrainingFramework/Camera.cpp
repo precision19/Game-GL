@@ -103,7 +103,9 @@ void Camera::Init()
 	SetWorldMatrix();
 	SetViewMatrix();
 
-	m_Perspective.SetPerspective(m_FOV, (float)Globals::screenWidth / (float)Globals::screenHeight, m_Near, m_Far);
+	//m_Projection.SetPerspective(m_FOV, (float)Globals::screenWidth / (float)Globals::screenHeight, m_Near, m_Far);
+	float scale = 0.1;
+	m_Projection.SetOrtho((float)Globals::screenWidth * scale, (float)Globals::screenHeight * scale, m_Near, m_Far);
 }
 
 Vector3 Camera::GetPosition()
@@ -161,26 +163,24 @@ Matrix Camera::GetViewMatrix()
 	return m_ViewMatrix;
 }
 
-Matrix Camera::GetPerspective()
+Matrix Camera::GetProjection()
 {
-	return m_Perspective;
+	return m_Projection;
 }
 
-void Camera::Update(int input, float deltaTime)
+void Camera::Update(float deltaTime)
 {
-	if (input == 0) return;
-
 	Vector3 zaxis = (m_Position - m_Target).Normalize(); // de set di chuyen theo huong nhin
 	Vector3 xaxis = (m_Up.Cross(zaxis)).Normalize();
 
 	Vector3 movement;
-	if (input & MOVE_FORWARD)
+	if (Input::GetKeyDown(W))
 		movement -= zaxis;
-	if (input & MOVE_BACKWARD)
+	if (Input::GetKeyDown(S))
 		movement += zaxis;
-	if (input & MOVE_LEFT)
+	if (Input::GetKeyDown(A))
 		movement -= xaxis;
-	if (input & MOVE_RIGHT)
+	if (Input::GetKeyDown(D))
 		movement += xaxis;
 
 	movement.y = 0;
@@ -190,9 +190,9 @@ void Camera::Update(int input, float deltaTime)
 
 	// Bay
 	float y = 0;
-	if (input & MOVE_UP)
+	if (Input::GetKeyDown(Space))
 		y += 1;
-	if (input & MOVE_DOWN)
+	if (Input::GetKeyDown(Ctrl))
 		y -= 1;
 
 	m_Position.y += y * m_Speed * deltaTime;
@@ -202,18 +202,18 @@ void Camera::Update(int input, float deltaTime)
 	SetViewMatrix();
 
 	float angle = 0;
-	if (input & ROTATE_LEFT)
+	if (Input::GetKeyDown(Left))
 		angle += m_RotateSpeed * deltaTime;
-	if (input & ROTATE_RIGHT)
+	if (Input::GetKeyDown(Right))
 		angle -= m_RotateSpeed * deltaTime;
 
 	float angle2 = 0;
-	if (input & LOOK_UP)
+	if (Input::GetKeyDown(Up))
 	{
 		m_FaceAngle -= m_RotateSpeed * deltaTime;
 		angle2 -= m_RotateSpeed * deltaTime;
 	}
-	if (input & LOOK_DOWN)
+	if (Input::GetKeyDown(Down))
 	{
 		m_FaceAngle += m_RotateSpeed * deltaTime;
 		angle2 += m_RotateSpeed * deltaTime;

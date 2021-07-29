@@ -168,61 +168,6 @@ int SceneManager::Init()
 	return 0;
 }
 
-void SceneManager::KeyEventHandle(unsigned char key, bool isPressed)
-{
-	switch (key)
-	{
-	case 'W':
-	case 'w':
-		keyPressed = isPressed ? (keyPressed | MOVE_FORWARD) : (keyPressed ^ MOVE_FORWARD);
-		break;
-	case 'A':
-	case 'a':
-		keyPressed = isPressed ? (keyPressed | MOVE_LEFT) : (keyPressed ^ MOVE_LEFT);
-		break;
-	case 'S':
-	case 's':
-		keyPressed = isPressed ? (keyPressed | MOVE_BACKWARD) : (keyPressed ^ MOVE_BACKWARD);
-		break;
-	case 'D':
-	case 'd':
-		keyPressed = isPressed ? (keyPressed | MOVE_RIGHT) : (keyPressed ^ MOVE_RIGHT);
-		break;
-	case 'J':
-	case 'j':
-	case VK_SPACE:
-		keyPressed = isPressed ? (keyPressed | MOVE_UP) : (keyPressed ^ MOVE_UP);
-		break;
-	case 'K':
-	case 'k':
-	case VK_CONTROL:
-		keyPressed = isPressed ? (keyPressed | MOVE_DOWN) : (keyPressed ^ MOVE_DOWN);
-		break;
-	case 'Q':
-	case 'q':
-	case VK_LEFT:
-		keyPressed = isPressed ? (keyPressed | ROTATE_LEFT) : (keyPressed ^ ROTATE_LEFT);
-		break;
-	case 'E':
-	case 'e':
-	case VK_RIGHT:
-		keyPressed = isPressed ? (keyPressed | ROTATE_RIGHT) : (keyPressed ^ ROTATE_RIGHT);
-		break;
-	case 'U':
-	case 'u':
-	case VK_UP:
-		keyPressed = isPressed ? (keyPressed | LOOK_UP) : (keyPressed ^ LOOK_UP);
-		break;
-	case 'I':
-	case 'i':
-	case VK_DOWN:
-		keyPressed = isPressed ? (keyPressed | LOOK_DOWN) : (keyPressed ^ LOOK_DOWN);
-		break;
-	default:
-		break;
-	}
-}
-
 void SceneManager::CreateInstance()
 {
 	if (ms_Instance == NULL)
@@ -255,7 +200,7 @@ void SceneManager::Draw()
 
 void SceneManager::Update(float deltaTime)
 {
-	Camera::GetInstance()->Update(keyPressed, deltaTime);
+	Camera::GetInstance()->Update(deltaTime);
 
 	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
 	{

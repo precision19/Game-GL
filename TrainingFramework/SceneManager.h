@@ -8,8 +8,7 @@ class SceneManager
 {
 protected:
 	static SceneManager* ms_Instance;
-	std::vector<Object*> m_vObjects;
-	int keyPressed = 0;
+	vector<Object*> m_vObjects;
 public:
 	static void CreateInstance();
 	static SceneManager* GetInstance();
@@ -17,7 +16,6 @@ public:
 
 	SceneManager();
 	int Init();
-	void KeyEventHandle(unsigned char, bool);
 	void Draw();
 	void Update(float);
 	~SceneManager();

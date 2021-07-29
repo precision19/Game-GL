@@ -150,6 +150,8 @@ public:
 	Matrix & SetTranslation(Vector3 &vec);
 
 	Matrix & SetPerspective(GLfloat fovY, GLfloat aspect, GLfloat nearPlane, GLfloat farPlane);
+	Matrix & SetOrtho(GLfloat width, GLfloat height, GLfloat nearPlane, GLfloat farPlane);
+	Matrix & SetOrtho(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat nearPlane, GLfloat farPlane);
 
 	Matrix Transpose();
 

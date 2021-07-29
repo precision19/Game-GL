@@ -2,22 +2,7 @@
 #include "Vertex.h"
 #include "Globals.h"
 #include <string>
-
-using namespace std;
-
-#define MOVE_FORWARD 1
-#define MOVE_BACKWARD 1 << 1
-#define MOVE_LEFT 1 << 2
-#define MOVE_RIGHT 1 << 3
-
-#define MOVE_UP 1 << 4
-#define MOVE_DOWN 1 << 5
-
-#define ROTATE_LEFT 1 << 6
-#define ROTATE_RIGHT 1 << 7
-
-#define LOOK_UP 1 << 8
-#define LOOK_DOWN 1 << 9
+#include "Input.h"
 
 class Camera
 {
@@ -30,7 +15,7 @@ protected:
 
 	Matrix m_WorldMatrix;
 	Matrix m_ViewMatrix;
-	Matrix m_Perspective;
+	Matrix m_Projection;
 
 	float m_Near;
 	float m_Far;
@@ -62,7 +47,7 @@ public:
 	void SetRotateSpeed(float);
 	Matrix GetWorldMatrix();
 	Matrix GetViewMatrix();
-	Matrix GetPerspective();
-	void Update(int, float);
+	Matrix GetProjection();
+	void Update(float);
 };
 

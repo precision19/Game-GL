@@ -15,7 +15,7 @@ Matrix Object::GetWVP()
 
 	Matrix worldMatrix = scale * rotationZ * rotationX * rotationY * translation;
 
-	Matrix WVP = worldMatrix * Camera::GetInstance()->GetViewMatrix() * Camera::GetInstance()->GetPerspective();
+	Matrix WVP = worldMatrix * Camera::GetInstance()->GetViewMatrix() * Camera::GetInstance()->GetProjection();
 	return WVP;
 }
 

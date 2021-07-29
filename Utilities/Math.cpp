@@ -543,6 +543,47 @@ Matrix & Matrix::SetPerspective(GLfloat fovY, GLfloat aspect, GLfloat nearPlane,
 	return *this;
 }
 
+Matrix& Matrix::SetOrtho(GLfloat width, GLfloat height, GLfloat nearPlane, GLfloat farPlane)
+{
+	GLfloat deltaZ = farPlane - nearPlane;
+	if (width == 0 || height == 0 || deltaZ == 0)
+		return *this;
+
+	SetIdentity();
+
+	m[0][0] = 2 / width;
+	m[1][1] = 2 / height;
+	m[2][2] = -2 / deltaZ;
+
+	m[3][0] = 0;
+	m[3][1] = 0;
+	m[3][2] = -(nearPlane + farPlane) / deltaZ;
+
+	return *this;
+}
+
+Matrix & Matrix::SetOrtho(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top, GLfloat nearPlane, GLfloat farPlane)
+{
+	GLfloat deltaX = right - left;
+	GLfloat deltaY = top - bottom;
+	GLfloat deltaZ = farPlane - nearPlane;
+
+	if (deltaX == 0 || deltaY == 0 || deltaZ == 0)
+		return *this;
+
+	SetIdentity();
+
+	m[0][0] = 2 / deltaX;
+	m[1][1] = 2 / deltaY;
+	m[2][2] = -2 / deltaZ;
+
+	m[3][0] = -(right + left) / deltaX;
+	m[3][1] = -(top + bottom) / deltaY;
+	m[3][2] = -(nearPlane + farPlane) / deltaZ;
+
+	return *this;
+}
+
 Matrix Matrix::Transpose()
 {
 	Matrix res;
