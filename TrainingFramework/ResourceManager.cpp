@@ -27,7 +27,7 @@ void ResourceManager::DestroyInstance()
 ResourceManager::ResourceManager()
 {
 	ifstream ifile;
-	ifile.open("../Resources/RM.txt");
+	ifile.open("Managers/RM.txt");
 
 	if (ifile.fail())
 	{

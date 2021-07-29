@@ -10,11 +10,8 @@ SceneManager::SceneManager()
 
 int SceneManager::Init()
 {
-	//Object* object = new Object("Models/Woman1.nfg", "Textures/Woman1.tga");
-	//m_vObjects.push_back(object);
-	
 	ifstream ifile;
-	ifile.open("../Resources/SM.txt");
+	ifile.open("Managers/SM.txt");
 
 	if (ifile.fail())
 	{
