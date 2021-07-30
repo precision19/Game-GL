@@ -182,7 +182,10 @@ ResourceManager::ResourceManager()
 		}
 
 		m_vShaders.push_back(shaders);
-	}	
+	}
+	// Load Sprite
+	Sprite* sprite = new Sprite("Textures/Woman2.tga");
+	m_Sprite.push_back(sprite);
 }
 
 Model* ResourceManager::GetModel(int id)
@@ -203,6 +206,11 @@ Shaders* ResourceManager::GetShaders(int id)
 CubeTexture* ResourceManager::GetCubeTexture(int id)
 {
 	return m_CubeTextures.at(id);
+}
+
+Sprite* ResourceManager::GetSprite(int id)
+{
+	return m_Sprite.at(id);
 }
 
 ResourceManager::~ResourceManager()
@@ -230,4 +238,10 @@ ResourceManager::~ResourceManager()
 		delete (*it);
 	}
 	m_vShaders.clear();
+
+	for (auto it = m_Sprite.begin(); it != m_Sprite.end(); it++)
+	{
+		delete (*it);
+	}
+	m_Sprite.clear();
 }

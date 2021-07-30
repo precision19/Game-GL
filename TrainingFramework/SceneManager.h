@@ -8,7 +8,9 @@ class SceneManager
 {
 protected:
 	static SceneManager* ms_Instance;
-	vector<Object*> m_vObjects;
+	std::vector<Object*> m_vObjects;
+	std::vector<Object*> m_spObjects;
+	int keyPressed = 0;
 public:
 	static void CreateInstance();
 	static SceneManager* GetInstance();

@@ -5,6 +5,7 @@
 #include "Texture.h"
 #include "CubeTexture.h"
 #include "Helper.h"
+#include "Sprite.h"
 
 class ResourceManager
 {
@@ -13,6 +14,7 @@ protected:
 	vector<Texture*> m_Textures;
 	vector<CubeTexture*> m_CubeTextures;
 	vector<Shaders*> m_vShaders;
+	vector<Sprite*> m_Sprite;
 
 	static ResourceManager* ms_Instance;
 public:
@@ -27,5 +29,6 @@ public:
 	Texture* GetTexture(int);
 	Shaders* GetShaders(int);
 	CubeTexture* GetCubeTexture(int);
+	Sprite* GetSprite(int);
 };
 
