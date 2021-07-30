@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "Shaders.h"
 #include "Camera.h"
+#include "Sprite.h"
 #include "ResourceManager.h"
 
 class Object
@@ -19,6 +20,9 @@ protected:
 	vector<Texture*> m_Textures;
 	Shaders* m_Shaders;
 
+	Sprite* m_Sprite;
+	int m_spriteId;
+
 	Vector3 m_Scale;
 	Vector3 m_Rotation;
 	Vector3 m_Translation;
@@ -30,6 +34,10 @@ public:
 	void Init();
 	void Init(ResourceManager* resource);
 	Object(const char*, const char*);
+
+	Object(const char*, const char*, const char*);
+	void SetSpriteId(int);
+
 	void SetModelId(int);
 	void SetTextureId(int);
 	void SetTextureCubeId(int);

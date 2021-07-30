@@ -117,6 +117,11 @@ CubeTexture* ResourceManager::GetCubeTexture(int id)
 	return m_CubeTextures.at(id);
 }
 
+Sprite* ResourceManager::GetSprite(int id)
+{
+	return m_Sprite.at(id);
+}
+
 ResourceManager::~ResourceManager()
 {
 	for (auto it = m_Models.begin(); it != m_Models.end(); it++)
@@ -142,4 +147,10 @@ ResourceManager::~ResourceManager()
 		delete (*it);
 	}
 	m_vShaders.clear();
+
+	for (auto it = m_Sprite.begin(); it != m_Sprite.end(); it++)
+	{
+		delete (*it);
+	}
+	m_Sprite.clear();
 }

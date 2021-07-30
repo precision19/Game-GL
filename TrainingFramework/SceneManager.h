@@ -11,6 +11,7 @@ protected:
 	vector<Object*> m_vObjects;
 	ResourceManager* m_Resource;
 	Camera* m_Camera;
+	std::vector<Object*> m_spObjects;
 public:
 	static void CreateInstance();
 	static SceneManager* GetInstance();

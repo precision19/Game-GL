@@ -250,6 +250,17 @@ int SceneManager::Init()
 		object->Init(m_Resource);
 		m_vObjects.push_back(object);
 	}
+
+	Object* sprite = new Object();
+	sprite->SetSpriteId(0);
+	sprite->SetShadersId(0);
+	sprite->SetTextureId(0);
+//	sprite->SetSizeBoard(Vector2(0.0, 0.0), Vector2(480, 854), Vector2(480, 854));
+	sprite->SetTranslation(Vector3(0.0, 1.0, 0.0));
+	sprite->SetRotation(Vector3(0.0, 0.0, 0.0));
+	sprite->SetScale(Vector3(1.0, 1.0, 1.0));
+	sprite->Init();
+	m_spObjects.push_back(sprite);
 	
 	return 0;
 }
@@ -282,6 +293,11 @@ void SceneManager::Draw()
 	{
 		(*it)->Draw(m_Camera);
 	}
+
+	for (auto it2 = m_spObjects.begin(); it2 != m_spObjects.end(); it2++)
+	{
+		(*it2)->Draw();
+	} 
 }
 
 void SceneManager::Update(float deltaTime)
@@ -293,6 +309,11 @@ void SceneManager::Update(float deltaTime)
 	{
 		(*it)->Update(deltaTime);
 	}
+
+	for (auto it2 = m_spObjects.begin(); it2 != m_spObjects.end(); it2++)
+	{
+		(*it2)->Update(deltaTime);
+	} 
 }
 
 SceneManager::~SceneManager()
@@ -307,5 +328,11 @@ SceneManager::~SceneManager()
 		delete (*it);
 	}
 
+	for (auto it2 = m_spObjects.begin(); it2 != m_spObjects.end(); it2++)
+	{
+		delete (*it2);
+	} 
+
 	m_vObjects.clear();
+	m_spObjects.clear();
 }
