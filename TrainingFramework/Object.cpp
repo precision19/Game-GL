@@ -44,64 +44,13 @@ Object::Object()
 	m_shadersId = -1;
 }
 
-void Object::Init()
-{
-	if (m_modelId != -1)
-	{ 
-		printf("%d", m_modelId);
-		m_Model = ResourceManager::GetInstance()->GetModel(m_modelId);
-
-		for (int i = 0; i < m_TextureIds.size(); i++)
-		{
-			Texture* texture = ResourceManager::GetInstance()->GetTexture(m_TextureIds.at(i));
-			m_Textures.push_back(texture);
-		}
-
-		for (int i = 0; i < m_CubeTextureIds.size(); i++)
-		{
-			Texture* cubeTexture = ResourceManager::GetInstance()->GetCubeTexture(m_CubeTextureIds.at(i));
-			m_Textures.push_back(cubeTexture);
-		}
-
-		m_Shaders = ResourceManager::GetInstance()->GetShaders(m_shadersId);
-	}
-	else 
-	if (m_spriteId != -1)
-	{ 
-		printf("Sp ID %d", m_spriteId);
-		m_Sprite = ResourceManager::GetInstance()->GetSprite(m_spriteId);
-
-		for (int i = 0; i < m_TextureIds.size(); i++)
-		{
-			Texture* texture = ResourceManager::GetInstance()->GetTexture(m_TextureIds.at(i));
-			m_Textures.push_back(texture);
-		}
-
-		for (int i = 0; i < m_CubeTextureIds.size(); i++)
-		{
-			Texture* cubeTexture = ResourceManager::GetInstance()->GetCubeTexture(m_CubeTextureIds.at(i));
-			m_Textures.push_back(cubeTexture);
-		}
-
-		m_Shaders = ResourceManager::GetInstance()->GetShaders(m_shadersId);
-	}
-}
-
-Object::Object(const char* modelPath, const char* texturePath, const char* spritePath)
-{
-	m_Model = new Model(modelPath);
-	m_Sprite = new Sprite(spritePath);
-	m_Texture = new Texture(texturePath);
-	m_Shaders->Init("Shaders/TriangleShaderVS.vs", "Shaders/TriangleShaderFS.fs");
-
-	m_Scale = Vector3(1, 1, 1);
-	m_Rotation = Vector3(0, 0, 0);
-	m_Translation = Vector3(0, 0, 0);
-}
-
 void Object::Init(ResourceManager* resource)
 {
-	m_Model = resource->GetModel(m_modelId);
+	if (m_modelId != -1)
+		m_Model = resource->GetModel(m_modelId);
+
+	if (m_spriteId != -1)
+		m_Sprite = resource->GetSprite(m_spriteId);
 
 	for (int i = 0; i < m_TextureIds.size(); i++)
 	{
@@ -135,7 +84,11 @@ void Object::SetTranslation(Vector3 translation)
 
 void Object::Draw(Camera* camera)
 {
-	m_Model->BindBuffer();
+	if (m_modelId != -1)
+		m_Model->Model::BindBuffer();
+
+	if (m_spriteId != -1)
+		m_Sprite->Sprite::BindBuffer();
 
 	for (int i = 0; i < m_Textures.size(); i++)
 	{
@@ -144,9 +97,17 @@ void Object::Draw(Camera* camera)
 
 	m_Shaders->Use(GetWVP(camera));
 
-	m_Model->Draw();
+	if (m_modelId != -1)
+		m_Model->Model::Draw();
 
-	m_Model->BindBuffer(false);
+	if (m_spriteId != -1)
+		m_Sprite->Sprite::Draw();
+
+	if (m_modelId != -1)
+		m_Model->Model::BindBuffer(false);
+
+	if (m_spriteId != -1)
+		m_Sprite->Sprite::BindBuffer(false);
 
 	for (int i = 0; i < m_Textures.size(); i++)
 	{
@@ -177,50 +138,6 @@ void Object::SetScale(Vector3 scale)
 void Object::SetRotation(Vector3 rotation)
 {
 	m_Rotation = rotation * PI / 180;
-}
-
-void Object::Draw()
-{
-	if (m_modelId != -1)
-	{ 
-		m_Model->BindBuffer();
-
-		for (int i = 0; i < m_Textures.size(); i++)
-		{
-			m_Textures.at(i)->BindBuffer(i);
-		}
-
-		m_Shaders->Use(GetWVP());
-
-		m_Model->Draw();
-
-		m_Model->BindBuffer(false);
-		//m_Texture->BindBuffer(false);
-		for (int i = 0; i < m_Textures.size(); i++)
-		{
-			m_Textures.at(i)->BindBuffer(i, false);
-		}
-	}
-	else
-	{
-		m_Sprite->BindBuffer();
-
-		for (int i = 0; i < m_Textures.size(); i++)
-		{
-			m_Textures.at(i)->BindBuffer(i);
-		}
-
-		m_Shaders->Use(GetWVP());
-
-		m_Sprite->Draw();
-
-		m_Sprite->BindBuffer(false);
-		//m_Texture->BindBuffer(false);
-		for (int i = 0; i < m_Textures.size(); i++)
-		{
-			m_Textures.at(i)->BindBuffer(i, false);
-		}
-	}
 }
 
 void Object::Update(float deltaTime)

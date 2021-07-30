@@ -31,11 +31,7 @@ protected:
 	Matrix GetWVP(Camera*);
 public:
 	Object();
-	void Init();
 	void Init(ResourceManager* resource);
-	Object(const char*, const char*);
-
-	Object(const char*, const char*, const char*);
 	void SetSpriteId(int);
 
 	void SetModelId(int);
@@ -45,7 +41,6 @@ public:
 	void SetScale(Vector3);
 	void SetRotation(Vector3);
 	void SetTranslation(Vector3);
-	void Draw();
 	void Draw(Camera*);
 	void Update(float);
 	~Object();

@@ -3,13 +3,11 @@
 #include "../Utilities/utilities.h"
 #include <string>
 #include <fstream>
-#include "Texture.h"
 #include "Vertex.h"
 
-class Sprite 
+class Sprite
 {
-public:
-
+protected:
 	GLuint vboId2;
 	GLuint iboId2;
 
@@ -17,7 +15,7 @@ public:
 	Vertex* vertices;
 	int amountIndices;
 	unsigned int* indices;
-
+public:
 	Sprite(const char*);
 	Sprite(const char*, const char*);
 
