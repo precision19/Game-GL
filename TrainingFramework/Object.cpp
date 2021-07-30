@@ -22,6 +22,7 @@ Matrix Object::GetWVP()
 Object::Object()
 {
 	m_modelId = -1;
+	m_spriteId = -1;
 	m_textureCubeId = -1;
 	m_textureId = -1;
 	m_shadersId = -1;
@@ -29,37 +30,65 @@ Object::Object()
 
 void Object::Init()
 {
-	m_Model = ResourceManager::GetInstance()->GetModel(m_modelId);
+	if (m_modelId != -1)
+	{ 
+		printf("%d", m_modelId);
+		m_Model = ResourceManager::GetInstance()->GetModel(m_modelId);
 
-	//if (m_textureCubeId != -1)
-	//	m_Texture = ResourceManager::GetInstance()->GetCubeTexture(m_textureCubeId);
-	//else 
-	//	m_Texture = ResourceManager::GetInstance()->GetTexture(m_textureId);
+		for (int i = 0; i < m_TextureIds.size(); i++)
+		{
+			Texture* texture = ResourceManager::GetInstance()->GetTexture(m_TextureIds.at(i));
+			m_Textures.push_back(texture);
+		}
 
-	for (int i = 0; i < m_TextureIds.size(); i++)
-	{
-		Texture* texture = ResourceManager::GetInstance()->GetTexture(m_TextureIds.at(i));
-		m_Textures.push_back(texture);
+		for (int i = 0; i < m_CubeTextureIds.size(); i++)
+		{
+			Texture* cubeTexture = ResourceManager::GetInstance()->GetCubeTexture(m_CubeTextureIds.at(i));
+			m_Textures.push_back(cubeTexture);
+		}
+
+		m_Shaders = ResourceManager::GetInstance()->GetShaders(m_shadersId);
 	}
+	else 
+	if (m_spriteId != -1)
+	{ 
+		printf("Sp ID %d", m_spriteId);
+		m_Sprite = ResourceManager::GetInstance()->GetSprite(m_spriteId);
 
-	for (int i = 0; i < m_CubeTextureIds.size(); i++)
-	{
-		Texture* cubeTexture = ResourceManager::GetInstance()->GetCubeTexture(m_CubeTextureIds.at(i));
-		m_Textures.push_back(cubeTexture);
+		for (int i = 0; i < m_TextureIds.size(); i++)
+		{
+			Texture* texture = ResourceManager::GetInstance()->GetTexture(m_TextureIds.at(i));
+			m_Textures.push_back(texture);
+		}
+
+		for (int i = 0; i < m_CubeTextureIds.size(); i++)
+		{
+			Texture* cubeTexture = ResourceManager::GetInstance()->GetCubeTexture(m_CubeTextureIds.at(i));
+			m_Textures.push_back(cubeTexture);
+		}
+
+		m_Shaders = ResourceManager::GetInstance()->GetShaders(m_shadersId);
 	}
-
-	m_Shaders = ResourceManager::GetInstance()->GetShaders(m_shadersId);
+	
+	
+	printf("Hi\n");
 }
 
-Object::Object(const char* modelPath, const char* texturePath)
+Object::Object(const char* modelPath, const char* texturePath, const char* spritePath)
 {
 	m_Model = new Model(modelPath);
+	m_Sprite = new Sprite(spritePath);
 	m_Texture = new Texture(texturePath);
 	m_Shaders->Init("Shaders/TriangleShaderVS.vs", "Shaders/TriangleShaderFS.fs");
 
 	m_Scale = Vector3(1, 1, 1);
 	m_Rotation = Vector3(0, 0, 0);
 	m_Translation = Vector3(0, 0, 0);
+}
+
+void Object::SetSpriteId(int id)
+{
+	m_spriteId = id;
 }
 
 void Object::SetModelId(int id)
@@ -101,22 +130,45 @@ void Object::SetRotation(Vector3 rotation)
 
 void Object::Draw()
 {
-	m_Model->BindBuffer();
+	if (m_modelId != -1)
+	{ 
+		m_Model->BindBuffer();
 
-	for (int i = 0; i < m_Textures.size(); i++)
-	{
-		m_Textures.at(i)->BindBuffer(i);
+		for (int i = 0; i < m_Textures.size(); i++)
+		{
+			m_Textures.at(i)->BindBuffer(i);
+		}
+
+		m_Shaders->Use(GetWVP());
+
+		m_Model->Draw();
+
+		m_Model->BindBuffer(false);
+		//m_Texture->BindBuffer(false);
+		for (int i = 0; i < m_Textures.size(); i++)
+		{
+			m_Textures.at(i)->BindBuffer(i, false);
+		}
 	}
-
-	m_Shaders->Use(GetWVP());
-
-	m_Model->Draw();
-
-	m_Model->BindBuffer(false);
-	//m_Texture->BindBuffer(false);
-	for (int i = 0; i < m_Textures.size(); i++)
+	else
 	{
-		m_Textures.at(i)->BindBuffer(i, false);
+		m_Sprite->BindBuffer();
+
+		for (int i = 0; i < m_Textures.size(); i++)
+		{
+			m_Textures.at(i)->BindBuffer(i);
+		}
+
+		m_Shaders->Use(GetWVP());
+
+		m_Sprite->Draw();
+
+		m_Sprite->BindBuffer(false);
+		//m_Texture->BindBuffer(false);
+		for (int i = 0; i < m_Textures.size(); i++)
+		{
+			m_Textures.at(i)->BindBuffer(i, false);
+		}
 	}
 }
 
@@ -130,6 +182,7 @@ Object::~Object()
 	m_Model = NULL;
 	m_Texture = NULL;
 	m_Shaders = NULL;
+	m_Sprite = NULL;
 
 	m_TextureIds.clear();
 }
