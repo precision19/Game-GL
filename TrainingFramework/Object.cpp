@@ -19,36 +19,47 @@ Matrix Object::GetWVP()
 	return WVP;
 }
 
+Matrix Object::GetWVP(Camera* camera)
+{
+	Matrix scale, rotationX, rotationY, rotationZ, translation;
+
+	scale.SetScale(m_Scale);
+
+	rotationX.SetRotationX(m_Rotation.x);
+	rotationY.SetRotationY(m_Rotation.y);
+	rotationZ.SetRotationZ(m_Rotation.z);
+
+	translation.SetTranslation(m_Translation);
+
+	Matrix worldMatrix = scale * rotationZ * rotationX * rotationY * translation;
+
+	Matrix WVP = worldMatrix * camera->GetViewMatrix() * camera->GetProjection();
+	return WVP;
+}
+
 Object::Object()
 {
 	m_modelId = -1;
-	m_textureCubeId = -1;
-	m_textureId = -1;
 	m_shadersId = -1;
 }
 
 void Object::Init()
 {
-	m_Model = ResourceManager::GetInstance()->GetModel(m_modelId);
+	//m_Model = ResourceManager::GetInstance()->GetModel(m_modelId);
 
-	//if (m_textureCubeId != -1)
-	//	m_Texture = ResourceManager::GetInstance()->GetCubeTexture(m_textureCubeId);
-	//else 
-	//	m_Texture = ResourceManager::GetInstance()->GetTexture(m_textureId);
+	//for (int i = 0; i < m_TextureIds.size(); i++)
+	//{
+	//	Texture* texture = ResourceManager::GetInstance()->GetTexture(m_TextureIds.at(i));
+	//	m_Textures.push_back(texture);
+	//}
 
-	for (int i = 0; i < m_TextureIds.size(); i++)
-	{
-		Texture* texture = ResourceManager::GetInstance()->GetTexture(m_TextureIds.at(i));
-		m_Textures.push_back(texture);
-	}
+	//for (int i = 0; i < m_CubeTextureIds.size(); i++)
+	//{
+	//	Texture* cubeTexture = ResourceManager::GetInstance()->GetCubeTexture(m_CubeTextureIds.at(i));
+	//	m_Textures.push_back(cubeTexture);
+	//}
 
-	for (int i = 0; i < m_CubeTextureIds.size(); i++)
-	{
-		Texture* cubeTexture = ResourceManager::GetInstance()->GetCubeTexture(m_CubeTextureIds.at(i));
-		m_Textures.push_back(cubeTexture);
-	}
-
-	m_Shaders = ResourceManager::GetInstance()->GetShaders(m_shadersId);
+	//m_Shaders = ResourceManager::GetInstance()->GetShaders(m_shadersId);
 }
 
 Object::Object(const char* modelPath, const char* texturePath)
@@ -62,6 +73,25 @@ Object::Object(const char* modelPath, const char* texturePath)
 	m_Translation = Vector3(0, 0, 0);
 }
 
+void Object::Init(ResourceManager* resource)
+{
+	m_Model = resource->GetModel(m_modelId);
+
+	for (int i = 0; i < m_TextureIds.size(); i++)
+	{
+		Texture* texture = resource->GetTexture(m_TextureIds.at(i));
+		m_Textures.push_back(texture);
+	}
+
+	for (int i = 0; i < m_CubeTextureIds.size(); i++)
+	{
+		Texture* cubeTexture = resource->GetCubeTexture(m_CubeTextureIds.at(i));
+		m_Textures.push_back(cubeTexture);
+	}
+
+	m_Shaders = resource->GetShaders(m_shadersId);
+}
+
 void Object::SetModelId(int id)
 {
 	m_modelId = id;
@@ -72,15 +102,34 @@ void Object::SetTranslation(Vector3 translation)
 	m_Translation = translation;
 }
 
+void Object::Draw(Camera* camera)
+{
+	m_Model->BindBuffer();
+
+	for (int i = 0; i < m_Textures.size(); i++)
+	{
+		m_Textures.at(i)->BindBuffer(i);
+	}
+
+	m_Shaders->Use(GetWVP(camera));
+
+	m_Model->Draw();
+
+	m_Model->BindBuffer(false);
+
+	for (int i = 0; i < m_Textures.size(); i++)
+	{
+		m_Textures.at(i)->BindBuffer(i, false);
+	}
+}
+
 void Object::SetTextureId(int id)
 {
-	//m_textureId = id;
 	m_TextureIds.push_back(id);
 }
 
 void Object::SetTextureCubeId(int id)
 {
-	//m_textureCubeId = id;
 	m_CubeTextureIds.push_back(id);
 }
 
@@ -96,7 +145,7 @@ void Object::SetScale(Vector3 scale)
 
 void Object::SetRotation(Vector3 rotation)
 {
-	m_Rotation = rotation;
+	m_Rotation = rotation * PI / 180;
 }
 
 void Object::Draw()

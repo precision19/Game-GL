@@ -82,30 +82,30 @@ Camera::Camera()
 	m_FaceAngle = 0;
 }
 
-Camera::Camera(Vector3 position, Vector3 target, bool isPerspective = true)
+Camera::Camera(int isPerspective)
 {
-	m_Position = position;
-	m_Target = target;
-	m_Up = Vector3(0, 1, 0);
-
-	m_Near = 0.001;
-	m_Far = 50.0;
-	m_FOV = 60.0 * (PI / 180);
-
-	m_Speed = 1;
-	m_RotateSpeed = 30 * (PI / 180);
-
-	Init();
+	m_IsPerspective = isPerspective;
 }
 
 void Camera::Init()
 {
+	m_Up = Vector3(0, 1, 0);
+	m_Near = 0.1;
+	m_Far = 500.0;
+	m_FaceAngle = 0;
+	m_RotateSpeed = 1;
+
 	SetWorldMatrix();
 	SetViewMatrix();
 
-	//m_Projection.SetPerspective(m_FOV, (float)Globals::screenWidth / (float)Globals::screenHeight, m_Near, m_Far);
-	float scale = 0.1;
-	m_Projection.SetOrtho((float)Globals::screenWidth * scale, (float)Globals::screenHeight * scale, m_Near, m_Far);
+	if (m_IsPerspective)
+	{
+		m_Projection.SetPerspective(m_FOV, (float)Globals::screenWidth / (float)Globals::screenHeight, m_Near, m_Far);
+	}
+	else
+	{
+		m_Projection.SetOrtho((float)Globals::screenWidth, (float)Globals::screenHeight, m_Near, m_Far);
+	}
 }
 
 Vector3 Camera::GetPosition()
@@ -170,7 +170,7 @@ Matrix Camera::GetProjection()
 
 void Camera::Update(float deltaTime)
 {
-	Vector3 zaxis = (m_Position - m_Target).Normalize(); // de set di chuyen theo huong nhin
+	Vector3 zaxis = (m_Position - m_Target).Normalize();
 	Vector3 xaxis = (m_Up.Cross(zaxis)).Normalize();
 
 	Vector3 movement;
@@ -247,7 +247,6 @@ void Camera::Update(float deltaTime)
 	Vector4 newWorldTarget = newLocalTarget2 * m_WorldMatrix;
 
 	m_Target = Vector3(newWorldTarget.x, newWorldTarget.y, newWorldTarget.z);
-
 
 	SetWorldMatrix();
 	SetViewMatrix();

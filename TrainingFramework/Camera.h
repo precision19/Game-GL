@@ -26,6 +26,8 @@ protected:
 
 	float m_FaceAngle;
 
+	bool m_IsPerspective;
+
 	void SetWorldMatrix();
 	void SetViewMatrix();
 public:
@@ -34,7 +36,7 @@ public:
 	static void DestroyInstance();
 
 	Camera();
-	Camera(Vector3, Vector3, bool);
+	Camera(int);
 	void Init();
 	Vector3 GetPosition();
 	void SetPosition(Vector3);

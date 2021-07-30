@@ -9,7 +9,7 @@ Model::Model(const char* path)
 
 	if (ifile.fail())
 	{
-		printf("Invalid File Name!");
+		printf("Invalid File Name: %s\n", path);
 		exit(1);
 	}
 
@@ -79,7 +79,7 @@ Model::Model(const char* path, const char* pathHeightmap)
 
 	if (ifile.fail())
 	{
-		printf("Invalid File Name!");
+		printf("Invalid File Name: %s\n", path);
 		exit(1);
 	}
 

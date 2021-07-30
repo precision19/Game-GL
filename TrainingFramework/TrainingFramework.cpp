@@ -13,29 +13,34 @@
 #include "SceneManager.h"
 #include "Input.h"
 
+SceneManager* LevelsMapScene;
+
 int Init ( ESContext *esContext )
 {
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 	//glEnable(GL_DEPTH_TEST);
 
 	Input::CreateInstance();
-	SceneManager::CreateInstance();
+	//SceneManager::CreateInstance();
+	LevelsMapScene = new SceneManager("Managers/LevelsMap");
 
-	return SceneManager::GetInstance()->Init();
+	return 0;
 }
 
 void Draw ( ESContext *esContext )
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	SceneManager::GetInstance()->Draw();
+	//SceneManager::GetInstance()->Draw();
+	LevelsMapScene->Draw();
 
 	eglSwapBuffers ( esContext->eglDisplay, esContext->eglSurface );
 }
 
 void Update ( ESContext *esContext, float deltaTime )
 {
-	SceneManager::GetInstance()->Update(deltaTime);
+	//SceneManager::GetInstance()->Update(deltaTime);
+	LevelsMapScene->Update(deltaTime);
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
@@ -62,7 +67,8 @@ void TouchActionMove(ESContext* esContext, int x, int y)
 
 void CleanUp()
 {
-	SceneManager::DestroyInstance();
+	//SceneManager::DestroyInstance();
+	delete LevelsMapScene;
 	Input::DestroyInstance();
 }
 

@@ -9,12 +9,16 @@ class SceneManager
 protected:
 	static SceneManager* ms_Instance;
 	vector<Object*> m_vObjects;
+	ResourceManager* m_Resource;
+	Camera* m_Camera;
 public:
 	static void CreateInstance();
 	static SceneManager* GetInstance();
 	static void DestroyInstance();
 
 	SceneManager();
+	SceneManager(const char*);
+	void Init(const char*);
 	int Init();
 	void Draw();
 	void Update(float);

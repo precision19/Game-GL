@@ -1,71 +1,33 @@
 #include "stdafx.h"
 #include "ResourceManager.h"
 
-ResourceManager* ResourceManager::ms_Instance = NULL;
-
-void ResourceManager::CreateInstance()
+ResourceManager::ResourceManager(const char* filePath)
 {
-	if (ms_Instance == NULL)
-		ms_Instance = new ResourceManager();
+	FILE* f = fopen(filePath, "r+");
 
-}
-
-ResourceManager* ResourceManager::GetInstance()
-{
-	return ms_Instance;
-}
-
-void ResourceManager::DestroyInstance()
-{
-	if (ms_Instance)
+	if (f == NULL)
 	{
-		delete ms_Instance;
-		ms_Instance = NULL;
-	}
-}
-
-ResourceManager::ResourceManager()
-{
-	ifstream ifile;
-	ifile.open("Managers/RM.txt");
-
-	if (ifile.fail())
-	{
-		printf("Invalid File Name!");
+		printf("Invalid file %s\n", filePath);
 		exit(1);
 	}
 
-	string str = "";
-	char keyword[20], path[40], temp[20];
-	int count, id;
-	// Load models
-	getline(ifile, str);
-	sscanf(str.c_str(), "%s %d", keyword, &count);
-
-	if (strcmp(keyword, "#Models:") != 0)
+	int amount;
+	char keyword[30], path[40];
+	fscanf(f, "#Models: %d\n", &amount);
+	for (int i = 0; i < amount; i++)
 	{
-		printf("ERROR: Invalid File Format - Expected: #Models:");
-		return;
-	}
-
-	for (int i = 0; i < count; i++)
-	{
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %d", keyword, &id);
+		int id;
+		fscanf(f, "ID %d\n", &id);
 		if (id != i)
-		{
-			printf("WARNING: modelId is incorrect");
-		}
+			printf("WARNING: model's ID is not correct\n");
 
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %s", keyword, path);
-		
+		fscanf(f, "%s %s\n", keyword, path);
+
 		if (strcmp(keyword, "TERRAIN_FILE") == 0)
 		{
-			char pathHeightmap[40];
-			getline(ifile, str);
-			sscanf(str.c_str(), "%s", pathHeightmap);
-			Model* model = new Model(path, pathHeightmap);
+			char path2[30];
+			fscanf(f, "%s\n", path2);
+			Model* model = new Model(path, path2);
 			m_Models.push_back(model);
 		}
 		else {
@@ -73,116 +35,66 @@ ResourceManager::ResourceManager()
 			m_Models.push_back(model);
 		}
 	}
-	getline(ifile, str);
-	// Load textures
-	getline(ifile, str);
-	sscanf(str.c_str(), "%s %s %d", keyword, temp, &count);
 
-	if (strcmp(keyword, "#2D") != 0)
+	fscanf(f, "#Textures: %d\n", &amount);
+	for (int i = 0; i < amount; i++)
 	{
-		printf("ERROR: Invalid File Format - Expected: #2D");
-		return;
-	}
-
-	for (int i = 0; i < count; i++)
-	{
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %d", keyword, &id);
+		int id;
+		fscanf(f, "ID %d\n", &id);
 		if (id != i)
-		{
-			printf("WARNING: textureId is incorrect");
-		}
+			printf("WARNING: Texture's ID is not correct\n");
 
 		char wrap[20], filterMin[20], filterMag[20];
-
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %s", keyword, path);
-
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %s", keyword, wrap);
-
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %s %s", keyword, filterMin, filterMag);
-
+		fscanf(f, "FILE %s\n", path);
+		fscanf(f, "WRAP %s\n", wrap);
+		fscanf(f, "FILTER %s %s\n", filterMin, filterMag);
 		Texture* texture = new Texture(path, wrap, filterMin, filterMag);
 		m_Textures.push_back(texture);
 	}
-	getline(ifile, str);
-	// Load cube texture
-	getline(ifile, str);
-	sscanf(str.c_str(), "%s %s %d", keyword, temp, &count);
-	if (strcmp(keyword, "#Cube") != 0)
-	{
-		printf("ERROR: Invalid File Format - Expected: #Cube");
-		return;
-	}
 
-	for (int i = 0; i < count; i++)
+	fscanf(f, "#CubeTextures: %d\n", &amount);
+	for (int i = 0; i < amount; i++)
 	{
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %d", keyword, &id);
+		int id;
+		fscanf(f, "ID %d\n", &id);
 		if (id != i)
-		{
-			printf("WARNING: cubeTextureId is incorrect");
-		}
+			printf("WARNING: CubeTexture's ID is not correct\n");
 
 		char wrap[20], filterMin[20], filterMag[20];
-
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %s", keyword, path);
-
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %s", keyword, wrap);
-
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %s %s", keyword, filterMin, filterMag);
-
-		CubeTexture* cubeTexture = new CubeTexture(path, wrap, filterMin, filterMag);
-		m_CubeTextures.push_back(cubeTexture);
-	}
-	getline(ifile, str);
-	// Load shaders
-	getline(ifile, str);
-	sscanf(str.c_str(), "%s %d", keyword, &count);
-
-	if (strcmp(keyword, "#Shaders:") != 0)
-	{
-		printf("ERROR: Invalid File Format - Expected: #Shaders:");
-		exit(1);
+		fscanf(f, "FILE %s\n", path);
+		fscanf(f, "WRAP %s\n", wrap);
+		fscanf(f, "FILTER %s %s\n", filterMin, filterMag);
+		CubeTexture* texture = new CubeTexture(path, wrap, filterMin, filterMag);
+		m_CubeTextures.push_back(texture);
 	}
 
-	for (int i = 0; i < count; i++)
+	fscanf(f, "#Shaders: %d\n", &amount);
+	for (int i = 0; i < amount; i++)
 	{
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %d", keyword, &id);
+		int id;
+		fscanf(f, "ID %d\n", &id);
 		if (id != i)
-		{
-			printf("WARNING: shadersId is incorrect");
-		}
+			printf("WARNING: Shader's ID is not correct\n");
 
-		char pathFS[40];
+		char vs[30], fs[30];
+		fscanf(f, "VS %s\n", vs);
+		fscanf(f, "FS %s\n", fs);
+		Shaders* shaders = new Shaders(vs, fs);
 
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %s", keyword, path);
-
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %s", keyword, pathFS);
-
-		Shaders* shaders = new Shaders(path, pathFS);
-
-		int d = 0;
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %d", keyword, &d);
-		for (int j = 0; j < d; j++)
+		int stateAmount;
+		fscanf(f, "STATES %d\n", &stateAmount);
+		for (int j = 0; j < stateAmount; j++)
 		{
 			int iBool;
-			getline(ifile, str);
-			sscanf(str.c_str(), "%s %d", keyword, &iBool);
+			fscanf(f, "%s %d\n", keyword, &iBool);
 			shaders->SetStates(keyword, iBool);
 		}
 
 		m_vShaders.push_back(shaders);
-	}	
+	}
+
+	fclose(f);
+
 }
 
 Model* ResourceManager::GetModel(int id)

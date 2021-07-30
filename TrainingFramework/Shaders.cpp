@@ -118,8 +118,9 @@ void Shaders::Use(Matrix WVP)
 
 	if (cameraPositionUniform != -1)
 	{
-		Vector3 cameraPosition = Camera::GetInstance()->GetPosition();
-		glUniform3f(cameraPositionUniform, cameraPosition.x, cameraPosition.y, cameraPosition.z);
+		//Vector3 cameraPosition = Camera::GetInstance()->GetPosition();
+		//glUniform3f(cameraPositionUniform, cameraPosition.x, cameraPosition.y, cameraPosition.z);
+		glUniform3f(cameraPositionUniform, 0, 0, 0);
 	}
 
 	if (fogStartUniform != -1)

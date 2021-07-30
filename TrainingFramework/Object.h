@@ -10,9 +10,7 @@ class Object
 {
 protected: 
 	int m_modelId;
-	int m_textureId;
 	vector<int> m_TextureIds;
-	int m_textureCubeId;
 	vector<int> m_CubeTextureIds;
 	int m_shadersId;
 
@@ -26,9 +24,11 @@ protected:
 	Vector3 m_Translation;
 
 	Matrix GetWVP();
+	Matrix GetWVP(Camera*);
 public:
 	Object();
 	void Init();
+	void Init(ResourceManager* resource);
 	Object(const char*, const char*);
 	void SetModelId(int);
 	void SetTextureId(int);
@@ -38,6 +38,7 @@ public:
 	void SetRotation(Vector3);
 	void SetTranslation(Vector3);
 	void Draw();
+	void Draw(Camera*);
 	void Update(float);
 	~Object();
 };
