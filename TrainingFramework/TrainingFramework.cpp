@@ -12,11 +12,39 @@
 #include <iostream>
 #include "SceneManager.h"
 #include "Input.h"
+#include "box2d/b2_world.h"
+#include "box2d/b2_body.h"
+#include "box2d/b2_polygon_shape.h"
+#include "box2d/b2_fixture.h"
+
+//testBox2D
+b2Vec2 gravity(0.0f, -10.0f);
+b2World world(gravity);
+b2Body* body;
+
 
 SceneManager* LevelsMapScene;
 
 int Init ( ESContext *esContext )
 {
+	//testBox2D
+	b2BodyDef groundBodyDef;
+	groundBodyDef.position.Set(0.0f, -10.0f);
+	b2Body* groundBody = world.CreateBody(&groundBodyDef);
+	b2PolygonShape groundBox;
+	groundBox.SetAsBox(50.0f, 10.0f);
+	groundBody->CreateFixture(&groundBox, 0.0f);
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position.Set(0.0f, 4.0f);
+	body = world.CreateBody(&bodyDef);
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox(1.0f, 1.0f);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.3f;
+	body->CreateFixture(&fixtureDef);
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 	//glEnable(GL_DEPTH_TEST);
 
@@ -39,6 +67,13 @@ void Draw ( ESContext *esContext )
 
 void Update ( ESContext *esContext, float deltaTime )
 {
+	//test box 2D
+	int32 velocityIterations = 6;
+	int32 positionIterations = 2;
+	world.Step(deltaTime, velocityIterations, positionIterations);
+	b2Vec2 position = body->GetPosition();
+	float angle = body->GetAngle();
+	printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
 	//SceneManager::GetInstance()->Update(deltaTime);
 	LevelsMapScene->Update(deltaTime);
 }
