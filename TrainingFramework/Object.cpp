@@ -11,7 +11,7 @@ Matrix Object::GetWVP()
 	rotationY.SetRotationY(m_Rotation.y);
 	rotationZ.SetRotationZ(m_Rotation.z);
 
-	translation.SetTranslation(m_Translation);
+	translation.SetTranslation(m_Position);
 
 	Matrix worldMatrix = scale * rotationZ * rotationX * rotationY * translation;
 
@@ -29,7 +29,7 @@ Matrix Object::GetWVP(Camera* camera)
 	rotationY.SetRotationY(m_Rotation.y);
 	rotationZ.SetRotationZ(m_Rotation.z);
 
-	translation.SetTranslation(m_Translation);
+	translation.SetTranslation(m_Position);
 
 	Matrix worldMatrix = scale * rotationZ * rotationX * rotationY * translation;
 
@@ -72,14 +72,20 @@ void Object::SetSpriteId(int id)
 	m_spriteId = id;
 }
 
+void Object::SetNativeSize()
+{
+	Vector2 size = m_Textures[0]->GetSize();
+	m_Scale = Vector3(size.x, size.y, 1);
+}
+
 void Object::SetModelId(int id)
 {
 	m_modelId = id;
 }
 
-void Object::SetTranslation(Vector3 translation)
+void Object::SetPosition(Vector3 position)
 {
-	m_Translation = translation;
+	m_Position = position;
 }
 
 void Object::Draw(Camera* camera)

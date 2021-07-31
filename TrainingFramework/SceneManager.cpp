@@ -69,7 +69,7 @@ void SceneManager::Init(const char* filePath)
 		object->SetShadersId(id);
 
 		fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
-		object->SetTranslation(Vector3(x, y, z));
+		object->SetPosition(Vector3(x, y, z));
 
 		fscanf(f, "ROTATION %f %f %f\n", &x, &y, &z);
 		object->SetRotation(Vector3(x, y, z));
@@ -78,6 +78,10 @@ void SceneManager::Init(const char* filePath)
 		object->SetScale(Vector3(x, y, z));
 
 		object->Init(m_Resource);
+
+		fscanf(f, "SET_NATIVE_SIZE %d\n", &x);
+		if (x) object->SetNativeSize();
+
 		m_vObjects.push_back(object);
 	}
 }

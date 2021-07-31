@@ -18,11 +18,10 @@ SceneManager* LevelsMapScene;
 int Init ( ESContext *esContext )
 {
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
-	//glEnable(GL_DEPTH_TEST);
 
 	Input::CreateInstance();
-	//SceneManager::CreateInstance();
-	LevelsMapScene = new SceneManager("Managers/LevelsMap");
+
+	LevelsMapScene = new SceneManager("Managers/Level1");
 
 	return 0;
 }
@@ -31,7 +30,6 @@ void Draw ( ESContext *esContext )
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//SceneManager::GetInstance()->Draw();
 	LevelsMapScene->Draw();
 
 	eglSwapBuffers ( esContext->eglDisplay, esContext->eglSurface );
@@ -39,7 +37,6 @@ void Draw ( ESContext *esContext )
 
 void Update ( ESContext *esContext, float deltaTime )
 {
-	//SceneManager::GetInstance()->Update(deltaTime);
 	LevelsMapScene->Update(deltaTime);
 }
 

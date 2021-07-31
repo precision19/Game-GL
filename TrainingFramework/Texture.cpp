@@ -1,12 +1,19 @@
 #include "stdafx.h"
 #include "Texture.h"
 
+Texture::Texture()
+{
+	textureId = -1;
+	iWidth = 0;
+	iHeight = 0;
+}
+
 Texture::Texture(const char* path)
 {
 	glGenTextures(1, &textureId);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 
-	int iWidth, iHeight, iBpp;
+	int iBpp;
 	char* imageData = LoadTGA(path, &iWidth, &iHeight, &iBpp);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, iWidth, iHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
 	delete[] imageData;
@@ -26,7 +33,7 @@ Texture::Texture(const char* path, string wrap, string filterMin, string filterM
 	glGenTextures(1, &textureId);
 	glBindTexture(GL_TEXTURE_2D, textureId);
 	
-	int iWidth, iHeight, iBpp;
+	int iBpp;
 	char* imageData = LoadTGA(path, &iWidth, &iHeight, &iBpp);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, iWidth, iHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
 	delete[] imageData;
@@ -99,6 +106,11 @@ void Texture::BindBuffer(int id, bool isStarted)
 		glBindTexture(GL_TEXTURE_2D, textureId);
 	else
 		glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+Vector2 Texture::GetSize()
+{
+	return Vector2(iWidth, iHeight);
 }
 
 Texture::~Texture()
