@@ -83,24 +83,26 @@ void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 
 void TouchActionDown(ESContext* esContext, int x, int y)
 {
+	y = Globals::screenHeight - y;
 	Input::SetTouchStatus(true);
 	Input::SetTouchPosition(Vector2(x, y));
 }
 
 void TouchActionUp(ESContext* esContext, int x, int y)
 {
+	y = Globals::screenHeight - y;
 	Input::SetTouchStatus(false);
 	Input::SetTouchPosition(Vector2(x, y));
 }
 
 void TouchActionMove(ESContext* esContext, int x, int y)
 {
+	y = Globals::screenHeight - y;
 	Input::SetTouchPosition(Vector2(x, y));
 }
 
 void CleanUp()
 {
-	//SceneManager::DestroyInstance();
 	delete LevelsMapScene;
 	Input::DestroyInstance();
 }

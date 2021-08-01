@@ -89,14 +89,12 @@ Camera::Camera(int isPerspective)
 
 void Camera::Init()
 {
+
 	m_Up = Vector3(0, 1, 0);
 	m_Near = 0.1;
 	m_Far = 500.0;
 	m_FaceAngle = 0;
 	m_RotateSpeed = 1;
-
-	SetWorldMatrix();
-	SetViewMatrix();
 
 	if (m_IsPerspective)
 	{
@@ -105,7 +103,13 @@ void Camera::Init()
 	else
 	{
 		m_Projection.SetOrtho((float)Globals::screenWidth, (float)Globals::screenHeight, m_Near, m_Far);
+		m_Position = Vector3(Globals::screenWidth / 2, Globals::screenHeight / 2, m_Position.z);
+		m_Target = Vector3(Globals::screenWidth / 2, Globals::screenHeight / 2, 0);
 	}
+
+	SetWorldMatrix();
+	SetViewMatrix();
+
 }
 
 Vector3 Camera::GetPosition()

@@ -84,6 +84,8 @@ void SceneManager::Init(const char* filePath)
 
 		m_vObjects.push_back(object);
 	}
+
+	fclose(f);
 }
 
 void SceneManager::Draw()
