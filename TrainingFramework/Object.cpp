@@ -88,6 +88,10 @@ void Object::SetPosition(Vector3 position)
 	m_Position = position;
 }
 
+Vector3 Object::GetPosition() {
+	return m_Position;
+}
+
 void Object::Draw(Camera* camera)
 {
 	if (m_modelId != -1)

@@ -40,6 +40,7 @@ public:
 	void SetShadersId(int);
 	void SetScale(Vector3);
 	void SetRotation(Vector3);
+	Vector3 GetPosition();
 	void SetPosition(Vector3);
 	void Draw(Camera*);
 	void Update(float);

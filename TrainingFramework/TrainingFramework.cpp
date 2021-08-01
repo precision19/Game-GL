@@ -27,16 +27,17 @@ SceneManager* LevelsMapScene;
 
 int Init ( ESContext *esContext )
 {
+	LevelsMapScene = new SceneManager("Managers/Level1");
 	//testBox2D
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, -10.0f);
+	groundBodyDef.position.Set(0.0f, -450.0f);
 	b2Body* groundBody = world.CreateBody(&groundBodyDef);
 	b2PolygonShape groundBox;
-	groundBox.SetAsBox(50.0f, 10.0f);
+	groundBox.SetAsBox(500.0f, 500.0f);
 	groundBody->CreateFixture(&groundBox, 0.0f);
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(0.0f, 4.0f);
+	bodyDef.position.Set(LevelsMapScene->m_vObjects[1]->GetPosition().x, LevelsMapScene->m_vObjects[1]->GetPosition().y);
 	body = world.CreateBody(&bodyDef);
 	b2PolygonShape dynamicBox;
 	dynamicBox.SetAsBox(1.0f, 1.0f);
@@ -48,8 +49,6 @@ int Init ( ESContext *esContext )
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
 	Input::CreateInstance();
-
-	LevelsMapScene = new SceneManager("Managers/Level1");
 
 	return 0;
 }
@@ -65,15 +64,15 @@ void Draw ( ESContext *esContext )
 
 void Update ( ESContext *esContext, float deltaTime )
 {
+	LevelsMapScene->Update(deltaTime);
 	//test box 2D
+	printf("%f\n", LevelsMapScene->m_vObjects[1]->GetPosition().x);
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 	world.Step(deltaTime, velocityIterations, positionIterations);
-	b2Vec2 position = body->GetPosition();
-	float angle = body->GetAngle();
-	printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+	LevelsMapScene->m_vObjects[1]->SetPosition(Vector3(body->GetPosition().x, body->GetPosition().y, LevelsMapScene->m_vObjects[1]->GetPosition().z));
+	printf("%f %f\n", body->GetPosition().x, body->GetPosition().y);
 	//SceneManager::GetInstance()->Update(deltaTime);
-	LevelsMapScene->Update(deltaTime);
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
