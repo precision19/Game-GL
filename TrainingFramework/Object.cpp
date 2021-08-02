@@ -152,7 +152,10 @@ void Object::SetRotation(Vector3 rotation)
 
 void Object::Update(float deltaTime)
 {
-
+	for (int i = 0; i < m_Components.size(); i++)
+	{
+		m_Components.at(i)->Update(deltaTime);
+	}
 }
 
 Object::~Object()

@@ -72,7 +72,6 @@ void Update ( ESContext *esContext, float deltaTime )
 	world.Step(deltaTime, velocityIterations, positionIterations);
 	LevelsMapScene->m_vObjects[1]->SetPosition(Vector3(body->GetPosition().x, body->GetPosition().y, LevelsMapScene->m_vObjects[1]->GetPosition().z));
 	printf("%f %f\n", body->GetPosition().x, body->GetPosition().y);
-	//SceneManager::GetInstance()->Update(deltaTime);
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
@@ -83,15 +82,15 @@ void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 void TouchActionDown(ESContext* esContext, int x, int y)
 {
 	y = Globals::screenHeight - y;
-	Input::SetTouchStatus(true);
 	Input::SetTouchPosition(Vector2(x, y));
+	Input::SetTouchStatus(true);
 }
 
 void TouchActionUp(ESContext* esContext, int x, int y)
 {
 	y = Globals::screenHeight - y;
-	Input::SetTouchStatus(false);
 	Input::SetTouchPosition(Vector2(x, y));
+	Input::SetTouchStatus(false);
 }
 
 void TouchActionMove(ESContext* esContext, int x, int y)

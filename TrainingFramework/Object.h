@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "Sprite.h"
 #include "ResourceManager.h"
+#include "Component.h"
 
 class Object
 {
@@ -29,6 +30,8 @@ protected:
 
 	Matrix GetWVP();
 	Matrix GetWVP(Camera*);
+
+	vector<Component*> m_Components;
 public:
 	Object();
 	void Init(ResourceManager* resource);

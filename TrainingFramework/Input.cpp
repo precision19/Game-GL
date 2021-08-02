@@ -29,6 +29,7 @@ Input::Input()
 {
 	m_isTouching = false;
 	m_TouchPosition = Vector2();
+	m_PreviousTouchPosition = m_TouchPosition;
 
 	m_KeyPressed = 0;
 
@@ -72,16 +73,23 @@ bool Input::GetKeyUp(KeyCode key)
 void Input::SetTouchStatus(bool status)
 {
 	ms_Instance->m_isTouching = status;
+	ms_Instance->m_PreviousTouchPosition = ms_Instance->m_TouchPosition;
 }
 
 void Input::SetTouchPosition(Vector2 position)
 {
+	ms_Instance->m_PreviousTouchPosition = ms_Instance->m_TouchPosition;
 	ms_Instance->m_TouchPosition = position;
 }
 
 bool Input::GetTouch()
 {
 	return ms_Instance->m_isTouching;
+}
+
+Vector2 Input::GetDeltaTouch()
+{
+	return ms_Instance->m_TouchPosition - ms_Instance->m_PreviousTouchPosition;
 }
 
 Vector2 Input::GetTouchPosition()
