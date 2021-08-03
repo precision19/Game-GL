@@ -17,25 +17,10 @@ ResourceManager::ResourceManager(const char* filePath)
 	for (int i = 0; i < amount; i++)
 	{
 		fscanf(f, "%s %s\n", keyword, name);
-
-
-		if (strcmp(keyword, "TERRAIN") == 0)
-		{
-			string path = "Models/" + string(name) + ".nfg";
-			string heightMapPath = "Textures/" + string(name) + ".tga";
-			Model* model = new Model(path.c_str(), heightMapPath.c_str());
-			m_Models.push_back(model);
-		}
-		else 
-		{
-			string path = "Models/" + string(name) + ".nfg";
-			Model* model = new Model(path.c_str());
-
-			if (strcmp(name, "Sprite") == 0)
-				m_SpriteModel = model;
-
-			m_Models.push_back(model);
-		}
+		Model* model = new Model(name, strcmp(keyword, "TERRAIN") == 0);
+		if (strcmp(name, "Sprite") == 0)
+			m_SpriteModel = model;
+		m_Models.push_back(model);
 	}
 
 	fscanf(f, "#2DTextures: %d\n", &amount);
@@ -43,8 +28,7 @@ ResourceManager::ResourceManager(const char* filePath)
 	{
 		char wrap[20], filterMin[20], filterMag[20];
 		fscanf(f, "%s %s %s\t%s\n", wrap, filterMin, filterMag, name);
-		string path = "Textures/" + string(name) + ".tga";
-		Texture* texture = new Texture(path.c_str(), wrap, filterMin, filterMag);
+		Texture* texture = new Texture(name, wrap, filterMin, filterMag);
 		m_Textures.push_back(texture);
 	}
 
@@ -85,14 +69,27 @@ Model* ResourceManager::GetModel(int id)
 	return m_Models.at(id);
 }
 
-Model* ResourceManager::GetModel(string)
+Model* ResourceManager::GetModel(string name)
 {
-	return nullptr;
+	for (int i = 0; i < m_Models.size(); i++)
+		if (name == m_Models.at(i)->GetName())
+			return m_Models.at(i);
+	printf("WARNING: Can't find model %s\n", name.c_str());
+	return NULL;
 }
 
 Texture* ResourceManager::GetTexture(int id)
 {
 	return m_Textures.at(id);
+}
+
+Texture* ResourceManager::GetTexture(string name)
+{
+	for (int i = 0; i < m_Textures.size(); i++)
+		if (name == m_Textures.at(i)->GetName())
+			return m_Textures.at(i);
+	printf("WARNING: Can't find texture %s\n", name.c_str());
+	return NULL;
 }
 
 Shaders* ResourceManager::GetShaders(int id)

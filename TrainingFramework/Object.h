@@ -28,7 +28,7 @@ protected:
 	Vector3 m_Rotation;
 	Vector3 m_Position;
 
-	Matrix GetWVP(Camera*);
+	Matrix GetWVP();
 
 	vector<Component*> m_Components;
 public:
@@ -46,6 +46,7 @@ public:
 	void SetRotation(Vector3);
 	Vector3 GetPosition();
 	void SetPosition(Vector3);
+	void Draw();
 	void Draw(Camera*);
 	void Update(float);
 	~Object();

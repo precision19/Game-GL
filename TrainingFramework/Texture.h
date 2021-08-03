@@ -17,7 +17,6 @@ protected:
 public:
 	Texture();
 	Texture(const char*);
-	Texture(const char*, string, string, string);
 	Texture(string, string, string, string);
 	string GetName();
 	virtual void BindBuffer(int, bool = true);

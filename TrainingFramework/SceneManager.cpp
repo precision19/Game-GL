@@ -10,6 +10,11 @@ SceneManager::SceneManager(const char* sceneName)
 	Init(pathSM.c_str());
 }
 
+SceneManager::SceneManager(string name)
+{
+
+}
+
 void SceneManager::Init(const char* filePath)
 {
 	FILE* f = fopen(filePath, "r+");
@@ -25,19 +30,20 @@ void SceneManager::Init(const char* filePath)
 	char keyword[30];
 
 	fscanf(f, "#Camera %d\n", &id);
-	m_Camera = new Camera(id);
+	Camera::GetInstance()->SetPerspective(id);
 	fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
-	m_Camera->SetPosition(Vector3(x, y, z));
+	Camera::GetInstance()->SetPosition(Vector3(x, y, z));
 	fscanf(f, "TARGET %f %f %f\n", &x, &y, &z);
-	m_Camera->SetTarget(Vector3(x, y, z));
+	Camera::GetInstance()->SetTarget(Vector3(x, y, z));
 	if (id)
 	{
 		fscanf(f, "FOVY %f\n", &x);
-		m_Camera->SetFOVY(x);
+		Camera::GetInstance()->SetFOVY(x);
 	}
 	fscanf(f, "MOVE_SPEED %f\n", &x);
-	m_Camera->SetMoveSpeed(x);
-	m_Camera->Init();
+	Camera::GetInstance()->SetMoveSpeed(x);
+
+	Camera::GetInstance()->Init();
 	
 	fscanf(f, "#Objects: %d\n", &amount);
 	for (int i = 0; i < amount; i++)
@@ -92,46 +98,26 @@ void SceneManager::Draw()
 {
 	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
 	{
-		(*it)->Draw(m_Camera);
+		(*it)->Draw();
 	}
-
-	for (auto it2 = m_spObjects.begin(); it2 != m_spObjects.end(); it2++)
-	{
-		(*it2)->Draw(m_Camera);
-	} 
 }
 
 void SceneManager::Update(float deltaTime)
 {
-	//Camera::GetInstance()->Update(deltaTime);
-	m_Camera->Update(deltaTime);
-
 	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
 	{
 		(*it)->Update(deltaTime);
 	}
-
-	for (auto it2 = m_spObjects.begin(); it2 != m_spObjects.end(); it2++)
-	{
-		(*it2)->Update(deltaTime);
-	} 
 }
 
 SceneManager::~SceneManager()
 {
 	delete m_Resource;
-	delete m_Camera;
 
 	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
 	{
 		delete (*it);
 	}
 
-	for (auto it2 = m_spObjects.begin(); it2 != m_spObjects.end(); it2++)
-	{
-		delete (*it2);
-	} 
-
 	m_vObjects.clear();
-	m_spObjects.clear();
 }

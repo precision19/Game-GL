@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Object.h"
 
-Matrix Object::GetWVP(Camera* camera)
+Matrix Object::GetWVP()
 {
 	Matrix scale, rotationX, rotationY, rotationZ, translation;
 
@@ -15,7 +15,8 @@ Matrix Object::GetWVP(Camera* camera)
 
 	Matrix worldMatrix = scale * rotationZ * rotationX * rotationY * translation;
 
-	Matrix WVP = worldMatrix * camera->GetViewMatrix() * camera->GetProjection();
+	//Matrix WVP = worldMatrix * camera->GetViewMatrix() * camera->GetProjection();
+	Matrix WVP = worldMatrix * Camera::GetInstance()->GetViewMatrix() * Camera::GetInstance()->GetProjection();
 	return WVP;
 }
 
@@ -67,6 +68,30 @@ void Object::SetPosition(Vector3 position)
 	m_Position = position;
 }
 
+void Object::Draw()
+{
+	if (m_modelId != -1)
+		m_Model->Model::BindBuffer();
+
+	for (int i = 0; i < m_Textures.size(); i++)
+	{
+		m_Textures.at(i)->BindBuffer(i);
+	}
+
+	m_Shaders->Use(GetWVP());
+
+	if (m_modelId != -1)
+		m_Model->Model::Draw();
+
+	if (m_modelId != -1)
+		m_Model->Model::BindBuffer(false);
+
+	for (int i = 0; i < m_Textures.size(); i++)
+	{
+		m_Textures.at(i)->BindBuffer(i, false);
+	}
+}
+
 Vector3 Object::GetPosition() {
 	return m_Position;
 }
@@ -81,7 +106,7 @@ void Object::Draw(Camera* camera)
 		m_Textures.at(i)->BindBuffer(i);
 	}
 
-	m_Shaders->Use(GetWVP(camera));
+	m_Shaders->Use(GetWVP());
 
 	if (m_modelId != -1)
 		m_Model->Model::Draw();

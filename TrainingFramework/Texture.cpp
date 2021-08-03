@@ -28,13 +28,16 @@ Texture::Texture(const char* path)
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-Texture::Texture(const char* path, string wrap, string filterMin, string filterMag)
+Texture::Texture(string name, string wrap, string filterMin, string filterMag)
 {
+	m_Name = name;
+	string path = "Textures/" + name + ".tga";
+
 	glGenTextures(1, &textureId);
 	glBindTexture(GL_TEXTURE_2D, textureId);
-	
+
 	int iBpp;
-	char* imageData = LoadTGA(path, &iWidth, &iHeight, &iBpp);
+	char* imageData = LoadTGA(path.c_str(), &iWidth, &iHeight, &iBpp);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, iWidth, iHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
 	delete[] imageData;
 
@@ -43,12 +46,12 @@ Texture::Texture(const char* path, string wrap, string filterMin, string filterM
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	}
-	else if (wrap == "CLAMP") 
+	else if (wrap == "CLAMP")
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	}
-	else 
+	else
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -58,12 +61,12 @@ Texture::Texture(const char* path, string wrap, string filterMin, string filterM
 	if (filterMin == "LINEAR_LINEAR")
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	} 
+	}
 	else if (filterMin == "LINEAR")
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	} 
-	else 
+	}
+	else
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		printf("WARNING: min filter\n");
@@ -79,10 +82,6 @@ Texture::Texture(const char* path, string wrap, string filterMin, string filterM
 	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-}
-
-Texture::Texture(string, string, string, string)
-{
 }
 
 string Texture::GetName()
