@@ -1,28 +1,21 @@
 #pragma once
 
 #include "../Utilities/utilities.h"
-#include <string>
-#include <fstream>
-#include "Vertex.h"
+#include "Component.h"
+#include "Model.h"
+#include "Texture.h"
+#include "Shaders.h"
+#include "ResourceManager.h"
 
-class Sprite
+class Sprite : public Component
 {
 protected:
-	GLuint vboId2;
-	GLuint iboId2;
-
-	int amountVertexs;
-	Vertex* vertices;
-	int amountIndices;
-	unsigned int* indices;
+	Model* m_Model;
+	Shaders* m_Shaders;
+	Texture* m_Sprite;
 public:
 	Sprite(const char*);
-	Sprite(const char*, const char*);
-
-	void Init(Vector2 spPosition, Vector2 spSize, Vector2 texSize, Vector2 origin);
-	void SetImage(const char* path);
-	void BindBuffer(bool = true);
-	void Draw();
+	void Draw(Camera*);
 	~Sprite();
 };
 

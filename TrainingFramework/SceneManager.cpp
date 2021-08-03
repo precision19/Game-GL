@@ -119,8 +119,6 @@ void SceneManager::Update(float deltaTime)
 
 SceneManager::~SceneManager()
 {
-	Camera::DestroyInstance();
-	//ResourceManager::DestroyInstance();
 	delete m_Resource;
 	delete m_Camera;
 

@@ -1,24 +1,6 @@
 #include "stdafx.h"
 #include "Object.h"
 
-Matrix Object::GetWVP()
-{
-	Matrix scale, rotationX, rotationY, rotationZ, translation;
-
-	scale.SetScale(m_Scale);
-
-	rotationX.SetRotationX(m_Rotation.x);
-	rotationY.SetRotationY(m_Rotation.y);
-	rotationZ.SetRotationZ(m_Rotation.z);
-
-	translation.SetTranslation(m_Position);
-
-	Matrix worldMatrix = scale * rotationZ * rotationX * rotationY * translation;
-
-	Matrix WVP = worldMatrix * Camera::GetInstance()->GetViewMatrix() * Camera::GetInstance()->GetProjection();
-	return WVP;
-}
-
 Matrix Object::GetWVP(Camera* camera)
 {
 	Matrix scale, rotationX, rotationY, rotationZ, translation;
@@ -48,9 +30,6 @@ void Object::Init(ResourceManager* resource)
 {
 	if (m_modelId != -1)
 		m_Model = resource->GetModel(m_modelId);
-
-	if (m_spriteId != -1)
-		m_Sprite = resource->GetSprite(m_spriteId);
 
 	for (int i = 0; i < m_TextureIds.size(); i++)
 	{
@@ -97,9 +76,6 @@ void Object::Draw(Camera* camera)
 	if (m_modelId != -1)
 		m_Model->Model::BindBuffer();
 
-	if (m_spriteId != -1)
-		m_Sprite->Sprite::BindBuffer();
-
 	for (int i = 0; i < m_Textures.size(); i++)
 	{
 		m_Textures.at(i)->BindBuffer(i);
@@ -110,14 +86,8 @@ void Object::Draw(Camera* camera)
 	if (m_modelId != -1)
 		m_Model->Model::Draw();
 
-	if (m_spriteId != -1)
-		m_Sprite->Sprite::Draw();
-
 	if (m_modelId != -1)
 		m_Model->Model::BindBuffer(false);
-
-	if (m_spriteId != -1)
-		m_Sprite->Sprite::BindBuffer(false);
 
 	for (int i = 0; i < m_Textures.size(); i++)
 	{

@@ -35,7 +35,6 @@ public:
 	GLint timeUniform;
 	clock_t m_Timer;
 	Shaders(char* fileVertexShader, char* fileFragmentShader);
-	int Init(char * fileVertexShader, char * fileFragmentShader);
 	void SetStates(char*, int);
 	void Use(Matrix);
 	~Shaders();

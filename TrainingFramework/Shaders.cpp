@@ -44,11 +44,6 @@ Shaders::Shaders(char* fileVertexShader, char* fileFragmentShader)
 	m_States = 0;
 }
 
-int Shaders::Init(char* fileVertexShader, char* fileFragmentShader)
-{
-	return 0;
-}
-
 void Shaders::SetStates(char* state, int iBool)
 {
 	if (strcmp(state, "GL_DEPTH_TEST") == 0)

@@ -12,77 +12,61 @@ ResourceManager::ResourceManager(const char* filePath)
 	}
 
 	int amount;
-	char keyword[30], path[40];
+	char keyword[30], name[40];
 	fscanf(f, "#Models: %d\n", &amount);
 	for (int i = 0; i < amount; i++)
 	{
-		int id;
-		fscanf(f, "ID %d\n", &id);
-		if (id != i)
-			printf("WARNING: model's ID is not correct\n");
+		fscanf(f, "%s %s\n", keyword, name);
 
-		fscanf(f, "%s %s\n", keyword, path);
 
-		if (strcmp(keyword, "TERRAIN_FILE") == 0)
+		if (strcmp(keyword, "TERRAIN") == 0)
 		{
-			char path2[30];
-			fscanf(f, "%s\n", path2);
-			Model* model = new Model(path, path2);
+			string path = "Models/" + string(name) + ".nfg";
+			string heightMapPath = "Textures/" + string(name) + ".tga";
+			Model* model = new Model(path.c_str(), heightMapPath.c_str());
 			m_Models.push_back(model);
 		}
-		else {
-			Model* model = new Model(path);
+		else 
+		{
+			string path = "Models/" + string(name) + ".nfg";
+			Model* model = new Model(path.c_str());
+
+			if (strcmp(name, "Sprite") == 0)
+				m_SpriteModel = model;
+
 			m_Models.push_back(model);
 		}
 	}
 
-	fscanf(f, "#Textures: %d\n", &amount);
+	fscanf(f, "#2DTextures: %d\n", &amount);
 	for (int i = 0; i < amount; i++)
 	{
-		int id;
-		fscanf(f, "ID %d\n", &id);
-		if (id != i)
-			printf("WARNING: Texture's ID is not correct\n");
-
 		char wrap[20], filterMin[20], filterMag[20];
-		fscanf(f, "FILE %s\n", path);
-		fscanf(f, "WRAP %s\n", wrap);
-		fscanf(f, "FILTER %s %s\n", filterMin, filterMag);
-		Texture* texture = new Texture(path, wrap, filterMin, filterMag);
+		fscanf(f, "%s %s %s\t%s\n", wrap, filterMin, filterMag, name);
+		string path = "Textures/" + string(name) + ".tga";
+		Texture* texture = new Texture(path.c_str(), wrap, filterMin, filterMag);
 		m_Textures.push_back(texture);
 	}
 
 	fscanf(f, "#CubeTextures: %d\n", &amount);
 	for (int i = 0; i < amount; i++)
 	{
-		int id;
-		fscanf(f, "ID %d\n", &id);
-		if (id != i)
-			printf("WARNING: CubeTexture's ID is not correct\n");
-
 		char wrap[20], filterMin[20], filterMag[20];
-		fscanf(f, "FILE %s\n", path);
-		fscanf(f, "WRAP %s\n", wrap);
-		fscanf(f, "FILTER %s %s\n", filterMin, filterMag);
-		CubeTexture* texture = new CubeTexture(path, wrap, filterMin, filterMag);
+		fscanf(f, "%s %s %s\t%s\n", wrap, filterMin, filterMag, name);
+		string path = "Textures/" + string(name);
+		CubeTexture* texture = new CubeTexture(path.c_str(), wrap, filterMin, filterMag);
 		m_CubeTextures.push_back(texture);
 	}
 
 	fscanf(f, "#Shaders: %d\n", &amount);
 	for (int i = 0; i < amount; i++)
 	{
-		int id;
-		fscanf(f, "ID %d\n", &id);
-		if (id != i)
-			printf("WARNING: Shader's ID is not correct\n");
-
-		char vs[30], fs[30];
-		fscanf(f, "VS %s\n", vs);
-		fscanf(f, "FS %s\n", fs);
-		Shaders* shaders = new Shaders(vs, fs);
-
 		int stateAmount;
-		fscanf(f, "STATES %d\n", &stateAmount);
+		fscanf(f, "NAME %s - %d STATE(S)", name, &stateAmount);
+		string pathVS = "Shaders/" + string(name) + ".vs";
+		string pathFS = "Shaders/" + string(name) + ".fs";
+		Shaders* shaders = new Shaders((char*)pathVS.c_str(), (char*)pathFS.c_str());
+
 		for (int j = 0; j < stateAmount; j++)
 		{
 			int iBool;
@@ -94,12 +78,16 @@ ResourceManager::ResourceManager(const char* filePath)
 	}
 
 	fclose(f);
-
 }
 
 Model* ResourceManager::GetModel(int id)
 {
 	return m_Models.at(id);
+}
+
+Model* ResourceManager::GetModel(string)
+{
+	return nullptr;
 }
 
 Texture* ResourceManager::GetTexture(int id)
@@ -117,9 +105,9 @@ CubeTexture* ResourceManager::GetCubeTexture(int id)
 	return m_CubeTextures.at(id);
 }
 
-Sprite* ResourceManager::GetSprite(int id)
+Model* ResourceManager::GetSpriteModel()
 {
-	return m_Sprite.at(id);
+	return m_SpriteModel;
 }
 
 ResourceManager::~ResourceManager()
@@ -147,10 +135,4 @@ ResourceManager::~ResourceManager()
 		delete (*it);
 	}
 	m_vShaders.clear();
-
-	for (auto it = m_Sprite.begin(); it != m_Sprite.end(); it++)
-	{
-		delete (*it);
-	}
-	m_Sprite.clear();
 }

@@ -8,13 +8,18 @@ using namespace std;
 class Texture
 {
 protected:
-	GLuint textureId;
+	string m_Name;
+
 	int iWidth;
 	int iHeight;
+
+	GLuint textureId;
 public:
 	Texture();
 	Texture(const char*);
 	Texture(const char*, string, string, string);
+	Texture(string, string, string, string);
+	string GetName();
 	virtual void BindBuffer(int, bool = true);
 	Vector2 GetSize();
 	~Texture();

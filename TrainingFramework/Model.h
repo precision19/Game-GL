@@ -10,6 +10,8 @@ using namespace std;
 class Model
 {
 protected:
+	string m_Name;
+
 	GLuint vboId;
 	GLuint iboId;
 
@@ -20,6 +22,8 @@ protected:
 public:
 	Model(const char* path);
 	Model(const char* path, const char* pathHeightmap);
+	Model(string, bool);
+	string GetName();
 	void SetHeightmap(const char* path);
 	void BindBuffer(bool = true);
 	void Draw();

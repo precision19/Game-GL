@@ -32,14 +32,9 @@ Model::Model(const char* path)
 		getline(ifile, str);
 		sscanf(str.c_str(), "%s pos:[%f, %f, %f]; norm:[%f, %f, %f]; binorm:[%f, %f, %f]; tgt:[%f, %f, %f]; uv:[%f, %f];",
 			&keyword, &posX, &posY, &posZ, &normX, &normY, &normZ, &binormX, &binormY, &binormZ, &tgtX, &tgtY, &tgtZ, &uvU, &uvV);
+		vertices[i].pos = Vector3(posX, posY, posZ);
 
-		// SAVE DATA
-		vertices[i].pos.x = posX;
-		vertices[i].pos.y = posY;
-		vertices[i].pos.z = posZ;
-
-		vertices[i].uv.x = uvU;
-		vertices[i].uv.y = uvV;
+		vertices[i].uv = Vector2(uvU, uvV);
 	}
 
 	getline(ifile, str);
@@ -142,6 +137,16 @@ Model::Model(const char* path, const char* pathHeightmap)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, amountOfIndices * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+Model::Model(string name, bool isTerrain)
+{
+
+}
+
+string Model::GetName()
+{
+	return m_Name;
 }
 
 void Model::SetHeightmap(const char* path)

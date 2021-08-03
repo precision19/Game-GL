@@ -81,6 +81,15 @@ Texture::Texture(const char* path, string wrap, string filterMin, string filterM
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+Texture::Texture(string, string, string, string)
+{
+}
+
+string Texture::GetName()
+{
+	return m_Name;
+}
+
 void Texture::BindBuffer(int id, bool isStarted)
 {
 	switch (id)

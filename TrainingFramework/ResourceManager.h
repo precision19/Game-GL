@@ -14,7 +14,8 @@ protected:
 	vector<Texture*> m_Textures;
 	vector<CubeTexture*> m_CubeTextures;
 	vector<Shaders*> m_vShaders;
-	vector<Sprite*> m_Sprite;
+
+	Model* m_SpriteModel;
 public:
 
 	ResourceManager();
@@ -22,9 +23,13 @@ public:
 	~ResourceManager();
 
 	Model* GetModel(int);
+	Model* GetModel(string);
 	Texture* GetTexture(int);
+	Texture* GetTexture(string);
 	Shaders* GetShaders(int);
+	Shaders* GetShaders(string);
 	CubeTexture* GetCubeTexture(int);
-	Sprite* GetSprite(int);
+
+	Model* GetSpriteModel();
 };
 

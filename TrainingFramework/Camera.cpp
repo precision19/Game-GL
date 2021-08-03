@@ -174,84 +174,84 @@ Matrix Camera::GetProjection()
 
 void Camera::Update(float deltaTime)
 {
-	Vector3 zaxis = (m_Position - m_Target).Normalize();
-	Vector3 xaxis = (m_Up.Cross(zaxis)).Normalize();
+	//Vector3 zaxis = (m_Position - m_Target).Normalize();
+	//Vector3 xaxis = (m_Up.Cross(zaxis)).Normalize();
 
-	Vector3 movement;
-	if (Input::GetKeyDown(W))
-		movement -= zaxis;
-	if (Input::GetKeyDown(S))
-		movement += zaxis;
-	if (Input::GetKeyDown(A))
-		movement -= xaxis;
-	if (Input::GetKeyDown(D))
-		movement += xaxis;
+	//Vector3 movement;
+	//if (Input::GetKeyDown(W))
+	//	movement -= zaxis;
+	//if (Input::GetKeyDown(S))
+	//	movement += zaxis;
+	//if (Input::GetKeyDown(A))
+	//	movement -= xaxis;
+	//if (Input::GetKeyDown(D))
+	//	movement += xaxis;
 
-	movement.y = 0;
-	movement.Normalize();
-	m_Position += movement * m_Speed * deltaTime;
-	m_Target += movement * m_Speed * deltaTime;
+	//movement.y = 0;
+	//movement.Normalize();
+	//m_Position += movement * m_Speed * deltaTime;
+	//m_Target += movement * m_Speed * deltaTime;
 
-	// Bay
-	float y = 0;
-	if (Input::GetKeyDown(Space))
-		y += 1;
-	if (Input::GetKeyDown(Ctrl))
-		y -= 1;
+	//// Bay
+	//float y = 0;
+	//if (Input::GetKeyDown(Space))
+	//	y += 1;
+	//if (Input::GetKeyDown(Ctrl))
+	//	y -= 1;
 
-	m_Position.y += y * m_Speed * deltaTime;
-	m_Target.y += y * m_Speed * deltaTime;
+	//m_Position.y += y * m_Speed * deltaTime;
+	//m_Target.y += y * m_Speed * deltaTime;
 
-	SetWorldMatrix();
-	SetViewMatrix();
+	//SetWorldMatrix();
+	//SetViewMatrix();
 
-	float angle = 0;
-	if (Input::GetKeyDown(Left))
-		angle += m_RotateSpeed * deltaTime;
-	if (Input::GetKeyDown(Right))
-		angle -= m_RotateSpeed * deltaTime;
+	//float angle = 0;
+	//if (Input::GetKeyDown(Left))
+	//	angle += m_RotateSpeed * deltaTime;
+	//if (Input::GetKeyDown(Right))
+	//	angle -= m_RotateSpeed * deltaTime;
 
-	float angle2 = 0;
-	if (Input::GetKeyDown(Up))
-	{
-		m_FaceAngle -= m_RotateSpeed * deltaTime;
-		angle2 -= m_RotateSpeed * deltaTime;
-	}
-	if (Input::GetKeyDown(Down))
-	{
-		m_FaceAngle += m_RotateSpeed * deltaTime;
-		angle2 += m_RotateSpeed * deltaTime;
-	}
+	//float angle2 = 0;
+	//if (Input::GetKeyDown(Up))
+	//{
+	//	m_FaceAngle -= m_RotateSpeed * deltaTime;
+	//	angle2 -= m_RotateSpeed * deltaTime;
+	//}
+	//if (Input::GetKeyDown(Down))
+	//{
+	//	m_FaceAngle += m_RotateSpeed * deltaTime;
+	//	angle2 += m_RotateSpeed * deltaTime;
+	//}
 
-	if (m_FaceAngle > 89 * (PI / 180))
-	{
-		m_FaceAngle -= m_RotateSpeed * deltaTime;
-		angle2 -= m_RotateSpeed * deltaTime;
-	}
-	else if (m_FaceAngle < -89 * (PI / 180))
-	{
-		m_FaceAngle += m_RotateSpeed * deltaTime;
-		angle2 += m_RotateSpeed * deltaTime;
-	}
-	
-	Vector4 localTarget = Vector4(0, 0, -(m_Position - m_Target).Length(), 1);
-	Vector4 Oy = Vector4(0, 1, 0, 0);
-	
-	Vector4 rotationAxis = Oy * m_ViewMatrix;
-	Matrix rotation;
-	Vector4 newLocalTarget = localTarget * rotation.SetRotationAngleAxis(angle, rotationAxis.x, rotationAxis.y, rotationAxis.z);
+	//if (m_FaceAngle > 89 * (PI / 180))
+	//{
+	//	m_FaceAngle -= m_RotateSpeed * deltaTime;
+	//	angle2 -= m_RotateSpeed * deltaTime;
+	//}
+	//else if (m_FaceAngle < -89 * (PI / 180))
+	//{
+	//	m_FaceAngle += m_RotateSpeed * deltaTime;
+	//	angle2 += m_RotateSpeed * deltaTime;
+	//}
+	//
+	//Vector4 localTarget = Vector4(0, 0, -(m_Position - m_Target).Length(), 1);
+	//Vector4 Oy = Vector4(0, 1, 0, 0);
+	//
+	//Vector4 rotationAxis = Oy * m_ViewMatrix;
+	//Matrix rotation;
+	//Vector4 newLocalTarget = localTarget * rotation.SetRotationAngleAxis(angle, rotationAxis.x, rotationAxis.y, rotationAxis.z);
 
-	Vector3 v3LocalTarget = Vector3(localTarget.x, localTarget.y, localTarget.z);
-	Vector3 v3Oy = Vector3(0, 1, 0);
-	Vector3 v3Ox = v3Oy.Cross(v3LocalTarget);
-	Vector4 v4Ox = Vector4(v3Ox.x, v3Ox.y, v3Ox.z, 0);
+	//Vector3 v3LocalTarget = Vector3(localTarget.x, localTarget.y, localTarget.z);
+	//Vector3 v3Oy = Vector3(0, 1, 0);
+	//Vector3 v3Ox = v3Oy.Cross(v3LocalTarget);
+	//Vector4 v4Ox = Vector4(v3Ox.x, v3Ox.y, v3Ox.z, 0);
 
-	Vector4 newLocalTarget2 = newLocalTarget * rotation.SetRotationAngleAxis(angle2, v4Ox.x, v4Ox.y, v4Ox.z);
+	//Vector4 newLocalTarget2 = newLocalTarget * rotation.SetRotationAngleAxis(angle2, v4Ox.x, v4Ox.y, v4Ox.z);
 
-	Vector4 newWorldTarget = newLocalTarget2 * m_WorldMatrix;
+	//Vector4 newWorldTarget = newLocalTarget2 * m_WorldMatrix;
 
-	m_Target = Vector3(newWorldTarget.x, newWorldTarget.y, newWorldTarget.z);
+	//m_Target = Vector3(newWorldTarget.x, newWorldTarget.y, newWorldTarget.z);
 
-	SetWorldMatrix();
-	SetViewMatrix();
+	//SetWorldMatrix();
+	//SetViewMatrix();
 }

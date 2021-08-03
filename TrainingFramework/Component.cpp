@@ -3,10 +3,17 @@
 
 Component::Component()
 {
+	enable = true;
+	transform = NULL;
 }
 
 Component::~Component()
 {
+}
+
+void Component::SetTransform(Transform* objectTransform)
+{
+	transform = objectTransform;
 }
 
 void Component::Update(float)
@@ -36,6 +43,7 @@ void Component::CallBack(int functionId)
 void Component::CallBack0()
 {
 }
+
 
 void Component::CallBack1()
 {

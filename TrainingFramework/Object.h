@@ -28,11 +28,12 @@ protected:
 	Vector3 m_Rotation;
 	Vector3 m_Position;
 
-	Matrix GetWVP();
 	Matrix GetWVP(Camera*);
 
 	vector<Component*> m_Components;
 public:
+	Transform* transform;
+
 	Object();
 	void Init(ResourceManager* resource);
 	void SetSpriteId(int);
