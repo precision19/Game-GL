@@ -8,22 +8,6 @@ SceneManager::SceneManager(const char* sceneName)
 
 	string pathSM = string(sceneName) + "SM.txt";
 	Init(pathSM.c_str());
-	//make the ground
-	b2Vec2 gravity(0.0f, -10.0f);
-	m_world = std::make_unique<b2World>(gravity);
-	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, -500.0f);
-	b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
-	//make the ground fixture
-	b2PolygonShape groundBox;
-	groundBox.SetAsBox(500.0f, 500.0f);
-	groundBody->CreateFixture(&groundBox, 0.0f);
-
-	for (int i = 0; i < m_vObjects.size(); i++) {
-		Box newBox;
-		newBox.Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(50.0f, 50.0f));
-		m_boxes.push_back(newBox);
-	}
 }
 
 void SceneManager::Init(const char* filePath)
@@ -130,13 +114,7 @@ void SceneManager::Update(float deltaTime)
 	for (auto it2 = m_spObjects.begin(); it2 != m_spObjects.end(); it2++)
 	{
 		(*it2)->Update(deltaTime);
-	}
-	int32 velocityIterations = 6;
-	int32 positionIterations = 2;
-	m_world->Step(deltaTime, velocityIterations, positionIterations);
-	for (int i = 0; i < m_boxes.size(); i++) {
-		m_vObjects[i]->SetPosition(Vector3(m_boxes[i].getBody()->GetPosition().x, m_boxes[i].getBody()->GetPosition().y, m_vObjects[i]->GetPosition().z));
-	}
+	} 
 }
 
 SceneManager::~SceneManager()

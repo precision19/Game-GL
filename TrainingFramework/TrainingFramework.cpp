@@ -12,14 +12,40 @@
 #include <iostream>
 #include "SceneManager.h"
 #include "Input.h"
-#include "box2d/box2d.h"
-#include "Box.h"
+#include "box2d/b2_world.h"
+#include "box2d/b2_body.h"
+#include "box2d/b2_polygon_shape.h"
+#include "box2d/b2_fixture.h"
+
+//testBox2D
+b2Vec2 gravity(0.0f, -10.0f);
+b2World world(gravity);
+b2Body* body;
+
 
 SceneManager* LevelsMapScene;
 
 int Init ( ESContext *esContext )
 {
 	LevelsMapScene = new SceneManager("Managers/Level1");
+	//testBox2D
+	b2BodyDef groundBodyDef;
+	groundBodyDef.position.Set(0.0f, -450.0f);
+	b2Body* groundBody = world.CreateBody(&groundBodyDef);
+	b2PolygonShape groundBox;
+	groundBox.SetAsBox(500.0f, 500.0f);
+	groundBody->CreateFixture(&groundBox, 0.0f);
+	b2BodyDef bodyDef;
+	bodyDef.type = b2_dynamicBody;
+	bodyDef.position.Set(LevelsMapScene->m_vObjects[1]->GetPosition().x, LevelsMapScene->m_vObjects[1]->GetPosition().y);
+	body = world.CreateBody(&bodyDef);
+	b2PolygonShape dynamicBox;
+	dynamicBox.SetAsBox(1.0f, 1.0f);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicBox;
+	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.3f;
+	body->CreateFixture(&fixtureDef);
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
 	Input::CreateInstance();
@@ -39,6 +65,13 @@ void Draw ( ESContext *esContext )
 void Update ( ESContext *esContext, float deltaTime )
 {
 	LevelsMapScene->Update(deltaTime);
+	//test box 2D
+	printf("%f\n", LevelsMapScene->m_vObjects[1]->GetPosition().x);
+	int32 velocityIterations = 6;
+	int32 positionIterations = 2;
+	world.Step(deltaTime, velocityIterations, positionIterations);
+	LevelsMapScene->m_vObjects[1]->SetPosition(Vector3(body->GetPosition().x, body->GetPosition().y, LevelsMapScene->m_vObjects[1]->GetPosition().z));
+	printf("%f %f\n", body->GetPosition().x, body->GetPosition().y);
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
