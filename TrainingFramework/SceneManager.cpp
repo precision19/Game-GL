@@ -9,21 +9,20 @@ SceneManager::SceneManager(const char* sceneName)
 	string pathSM = string(sceneName) + "SM.txt";
 	Init(pathSM.c_str());
 	//make the ground
-	b2Vec2 gravity(0.0f, -9.81f);
+	b2Vec2 gravity(0.0f, -10.0f);
 	m_world = std::make_unique<b2World>(gravity);
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(500.0f, -1000.0f);
+	groundBodyDef.position.Set(0.0f, -500.0f);
 	b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
 	//make the ground fixture
 	b2PolygonShape groundBox;
-	groundBox.SetAsBox(1000.0f, 1000.0f);
+	groundBox.SetAsBox(500.0f, 500.0f);
 	groundBody->CreateFixture(&groundBox, 0.0f);
 
 	for (int i = 0; i < m_vObjects.size(); i++) {
 		Box newBox;
-		newBox.Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y));
+		newBox.Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(50.0f, 50.0f));
 		m_boxes.push_back(newBox);
-		printf("%f %f\n", m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y);
 	}
 }
 

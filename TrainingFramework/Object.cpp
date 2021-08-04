@@ -45,7 +45,6 @@ void Object::Init(ResourceManager* resource)
 	}
 
 	m_Shaders = resource->GetShaders(m_shadersId);
-	m_Dimenstion = m_Textures[0]->GetSize();
 }
 
 void Object::SetSpriteId(int id)
@@ -67,15 +66,6 @@ void Object::SetModelId(int id)
 void Object::SetPosition(Vector3 position)
 {
 	m_Position = position;
-}
-
-Vector2 Object::GetDimension() {
-	return m_Dimenstion;
-}
-
-void Object::SetDimension(Vector2 dimen) {
-	m_Dimenstion.x = dimen.x;
-	m_Dimenstion.y = dimen.y;
 }
 
 void Object::Draw()
