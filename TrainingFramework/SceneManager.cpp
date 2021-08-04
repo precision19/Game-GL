@@ -1,43 +1,41 @@
 #include "stdafx.h"
 #include "SceneManager.h"
 
-SceneManager::SceneManager(const char* sceneName)
+SceneManager* SceneManager::ms_Instance = NULL;
+
+void SceneManager::CreateInstance()
 {
-	string pathRM = string(sceneName) + "RM.txt";
-	m_Resource = new ResourceManager(pathRM.c_str());
+	if (ms_Instance == NULL)
+		ms_Instance = new SceneManager();
+}
 
-	string pathSM = string(sceneName) + "SM.txt";
-	Init(pathSM.c_str());
-	//make the ground
-	b2Vec2 gravity(0.0f, -10.0f);
-	m_world = std::make_unique<b2World>(gravity);
-	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(0.0f, -500.0f);
-	b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
-	//make the ground fixture
-	b2PolygonShape groundBox;
-	groundBox.SetAsBox(500.0f, 500.0f);
-	groundBody->CreateFixture(&groundBox, 0.0f);
+SceneManager* SceneManager::GetInstance()
+{
+	return ms_Instance;
+}
 
-	for (int i = 0; i < m_vObjects.size(); i++) {
-		Box newBox;
-		newBox.Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(50.0f, 50.0f));
-		m_boxes.push_back(newBox);
+void SceneManager::DestroyInstance()
+{
+	if (ms_Instance)
+	{
+		delete ms_Instance;
+		ms_Instance = NULL;
 	}
 }
 
-SceneManager::SceneManager(string name)
-{
+SceneManager::SceneManager() { }
 
-}
-
-void SceneManager::Init(const char* filePath)
+void SceneManager::LoadScene(string sceneName)
 {
-	FILE* f = fopen(filePath, "r+");
+	DestroyAllObjects();
+
+	string path = "Managers/" + sceneName + "SM.txt";
+
+	FILE* f = fopen(path.c_str(), "r+");
 
 	if (f == NULL)
 	{
-		printf("Invalid file %s\n", filePath);
+		printf("Invalid file %s\n", path.c_str());
 		exit(1);
 	}
 
@@ -60,7 +58,7 @@ void SceneManager::Init(const char* filePath)
 	Camera::GetInstance()->SetMoveSpeed(x);
 
 	Camera::GetInstance()->Init();
-	
+
 	fscanf(f, "#Objects: %d\n", &amount);
 	for (int i = 0; i < amount; i++)
 	{
@@ -70,25 +68,25 @@ void SceneManager::Init(const char* filePath)
 
 		Object* object = new Object();
 		fscanf(f, "MODEL_ID %d\n", &id);
-		object->SetModelId(id);
-		
+		object->SetModel(id);
+
 		int amount2;
 		fscanf(f, "AMOUNT_OF_TEXTURES %d\n", &amount2);
 		for (int j = 0; j < amount2; j++)
 		{
 			fscanf(f, "TEXTURE_ID %d\n", &id);
-			object->SetTextureId(id);
+			object->AddTexture(id);
 		}
 
 		fscanf(f, "AMOUNT_OF_CUBETEXTURES %d\n", &amount2);
 		for (int j = 0; j < amount2; j++)
 		{
 			fscanf(f, "TEXTURE_ID %d\n", &id);
-			object->SetTextureCubeId(id);
+			object->AddCubeTexture(id);
 		}
 
 		fscanf(f, "SHADER_ID %d\n", &id);
-		object->SetShadersId(id);
+		object->SetShaders(id);
 
 		fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
 		object->SetPosition(Vector3(x, y, z));
@@ -99,8 +97,6 @@ void SceneManager::Init(const char* filePath)
 		fscanf(f, "SCALE %f %f %f\n", &x, &y, &z);
 		object->SetScale(Vector3(x, y, z));
 
-		object->Init(m_Resource);
-
 		fscanf(f, "SET_NATIVE_SIZE %d\n", &x);
 		if (x) object->SetNativeSize();
 
@@ -108,6 +104,26 @@ void SceneManager::Init(const char* filePath)
 	}
 
 	fclose(f);
+}
+
+void SceneManager::AddPhysicsToScene()
+{
+	//make the ground
+	b2Vec2 gravity(0.0f, -10.0f);
+	m_world = std::make_unique<b2World>(gravity);
+	b2BodyDef groundBodyDef;
+	groundBodyDef.position.Set(0.0f, -500.0f);
+	b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
+	//make the ground fixture
+	b2PolygonShape groundBox;
+	groundBox.SetAsBox(500.0f, 500.0f);
+	groundBody->CreateFixture(&groundBox, 0.0f);
+
+	for (int i = 0; i < m_vObjects.size(); i++) {
+		Box newBox;
+		newBox.Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(50.0f, 50.0f));
+		m_boxes.push_back(newBox);
+	}
 }
 
 void SceneManager::Draw()
@@ -132,14 +148,16 @@ void SceneManager::Update(float deltaTime)
 	}
 }
 
-SceneManager::~SceneManager()
+void SceneManager::DestroyAllObjects()
 {
-	delete m_Resource;
-
 	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
 	{
 		delete (*it);
 	}
-
 	m_vObjects.clear();
+}
+
+SceneManager::~SceneManager()
+{
+	DestroyAllObjects();
 }

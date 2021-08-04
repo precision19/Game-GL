@@ -11,16 +11,23 @@ class SceneManager
 protected:
 	static SceneManager* ms_Instance;
 
-	ResourceManager* m_Resource;
 	std::vector<Box>m_boxes;
 public:
+	static void CreateInstance();
+	static SceneManager* GetInstance();
+	static void DestroyInstance();
+
 	vector<Object*> m_vObjects;
 	std::unique_ptr<b2World>m_world;
-	SceneManager(const char*);
-	SceneManager(string);
-	void Init(const char*);
+
+	SceneManager();
+	void LoadScene(string);
+	void AddPhysicsToScene();
+
 	void Draw();
 	void Update(float);
+
+	void DestroyAllObjects();
 	~SceneManager();
 };
 
