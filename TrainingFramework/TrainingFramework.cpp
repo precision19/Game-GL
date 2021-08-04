@@ -3,27 +3,21 @@
 
 #include "stdafx.h"
 #include "../Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
-#include "Vertex.h"
-#include "Shaders.h"
 #include "Globals.h"
 #include <conio.h>
-#include <fstream>
-#include <string>
-#include <iostream>
 #include "SceneManager.h"
 #include "Input.h"
-
-
-SceneManager* LevelsMapScene;
 
 int Init ( ESContext *esContext )
 {
 	Input::CreateInstance();
 	Camera::CreateInstance();
-
-	LevelsMapScene = new SceneManager("Managers/Level1");
+	ResourceManager::CreateInstance();
+	ResourceManager::GetInstance()->LoadResource("Level1");
+	SceneManager::CreateInstance();
+	SceneManager::GetInstance()->LoadScene("Level1");
+	SceneManager::GetInstance()->AddPhysicsToScene();
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
-
 
 	return 0;
 }
@@ -32,15 +26,15 @@ void Draw ( ESContext *esContext )
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	LevelsMapScene->Draw();
+	SceneManager::GetInstance()->Draw();
 
 	eglSwapBuffers ( esContext->eglDisplay, esContext->eglSurface );
 }
 
 void Update ( ESContext *esContext, float deltaTime )
 {
-	LevelsMapScene->Update(deltaTime);
 	Camera::GetInstance()->Update(deltaTime);
+	SceneManager::GetInstance()->Update(deltaTime);
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
@@ -70,9 +64,10 @@ void TouchActionMove(ESContext* esContext, int x, int y)
 
 void CleanUp()
 {
-	delete LevelsMapScene;
 	Input::DestroyInstance();
 	Camera::DestroyInstance();
+	ResourceManager::DestroyInstance();
+	SceneManager::DestroyInstance();
 }
 
 int _tmain(int argc, _TCHAR* argv[])

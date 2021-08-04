@@ -22,34 +22,8 @@ Matrix Object::GetWVP()
 
 Object::Object()
 {
-	m_modelId = -1;
-	m_spriteId = -1;
-	m_shadersId = -1;
-}
-
-void Object::Init(ResourceManager* resource)
-{
-	if (m_modelId != -1)
-		m_Model = resource->GetModel(m_modelId);
-
-	for (int i = 0; i < m_TextureIds.size(); i++)
-	{
-		Texture* texture = resource->GetTexture(m_TextureIds.at(i));
-		m_Textures.push_back(texture);
-	}
-
-	for (int i = 0; i < m_CubeTextureIds.size(); i++)
-	{
-		Texture* cubeTexture = resource->GetCubeTexture(m_CubeTextureIds.at(i));
-		m_Textures.push_back(cubeTexture);
-	}
-
-	m_Shaders = resource->GetShaders(m_shadersId);
-}
-
-void Object::SetSpriteId(int id)
-{
-	m_spriteId = id;
+	m_Model = NULL;
+	m_Shaders = NULL;
 }
 
 void Object::SetNativeSize()
@@ -58,9 +32,39 @@ void Object::SetNativeSize()
 	m_Scale = Vector3(size.x, size.y, 1);
 }
 
-void Object::SetModelId(int id)
+void Object::SetModel(int modelID)
 {
-	m_modelId = id;
+	m_Model = ResourceManager::GetInstance()->GetModel(modelID);
+}
+
+void Object::SetModel(string modelName)
+{
+	m_Model = ResourceManager::GetInstance()->GetModel(modelName);
+}
+
+void Object::AddTexture(int textureID)
+{
+	m_Textures.push_back(ResourceManager::GetInstance()->GetTexture(textureID));
+}
+
+void Object::AddTexture(string textureName)
+{
+	m_Textures.push_back(ResourceManager::GetInstance()->GetTexture(textureName));
+}
+
+void Object::AddCubeTexture(int cubeTextureID)
+{
+	m_Textures.push_back(ResourceManager::GetInstance()->GetCubeTexture(cubeTextureID));
+}
+
+void Object::SetShaders(int shadersID)
+{
+	m_Shaders = ResourceManager::GetInstance()->GetShaders(shadersID);
+}
+
+void Object::SetSahders(string shadersName)
+{
+	m_Shaders = ResourceManager::GetInstance()->GetShaders(shadersName);
 }
 
 void Object::SetPosition(Vector3 position)
@@ -70,8 +74,10 @@ void Object::SetPosition(Vector3 position)
 
 void Object::Draw()
 {
-	if (m_modelId != -1)
-		m_Model->Model::BindBuffer();
+	if (m_Model == NULL || m_Shaders == NULL)
+		return;
+
+	m_Model->Model::BindBuffer();
 
 	for (int i = 0; i < m_Textures.size(); i++)
 	{
@@ -80,11 +86,9 @@ void Object::Draw()
 
 	m_Shaders->Use(GetWVP());
 
-	if (m_modelId != -1)
-		m_Model->Model::Draw();
+	m_Model->Model::Draw();
 
-	if (m_modelId != -1)
-		m_Model->Model::BindBuffer(false);
+	m_Model->Model::BindBuffer(false);
 
 	for (int i = 0; i < m_Textures.size(); i++)
 	{
@@ -94,45 +98,6 @@ void Object::Draw()
 
 Vector3 Object::GetPosition() {
 	return m_Position;
-}
-
-void Object::Draw(Camera* camera)
-{
-	if (m_modelId != -1)
-		m_Model->Model::BindBuffer();
-
-	for (int i = 0; i < m_Textures.size(); i++)
-	{
-		m_Textures.at(i)->BindBuffer(i);
-	}
-
-	m_Shaders->Use(GetWVP());
-
-	if (m_modelId != -1)
-		m_Model->Model::Draw();
-
-	if (m_modelId != -1)
-		m_Model->Model::BindBuffer(false);
-
-	for (int i = 0; i < m_Textures.size(); i++)
-	{
-		m_Textures.at(i)->BindBuffer(i, false);
-	}
-}
-
-void Object::SetTextureId(int id)
-{
-	m_TextureIds.push_back(id);
-}
-
-void Object::SetTextureCubeId(int id)
-{
-	m_CubeTextureIds.push_back(id);
-}
-
-void Object::SetShadersId(int id)
-{
-	m_shadersId = id;
 }
 
 void Object::SetScale(Vector3 scale)
@@ -156,9 +121,6 @@ void Object::Update(float deltaTime)
 Object::~Object()
 {
 	m_Model = NULL;
-	m_Texture = NULL;
+	m_Textures.clear();
 	m_Shaders = NULL;
-	m_Sprite = NULL;
-
-	m_TextureIds.clear();
 }

@@ -10,6 +10,8 @@
 class ResourceManager
 {
 protected:
+	static ResourceManager* ms_Instance;
+
 	vector<Model*> m_Models;
 	vector<Texture*> m_Textures;
 	vector<CubeTexture*> m_CubeTextures;
@@ -17,10 +19,13 @@ protected:
 
 	Model* m_SpriteModel;
 public:
+	static void CreateInstance();
+	static ResourceManager* GetInstance();
+	static void DestroyInstance();
 
 	ResourceManager();
-	ResourceManager(const char*);
-	~ResourceManager();
+
+	void LoadResource(string);
 
 	Model* GetModel(int);
 	Model* GetModel(string);
@@ -29,7 +34,9 @@ public:
 	Shaders* GetShaders(int);
 	Shaders* GetShaders(string);
 	CubeTexture* GetCubeTexture(int);
-
 	Model* GetSpriteModel();
+
+	void DeleteAllResources();
+	~ResourceManager();
 };
 

@@ -11,8 +11,10 @@
 class Shaders 
 {
 protected:
+	string m_Name;
 	int m_States;
 public:
+	string GetName();
 	GLuint program, vertexShader, fragmentShader;
 	char fileVS[260];
 	char fileFS[260];
@@ -34,8 +36,10 @@ public:
 	GLint WVPUniform;
 	GLint timeUniform;
 	clock_t m_Timer;
-	Shaders(char* fileVertexShader, char* fileFragmentShader);
+
+	Shaders(string);
 	void SetStates(char*, int);
+	void UseState();
 	void Use(Matrix);
 	~Shaders();
 };
