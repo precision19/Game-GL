@@ -30,6 +30,7 @@ protected:
 
 	void SetWorldMatrix();
 	void SetViewMatrix();
+	void SetProjectionMatrix();
 public:
 	static void CreateInstance();
 	static Camera* GetInstance();
@@ -42,6 +43,7 @@ public:
 	void SetPosition(Vector3);
 	void SetTarget(Vector3);
 	void SetUpVector(Vector3);
+	void SetPerspective(bool);
 	void SetFOVY(float);
 	void SetNear(float);
 	void SetFar(float);

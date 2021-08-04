@@ -141,7 +141,66 @@ Model::Model(const char* path, const char* pathHeightmap)
 
 Model::Model(string name, bool isTerrain)
 {
+	m_Name = name;
 
+	string path = "Models/" + name + ".nfg";
+	FILE* f = fopen(path.c_str(), "r+");
+
+	if (f == NULL)
+	{
+		printf("Invalid file %s\n", path.c_str());
+		exit(1);
+	}
+
+	char header[20];
+
+	fscanf(f, "NrVertices: %d\n", &amountOfVertexs);
+
+	vertices = new Vertex[amountOfVertexs];
+
+	for (int i = 0; i < amountOfVertexs; i++)
+	{
+		float posX, posY, posZ;
+		float normX, normY, normZ;
+		float binormX, binormY, binormZ;
+		float tgtX, tgtY, tgtZ;
+		float uvU, uvV;
+		fscanf(f, "%s pos:[%f, %f, %f]; norm:[%f, %f, %f]; binorm:[%f, %f, %f]; tgt:[%f, %f, %f]; uv:[%f, %f];\n",
+			&header, &posX, &posY, &posZ, &normX, &normY, &normZ, &binormX, &binormY, &binormZ, &tgtX, &tgtY, &tgtZ, &uvU, &uvV);
+		vertices[i].pos = Vector3(posX, posY, posZ);
+		vertices[i].uv = Vector2(uvU, uvV);
+	}
+
+	fscanf(f, "NrIndices: %d\n", &amountOfIndices);
+
+	indices = new unsigned int[amountOfIndices];
+
+	for (int i = 0; i < amountOfIndices / 3; i++)
+	{
+		int x, y, z;
+		fscanf(f, "%s %d, %d, %d\n", &header, &x, &y, &z);
+		indices[i * 3] = x;
+		indices[i * 3 + 1] = y;
+		indices[i * 3 + 2] = z;
+	}
+
+	fclose(f);
+
+	if (isTerrain)
+	{
+		string heightMapPath = "Textures/" + name + ".tga";
+		SetHeightmap(heightMapPath.c_str());
+	}
+
+	glGenBuffers(1, &vboId);
+	glBindBuffer(GL_ARRAY_BUFFER, vboId);
+	glBufferData(GL_ARRAY_BUFFER, amountOfVertexs * sizeof(Vertex), vertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glGenBuffers(1, &iboId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, amountOfIndices * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 string Model::GetName()

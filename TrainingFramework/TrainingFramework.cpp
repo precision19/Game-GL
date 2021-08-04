@@ -27,6 +27,9 @@ SceneManager* LevelsMapScene;
 
 int Init ( ESContext *esContext )
 {
+	Input::CreateInstance();
+	Camera::CreateInstance();
+
 	LevelsMapScene = new SceneManager("Managers/Level1");
 	//testBox2D
 	b2BodyDef groundBodyDef;
@@ -48,7 +51,6 @@ int Init ( ESContext *esContext )
 	body->CreateFixture(&fixtureDef);
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
-	Input::CreateInstance();
 
 	return 0;
 }
@@ -65,6 +67,7 @@ void Draw ( ESContext *esContext )
 void Update ( ESContext *esContext, float deltaTime )
 {
 	LevelsMapScene->Update(deltaTime);
+	Camera::GetInstance()->Update(deltaTime);
 	//test box 2D
 	printf("%f\n", LevelsMapScene->m_vObjects[1]->GetPosition().x);
 	int32 velocityIterations = 6;
@@ -103,6 +106,7 @@ void CleanUp()
 {
 	delete LevelsMapScene;
 	Input::DestroyInstance();
+	Camera::DestroyInstance();
 }
 
 int _tmain(int argc, _TCHAR* argv[])
