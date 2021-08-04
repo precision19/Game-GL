@@ -18,6 +18,7 @@ protected:
 	Vector3 m_Scale;
 	Vector3 m_Rotation;
 	Vector3 m_Position;
+	Vector2 m_Dimension;
 
 	Matrix GetWVP();
 
@@ -36,11 +37,13 @@ public:
 
 	void SetNativeSize();
 
+	void SetDimension(Vector2 dimen) { m_Dimension = dimen; }
 	void SetPosition(Vector3);
 	void SetScale(Vector3);
 	void SetRotation(Vector3);
 
 	Vector3 GetPosition();
+	Vector2 GetDimension() { return m_Dimension; }
 
 	void Draw();
 	void Update(float);

@@ -30,6 +30,8 @@ void Object::SetNativeSize()
 {
 	Vector2 size = m_Textures[0]->GetSize();
 	m_Scale = Vector3(size.x, size.y, 1);
+	m_Dimension = size;
+	printf("%f %f\n", size.x, size.y);
 }
 
 void Object::SetModel(int modelID)
