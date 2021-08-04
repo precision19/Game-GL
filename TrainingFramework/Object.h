@@ -27,13 +27,13 @@ protected:
 	Vector3 m_Scale;
 	Vector3 m_Rotation;
 	Vector3 m_Position;
+	Vector2 m_Dimenstion;
 
 	Matrix GetWVP();
 
 	vector<Component*> m_Components;
 public:
 	Transform* transform;
-
 	Object();
 	void Init(ResourceManager* resource);
 	void SetSpriteId(int);
@@ -46,6 +46,8 @@ public:
 	void SetRotation(Vector3);
 	Vector3 GetPosition();
 	void SetPosition(Vector3);
+	Vector2 GetDimension();
+	void SetDimension(Vector2);
 	void Draw();
 	void Draw(Camera*);
 	void Update(float);
