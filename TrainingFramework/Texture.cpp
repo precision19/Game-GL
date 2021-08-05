@@ -15,7 +15,14 @@ Texture::Texture(const char* path)
 
 	int iBpp;
 	char* imageData = LoadTGA(path, &iWidth, &iHeight, &iBpp);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, iWidth, iHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+	if (iBpp == 24)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, iWidth, iHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+	}
+	else
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, iWidth, iHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+	}
 	delete[] imageData;
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -38,7 +45,14 @@ Texture::Texture(string name, string wrap, string filterMin, string filterMag)
 
 	int iBpp;
 	char* imageData = LoadTGA(path.c_str(), &iWidth, &iHeight, &iBpp);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, iWidth, iHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+	if (iBpp == 24)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, iWidth, iHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+	}
+	else
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, iWidth, iHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+	}
 	delete[] imageData;
 
 	if (wrap == "REPEAT")
@@ -121,7 +135,13 @@ Vector2 Texture::GetSize()
 	return Vector2(iWidth, iHeight);
 }
 
+void Texture::Delete()
+{
+
+	glDeleteTextures(0, &textureId);
+}
+
 Texture::~Texture()
 {
-	// glDeleteTextures(0, &textureId);
+//	glDeleteTextures(0, &textureId);
 }

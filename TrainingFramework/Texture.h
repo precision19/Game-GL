@@ -21,6 +21,7 @@ public:
 	string GetName();
 	virtual void BindBuffer(int, bool = true);
 	Vector2 GetSize();
+	void Delete();
 	~Texture();
 };
 

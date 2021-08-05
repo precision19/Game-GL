@@ -144,6 +144,18 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Textures\DEAD\Dead__0.tga" />
+    <Image Include="Textures\DEAD\Dead__1.tga" />
+    <Image Include="Textures\DEAD\Dead__2.tga" />
+    <Image Include="Textures\DEAD\Dead__3.tga" />
+    <Image Include="Textures\DEAD\Dead__4.tga" />
+    <Image Include="Textures\DEAD\Dead__5.tga" />
+    <Image Include="Textures\DEAD\Dead__6.tga" />
+    <Image Include="Textures\DEAD\Dead__7.tga" />
+    <Image Include="Textures\DEAD\Dead__8.tga" />
+    <Image Include="Textures\Idle__000.tga" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
