@@ -111,6 +111,7 @@ void Model::SetHeightmap(Vertex* vertices, int amountOfVertexs, const char* path
 	delete[] data;
 }
 
+
 void Model::BindBuffer(bool isStarted)
 {
 	if (isStarted)

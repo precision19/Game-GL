@@ -3,9 +3,14 @@
 #include "Sprite.h"
 
 
-Sprite::Sprite(const char* imagePath)
+
+Sprite::Sprite(string path)
 {
-	m_Sprite = new Texture(imagePath);
+	
+}
+
+void Sprite::Update(float deltaTime)
+{
 }
 
 Sprite::~Sprite()

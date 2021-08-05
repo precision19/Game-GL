@@ -111,13 +111,13 @@ void Texture::BindBuffer(int id, bool isStarted)
 		glActiveTexture(GL_TEXTURE0);
 		break;
 	case 1:
-		glActiveTexture(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE0);
 		break;
 	case 2:
-		glActiveTexture(GL_TEXTURE2);
+		glActiveTexture(GL_TEXTURE0);
 		break;
 	case 3:
-		glActiveTexture(GL_TEXTURE3);
+		glActiveTexture(GL_TEXTURE0);
 		break;
 	default:
 		glActiveTexture(GL_TEXTURE10);

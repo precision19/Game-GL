@@ -24,6 +24,9 @@ Object::Object()
 {
 	m_Model = NULL;
 	m_Shaders = NULL;
+	currentFrameTime = 0.3;
+	anim_cursor = 0;
+	currentFrameId = NULL;
 }
 
 void Object::SetNativeSize()
@@ -64,9 +67,14 @@ void Object::SetShaders(int shadersID)
 	m_Shaders = ResourceManager::GetInstance()->GetShaders(shadersID);
 }
 
-void Object::SetSahders(string shadersName)
+void Object::SetShaders(string shadersName)
 {
 	m_Shaders = ResourceManager::GetInstance()->GetShaders(shadersName);
+}
+
+void Object::SetCurrentFrame(int id)
+{
+	currentFrameId = id;
 }
 
 void Object::SetPosition(Vector3 position)
@@ -76,26 +84,25 @@ void Object::SetPosition(Vector3 position)
 
 void Object::Draw()
 {
+	anim_cursor += currentFrameTime;
 	if (m_Model == NULL || m_Shaders == NULL)
 		return;
-
+//	printf("Texture %d\n", currentFrameId);
 	m_Model->Model::BindBuffer();
-
-	for (int i = 0; i < m_Textures.size(); i++)
+	if (anim_cursor > 0.1)
 	{
-		m_Textures.at(i)->BindBuffer(i);
+		currentFrameId = (currentFrameId + 1) % m_Textures.size();
+		anim_cursor = 0;
 	}
-
+	m_Textures.at(currentFrameId)->BindBuffer(currentFrameId, TRUE);
 	m_Shaders->Use(GetWVP());
 
 	m_Model->Model::Draw();
+	Sleep(100);
 
 	m_Model->Model::BindBuffer(false);
+	m_Textures.at(currentFrameId)->BindBuffer(currentFrameId, FALSE);
 
-	for (int i = 0; i < m_Textures.size(); i++)
-	{
-		m_Textures.at(i)->BindBuffer(i, false);
-	}
 }
 
 Vector3 Object::GetPosition() {

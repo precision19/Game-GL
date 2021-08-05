@@ -23,6 +23,11 @@ protected:
 	Matrix GetWVP();
 
 	vector<Component*> m_Components;
+
+	int currentFrameId;
+	float anim_cursor;
+	float currentFrameTime;
+
 public:
 	Transform* transform;
 
@@ -33,7 +38,9 @@ public:
 	void AddTexture(string);
 	void AddCubeTexture(int);
 	void SetShaders(int);
-	void SetSahders(string);
+	void SetShaders(string);
+
+	void SetCurrentFrame(int);
 
 	void SetNativeSize();
 
