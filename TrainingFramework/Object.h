@@ -10,23 +10,15 @@
 
 class Object
 {
-protected: 
-	int m_modelId;
-	vector<int> m_TextureIds;
-	vector<int> m_CubeTextureIds;
-	int m_shadersId;
-
+protected:
 	Model* m_Model;
-	Texture* m_Texture;
 	vector<Texture*> m_Textures;
 	Shaders* m_Shaders;
-
-	Sprite* m_Sprite;
-	int m_spriteId;
 
 	Vector3 m_Scale;
 	Vector3 m_Rotation;
 	Vector3 m_Position;
+	Vector2 m_Dimension;
 
 	Matrix GetWVP();
 
@@ -35,20 +27,27 @@ public:
 	Transform* transform;
 
 	Object();
-	void Init(ResourceManager* resource);
-	void SetSpriteId(int);
+	void SetModel(int);
+	void SetModel(string);
+	void AddTexture(int);
+	void AddTexture(string);
+	void AddCubeTexture(int);
+	void SetShaders(int);
+	void SetSahders(string);
+
 	void SetNativeSize();
-	void SetModelId(int);
-	void SetTextureId(int);
-	void SetTextureCubeId(int);
-	void SetShadersId(int);
+
+	void SetDimension(Vector2 dimen) { m_Dimension = dimen; }
+	void SetPosition(Vector3);
 	void SetScale(Vector3);
 	void SetRotation(Vector3);
+
 	Vector3 GetPosition();
-	void SetPosition(Vector3);
+	Vector2 GetDimension() { return m_Dimension; }
+
 	void Draw();
-	void Draw(Camera*);
 	void Update(float);
+
 	~Object();
 };
 

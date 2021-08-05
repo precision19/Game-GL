@@ -2,143 +2,6 @@
 #include "Model.h"
 #include <iostream>
 
-Model::Model(const char* path)
-{
-	ifstream ifile;
-	ifile.open(path);
-
-	if (ifile.fail())
-	{
-		printf("Invalid File Name: %s\n", path);
-		exit(1);
-	}
-
-	string str = "";
-	char keyword[20];
-	amountOfVertexs;
-
-	getline(ifile, str);
-	sscanf(str.c_str(), "%s %d", &keyword, &amountOfVertexs);
-
-	vertices = new Vertex[amountOfVertexs];
-
-	for (int i = 0; i < amountOfVertexs; i++)
-	{
-		float posX, posY, posZ;
-		float normX, normY, normZ;
-		float binormX, binormY, binormZ;
-		float tgtX, tgtY, tgtZ;
-		float uvU, uvV;
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s pos:[%f, %f, %f]; norm:[%f, %f, %f]; binorm:[%f, %f, %f]; tgt:[%f, %f, %f]; uv:[%f, %f];",
-			&keyword, &posX, &posY, &posZ, &normX, &normY, &normZ, &binormX, &binormY, &binormZ, &tgtX, &tgtY, &tgtZ, &uvU, &uvV);
-		vertices[i].pos = Vector3(posX, posY, posZ);
-
-		vertices[i].uv = Vector2(uvU, uvV);
-	}
-
-	getline(ifile, str);
-	sscanf(str.c_str(), "%s %d", &keyword, &amountOfIndices);
-
-	indices = new unsigned int[amountOfIndices];
-
-	for (int i = 0; i < amountOfIndices / 3; i++)
-	{
-		int x, y, z;
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %d, %d, %d", &keyword, &x, &y, &z);
-
-		// SAVE DATA
-		indices[i * 3] = x;
-		indices[i * 3 + 1] = y;
-		indices[i * 3 + 2] = z;
-	}
-
-	ifile.close();
-
-	glGenBuffers(1, &vboId);
-	glBindBuffer(GL_ARRAY_BUFFER, vboId);
-	glBufferData(GL_ARRAY_BUFFER, amountOfVertexs * sizeof(Vertex), vertices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glGenBuffers(1, &iboId);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, amountOfIndices * sizeof(unsigned int), indices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
-Model::Model(const char* path, const char* pathHeightmap)
-{
-	ifstream ifile;
-	ifile.open(path);
-
-	if (ifile.fail())
-	{
-		printf("Invalid File Name: %s\n", path);
-		exit(1);
-	}
-
-	string str = "";
-	char keyword[20];
-	amountOfVertexs;
-
-	getline(ifile, str);
-	sscanf(str.c_str(), "%s %d", &keyword, &amountOfVertexs);
-
-	vertices = new Vertex[amountOfVertexs];
-
-	for (int i = 0; i < amountOfVertexs; i++)
-	{
-		float posX, posY, posZ;
-		float normX, normY, normZ;
-		float binormX, binormY, binormZ;
-		float tgtX, tgtY, tgtZ;
-		float uvU, uvV;
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s pos:[%f, %f, %f]; norm:[%f, %f, %f]; binorm:[%f, %f, %f]; tgt:[%f, %f, %f]; uv:[%f, %f];",
-			&keyword, &posX, &posY, &posZ, &normX, &normY, &normZ, &binormX, &binormY, &binormZ, &tgtX, &tgtY, &tgtZ, &uvU, &uvV);
-
-		// SAVE DATA
-		vertices[i].pos.x = posX;
-		vertices[i].pos.y = posY;
-		vertices[i].pos.z = posZ;
-
-		vertices[i].uv.x = uvU;
-		vertices[i].uv.y = uvV;
-	}
-
-	getline(ifile, str);
-	sscanf(str.c_str(), "%s %d", &keyword, &amountOfIndices);
-
-	indices = new unsigned int[amountOfIndices];
-
-	for (int i = 0; i < amountOfIndices / 3; i++)
-	{
-		int x, y, z;
-		getline(ifile, str);
-		sscanf(str.c_str(), "%s %d, %d, %d", &keyword, &x, &y, &z);
-
-		// SAVE DATA
-		indices[i * 3] = x;
-		indices[i * 3 + 1] = y;
-		indices[i * 3 + 2] = z;
-	}
-
-	ifile.close();
-
-	SetHeightmap(pathHeightmap);
-
-	glGenBuffers(1, &vboId);
-	glBindBuffer(GL_ARRAY_BUFFER, vboId);
-	glBufferData(GL_ARRAY_BUFFER, amountOfVertexs * sizeof(Vertex), vertices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glGenBuffers(1, &iboId);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, amountOfIndices * sizeof(unsigned int), indices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-}
-
 Model::Model(string name, bool isTerrain)
 {
 	m_Name = name;
@@ -153,10 +16,10 @@ Model::Model(string name, bool isTerrain)
 	}
 
 	char header[20];
-
+	int amountOfVertexs;
 	fscanf(f, "NrVertices: %d\n", &amountOfVertexs);
 
-	vertices = new Vertex[amountOfVertexs];
+	Vertex* vertices = new Vertex[amountOfVertexs];
 
 	for (int i = 0; i < amountOfVertexs; i++)
 	{
@@ -173,7 +36,7 @@ Model::Model(string name, bool isTerrain)
 
 	fscanf(f, "NrIndices: %d\n", &amountOfIndices);
 
-	indices = new unsigned int[amountOfIndices];
+	unsigned int* indices = new unsigned int[amountOfIndices];
 
 	for (int i = 0; i < amountOfIndices / 3; i++)
 	{
@@ -184,12 +47,10 @@ Model::Model(string name, bool isTerrain)
 		indices[i * 3 + 2] = z;
 	}
 
-	fclose(f);
-
 	if (isTerrain)
 	{
 		string heightMapPath = "Textures/" + name + ".tga";
-		SetHeightmap(heightMapPath.c_str());
+		SetHeightmap(vertices, amountOfVertexs, heightMapPath.c_str());
 	}
 
 	glGenBuffers(1, &vboId);
@@ -201,6 +62,10 @@ Model::Model(string name, bool isTerrain)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboId);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, amountOfIndices * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+	fclose(f);
+	delete[] vertices;
+	delete[] indices;
 }
 
 string Model::GetName()
@@ -208,7 +73,7 @@ string Model::GetName()
 	return m_Name;
 }
 
-void Model::SetHeightmap(const char* path)
+void Model::SetHeightmap(Vertex* vertices, int amountOfVertexs, const char* path)
 {
 	int iWidth, iHeight, iBpp;
 	char* imageData = LoadTGA(path, &iWidth, &iHeight, &iBpp); // iBpp = 24
@@ -267,9 +132,6 @@ void Model::Draw()
 
 Model::~Model()
 {
-	delete[] vertices;
-	delete[] indices;
-
 	glDeleteBuffers(1, &vboId);
 	glDeleteBuffers(1, &iboId);
 }

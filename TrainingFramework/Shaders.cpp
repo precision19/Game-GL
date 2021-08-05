@@ -1,22 +1,30 @@
 #include "stdafx.h"
 #include "Shaders.h"
 
-Shaders::Shaders(char* fileVertexShader, char* fileFragmentShader)
+string Shaders::GetName()
 {
-	vertexShader = esLoadShader(GL_VERTEX_SHADER, fileVertexShader);
+	return m_Name;
+}
 
+Shaders::Shaders(string name)
+{
+	m_Name = name;
+	string pathVS = "Shaders/" + name + ".vs";
+	string pathFS = "Shaders/" + name + ".fs";
+
+	vertexShader = esLoadShader(GL_VERTEX_SHADER, (char*)pathVS.c_str());
 	if (vertexShader == 0)
 	{
-		printf("ERROR: %s", fileVertexShader);
+		printf("ERROR: %s", (char*)pathVS.c_str());
 		return;
 	}
 
-	fragmentShader = esLoadShader(GL_FRAGMENT_SHADER, fileFragmentShader);
+	fragmentShader = esLoadShader(GL_FRAGMENT_SHADER, (char*)pathFS.c_str());
 
 	if (fragmentShader == 0)
 	{
 		glDeleteShader(vertexShader);
-		printf("ERROR: %s", fileFragmentShader);
+		printf("ERROR: %s", (char*)pathFS.c_str());
 		return;
 	}
 
@@ -65,6 +73,29 @@ void Shaders::SetStates(char* state, int iBool)
 	}
 
 	printf("Undefined state\n");
+}
+
+void Shaders::UseState()
+{
+	if (m_States & DEPTH_TEST)
+		glEnable(GL_DEPTH_TEST);
+	else
+		glDisable(GL_DEPTH_TEST);
+
+	if (m_States & CULL_FACE)
+		glEnable(GL_CULL_FACE);
+	else
+		glDisable(GL_CULL_FACE);
+
+	if (m_States & BLEND)
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA);
+	}
+	else
+	{
+		glDisable(GL_BLEND);
+	}
 }
 
 void Shaders::Use(Matrix WVP)

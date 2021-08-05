@@ -1,13 +1,43 @@
 #include "stdafx.h"
 #include "ResourceManager.h"
 
-ResourceManager::ResourceManager(const char* filePath)
+ResourceManager* ResourceManager::ms_Instance = NULL;
+
+void ResourceManager::CreateInstance()
 {
-	FILE* f = fopen(filePath, "r+");
+	if (ms_Instance == NULL)
+		ms_Instance = new ResourceManager();
+}
+
+ResourceManager* ResourceManager::GetInstance()
+{
+	return ms_Instance;
+}
+
+void ResourceManager::DestroyInstance()
+{
+	if (ms_Instance)
+	{
+		delete ms_Instance;
+		ms_Instance = NULL;
+	}
+}
+
+ResourceManager::ResourceManager()
+{
+
+}
+
+void ResourceManager::LoadResource(string sceneName)
+{
+	DeleteAllResources();
+
+	string path = "Managers/" + sceneName + "RM.txt";
+	FILE* f = fopen(path.c_str(), "r+");
 
 	if (f == NULL)
 	{
-		printf("Invalid file %s\n", filePath);
+		printf("Invalid file %s\n", path.c_str());
 		exit(1);
 	}
 
@@ -46,10 +76,8 @@ ResourceManager::ResourceManager(const char* filePath)
 	for (int i = 0; i < amount; i++)
 	{
 		int stateAmount;
-		fscanf(f, "NAME %s - %d STATE(S)", name, &stateAmount);
-		string pathVS = "Shaders/" + string(name) + ".vs";
-		string pathFS = "Shaders/" + string(name) + ".fs";
-		Shaders* shaders = new Shaders((char*)pathVS.c_str(), (char*)pathFS.c_str());
+		fscanf(f, "NAME %s - %d STATE(S)", name, &stateAmount);		
+		Shaders* shaders = new Shaders(name);
 
 		for (int j = 0; j < stateAmount; j++)
 		{
@@ -97,6 +125,17 @@ Shaders* ResourceManager::GetShaders(int id)
 	return m_vShaders.at(id);
 }
 
+Shaders* ResourceManager::GetShaders(string name)
+{
+	for (int i = 0; i < m_vShaders.size(); i++)
+	{
+		if (name == m_vShaders.at(i)->GetName())
+			return m_vShaders.at(i);
+	}
+	printf("WARNING: Can't find shader %s\n", name.c_str());
+	return NULL;
+}
+
 CubeTexture* ResourceManager::GetCubeTexture(int id)
 {
 	return m_CubeTextures.at(id);
@@ -107,7 +146,7 @@ Model* ResourceManager::GetSpriteModel()
 	return m_SpriteModel;
 }
 
-ResourceManager::~ResourceManager()
+void ResourceManager::DeleteAllResources()
 {
 	for (auto it = m_Models.begin(); it != m_Models.end(); it++)
 	{
@@ -132,4 +171,9 @@ ResourceManager::~ResourceManager()
 		delete (*it);
 	}
 	m_vShaders.clear();
+}
+
+ResourceManager::~ResourceManager()
+{
+	DeleteAllResources();
 }

@@ -15,16 +15,11 @@ protected:
 	GLuint vboId;
 	GLuint iboId;
 
-	int amountOfVertexs;
-	Vertex* vertices;
 	int amountOfIndices;
-	unsigned int* indices;
 public:
-	Model(const char* path);
-	Model(const char* path, const char* pathHeightmap);
 	Model(string, bool);
 	string GetName();
-	void SetHeightmap(const char* path);
+	void SetHeightmap(Vertex*, int,const char*);
 	void BindBuffer(bool = true);
 	void Draw();
 	~Model();
