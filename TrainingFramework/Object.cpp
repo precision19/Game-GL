@@ -84,16 +84,10 @@ void Object::SetPosition(Vector3 position)
 
 void Object::Draw()
 {
-	anim_cursor += currentFrameTime;
 	if (m_Model == NULL || m_Shaders == NULL)
 		return;
 
 	m_Model->Model::BindBuffer();
-	if (anim_cursor > 0.1)
-	{
-		currentFrameId = (currentFrameId + 1) % m_Textures.size();
-		anim_cursor = 0;
-	}
 	m_Textures.at(currentFrameId)->BindBuffer(0, TRUE);
 
 	m_Shaders->UseState();
@@ -145,7 +139,13 @@ void Object::SetRotation(Vector3 rotation)
 
 void Object::Update(float deltaTime)
 {
-	
+	anim_cursor += deltaTime;
+
+	if (anim_cursor > 0.1)
+	{
+		currentFrameId = (currentFrameId + 1) % m_Textures.size();
+		anim_cursor = 0;
+	}
 }
 
 Object::~Object()
