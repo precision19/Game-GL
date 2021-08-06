@@ -9,5 +9,6 @@ public:
 	Vector3 scale;
 
 	Matrix GetWorldMatrix();
+	Matrix GetWorldMatrix(Vector3);
 };
 

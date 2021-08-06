@@ -2,10 +2,7 @@
 #include <vector>
 #include "Shaders.h"
 #include "Model.h"
-#include "Texture.h"
 #include "CubeTexture.h"
-#include "Helper.h"
-#include "Sprite.h"
 
 class ResourceManager
 {

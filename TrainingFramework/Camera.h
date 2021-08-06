@@ -1,7 +1,6 @@
 #pragma once
-#include "Vertex.h"
+#include <math.h>
 #include "Globals.h"
-#include <string>
 #include "Input.h"
 
 class Camera

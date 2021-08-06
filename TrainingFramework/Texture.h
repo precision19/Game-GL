@@ -20,7 +20,8 @@ public:
 	Texture(string, string, string, string);
 	string GetName();
 	virtual void BindBuffer(int, bool = true);
-	Vector2 GetSize();
+	void BindBuffer(bool = true);
+	Vector3 GetSize();
 	void Delete();
 	~Texture();
 };

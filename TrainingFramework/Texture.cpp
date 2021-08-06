@@ -130,9 +130,17 @@ void Texture::BindBuffer(int id, bool isStarted)
 		glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-Vector2 Texture::GetSize()
+void Texture::BindBuffer(bool isStarted)
 {
-	return Vector2(iWidth, iHeight);
+	if (isStarted)
+		glBindTexture(GL_TEXTURE_2D, textureId);
+	else
+		glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+Vector3 Texture::GetSize()
+{
+	return Vector3(iWidth, iHeight, 1);
 }
 
 void Texture::Delete()

@@ -1,8 +1,8 @@
 #pragma once
 #include "../Utilities/utilities.h"
-#include "Vertex.h"
-#include "Camera.h"
-#include <ctime>
+#include <string>
+
+using namespace std;
 
 #define DEPTH_TEST 1
 #define CULL_FACE 1 << 1
@@ -35,7 +35,6 @@ public:
 	GLint texture3Uniform;
 	GLint WVPUniform;
 	GLint timeUniform;
-	clock_t m_Timer;
 
 	Shaders(string);
 	void SetStates(char*, int);

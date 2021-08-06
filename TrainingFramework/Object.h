@@ -1,11 +1,6 @@
 #pragma once
 #include "../Utilities/utilities.h"
-#include "Model.h"
-#include "Texture.h"
-#include "Shaders.h"
-#include "Camera.h"
-#include "Sprite.h"
-#include "ResourceManager.h"
+#include "Renderer2D.h"
 #include "Component.h"
 
 class Object
@@ -28,6 +23,7 @@ protected:
 	float anim_cursor;
 	float currentFrameTime;
 
+	Renderer* m_Renderer;
 public:
 	Transform* transform;
 

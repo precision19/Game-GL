@@ -22,24 +22,33 @@ Matrix Object::GetWVP()
 
 Object::Object()
 {
+	transform = new Transform();
+	transform->position = Vector3(0, 0, 0);
+	transform->rotation = Vector3(0, 0, 0);
+	transform->scale = Vector3(1, 1, 1);
 	m_Model = NULL;
 	m_Shaders = NULL;
 	currentFrameTime = 0.3;
 	anim_cursor = 0;
 	currentFrameId = NULL;
+	m_Renderer = new Renderer2D();
+	m_Renderer->SetTransform(transform);
 }
 
 void Object::SetNativeSize()
 {
-	Vector2 size = m_Textures[0]->GetSize();
-	m_Scale = Vector3(size.x, size.y, 1);
-	m_Dimension = size;
-	printf("%f %f\n", size.x, size.y);
+	//Vector2 size = m_Textures[0]->GetSize();
+	//m_Scale = Vector3(size.x, size.y, 1);
+	//m_Dimension = size;
+	Vector3 size = m_Renderer->GetSize();
+	m_Dimension = Vector2(size.x, size.y);
+	printf("%f %f\n", m_Dimension.x, m_Dimension.y);
 }
 
 void Object::SetModel(int modelID)
 {
 	m_Model = ResourceManager::GetInstance()->GetModel(modelID);
+	m_Renderer->SetModel(modelID);
 }
 
 void Object::SetModel(string modelName)
@@ -50,6 +59,7 @@ void Object::SetModel(string modelName)
 void Object::AddTexture(int textureID)
 {
 	m_Textures.push_back(ResourceManager::GetInstance()->GetTexture(textureID));
+	m_Renderer->SetTexture(textureID);
 }
 
 void Object::AddTexture(string textureName)
@@ -65,6 +75,7 @@ void Object::AddCubeTexture(int cubeTextureID)
 void Object::SetShaders(int shadersID)
 {
 	m_Shaders = ResourceManager::GetInstance()->GetShaders(shadersID);
+	m_Renderer->SetShaders(shadersID);
 }
 
 void Object::SetShaders(string shadersName)
@@ -80,11 +91,12 @@ void Object::SetCurrentFrame(int id)
 void Object::SetPosition(Vector3 position)
 {
 	m_Position = position;
+	transform->position = position;
 }
 
 void Object::Draw()
 {
-	anim_cursor += currentFrameTime;
+	/*anim_cursor += currentFrameTime;
 	if (m_Model == NULL || m_Shaders == NULL)
 		return;
 
@@ -125,8 +137,8 @@ void Object::Draw()
 	m_Model->Model::Draw();
 
 	m_Model->Model::BindBuffer(false);
-	m_Textures.at(currentFrameId)->BindBuffer(currentFrameId, FALSE);
-
+	m_Textures.at(currentFrameId)->BindBuffer(currentFrameId, FALSE);*/
+	m_Renderer->Draw();
 }
 
 Vector3 Object::GetPosition() {
@@ -145,7 +157,7 @@ void Object::SetRotation(Vector3 rotation)
 
 void Object::Update(float deltaTime)
 {
-	
+	m_Renderer->Update(deltaTime);
 }
 
 Object::~Object()
@@ -153,4 +165,6 @@ Object::~Object()
 	m_Model = NULL;
 	m_Textures.clear();
 	m_Shaders = NULL;
+	delete transform;
+	delete m_Renderer;
 }
