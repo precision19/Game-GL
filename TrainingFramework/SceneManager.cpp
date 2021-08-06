@@ -94,7 +94,7 @@ void SceneManager::LoadScene(string sceneName)
 void SceneManager::AddPhysicsToScene()
 {
 	//make the ground
-	b2Vec2 gravity(0.0f, -50.0f);
+	b2Vec2 gravity(0.0f, -10.0f);
 	m_world = std::make_unique<b2World>(gravity);
 	for (int i = 0; i < m_vObjects.size(); i++) {
 		if (strncmp(m_vObjects[i]->type, "GROUND", 6) == 0) {
@@ -122,11 +122,12 @@ void SceneManager::Draw()
 
 void SceneManager::Update(float deltaTime)
 {
+
 	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
 	{
 		(*it)->Update(deltaTime);
 	}
-	m_world->Step(deltaTime, 6, 10);
+	m_world->Step(deltaTime, 60, 20);
 
 	for (int i = 0; i < m_boxes.size(); i++) 
 	{

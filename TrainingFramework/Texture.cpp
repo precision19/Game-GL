@@ -67,7 +67,8 @@ Texture::Texture(string name, string wrap, string filterMin, string filterMag)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, iWidth, iHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
 	}
-	delete[] imageData;
+	delete imageData;
+	imageData = nullptr;
 
 	if (wrap == "REPEAT")
 	{
