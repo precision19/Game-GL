@@ -78,6 +78,12 @@
     <ClCompile Include="PrefabManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GroundBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -141,6 +147,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PrefabManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

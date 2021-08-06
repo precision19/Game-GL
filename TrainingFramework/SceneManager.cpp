@@ -42,6 +42,7 @@ void SceneManager::LoadScene(string sceneName)
 	int amount, id;
 	float x, y, z;
 	char keyword[30];
+	char type[10];
 
 	fscanf(f, "#Camera %d\n", &id);
 	Camera::GetInstance()->SetPerspective(id);
@@ -67,7 +68,9 @@ void SceneManager::LoadScene(string sceneName)
 			printf("WARNING: Object's ID is not correct");
 
 		Object* object = new Object();
-
+		memset(type, 0, sizeof(type));
+		fscanf(f, "TYPE %s\n", type);
+		strcpy(object->type, type);
 		fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
 		object->SetPosition(Vector3(x, y, z));
 
@@ -91,20 +94,21 @@ void SceneManager::LoadScene(string sceneName)
 void SceneManager::AddPhysicsToScene()
 {
 	//make the ground
-	b2Vec2 gravity(0.0f, -10.0f);
+	b2Vec2 gravity(0.0f, -50.0f);
 	m_world = std::make_unique<b2World>(gravity);
-	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(500.0f, -1000.0f);
-	b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
-	//make the ground fixture
-	b2PolygonShape groundBox;
-	groundBox.SetAsBox(1000.0f, 1000.0f);
-	groundBody->CreateFixture(&groundBox, 0.0f);
-
 	for (int i = 0; i < m_vObjects.size(); i++) {
-		Box newBox;
-		newBox.Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y));
-		m_boxes.push_back(newBox);
+		if (strncmp(m_vObjects[i]->type, "GROUND", 6) == 0) {
+			GroundBox* grBox = new GroundBox();
+			grBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y));
+			m_boxes.push_back(grBox);
+			m_boxes[i]->SetDynamic(false);
+		}
+		else {
+			DynamicBox* dyBox = new DynamicBox();
+			dyBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y));
+			m_boxes.push_back(dyBox);
+			m_boxes[i]->SetDynamic(true);
+		}
 	}
 }
 
@@ -122,14 +126,14 @@ void SceneManager::Update(float deltaTime)
 	{
 		(*it)->Update(deltaTime);
 	}
-
-	int32 velocityIterations = 6;
-	int32 positionIterations = 2;
-	m_world->Step(deltaTime, velocityIterations, positionIterations);
+	m_world->Step(deltaTime, 6, 10);
 
 	for (int i = 0; i < m_boxes.size(); i++) 
 	{
-		m_vObjects[i]->SetPosition(Vector3(m_boxes[i].getBody()->GetPosition().x, m_boxes[i].getBody()->GetPosition().y, m_vObjects[i]->GetPosition().z));
+		if (m_boxes[i]->GetDynmaic()) {
+			DynamicBox* dyBox = (DynamicBox*)m_boxes[i];
+			m_vObjects[i]->SetPosition(Vector3(dyBox->getBody()->GetPosition().x, dyBox->getBody()->GetPosition().y, m_vObjects[i]->GetPosition().z));
+		}
 	}
 }
 
@@ -138,6 +142,9 @@ void SceneManager::DestroyAllObjects()
 	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
 	{
 		delete (*it);
+	}
+	for (int i = 0; i < m_boxes.size(); i++) {
+		delete m_boxes[i];
 	}
 	m_vObjects.clear();
 }

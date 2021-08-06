@@ -5,13 +5,15 @@
 #include "PrefabManager.h"
 #include "box2d/box2d.h"
 #include "Box.h"
+#include "GroundBox.h"
+#include "DynamicBox.h"
 
 class SceneManager
 {
 protected:
 	static SceneManager* ms_Instance;
 
-	std::vector<Box>m_boxes;
+	std::vector<Box*>m_boxes;
 public:
 	static void CreateInstance();
 	static SceneManager* GetInstance();

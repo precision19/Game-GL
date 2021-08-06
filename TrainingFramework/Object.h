@@ -10,6 +10,7 @@ protected:
 	Transform transform;
 	Renderer* m_Renderer;
 public:
+	char type[10];
 	Object();
 	void SetDimension(Vector2 dimen) { m_Dimension = dimen; }
 	void SetPosition(Vector3);
