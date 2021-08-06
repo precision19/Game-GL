@@ -12,11 +12,17 @@ int Init ( ESContext *esContext )
 {
 	Input::CreateInstance();
 	Camera::CreateInstance();
+
 	ResourceManager::CreateInstance();
 	ResourceManager::GetInstance()->LoadResource("Level1");
+
+	PrefabManager::CreateInstance();
+	PrefabManager::GetInstance()->LoadPrefabs("Level1");
+
 	SceneManager::CreateInstance();
 	SceneManager::GetInstance()->LoadScene("Level1");
 	SceneManager::GetInstance()->AddPhysicsToScene();
+
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
 	return 0;
@@ -67,6 +73,7 @@ void CleanUp()
 	Input::DestroyInstance();
 	Camera::DestroyInstance();
 	ResourceManager::DestroyInstance();
+	PrefabManager::DestroyInstance();
 	SceneManager::DestroyInstance();
 }
 

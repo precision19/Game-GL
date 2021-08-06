@@ -45,7 +45,7 @@ void Renderer::SetShaders(string name)
 
 Vector3 Renderer::GetSize()
 {
-	return Vector3(1, 1, 1);
+	return transform->scale;
 }
 
 Matrix Renderer::GetWVP()

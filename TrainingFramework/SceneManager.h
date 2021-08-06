@@ -2,7 +2,7 @@
 #include <vector>
 #include "Object.h"
 #include "Camera.h"
-#include "ResourceManager.h"
+#include "PrefabManager.h"
 #include "box2d/box2d.h"
 #include "Box.h"
 

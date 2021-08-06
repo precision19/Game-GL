@@ -67,26 +67,6 @@ void SceneManager::LoadScene(string sceneName)
 			printf("WARNING: Object's ID is not correct");
 
 		Object* object = new Object();
-		fscanf(f, "MODEL_ID %d\n", &id);
-		object->SetModel(id);
-
-		int amount2;
-		fscanf(f, "AMOUNT_OF_TEXTURES %d\n", &amount2);
-		for (int j = 0; j < amount2; j++)
-		{
-			fscanf(f, "TEXTURE_ID %d\n", &id);
-			object->AddTexture(id);
-		}
-
-		fscanf(f, "AMOUNT_OF_CUBETEXTURES %d\n", &amount2);
-		for (int j = 0; j < amount2; j++)
-		{
-			fscanf(f, "TEXTURE_ID %d\n", &id);
-			object->AddCubeTexture(id);
-		}
-
-		fscanf(f, "SHADER_ID %d\n", &id);
-		object->SetShaders(id);
 
 		fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
 		object->SetPosition(Vector3(x, y, z));
@@ -97,8 +77,10 @@ void SceneManager::LoadScene(string sceneName)
 		fscanf(f, "SCALE %f %f %f\n", &x, &y, &z);
 		object->SetScale(Vector3(x, y, z));
 
-		fscanf(f, "SET_NATIVE_SIZE %d\n", &x);
-		if (x) object->SetNativeSize();
+		fscanf(f, "RENDERER %d\n", &id);
+		object->SetRenderer(id);
+
+		object->SetNativeSize();
 
 		m_vObjects.push_back(object);
 	}

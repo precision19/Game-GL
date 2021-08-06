@@ -15,6 +15,13 @@ Texture::Texture(const char* path)
 
 	int iBpp;
 	char* imageData = LoadTGA(path, &iWidth, &iHeight, &iBpp);
+
+	if (imageData == NULL)
+	{
+		printf("Invalid file %s\n", path);
+		exit(1);
+	}
+
 	if (iBpp == 24)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, iWidth, iHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
@@ -45,6 +52,13 @@ Texture::Texture(string name, string wrap, string filterMin, string filterMag)
 
 	int iBpp;
 	char* imageData = LoadTGA(path.c_str(), &iWidth, &iHeight, &iBpp);
+
+	if (imageData == NULL)
+	{
+		printf("Invalid file %s\n", path.c_str());
+		exit(1);
+	}
+
 	if (iBpp == 24)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, iWidth, iHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
