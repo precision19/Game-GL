@@ -140,10 +140,13 @@ void SceneManager::Update(float deltaTime)
 	{
 		(*it)->Update(deltaTime);
 	}
+
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 	m_world->Step(deltaTime, velocityIterations, positionIterations);
-	for (int i = 0; i < m_boxes.size(); i++) {
+
+	for (int i = 0; i < m_boxes.size(); i++) 
+	{
 		m_vObjects[i]->SetPosition(Vector3(m_boxes[i].getBody()->GetPosition().x, m_boxes[i].getBody()->GetPosition().y, m_vObjects[i]->GetPosition().z));
 	}
 }

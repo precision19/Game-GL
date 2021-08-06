@@ -87,18 +87,42 @@ void Object::Draw()
 	anim_cursor += currentFrameTime;
 	if (m_Model == NULL || m_Shaders == NULL)
 		return;
-//	printf("Texture %d\n", currentFrameId);
+
 	m_Model->Model::BindBuffer();
 	if (anim_cursor > 0.1)
 	{
 		currentFrameId = (currentFrameId + 1) % m_Textures.size();
 		anim_cursor = 0;
 	}
-	m_Textures.at(currentFrameId)->BindBuffer(currentFrameId, TRUE);
-	m_Shaders->Use(GetWVP());
+	m_Textures.at(currentFrameId)->BindBuffer(0, TRUE);
+
+	m_Shaders->UseState();
+
+	glUseProgram(m_Shaders->program);
+
+	if (m_Shaders->textureUniform != -1)
+	{
+		glUniform1i(m_Shaders->textureUniform, 0);
+	}
+
+	if (m_Shaders->positionAttribute != -1)
+	{
+		glEnableVertexAttribArray(m_Shaders->positionAttribute);
+		glVertexAttribPointer(m_Shaders->positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	}
+
+	if (m_Shaders->uvAttribute != -1)
+	{
+		glEnableVertexAttribArray(m_Shaders->uvAttribute);
+		glVertexAttribPointer(m_Shaders->uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*)sizeof(Vector3));
+	}
+
+	if (m_Shaders->WVPUniform != -1)
+	{
+		glUniformMatrix4fv(m_Shaders->WVPUniform, 1, GL_FALSE, &GetWVP().m[0][0]);
+	}
 
 	m_Model->Model::Draw();
-	Sleep(100);
 
 	m_Model->Model::BindBuffer(false);
 	m_Textures.at(currentFrameId)->BindBuffer(currentFrameId, FALSE);
@@ -121,10 +145,7 @@ void Object::SetRotation(Vector3 rotation)
 
 void Object::Update(float deltaTime)
 {
-	for (int i = 0; i < m_Components.size(); i++)
-	{
-		m_Components.at(i)->Update(deltaTime);
-	}
+	
 }
 
 Object::~Object()

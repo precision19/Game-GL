@@ -100,7 +100,7 @@ void Shaders::UseState()
 
 void Shaders::Use(Matrix WVP)
 {
-	if (m_States & DEPTH_TEST)
+	/*if (m_States & DEPTH_TEST)
 		glEnable(GL_DEPTH_TEST);
 	else
 		glDisable(GL_DEPTH_TEST);
@@ -144,8 +144,8 @@ void Shaders::Use(Matrix WVP)
 
 	if (cameraPositionUniform != -1)
 	{
-		//Vector3 cameraPosition = Camera::GetInstance()->GetPosition();
-		//glUniform3f(cameraPositionUniform, cameraPosition.x, cameraPosition.y, cameraPosition.z);
+		Vector3 cameraPosition = Camera::GetInstance()->GetPosition();
+		glUniform3f(cameraPositionUniform, cameraPosition.x, cameraPosition.y, cameraPosition.z);
 		glUniform3f(cameraPositionUniform, 0, 0, 0);
 	}
 
@@ -196,7 +196,7 @@ void Shaders::Use(Matrix WVP)
 	{
 		clock_t t = clock();
 		glUniform1f(timeUniform, ((float)t) / CLOCKS_PER_SEC);
-	}
+	}*/
 }
 
 Shaders::~Shaders()
