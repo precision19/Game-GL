@@ -33,6 +33,11 @@ void Renderer::SetTexture(string name)
 	m_Texture = ResourceManager::GetInstance()->GetTexture(name);
 }
 
+void Renderer::SetFramePerSec(int framePerSec)
+{
+	m_FramePerSec = framePerSec;
+}
+
 void Renderer::SetShaders(int id)
 {
 	m_Shaders = ResourceManager::GetInstance()->GetShaders(id);

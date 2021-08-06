@@ -92,11 +92,10 @@ void PrefabManager::LoadPrefabs(string sceneName)
 		{
 			int frameRate;
 			fscanf(f, "FRAME_RATE %d\n", &frameRate);
-			// TODO: Set frame rate of renderer
+			renderer->SetFramePerSec(frameRate);
 		}
 		m_Renderers.push_back(renderer);
 	}
-
 	fclose(f);
 }
 

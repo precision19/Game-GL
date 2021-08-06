@@ -7,11 +7,13 @@ class Renderer2D : public Renderer
 protected:
 	vector<Texture*> m_Sprites;
 	int m_CurrentSpriteId;
-	float anim_cursor;
+	float m_FramePerSec;
+	float m_animationCurrent;
 public:
 	Renderer2D();
 	void SetTexture(int);
 	void SetTexture(string);
+	float GetFramePerSecond();
 	Vector3 GetSize();
 	Matrix GetWVP();
 	void Update(float);

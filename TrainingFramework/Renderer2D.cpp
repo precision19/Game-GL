@@ -7,7 +7,8 @@ Renderer2D::Renderer2D()
 	m_Shaders = ResourceManager::GetInstance()->GetShaders("Sprite");
 	m_Texture = NULL;
 	m_CurrentSpriteId = 0;
-	anim_cursor = 0;
+	m_animationCurrent = 0;
+	m_FramePerSec = 0;
 }
 
 void Renderer2D::SetTexture(int spriteId)
@@ -22,6 +23,12 @@ void Renderer2D::SetTexture(string spriteName)
 	m_Sprites.push_back(ResourceManager::GetInstance()->GetTexture(spriteName));
 	if (m_Texture == NULL)
 		m_Texture = m_Sprites.at(0);
+}
+
+float Renderer2D::GetFramePerSecond()
+{
+	m_FramePerSec = Renderer::m_FramePerSec;
+	return 1 / m_FramePerSec;
 }
 
 Vector3 Renderer2D::GetSize()
@@ -39,11 +46,13 @@ Matrix Renderer2D::GetWVP()
 
 void Renderer2D::Update(float deltaTime)
 {
-	anim_cursor += deltaTime;
-	if (anim_cursor)
+	m_animationCurrent += deltaTime;
+	float FPS = GetFramePerSecond();
+
+	if (m_animationCurrent > FPS)
 	{
 		m_CurrentSpriteId = (m_CurrentSpriteId + 1) % (m_Sprites.size());
-		anim_cursor = 0;
+		m_animationCurrent = 0;
 	}
 	m_Texture = m_Sprites.at(m_CurrentSpriteId);
 }
