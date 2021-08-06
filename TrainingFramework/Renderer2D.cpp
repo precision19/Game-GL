@@ -7,6 +7,7 @@ Renderer2D::Renderer2D()
 	m_Shaders = ResourceManager::GetInstance()->GetShaders("Sprite");
 	m_Texture = NULL;
 	m_CurrentSpriteId = 0;
+	anim_cursor = 0;
 }
 
 void Renderer2D::SetTexture(int spriteId)
@@ -38,6 +39,12 @@ Matrix Renderer2D::GetWVP()
 
 void Renderer2D::Update(float deltaTime)
 {
+	anim_cursor += deltaTime;
+	if (anim_cursor)
+	{
+		m_CurrentSpriteId = (m_CurrentSpriteId + 1) % (m_Sprites.size());
+		anim_cursor = 0;
+	}
 	m_Texture = m_Sprites.at(m_CurrentSpriteId);
 }
 
