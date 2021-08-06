@@ -101,11 +101,6 @@ void Object::Draw()
 		return;
 
 	m_Model->Model::BindBuffer();
-	if (anim_cursor > 0.1)
-	{
-		currentFrameId = (currentFrameId + 1) % m_Textures.size();
-		anim_cursor = 0;
-	}
 	m_Textures.at(currentFrameId)->BindBuffer(0, TRUE);
 
 	m_Shaders->UseState();
