@@ -45,7 +45,17 @@ void Update ( ESContext *esContext, float deltaTime )
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 {
+	//printf("%d %c\n", bIsPressed, key);
 	Input::SetKeyPressed(key, bIsPressed);
+	if (key == 'J') {
+		if (bIsPressed) {
+			SceneManager::GetInstance()->jumpPressed = 1;
+		}
+		else {
+			SceneManager::GetInstance()->jumpPressed = 0;
+		}
+	}
+	//printf("%c\n", key);
 }
 
 void TouchActionDown(ESContext* esContext, int x, int y)

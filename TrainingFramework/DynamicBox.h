@@ -14,4 +14,5 @@ public:
 	void Init(b2World* world, Vector2 position, Vector2 dimension);
 	b2Body* getBody() { return body; }
 	b2Fixture* getFixture() { return fixture; }
+	void ApplyForce(Vector2);
 };

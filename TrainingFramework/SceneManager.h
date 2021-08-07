@@ -15,6 +15,7 @@ protected:
 
 	std::vector<Box*>m_boxes;
 public:
+	bool jumpPressed = 0;
 	static void CreateInstance();
 	static SceneManager* GetInstance();
 	static void DestroyInstance();
@@ -28,7 +29,7 @@ public:
 
 	void Draw();
 	void Update(float);
-
+	void Jump();
 	void DestroyAllObjects();
 	~SceneManager();
 };
