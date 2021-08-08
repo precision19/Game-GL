@@ -108,6 +108,7 @@ void SceneManager::AddPhysicsToScene()
 		else {
 			DynamicBox* dyBox = new DynamicBox();
 			dyBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y));
+			dyBox->setObj(m_vObjects[i]);
 			m_boxes.push_back(dyBox);
 			m_boxes[i]->SetDynamic(true);
 		}
@@ -136,15 +137,10 @@ void SceneManager::Update(float deltaTime)
 		if (m_boxes[i]->GetDynmaic()) {
 			DynamicBox* dyBox = (DynamicBox*)m_boxes[i];
 			// add force to player
-			if (jumpPressed && i==2) {
-				dyBox->getBody()->SetGravityScale(1);
-				dyBox->ApplyForce(Vector2(-2*dyBox->getBody()->GetMass() * m_world.get()->GetGravity().x, -2*dyBox->getBody()->GetMass() * m_world.get()->GetGravity().y));
+			if (jumpPressed && strncmp(m_vObjects[i]->type, "PLAYER", 6) == 0 ) {
+				dyBox->UpdatePlayer(m_world.get());
 			}
-			else {
-				dyBox->getBody()->SetGravityScale(1);
-				dyBox->ApplyForce(Vector2(dyBox->getBody()->GetMass()*m_world.get()->GetGravity().x, dyBox->getBody()->GetMass() * m_world.get()->GetGravity().y));
-			}
-			m_vObjects[i]->SetPosition(Vector3(dyBox->getBody()->GetPosition().x, dyBox->getBody()->GetPosition().y, m_vObjects[i]->GetPosition().z));
+			dyBox->Update(m_world.get());
 		}
 	}
 }
