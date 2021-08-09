@@ -21,8 +21,8 @@ public:
 	Vector3 GetPosition();
 	Vector2 GetDimension() { return m_Dimension; }
 
-	void Draw();
-	void Update(float);
+	virtual void Draw();
+	virtual void Update(float);
 
 	~Object();
 };

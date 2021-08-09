@@ -1,12 +1,32 @@
 #include "stdafx.h"
 #include "Player.h"
 
-void Player::CallBack0()
+Player::Player(int health, int life) : m_Health(health), m_Life(life)
 {
-	printf("Call Back 0");
+	isTouch = false;
 }
 
-void Player::CallBack1()
+Player::~Player()
 {
-	printf("Call Back 1");
+}
+
+void Player::Draw()
+{
+	if (isTouch)
+	{
+		m_Renderer->Draw();
+	}
+}
+
+void Player::Update(float deltaTime)
+{
+	if (!Input::GetTouch())
+	{
+		isTouch = false;
+	}
+	else
+	{
+		isTouch = true;
+	}
+	m_Renderer->Update(deltaTime);
 }

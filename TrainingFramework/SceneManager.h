@@ -7,6 +7,9 @@
 #include "Box.h"
 #include "GroundBox.h"
 #include "DynamicBox.h"
+#include "Player.h"
+#include "TreasureChest.h"
+
 
 class SceneManager
 {

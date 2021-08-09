@@ -117,6 +117,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Trap.cpp" />
+    <ClCompile Include="TreasureChest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box.h" />
@@ -141,6 +143,8 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Trap.h" />
+    <ClInclude Include="TreasureChest.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +157,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Textures\Chest\chest_00.tga" />
+    <Image Include="Textures\Chest\chest_01.tga" />
+    <Image Include="Textures\Chest\chest_02.tga" />
+    <Image Include="Textures\Chest\chest_03.tga" />
+    <Image Include="Textures\Chest\chest_04.tga" />
+    <Image Include="Textures\Chest\chest_05.tga" />
+    <Image Include="Textures\Chest\chest_06.tga" />
+    <Image Include="Textures\Chest\chest_07.tga" />
+    <Image Include="Textures\Circle_1.tga" />
+    <Image Include="Textures\DEAD\Circle_idle_001.tga" />
     <Image Include="Textures\DEAD\Dead__0.tga" />
     <Image Include="Textures\DEAD\Dead__1.tga" />
     <Image Include="Textures\DEAD\Dead__2.tga" />

@@ -60,9 +60,6 @@
     <ClCompile Include="Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -82,6 +79,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DynamicBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Trap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TreasureChest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -131,9 +137,6 @@
     <ClInclude Include="Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -155,6 +158,15 @@
     <ClInclude Include="DynamicBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Trap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TreasureChest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Readme.doc" />
@@ -170,5 +182,15 @@
     <Image Include="Textures\DEAD\Dead__7.tga" />
     <Image Include="Textures\DEAD\Dead__8.tga" />
     <Image Include="Textures\Idle__000.tga" />
+    <Image Include="Textures\DEAD\Circle_idle_001.tga" />
+    <Image Include="Textures\Circle_1.tga" />
+    <Image Include="Textures\Chest\chest_00.tga" />
+    <Image Include="Textures\Chest\chest_01.tga" />
+    <Image Include="Textures\Chest\chest_02.tga" />
+    <Image Include="Textures\Chest\chest_03.tga" />
+    <Image Include="Textures\Chest\chest_04.tga" />
+    <Image Include="Textures\Chest\chest_05.tga" />
+    <Image Include="Textures\Chest\chest_06.tga" />
+    <Image Include="Textures\Chest\chest_07.tga" />
   </ItemGroup>
 </Project>

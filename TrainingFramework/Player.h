@@ -1,8 +1,24 @@
 #pragma once
 #include "Component.h"
-class Player : public Component
+#include "Object.h"
+
+enum{
+	Run,
+	Jump
+};
+
+class Player : public Object
 {
-	void CallBack0();
-	void CallBack1();
+public:
+	int m_Health;
+	int m_Life;
+	bool isTouch;
+
+	void Navigation(); // chuyen huong di chuyen
+	void Draw();
+	void Update(float);
+
+	Player(int health, int life);
+	~Player();
 };
 
