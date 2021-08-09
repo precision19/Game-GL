@@ -25,6 +25,7 @@ void SceneManager::DestroyInstance()
 
 SceneManager::SceneManager() { }
 
+
 void SceneManager::LoadScene(string sceneName)
 {
 	DestroyAllObjects();
@@ -114,6 +115,7 @@ void SceneManager::AddPhysicsToScene()
 	//make the ground
 	b2Vec2 gravity(0.0f, -10.0f);
 	m_world = std::make_unique<b2World>(gravity);
+	m_world.get()->SetGravity(b2Vec2(0.0f, -10.0f));
 	for (int i = 0; i < m_vObjects.size(); i++) {
 		if (strncmp(m_vObjects[i]->type, "GROUND", 6) == 0) {
 			GroundBox* grBox = new GroundBox();
@@ -124,6 +126,7 @@ void SceneManager::AddPhysicsToScene()
 		else {
 			DynamicBox* dyBox = new DynamicBox();
 			dyBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y));
+			dyBox->setObj(m_vObjects[i]);
 			m_boxes.push_back(dyBox);
 			m_boxes[i]->SetDynamic(true);
 		}
@@ -140,18 +143,22 @@ void SceneManager::Draw()
 
 void SceneManager::Update(float deltaTime)
 {
-
+	//printf("%d\n", jumpPressed);
 	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
 	{
 		(*it)->Update(deltaTime);
 	}
-	m_world->Step(deltaTime, 60, 20);
+	m_world->Step(deltaTime, 6, 2);
 
 	for (int i = 0; i < m_boxes.size(); i++) 
 	{
 		if (m_boxes[i]->GetDynmaic()) {
 			DynamicBox* dyBox = (DynamicBox*)m_boxes[i];
-			m_vObjects[i]->SetPosition(Vector3(dyBox->getBody()->GetPosition().x, dyBox->getBody()->GetPosition().y, m_vObjects[i]->GetPosition().z));
+			// add force to player
+			if (jumpPressed && strncmp(m_vObjects[i]->type, "PLAYER", 6) == 0 ) {
+				dyBox->UpdatePlayer(m_world.get());
+			}
+			dyBox->Update(m_world.get());
 		}
 	}
 }
