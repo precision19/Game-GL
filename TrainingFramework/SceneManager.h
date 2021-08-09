@@ -9,13 +9,14 @@
 #include "DynamicBox.h"
 #include "Player.h"
 #include "TreasureChest.h"
+#include "MyContactListener.h"
 
 
 class SceneManager
 {
 protected:
 	static SceneManager* ms_Instance;
-
+	MyContactListener* myContactListenerInstance;
 	std::vector<Box*>m_boxes;
 public:
 	bool jumpPressed = 0;

@@ -8,11 +8,16 @@ DynamicBox::~DynamicBox() {
 
 }
 
-void DynamicBox::Init(b2World* world, Vector2 position, Vector2 dimension) {
+void DynamicBox::Init(b2World* world, Vector2 position, Vector2 dimension, Object* obj) {
 	//make the body
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(position.x, position.y);
+
+	b2BodyUserData bdt;
+	bdt.pointer = (uintptr_t)obj;
+	bodyDef.userData = bdt;
+
 	body = world->CreateBody(&bodyDef);
 	b2CircleShape circleShape;
 	circleShape.m_radius = min(dimension.x / 2.0f, dimension.y / 2.0f);
@@ -31,6 +36,7 @@ void DynamicBox::ApplyForce(Vector2 direction) {
 
 void DynamicBox::Update(b2World* m_world) {
 	ApplyForce(Vector2(body->GetMass() * m_world->GetGravity().x, body->GetMass() * m_world->GetGravity().y));
+	Object* obj = (Object*)body->GetUserData().pointer;
 	obj->SetPosition(Vector3(body->GetPosition().x, body->GetPosition().y, obj->GetPosition().z));
 	if (strncmp(obj->type, "PLAYER", 6) == 0) {
 		ApplyForce(Vector2(-body->GetMass() * m_world->GetGravity().y, body->GetMass() * m_world->GetGravity().x));

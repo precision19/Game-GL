@@ -3,13 +3,14 @@
 
 Object::Object()
 {
+	m_contacting = false;
 }
 
 void Object::SetNativeSize()
 {
 	Vector3 size = m_Renderer->GetSize();
 	m_Dimension = Vector2(size.x, size.y);
-	printf("%f %f\n", m_Dimension.x, m_Dimension.y);
+	//printf("%f %f\n", m_Dimension.x, m_Dimension.y);
 }
 
 void Object::SetPosition(Vector3 position)
@@ -41,6 +42,7 @@ void Object::SetRenderer(int id)
 void Object::Draw()
 {
 	m_Renderer->Draw();
+	if (m_contacting)printf("Collision of %s\n", this->type);
 }
 
 void Object::Update(float deltaTime)
