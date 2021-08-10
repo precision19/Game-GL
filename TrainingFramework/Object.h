@@ -9,7 +9,7 @@ protected:
 	Vector2 m_Dimension;
 	Transform transform;
 	Renderer* m_Renderer;
-	int m_contacting;
+	int ID;
 public:
 	char type[10];
 	Object();
@@ -25,8 +25,8 @@ public:
 	virtual void Draw();
 	virtual void Update(float);
 
-	void StartContact() { m_contacting++; };
-	void EndContact() { m_contacting--; };
+	int GetID() { return ID; };
+	void SetID(int objID) { ID = objID; };
 
 	~Object();
 };

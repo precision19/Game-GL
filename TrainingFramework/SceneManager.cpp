@@ -67,8 +67,8 @@ void SceneManager::LoadScene(string sceneName)
 		fscanf(f, "ID %d\n", &id);
 		if (id != i)
 			printf("WARNING: Object's ID is not correct");
-
 		Object* object = new Object();
+		object->SetID(id);
 		memset(type, 0, sizeof(type));
 		fscanf(f, "TYPE %s\n", type);
 		strcpy(object->type, type);
@@ -168,6 +168,8 @@ void SceneManager::Update(float deltaTime)
 			dyBox->Update(m_world.get());
 		}
 	}
+
+	ContactManager::GetInstance()->HandleContact(m_vObjects);
 }
 
 void SceneManager::DestroyAllObjects()

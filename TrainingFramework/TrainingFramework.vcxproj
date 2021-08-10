@@ -97,6 +97,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="ContactManager.cpp" />
     <ClCompile Include="CubeTexture.cpp" />
     <ClCompile Include="DynamicBox.cpp" />
     <ClCompile Include="GroundBox.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ContactManager.h" />
     <ClInclude Include="CubeTexture.h" />
     <ClInclude Include="DynamicBox.h" />
     <ClInclude Include="Globals.h" />

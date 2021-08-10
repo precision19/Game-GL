@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "TreasureChest.h"
 #include "MyContactListener.h"
+#include "ContactManager.h"
 
 
 class SceneManager

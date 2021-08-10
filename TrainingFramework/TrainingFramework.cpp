@@ -6,6 +6,7 @@
 #include "Globals.h"
 #include <conio.h>
 #include "SceneManager.h"
+#include "ContactManager.h"
 #include "Input.h"
 
 int Init ( ESContext *esContext )
@@ -22,6 +23,8 @@ int Init ( ESContext *esContext )
 	SceneManager::CreateInstance();
 	SceneManager::GetInstance()->LoadScene("Level1");
 	SceneManager::GetInstance()->AddPhysicsToScene();
+
+	ContactManager::CreateInstance();
 
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
@@ -85,6 +88,7 @@ void CleanUp()
 	ResourceManager::DestroyInstance();
 	PrefabManager::DestroyInstance();
 	SceneManager::DestroyInstance();
+	ContactManager::DestroyInstance();
 }
 
 int _tmain(int argc, _TCHAR* argv[])

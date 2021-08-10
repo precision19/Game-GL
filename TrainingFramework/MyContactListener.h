@@ -1,6 +1,7 @@
 #pragma once
 #include "box2d/box2d.h"
 #include "DynamicBox.h"
+#include "ContactManager.h"
 class MyContactListener:public b2ContactListener
 {
 public:
