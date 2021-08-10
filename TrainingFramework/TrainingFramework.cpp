@@ -8,6 +8,7 @@
 #include "SceneManager.h"
 #include "ContactManager.h"
 #include "Input.h"
+#include "Physic.h"
 
 int Init ( ESContext *esContext )
 {
@@ -22,6 +23,7 @@ int Init ( ESContext *esContext )
 
 	SceneManager::CreateInstance();
 	SceneManager::GetInstance()->LoadScene("Level1");
+	Physic::CreateInstance();
 	SceneManager::GetInstance()->AddPhysicsToScene();
 
 	ContactManager::CreateInstance();
@@ -52,10 +54,10 @@ void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 	Input::SetKeyPressed(key, bIsPressed);
 	if (key == 'J') {
 		if (bIsPressed) {
-			SceneManager::GetInstance()->jumpPressed = 1;
+			Physic::GetInstance()->jumpPressed = 1;
 		}
 		else {
-			SceneManager::GetInstance()->jumpPressed = 0;
+			Physic::GetInstance()->jumpPressed = 0;
 		}
 	}
 	//printf("%c\n", key);
@@ -89,6 +91,7 @@ void CleanUp()
 	PrefabManager::DestroyInstance();
 	SceneManager::DestroyInstance();
 	ContactManager::DestroyInstance();
+	Physic::DestroyInstance();
 }
 
 int _tmain(int argc, _TCHAR* argv[])

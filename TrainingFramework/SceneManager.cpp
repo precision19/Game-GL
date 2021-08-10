@@ -89,55 +89,12 @@ void SceneManager::LoadScene(string sceneName)
 		m_vObjects.push_back(object);
 	}
 
-	//Object* player = new Player(100, 3);
-	//strcpy(player->type, "player");
-	//player->SetPosition(Vector3(600, 300, 1));
-	//player->SetRotation(Vector3(0 ,0 ,0));
-	//player->SetScale(Vector3(1, 1, 1));
-	//player->SetRenderer(4);
-	//player->SetNativeSize();
-	//m_vObjects.push_back(player);
-
-	//Object* chest = new TreasureChest();
-	//strcpy(chest->type, "GROUND");
-	//chest->SetPosition(Vector3(300, 400, 1));
-	//chest->SetRotation(Vector3(0, 0, 0));
-	//chest->SetScale(Vector3(3, 3, 1));
-	//chest->SetRenderer(2);
-	//chest->SetNativeSize();
-	//m_vObjects.push_back(chest);
-
 	fclose(f);
 }
 
 void SceneManager::AddPhysicsToScene()
 {
-	//make the ground
-	b2Vec2 gravity(0.0f, -10.0f);
-	m_world = std::make_unique<b2World>(gravity);
-	m_world.get()->SetGravity(b2Vec2(0.0f, -10.0f));
-
-	for (int i = 0; i < m_vObjects.size(); i++) {
-		if (strncmp(m_vObjects[i]->type, "GROUND", 6) == 0) {
-			GroundBox* grBox = new GroundBox();
-			grBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y), m_vObjects[i]);
-			m_boxes.push_back(grBox);
-			m_boxes[i]->SetDynamic(false);
-		}
-		else {
-			DynamicBox* dyBox = new DynamicBox();
-			dyBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y), m_vObjects[i]);
-			/*dyBox->setObj(m_vObjects[i]);*/
-			m_boxes.push_back(dyBox);
-			m_boxes[i]->SetDynamic(true);
-		}
-	}
-
-
-	//at global scope
-	myContactListenerInstance = new MyContactListener();
-	////in FooTest constructor
-	m_world.get()->SetContactListener(myContactListenerInstance);
+	Physic::GetInstance()->InitBox(m_vObjects);
 }
 
 void SceneManager::Draw()
@@ -150,26 +107,11 @@ void SceneManager::Draw()
 
 void SceneManager::Update(float deltaTime)
 {
-	//printf("%d\n", jumpPressed);
 	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
 	{
 		(*it)->Update(deltaTime);
 	}
-	m_world.get()->Step(deltaTime, 6, 2);
-
-	for (int i = 0; i < m_boxes.size(); i++) 
-	{
-		if (m_boxes[i]->GetDynmaic()) {
-			DynamicBox* dyBox = (DynamicBox*)m_boxes[i];
-			// add force to player
-			if (jumpPressed && strncmp(m_vObjects[i]->type, "PLAYER", 6) == 0 ) {
-				dyBox->UpdatePlayer(m_world.get());
-			}
-			dyBox->Update(m_world.get());
-		}
-	}
-
-	ContactManager::GetInstance()->HandleContact(m_vObjects);
+	Physic::GetInstance()->Update(deltaTime, m_vObjects);
 }
 
 void SceneManager::DestroyAllObjects()
@@ -178,14 +120,10 @@ void SceneManager::DestroyAllObjects()
 	{
 		delete (*it);
 	}
-	for (int i = 0; i < m_boxes.size(); i++) {
-		delete m_boxes[i];
-	}
 	m_vObjects.clear();
 }
 
 SceneManager::~SceneManager()
 {
 	DestroyAllObjects();
-	delete myContactListenerInstance;
 }

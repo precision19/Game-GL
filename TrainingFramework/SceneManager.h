@@ -11,6 +11,7 @@
 #include "TreasureChest.h"
 #include "MyContactListener.h"
 #include "ContactManager.h"
+#include "Physic.h"
 
 
 class SceneManager
@@ -18,23 +19,18 @@ class SceneManager
 protected:
 	static SceneManager* ms_Instance;
 	MyContactListener* myContactListenerInstance;
-	std::vector<Box*>m_boxes;
 public:
-	bool jumpPressed = 0;
 	static void CreateInstance();
 	static SceneManager* GetInstance();
 	static void DestroyInstance();
 
 	vector<Object*> m_vObjects;
-	std::unique_ptr<b2World>m_world;
 
 	SceneManager();
 	void LoadScene(string);
 	void AddPhysicsToScene();
-
 	void Draw();
 	void Update(float);
-	void Jump();
 	void DestroyAllObjects();
 	~SceneManager();
 };

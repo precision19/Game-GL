@@ -105,6 +105,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="MyContactListener.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Physic.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PrefabManager.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="MyContactListener.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Physic.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PrefabManager.h" />
     <ClInclude Include="Renderer.h" />
