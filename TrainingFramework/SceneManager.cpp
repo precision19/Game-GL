@@ -116,21 +116,28 @@ void SceneManager::AddPhysicsToScene()
 	b2Vec2 gravity(0.0f, -10.0f);
 	m_world = std::make_unique<b2World>(gravity);
 	m_world.get()->SetGravity(b2Vec2(0.0f, -10.0f));
+
 	for (int i = 0; i < m_vObjects.size(); i++) {
 		if (strncmp(m_vObjects[i]->type, "GROUND", 6) == 0) {
 			GroundBox* grBox = new GroundBox();
-			grBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y));
+			grBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y), m_vObjects[i]);
 			m_boxes.push_back(grBox);
 			m_boxes[i]->SetDynamic(false);
 		}
 		else {
 			DynamicBox* dyBox = new DynamicBox();
-			dyBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y));
-			dyBox->setObj(m_vObjects[i]);
+			dyBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y), m_vObjects[i]);
+			/*dyBox->setObj(m_vObjects[i]);*/
 			m_boxes.push_back(dyBox);
 			m_boxes[i]->SetDynamic(true);
 		}
 	}
+
+
+	//at global scope
+	myContactListenerInstance = new MyContactListener();
+	////in FooTest constructor
+	m_world.get()->SetContactListener(myContactListenerInstance);
 }
 
 void SceneManager::Draw()
@@ -148,7 +155,7 @@ void SceneManager::Update(float deltaTime)
 	{
 		(*it)->Update(deltaTime);
 	}
-	m_world->Step(deltaTime, 6, 2);
+	m_world.get()->Step(deltaTime, 6, 2);
 
 	for (int i = 0; i < m_boxes.size(); i++) 
 	{
@@ -178,4 +185,5 @@ void SceneManager::DestroyAllObjects()
 SceneManager::~SceneManager()
 {
 	DestroyAllObjects();
+	delete myContactListenerInstance;
 }

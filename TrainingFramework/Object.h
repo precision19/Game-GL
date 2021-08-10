@@ -9,6 +9,7 @@ protected:
 	Vector2 m_Dimension;
 	Transform transform;
 	Renderer* m_Renderer;
+	int m_contacting;
 public:
 	char type[10];
 	Object();
@@ -23,6 +24,9 @@ public:
 
 	virtual void Draw();
 	virtual void Update(float);
+
+	void StartContact() { m_contacting++; };
+	void EndContact() { m_contacting--; };
 
 	~Object();
 };
