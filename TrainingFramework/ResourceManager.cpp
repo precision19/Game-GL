@@ -57,7 +57,7 @@ void ResourceManager::LoadResource(string sceneName)
 	for (int i = 0; i < amount; i++)
 	{
 		char wrap[20], filterMin[20], filterMag[20];
-		fscanf(f, "%s %s %s\t%s\n", wrap, filterMin, filterMag, name);
+		fscanf(f, "%s %s\t%s %s %s\n", keyword, name, wrap, filterMin, filterMag);
 		Texture* texture = new Texture(name, wrap, filterMin, filterMag);
 		m_Textures.push_back(texture);
 	}

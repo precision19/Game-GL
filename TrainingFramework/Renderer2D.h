@@ -11,8 +11,10 @@ protected:
 	float m_animationCurrent;
 public:
 	Renderer2D();
+	Renderer2D* Clone();
 	void SetTexture(int);
 	void SetTexture(string);
+	void SetFramePerSec(int);
 	float GetFramePerSecond();
 	Vector3 GetSize();
 	Matrix GetWVP();

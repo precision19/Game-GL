@@ -72,7 +72,7 @@ void PrefabManager::LoadPrefabs(string sceneName)
 		}
 
 		int amount2;
-		fscanf(f, "AMOUNT_OF_TEXTURES %d\n", &amount2);
+		fscanf(f, "AMOUNT_OF_TEXTURES %d\t", &amount2);
 
 		for (int j = 0; j < amount2; j++)
 		{
@@ -92,7 +92,8 @@ void PrefabManager::LoadPrefabs(string sceneName)
 		{
 			int frameRate;
 			fscanf(f, "FRAME_RATE %d\n", &frameRate);
-			renderer->SetFramePerSec(frameRate);
+			
+			((Renderer2D*)renderer)->SetFramePerSec(frameRate);
 		}
 		m_Renderers.push_back(renderer);
 	}
@@ -103,10 +104,10 @@ Renderer* PrefabManager::GetRenderer(int id)
 {
 	if (id < 0 || id >= m_Renderers.size())
 	{
-		printf("ERROR:");
+		printf("ERROR: can not find renderer");
 		return NULL;
 	}
-	return m_Renderers.at(id);
+	return m_Renderers.at(id)->Clone();
 }
 
 void PrefabManager::DestroyAllPrefab()

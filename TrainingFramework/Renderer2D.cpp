@@ -11,6 +11,17 @@ Renderer2D::Renderer2D()
 	m_FramePerSec = 0;
 }
 
+Renderer2D* Renderer2D::Clone()
+{
+	Renderer2D* result = new Renderer2D();
+	result->m_Texture = m_Texture;
+	result->m_Sprites = m_Sprites;
+	result->m_CurrentSpriteId = m_CurrentSpriteId;
+	result->m_animationCurrent = m_animationCurrent;
+	result->m_FramePerSec = m_FramePerSec;
+	return result;
+}
+
 void Renderer2D::SetTexture(int spriteId)
 {
 	m_Sprites.push_back(ResourceManager::GetInstance()->GetTexture(spriteId));
@@ -25,9 +36,14 @@ void Renderer2D::SetTexture(string spriteName)
 		m_Texture = m_Sprites.at(0);
 }
 
+void Renderer2D::SetFramePerSec(int framePerSec)
+{
+	m_FramePerSec = framePerSec;
+}
+
 float Renderer2D::GetFramePerSecond()
 {
-	m_FramePerSec = Renderer::m_FramePerSec;
+	m_FramePerSec = m_FramePerSec;
 	return 1 / m_FramePerSec;
 }
 

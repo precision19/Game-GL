@@ -66,8 +66,6 @@ void Camera::SetProjectionMatrix()
 	else
 	{
 		m_Projection.SetOrtho((float)Globals::screenWidth, (float)Globals::screenHeight, m_Near, m_Far);
-		m_Position = Vector3(Globals::screenWidth / 2, Globals::screenHeight / 2, m_Position.z);
-		m_Target = Vector3(Globals::screenWidth / 2, Globals::screenHeight / 2, 0);
 	}
 }
 

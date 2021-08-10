@@ -89,23 +89,23 @@ void SceneManager::LoadScene(string sceneName)
 		m_vObjects.push_back(object);
 	}
 
-	Object* player = new Player(100, 3);
-	strcpy(player->type, "player");
-	player->SetPosition(Vector3(600, 300, 1));
-	player->SetRotation(Vector3(0 ,0 ,0));
-	player->SetScale(Vector3(1, 1, 1));
-	player->SetRenderer(4);
-	player->SetNativeSize();
-	m_vObjects.push_back(player);
+	//Object* player = new Player(100, 3);
+	//strcpy(player->type, "player");
+	//player->SetPosition(Vector3(600, 300, 1));
+	//player->SetRotation(Vector3(0 ,0 ,0));
+	//player->SetScale(Vector3(1, 1, 1));
+	//player->SetRenderer(4);
+	//player->SetNativeSize();
+	//m_vObjects.push_back(player);
 
-	Object* chest = new TreasureChest();
-	strcpy(chest->type, "GROUND");
-	chest->SetPosition(Vector3(300, 400, 1));
-	chest->SetRotation(Vector3(0, 0, 0));
-	chest->SetScale(Vector3(3, 3, 1));
-	chest->SetRenderer(2);
-	chest->SetNativeSize();
-	m_vObjects.push_back(chest);
+	//Object* chest = new TreasureChest();
+	//strcpy(chest->type, "GROUND");
+	//chest->SetPosition(Vector3(300, 400, 1));
+	//chest->SetRotation(Vector3(0, 0, 0));
+	//chest->SetScale(Vector3(3, 3, 1));
+	//chest->SetRenderer(2);
+	//chest->SetNativeSize();
+	//m_vObjects.push_back(chest);
 
 	fclose(f);
 }

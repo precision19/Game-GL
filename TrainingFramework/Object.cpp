@@ -3,6 +3,7 @@
 
 Object::Object()
 {
+	transform = Transform();
 }
 
 void Object::SetNativeSize()
@@ -50,5 +51,6 @@ void Object::Update(float deltaTime)
 
 Object::~Object()
 {
+	delete m_Renderer;
 	m_Renderer = NULL;
 }

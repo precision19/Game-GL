@@ -13,6 +13,15 @@ Renderer::Renderer()
 	m_Shaders = NULL;
 }
 
+Renderer* Renderer::Clone()
+{
+	Renderer* result = new Renderer();
+	result->m_Model = m_Model;
+	result->m_Texture = m_Texture;
+	result->m_Shaders = m_Shaders;
+	return result;
+}
+
 void Renderer::SetModel(int id)
 {
 	m_Model = ResourceManager::GetInstance()->GetModel(id);
@@ -31,11 +40,6 @@ void Renderer::SetTexture(int id)
 void Renderer::SetTexture(string name)
 {
 	m_Texture = ResourceManager::GetInstance()->GetTexture(name);
-}
-
-void Renderer::SetFramePerSec(int framePerSec)
-{
-	m_FramePerSec = framePerSec;
 }
 
 void Renderer::SetShaders(int id)
