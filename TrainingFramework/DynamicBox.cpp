@@ -38,7 +38,7 @@ void DynamicBox::Update(b2World* m_world) {
 	ApplyForce(Vector2(body->GetMass() * m_world->GetGravity().x, body->GetMass() * m_world->GetGravity().y));
 	Object* obj = (Object*)body->GetUserData().pointer;
 	obj->SetPosition(Vector3(body->GetPosition().x, body->GetPosition().y, obj->GetPosition().z));
-	if (strncmp(obj->type, "PLAYER", 6) == 0) {
+	if (obj->type == PLAYER) {
 		ApplyForce(Vector2(-body->GetMass() * m_world->GetGravity().y, body->GetMass() * m_world->GetGravity().x));
 	}
 }

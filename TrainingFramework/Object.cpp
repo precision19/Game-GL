@@ -12,7 +12,7 @@ void Object::SetNativeSize(int k)
 	if (currentAnim == k)
 	{
 		Vector3 size = m_Renderer.at(k)->GetSize();		
-		m_Dimension = Vector2(size.x, size.y);
+		//printf("%f %f\n", size.x, size.y);
 
 	}
 }

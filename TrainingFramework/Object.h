@@ -2,6 +2,13 @@
 #include "../Utilities/utilities.h"
 #include "Renderer2D.h"
 #include "PrefabManager.h"
+#include <map>
+
+enum Type
+{
+	GROUND,
+	PLAYER
+};
 
 class Object
 {
@@ -10,11 +17,10 @@ protected:
 	Transform transform;
 	vector<Renderer*> m_Renderer;
 	int ID;
-	
 public:
 	int currentAnim;
 	int i;
-	char type[10];
+	Type type;
 	Object();
 	void SetDimension(Vector2 dimen) { m_Dimension = dimen; }
 	void SetPosition(Vector3);
@@ -26,7 +32,6 @@ public:
 	Vector3 GetPosition();
 	Vector2 GetDimension() { return m_Dimension; }
 
-	void Jump();
 	virtual void Draw();
 	virtual void Update(float);
 	virtual void SetCurrentAnimation(int);
