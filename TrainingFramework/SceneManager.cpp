@@ -84,10 +84,21 @@ void SceneManager::LoadScene(string sceneName)
 		fscanf(f, "RENDERER %d\n", &id);
 		object->SetRenderer(id);
 
-		object->SetNativeSize();
+		object->SetNativeSize(0);
 
 		m_vObjects.push_back(object);
 	}
+
+	Object* player = new Player(100, 3);
+	strcpy(player->type,"PLAYER");
+	player->SetPosition(Vector3(50, 300, 1));
+	player->SetRotation(Vector3(0, 0, 0));
+	player->SetScale(Vector3(1, 1, 1));
+	player->SetRenderer(2);
+	player->SetNativeSize(0);
+	player->SetRenderer(3);
+	player->SetNativeSize(1);
+	m_vObjects.push_back(player);
 
 	fclose(f);
 }

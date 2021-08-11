@@ -11,10 +11,10 @@ TreasureChest::~TreasureChest()
 
 void TreasureChest::Draw()
 {
-	m_Renderer->Draw();
+	m_Renderer.at(0)->Draw();
 }
 
 void TreasureChest::Update(float deltaTime)
 {
-	m_Renderer->Update(deltaTime);
+	m_Renderer.at(0)->Update(deltaTime);
 }

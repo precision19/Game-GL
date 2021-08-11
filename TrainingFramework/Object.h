@@ -8,9 +8,12 @@ class Object
 protected:
 	Vector2 m_Dimension;
 	Transform transform;
-	Renderer* m_Renderer;
+	vector<Renderer*> m_Renderer;
 	int ID;
+	
 public:
+	int currentAnim;
+	int i;
 	char type[10];
 	Object();
 	void SetDimension(Vector2 dimen) { m_Dimension = dimen; }
@@ -18,10 +21,11 @@ public:
 	void SetScale(Vector3);
 	void SetRotation(Vector3);
 	void SetRenderer(int);
-	void SetNativeSize();
+	void SetNativeSize(int);
 	Vector3 GetPosition();
 	Vector2 GetDimension() { return m_Dimension; }
 
+	void Jump();
 	virtual void Draw();
 	virtual void Update(float);
 

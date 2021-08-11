@@ -3,12 +3,18 @@
 
 Object::Object()
 {
+	currentAnim = 0;
+	i = 0;
 }
 
-void Object::SetNativeSize()
+void Object::SetNativeSize(int k)
 {
-	Vector3 size = m_Renderer->GetSize();
-	m_Dimension = Vector2(size.x, size.y);
+	if (currentAnim == k)
+	{
+		Vector3 size = m_Renderer.at(k)->GetSize();		
+		m_Dimension = Vector2(size.x, size.y);
+
+	}
 }
 
 void Object::SetPosition(Vector3 position)
@@ -33,22 +39,27 @@ void Object::SetRotation(Vector3 rotation)
 
 void Object::SetRenderer(int id)
 {
-	m_Renderer = PrefabManager::GetInstance()->GetRenderer(id);
-	m_Renderer->SetTransform(&transform);
+	m_Renderer.push_back(PrefabManager::GetInstance()->GetRenderer(id));
+	m_Renderer.at(i)->SetTransform(&transform);
+	++i;
 }
 
 void Object::Draw()
 {
-	m_Renderer->Draw();
+	m_Renderer.at(currentAnim)->Draw();
 }
 
 void Object::Update(float deltaTime)
 {
-	m_Renderer->Update(deltaTime);
+	m_Renderer.at(currentAnim)->Update(deltaTime);
 }
 
 Object::~Object()
 {
-	delete m_Renderer;
-	m_Renderer = NULL;
+	for (int i = 0; i < m_Renderer.size(); i++)
+	{
+		delete m_Renderer.at(i);
+	}
+	m_Renderer.clear();
+
 }
