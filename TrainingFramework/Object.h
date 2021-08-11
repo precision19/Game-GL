@@ -22,12 +22,14 @@ public:
 	void SetRotation(Vector3);
 	void SetRenderer(int);
 	void SetNativeSize(int);
+	
 	Vector3 GetPosition();
 	Vector2 GetDimension() { return m_Dimension; }
 
 	void Jump();
 	virtual void Draw();
 	virtual void Update(float);
+	virtual void SetCurrentAnimation(int);
 
 	int GetID() { return ID; };
 	void SetID(int objID) { ID = objID; };

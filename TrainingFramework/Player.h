@@ -9,6 +9,7 @@ public:
 	int m_Health;
 	int m_Life;
 
+	void SetCurrentAnimation();
 	void Draw();
 	void Update(float);
 

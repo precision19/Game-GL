@@ -17,6 +17,19 @@ void Object::SetNativeSize(int k)
 	}
 }
 
+void Object::SetCurrentAnimation(int keys)
+{
+	if (VK_SPACE)
+	{
+		currentAnim = 1;
+	}
+	else
+	{
+		currentAnim = 0;
+	}
+
+}
+
 void Object::SetPosition(Vector3 position)
 {
 	transform.position = position;
