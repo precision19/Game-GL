@@ -8,7 +8,8 @@ enum Type
 {
 	GROUND,
 	PLAYER,
-	NONE
+	NONE,
+	SENSOR
 };
 
 class Object

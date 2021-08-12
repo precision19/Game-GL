@@ -83,6 +83,9 @@ void SceneManager::LoadScene(string sceneName)
 		if (strncmp(type, "NONE", 6) == 0) {
 			object->type = NONE;
 		}
+		if (strncmp(type, "SENSOR", 6) == 0) {
+			object->type = SENSOR;
+		}
 		fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
 		object->SetPosition(Vector3(x, y, z));
 

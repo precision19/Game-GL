@@ -26,6 +26,7 @@ void DynamicBox::Init(b2World* world, Vector2 position, Vector2 dimension, Objec
 	fixtureDef.shape = &circleShape;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.3f;
+	//fixtureDef.isSensor = true;
 	if (obj->type == PLAYER) {
 		fixtureDef.filter.maskBits = MASK_PLAYER;
 		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
