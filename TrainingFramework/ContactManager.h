@@ -2,6 +2,7 @@
 #include <map>
 #include "Object.h"
 using namespace std;
+
 class ContactManager
 {
 private:

@@ -18,6 +18,21 @@ void GroundBox::Init(b2World* world, Vector2 position, Vector2 dimension, Object
 	//make the ground fixture
 	b2PolygonShape groundBox;
 	groundBox.SetAsBox(dimension.x/2.0f, dimension.y/2.0f);
-	printf("%f %f\n", dimension.x, dimension.y);
-	groundBody->CreateFixture(&groundBox, 0.0f);
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &groundBox;
+	fixtureDef.density = 0.0f;
+	if (obj->type == GROUND) {
+		fixtureDef.filter.categoryBits = CATEGORY_GROUND;
+		fixtureDef.filter.categoryBits = MASK_GROUND;
+	}
+	if (obj->type == NONE) {
+		fixtureDef.filter.categoryBits = CATEGORY_NONE;
+		fixtureDef.filter.categoryBits = MASK_NONE;
+	}
+	if (obj->type == SENSOR) {
+		fixtureDef.filter.categoryBits = CATEGORY_SENSOR;
+		fixtureDef.filter.categoryBits = MASK_SENSOR;
+		fixtureDef.isSensor = true;
+	}
+	groundBody->CreateFixture(&fixtureDef);
 }

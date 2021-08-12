@@ -1,13 +1,8 @@
 #pragma once
 #include "PrefabManager.h"
 #include "box2d/box2d.h"
-#include "Box.h"
-#include "GroundBox.h"
-#include "DynamicBox.h"
 #include "Player.h"
 #include "TreasureChest.h"
-#include "MyContactListener.h"
-#include "ContactManager.h"
 #include "Physic.h"
 #include "MenuState.h"
 #include "MapState.h"

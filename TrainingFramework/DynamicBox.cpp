@@ -17,7 +17,7 @@ void DynamicBox::Init(b2World* world, Vector2 position, Vector2 dimension, Objec
 	b2BodyUserData bdt;
 	bdt.pointer = (uintptr_t)obj;
 	bodyDef.userData = bdt;
-
+		
 	body = world->CreateBody(&bodyDef);
 	b2CircleShape circleShape;
 	circleShape.m_radius = min(dimension.x / 2.0f, dimension.y / 2.0f);
@@ -26,7 +26,11 @@ void DynamicBox::Init(b2World* world, Vector2 position, Vector2 dimension, Objec
 	fixtureDef.shape = &circleShape;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.3f;
-	body->SetGravityScale(1000);
+	//fixtureDef.isSensor = true;
+	if (obj->type == PLAYER) {
+		fixtureDef.filter.maskBits = MASK_PLAYER;
+		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
+	}
 	fixture = body->CreateFixture(&fixtureDef);
 }
 
@@ -38,7 +42,7 @@ void DynamicBox::Update(b2World* m_world) {
 	ApplyForce(Vector2(body->GetMass() * m_world->GetGravity().x, body->GetMass() * m_world->GetGravity().y));
 	Object* obj = (Object*)body->GetUserData().pointer;
 	obj->SetPosition(Vector3(body->GetPosition().x, body->GetPosition().y, obj->GetPosition().z));
-	if (strncmp(obj->type, "PLAYER", 6) == 0) {
+	if (obj->type == PLAYER) {
 		ApplyForce(Vector2(-body->GetMass() * m_world->GetGravity().y, body->GetMass() * m_world->GetGravity().x));
 	}
 }

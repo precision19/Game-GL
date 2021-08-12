@@ -33,7 +33,7 @@ void Physic::InitBox(vector<Object*>& m_vObjects) {
 	m_world.get()->SetContactListener(myContactListenerInstance);
 
 	for (int i = 0; i < SceneManager::GetInstance()->m_vObjects.size(); i++) {
-		if (strncmp(SceneManager::GetInstance()->m_vObjects[i]->type, "GROUND", 6) == 0) {
+		if (SceneManager::GetInstance()->m_vObjects[i]->type == GROUND || SceneManager::GetInstance()->m_vObjects[i]->type == NONE || SceneManager::GetInstance()->m_vObjects[i]->type == SENSOR) {
 			GroundBox* grBox = new GroundBox();
 			grBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y), m_vObjects[i]);
 			m_boxes.push_back(grBox);
@@ -42,7 +42,6 @@ void Physic::InitBox(vector<Object*>& m_vObjects) {
 		else {
 			DynamicBox* dyBox = new DynamicBox();
 			dyBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y), m_vObjects[i]);
-			/*dyBox->setObj(m_vObjects[i]);*/
 			m_boxes.push_back(dyBox);
 			m_boxes[i]->SetDynamic(true);
 		}
@@ -57,13 +56,12 @@ void Physic::Update(float deltaTime, vector<Object*>&m_vObjects) {
 		if (m_boxes[i]->GetDynmaic()) {
 			DynamicBox* dyBox = (DynamicBox*)m_boxes[i];
 			// add force to player
-			if (jumpPressed && strncmp(m_vObjects[i]->type, "PLAYER", 6) == 0 ) {
+			if (jumpPressed && m_vObjects[i]->type == PLAYER) {
 				dyBox->UpdatePlayer(m_world.get());
 			}
 			dyBox->Update(m_world.get());
 		}
 	}
-
 	ContactManager::GetInstance()->HandleContact(m_vObjects);
 }
 

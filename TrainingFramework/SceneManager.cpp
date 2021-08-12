@@ -58,7 +58,6 @@ void SceneManager::LoadScene(string sceneName)
 	int amount, id;
 	float x, y, z;
 	char keyword[30];
-	char type[10];
 
 	fscanf(f, "#Camera %d\n", &id);
 	Camera::GetInstance()->SetPerspective(id);
@@ -84,9 +83,24 @@ void SceneManager::LoadScene(string sceneName)
 			printf("WARNING: Object's ID is not correct");
 		Object* object = new Object();
 		object->SetID(id);
-		memset(type, 0, sizeof(type));
+
+		char type[10];
 		fscanf(f, "TYPE %s\n", type);
-		strcpy(object->type, type);
+		if (strncmp(type, "GROUND", 6) == 0) {
+			object->type = GROUND;
+		}
+		if (strncmp(type, "PLAYER", 6) == 0) {
+			object->type = PLAYER;
+		}
+		if (strncmp(type, "GROUND", 6) == 0) {
+			object->type = GROUND;
+		}
+		if (strncmp(type, "NONE", 6) == 0) {
+			object->type = NONE;
+		}
+		if (strncmp(type, "SENSOR", 6) == 0) {
+			object->type = SENSOR;
+		}
 		fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
 		object->SetPosition(Vector3(x, y, z));
 
@@ -96,6 +110,9 @@ void SceneManager::LoadScene(string sceneName)
 		fscanf(f, "SCALE %f %f %f\n", &x, &y, &z);
 		object->SetScale(Vector3(x, y, z));
 
+		fscanf(f, "DIMENSION %f %f\n", &x, &y);
+		object->SetDimension(Vector2(x, y));
+
 		fscanf(f, "RENDERER %d\n", &id);
 		object->SetRenderer(id);
 
@@ -103,17 +120,6 @@ void SceneManager::LoadScene(string sceneName)
 
 		m_vObjects.push_back(object);
 	}
-
-	//Object* player = new Player();
-	//strcpy(player->type,"PLAYER");
-	//player->SetPosition(Vector3(50, 300, 1));
-	//player->SetRotation(Vector3(0, 0, 0));
-	//player->SetScale(Vector3(1, 1, 1));
-	//player->SetRenderer(2);
-	//player->SetNativeSize(0);
-	//player->SetRenderer(3);
-	//player->SetNativeSize(1);
-	//m_vObjects.push_back(player);
 
 	fclose(f);
 }

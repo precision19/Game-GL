@@ -25,8 +25,12 @@ ContactManager* ContactManager::GetInstance() {
 }
 
 void ContactManager::BenginContact(Object* obj1, Object* obj2) {
-	m_numContacts[{obj1->GetID(), obj2->GetID()}]++;
-	m_numContacts[{obj2->GetID(), obj1->GetID()}]++;
+	if (m_numContacts[{obj1->GetID(), obj2->GetID()}] < INT_MAX) {
+		m_numContacts[{obj1->GetID(), obj2->GetID()}]++;
+	}
+	if (m_numContacts[{obj2->GetID(), obj1->GetID()}] < INT_MAX) {
+		m_numContacts[{obj2->GetID(), obj1->GetID()}]++;
+	}
 }
 
 void ContactManager::EndContact(Object* obj1, Object* obj2) {

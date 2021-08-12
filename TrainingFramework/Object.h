@@ -2,6 +2,15 @@
 #include "../Utilities/utilities.h"
 #include "Renderer2D.h"
 #include "PrefabManager.h"
+#include <map>
+
+enum Type
+{
+	GROUND,
+	PLAYER,
+	NONE,
+	SENSOR
+};
 
 class Object
 {
@@ -13,7 +22,7 @@ protected:
 	Renderer* m_Renderer;
 	
 public:
-	char type[10];
+	Type type;
 	Object();
 	Object(string);
 	virtual Object* Clone();
