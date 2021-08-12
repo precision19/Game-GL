@@ -77,6 +77,12 @@ void SceneManager::LoadScene(string sceneName)
 		if (strncmp(type, "PLAYER", 6) == 0) {
 			object->type = PLAYER;
 		}
+		if (strncmp(type, "GROUND", 6) == 0) {
+			object->type = GROUND;
+		}
+		if (strncmp(type, "NONE", 6) == 0) {
+			object->type = NONE;
+		}
 		fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
 		object->SetPosition(Vector3(x, y, z));
 

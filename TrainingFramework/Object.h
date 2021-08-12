@@ -7,7 +7,8 @@
 enum Type
 {
 	GROUND,
-	PLAYER
+	PLAYER,
+	NONE
 };
 
 class Object

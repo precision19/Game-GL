@@ -17,7 +17,7 @@ void DynamicBox::Init(b2World* world, Vector2 position, Vector2 dimension, Objec
 	b2BodyUserData bdt;
 	bdt.pointer = (uintptr_t)obj;
 	bodyDef.userData = bdt;
-
+		
 	body = world->CreateBody(&bodyDef);
 	b2CircleShape circleShape;
 	circleShape.m_radius = min(dimension.x / 2.0f, dimension.y / 2.0f);
@@ -26,7 +26,10 @@ void DynamicBox::Init(b2World* world, Vector2 position, Vector2 dimension, Objec
 	fixtureDef.shape = &circleShape;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.3f;
-	body->SetGravityScale(1000);
+	if (obj->type == PLAYER) {
+		fixtureDef.filter.maskBits = MASK_PLAYER;
+		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
+	}
 	fixture = body->CreateFixture(&fixtureDef);
 }
 

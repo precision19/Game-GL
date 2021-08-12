@@ -33,7 +33,7 @@ void Physic::InitBox(vector<Object*>& m_vObjects) {
 	m_world.get()->SetContactListener(myContactListenerInstance);
 
 	for (int i = 0; i < SceneManager::GetInstance()->m_vObjects.size(); i++) {
-		if (SceneManager::GetInstance()->m_vObjects[i]->type == GROUND) {
+		if (SceneManager::GetInstance()->m_vObjects[i]->type == GROUND || SceneManager::GetInstance()->m_vObjects[i]->type == NONE) {
 			GroundBox* grBox = new GroundBox();
 			grBox->Init(m_world.get(), Vector2(m_vObjects[i]->GetPosition().x, m_vObjects[i]->GetPosition().y), Vector2(m_vObjects[i]->GetDimension().x, m_vObjects[i]->GetDimension().y), m_vObjects[i]);
 			m_boxes.push_back(grBox);
