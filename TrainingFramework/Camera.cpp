@@ -91,7 +91,17 @@ void Camera::DestroyInstance()
 
 Camera::Camera()
 {
-	m_Position = Vector3(0, 0, 1);
+	SetDefault();
+}
+
+Camera::Camera(int isPerspective)
+{
+	m_IsPerspective = isPerspective;
+}
+
+void Camera::SetDefault()
+{
+	m_Position = Vector3(0, 0, 100);
 	m_Target = Vector3(0, 0, 0);
 	m_Up = Vector3(0, 1, 0);
 
@@ -104,16 +114,11 @@ Camera::Camera()
 
 	m_FaceAngle = 0;
 
-	m_IsPerspective = true;
+	m_IsPerspective = false;
 
 	SetProjectionMatrix();
 	SetWorldMatrix();
 	SetViewMatrix();
-}
-
-Camera::Camera(int isPerspective)
-{
-	m_IsPerspective = isPerspective;
 }
 
 void Camera::Init()

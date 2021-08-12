@@ -32,7 +32,7 @@ void ResourceManager::LoadResource(string sceneName)
 {
 	DeleteAllResources();
 
-	string path = "Managers/" + sceneName + "RM.txt";
+	string path = "Managers/RM.txt";
 	FILE* f = fopen(path.c_str(), "r+");
 
 	if (f == NULL)
@@ -48,12 +48,10 @@ void ResourceManager::LoadResource(string sceneName)
 	{
 		fscanf(f, "%s %s\n", keyword, name);
 		Model* model = new Model(name, strcmp(keyword, "TERRAIN") == 0);
-		if (strcmp(name, "Sprite") == 0)
-			m_SpriteModel = model;
 		m_Models.push_back(model);
 	}
 
-	fscanf(f, "#2DTextures: %d\n", &amount);
+	fscanf(f, "#2D Textures: %d\n", &amount);
 	for (int i = 0; i < amount; i++)
 	{
 		char wrap[20], filterMin[20], filterMag[20];
@@ -62,7 +60,7 @@ void ResourceManager::LoadResource(string sceneName)
 		m_Textures.push_back(texture);
 	}
 
-	fscanf(f, "#CubeTextures: %d\n", &amount);
+	fscanf(f, "#Cube Textures: %d\n", &amount);
 	for (int i = 0; i < amount; i++)
 	{
 		char wrap[20], filterMin[20], filterMag[20];
@@ -76,7 +74,7 @@ void ResourceManager::LoadResource(string sceneName)
 	for (int i = 0; i < amount; i++)
 	{
 		int stateAmount;
-		fscanf(f, "NAME %s - %d STATE(S)", name, &stateAmount);		
+		fscanf(f, "%s %s - %d STATE(S)", keyword, name, &stateAmount);		
 		Shaders* shaders = new Shaders(name);
 
 		for (int j = 0; j < stateAmount; j++)

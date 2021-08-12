@@ -9,6 +9,7 @@ public:
 	Vector3 scale;
 
 	Transform();
+	Transform(const Transform&);
 
 	Matrix GetWorldMatrix();
 	Matrix GetWorldMatrix(Vector3);

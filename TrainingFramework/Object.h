@@ -6,16 +6,17 @@
 class Object
 {
 protected:
-	Vector2 m_Dimension;
-	Transform transform;
-	vector<Renderer*> m_Renderer;
+	string m_Name;
 	int ID;
+	Vector2 m_Dimension;
+	Transform m_Transform;
+	Renderer* m_Renderer;
 	
 public:
-	int currentAnim;
-	int i;
 	char type[10];
 	Object();
+	Object(string);
+	virtual Object* Clone();
 	void SetDimension(Vector2 dimen) { m_Dimension = dimen; }
 	void SetPosition(Vector3);
 	void SetScale(Vector3);
@@ -26,14 +27,12 @@ public:
 	Vector3 GetPosition();
 	Vector2 GetDimension() { return m_Dimension; }
 
-	void Jump();
 	virtual void Draw();
 	virtual void Update(float);
-	virtual void SetCurrentAnimation(int);
 
 	int GetID() { return ID; };
 	void SetID(int objID) { ID = objID; };
 
-	~Object();
+	virtual ~Object();
 };
 

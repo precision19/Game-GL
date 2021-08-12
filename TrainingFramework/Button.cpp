@@ -1,32 +1,38 @@
 #include "stdafx.h"
 #include "Button.h"
 
-Button::Button(Vector2 position, Vector2 size)
+Button::Button()
 {
-	m_Target = NULL;
-
-	m_Position = position;
-	m_Size = size;
-
+	m_IdleRenderer = NULL;
+	m_OnPressRenerer = NULL;
 	m_IsSkipped = false;
 	m_IsPressing = false;
+	m_WasJustPressed = false;
 }
 
-void Button::SetSize(Vector2 size)
+void Button::SetRenderer(int id)
 {
-	m_Size = size;
-}
-
-void Button::AddListener(Component* component, int functionID)
-{
-	m_Components.push_back(component);
-	m_CallBackFunctionIDs.push_back(functionID);
+	if (m_IdleRenderer == NULL)
+	{
+		m_IdleRenderer = PrefabManager::GetInstance()->GetRenderer(id)->Clone();
+		m_Renderer = m_IdleRenderer;
+	}
+	else
+	{
+		m_OnPressRenerer = PrefabManager::GetInstance()->GetRenderer(id)->Clone();
+	}
 }
 
 void Button::Update(float deltaTime)
 {
 	if (!Input::GetTouch())
 	{
+		if (m_IsPressing)
+		{
+			m_IsPressing = false;
+			OnClicked();
+			Idle();
+		}
 		m_IsSkipped = false;
 		return;
 	}
@@ -38,41 +44,67 @@ void Button::Update(float deltaTime)
 		if (!m_IsPressing)
 		{
 			if (CheckClick())
+			{
 				m_IsPressing = true;
+				OnPressing();
+			}
 			else
 				m_IsSkipped = true;
 		}
 		else
 		{
-			if (Input::GetDeltaTouch().Length() > 1.0)
+			if (Input::GetDeltaTouch().Length() > 10.0)
 			{
 				m_IsPressing = false;
 				m_IsSkipped = true;
+				//m_Renderer = m_IdleRenderer;
+				Idle();
 			}
 		}
 	}
-	else 
+}
+
+bool Button::JustPressed()
+{
+	if (m_WasJustPressed)
 	{
-		if (m_IsPressing)
-		{
-			m_IsPressing = false;
-			OnClick();
-		}
-		m_IsSkipped = false;
+		Idle();
+		m_WasJustPressed = false;
+		return true;
 	}
+	return false;
+}
+
+Button::~Button()
+{
+	delete m_OnPressRenerer;
 }
 
 bool Button::CheckClick()
 {
-	Vector2 distance = Input::GetTouchPosition() - m_Position;
-	if ((distance.x <= m_Size.x / 2) && (distance.x >= -m_Size.x / 2)
-		&& (distance.y <= m_Size.y / 2) && (distance.y >= -m_Size.y / 2))
+	Vector2 position = Vector2(m_Transform.position.x, m_Transform.position.y);
+	Vector2 distance = Input::GetTouchPosition() - position;
+
+	Vector2 size = Vector2(m_Renderer->GetTextureSize().x * m_Transform.scale.x, m_Renderer->GetTextureSize().y * m_Transform.scale.y);
+
+	if ((distance.x <= size.x / 2) && (distance.x >= -size.x / 2)
+		&& (distance.y <= size.y / 2) && (distance.y >= -size.y / 2))
 		return true;
+
 	return false;
 }
 
-void Button::OnClick()
+void Button::Idle()
 {
-	for (int i = 0; i < m_Components.size(); i++)
-		m_Components.at(i)->CallBack(m_CallBackFunctionIDs.at(i));
+	m_Renderer = m_IdleRenderer;
+}
+
+void Button::OnPressing()
+{
+	m_Renderer = m_OnPressRenerer;
+}
+
+void Button::OnClicked()
+{
+	m_WasJustPressed = true;
 }

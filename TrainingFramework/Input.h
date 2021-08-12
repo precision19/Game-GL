@@ -1,6 +1,7 @@
 #pragma once
 #include "Vertex.h"
 #include <map>
+#include "Globals.h"
 
 using namespace std;
 

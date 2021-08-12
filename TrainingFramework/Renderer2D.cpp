@@ -3,80 +3,54 @@
 
 Renderer2D::Renderer2D()
 {
-	m_Model = ResourceManager::GetInstance()->GetModel("Sprite");
-	m_Shaders = ResourceManager::GetInstance()->GetShaders("Sprite");
-	m_Texture = NULL;
-	m_CurrentSpriteId = 0;
-	m_animationCurrent = 0;
-	m_FramePerSec = 0;
+
 }
 
-Renderer2D* Renderer2D::Clone()
+Renderer* Renderer2D::Clone()
 {
 	Renderer2D* result = new Renderer2D();
+	result->m_Model = m_Model;
 	result->m_Texture = m_Texture;
-	result->m_Sprites = m_Sprites;
-	result->m_CurrentSpriteId = m_CurrentSpriteId;
-	result->m_animationCurrent = m_animationCurrent;
-	result->m_FramePerSec = m_FramePerSec;
+	result->m_Shaders = m_Shaders;
 	return result;
 }
 
-void Renderer2D::SetTexture(int spriteId)
+void Renderer2D::Draw(Transform transform)
 {
-	m_Sprites.push_back(ResourceManager::GetInstance()->GetTexture(spriteId));
-	if (m_Texture == NULL)
-		m_Texture = m_Sprites.at(0);
-}
+	m_Model->BindBuffer();
+	m_Texture->BindBuffer();
+	glUseProgram(m_Shaders->program);
 
-void Renderer2D::SetTexture(string spriteName)
-{
-	m_Sprites.push_back(ResourceManager::GetInstance()->GetTexture(spriteName));
-	if (m_Texture == NULL)
-		m_Texture = m_Sprites.at(0);
-}
-
-void Renderer2D::SetFramePerSec(int framePerSec)
-{
-	m_FramePerSec = framePerSec;
-}
-
-float Renderer2D::GetFramePerSecond()
-{
-	m_FramePerSec = m_FramePerSec;
-	return 1 / m_FramePerSec;
-}
-
-Vector3 Renderer2D::GetSize()
-{
-	Vector3 size = m_Texture->GetSize();
-	size = Vector3(size.x * transform->scale.x, size.y * transform->scale.y, size.z * transform->scale.z);
-	return size;
-}
-
-Matrix Renderer2D::GetWVP()
-{
-	Matrix WVP = transform->GetWorldMatrix(m_Texture->GetSize()) * Camera::GetInstance()->GetViewMatrix() * Camera::GetInstance()->GetProjection();
-	return WVP;
-}
-
-void Renderer2D::Update(float deltaTime)
-{
-	m_animationCurrent += deltaTime;
-	float FPS = GetFramePerSecond();
-
-	if (m_animationCurrent > FPS)
+	if (m_Shaders->textureUniform != -1)
 	{
-		m_CurrentSpriteId = (m_CurrentSpriteId + 1) % (m_Sprites.size());
-		m_animationCurrent = 0;
+		glUniform1i(m_Shaders->textureUniform, 0);
 	}
-	m_Texture = m_Sprites.at(m_CurrentSpriteId);
+
+	if (m_Shaders->positionAttribute != -1)
+	{
+		glEnableVertexAttribArray(m_Shaders->positionAttribute);
+		glVertexAttribPointer(m_Shaders->positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	}
+
+	if (m_Shaders->uvAttribute != -1)
+	{
+		glEnableVertexAttribArray(m_Shaders->uvAttribute);
+		glVertexAttribPointer(m_Shaders->uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*)sizeof(Vector3));
+	}
+
+	if (m_Shaders->WVPUniform != -1)
+	{
+		Matrix WVP = transform.GetWorldMatrix(m_Texture->GetSize()) * Camera::GetInstance()->GetViewMatrix() * Camera::GetInstance()->GetProjection();
+		glUniformMatrix4fv(m_Shaders->WVPUniform, 1, GL_FALSE, &WVP.m[0][0]);
+	}
+
+	m_Model->Draw();
+
+	m_Model->BindBuffer(false);
+	m_Texture->BindBuffer(false);
 }
 
 Renderer2D::~Renderer2D()
 {
-	m_Model = NULL;
-	m_Texture = NULL;
-	m_Sprites.clear();
-	m_Shaders = NULL;
+	
 }

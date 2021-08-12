@@ -1,13 +1,18 @@
 #pragma once
 #include "StateBase.h"
-#include "MenuState.h"
-#include "LevelState.h"
+#include <vector>
 
-class StateManager {
+class StateManager 
+{
+protected:
+	StateBase* m_CurrentState;
+	vector<StateBase*> m_States;
 public:
-	StateBase* state;
 	StateManager();
+	void AddState(StateBase*);
 	void Update(float deltaTime);
 	void Draw();
-	void Destroy();
+	void SwitchState(int);
+	void SwitchState(string);
+	~StateManager();
 };

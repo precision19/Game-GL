@@ -37,6 +37,7 @@ public:
 
 	Camera();
 	Camera(int);
+	void SetDefault();
 	void Init();
 	Vector3 GetPosition();
 	void SetPosition(Vector3);

@@ -13,20 +13,17 @@ protected:
 	Texture* m_Texture;
 	Shaders* m_Shaders;
 
-	Transform* transform;
 public:
 	Renderer();
 	virtual Renderer* Clone();
-	void SetTransform(Transform*);
 	void SetModel(int);
 	void SetModel(string);
 	virtual void SetTexture(int);
 	virtual void SetTexture(string);
 	void SetShaders(int);
 	void SetShaders(string);
-	virtual Vector3 GetSize();
-	virtual Matrix GetWVP();
-	void Draw();
+	Vector3 GetTextureSize();
+	virtual void Draw(Transform);
 	virtual void Update(float);
 	virtual ~Renderer();
 };

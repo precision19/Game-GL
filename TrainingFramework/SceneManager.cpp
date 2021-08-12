@@ -23,7 +23,22 @@ void SceneManager::DestroyInstance()
 	}
 }
 
-SceneManager::SceneManager() { }
+SceneManager::SceneManager() 
+{ 
+	m_StateManager = new StateManager();
+
+	MenuState* menuState = new MenuState();
+	menuState->SetStateManager(m_StateManager);
+	m_StateManager->AddState(menuState);
+
+	MapState* mapState = new MapState();
+	menuState->SetStateManager(m_StateManager);
+	m_StateManager->AddState(menuState);
+
+	LevelState* levelState = new LevelState();
+	levelState->SetStateManager(m_StateManager);
+	m_StateManager->AddState(levelState);
+}
 
 
 void SceneManager::LoadScene(string sceneName)
@@ -89,16 +104,16 @@ void SceneManager::LoadScene(string sceneName)
 		m_vObjects.push_back(object);
 	}
 
-	Object* player = new Player(100, 3);
-	strcpy(player->type,"PLAYER");
-	player->SetPosition(Vector3(50, 300, 1));
-	player->SetRotation(Vector3(0, 0, 0));
-	player->SetScale(Vector3(1, 1, 1));
-	player->SetRenderer(2);
-	player->SetNativeSize(0);
-	player->SetRenderer(3);
-	player->SetNativeSize(1);
-	m_vObjects.push_back(player);
+	//Object* player = new Player();
+	//strcpy(player->type,"PLAYER");
+	//player->SetPosition(Vector3(50, 300, 1));
+	//player->SetRotation(Vector3(0, 0, 0));
+	//player->SetScale(Vector3(1, 1, 1));
+	//player->SetRenderer(2);
+	//player->SetNativeSize(0);
+	//player->SetRenderer(3);
+	//player->SetNativeSize(1);
+	//m_vObjects.push_back(player);
 
 	fclose(f);
 }
@@ -110,31 +125,29 @@ void SceneManager::AddPhysicsToScene()
 
 void SceneManager::Draw()
 {
-	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
-	{
-		(*it)->Draw();
-	}
+	m_StateManager->Draw();
 }
 
 void SceneManager::Update(float deltaTime)
 {
-	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
-	{
-		(*it)->Update(deltaTime);
-	}
-	Physic::GetInstance()->Update(deltaTime, m_vObjects);
+	m_StateManager->Update(deltaTime);
 }
 
 void SceneManager::DestroyAllObjects()
 {
-	for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
-	{
-		delete (*it);
-	}
+	//for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
+	//{
+	//	delete (*it);
+	//}
+
+	for each (Object * object in m_vObjects)
+		delete object;
+
 	m_vObjects.clear();
 }
 
 SceneManager::~SceneManager()
 {
 	DestroyAllObjects();
+	delete m_StateManager;
 }

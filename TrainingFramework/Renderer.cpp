@@ -1,11 +1,6 @@
 #include "stdafx.h"
 #include "Renderer.h"
 
-void Renderer::SetTransform(Transform* objectTransform)
-{
-	transform = objectTransform;
-}
-
 Renderer::Renderer()
 {
 	m_Model = NULL;
@@ -52,18 +47,12 @@ void Renderer::SetShaders(string name)
 	m_Shaders = ResourceManager::GetInstance()->GetShaders(name);
 }
 
-Vector3 Renderer::GetSize()
+Vector3 Renderer::GetTextureSize()
 {
-	return transform->scale;
+	return m_Texture->GetSize();
 }
 
-Matrix Renderer::GetWVP()
-{
-	Matrix WVP = transform->GetWorldMatrix() * Camera::GetInstance()->GetViewMatrix() * Camera::GetInstance()->GetProjection();
-	return WVP;
-}
-
-void Renderer::Draw()
+void Renderer::Draw(Transform transform)
 {
 	m_Model->BindBuffer();
 	m_Texture->BindBuffer();
@@ -88,7 +77,8 @@ void Renderer::Draw()
 
 	if (m_Shaders->WVPUniform != -1)
 	{
-		glUniformMatrix4fv(m_Shaders->WVPUniform, 1, GL_FALSE, &GetWVP().m[0][0]);
+		Matrix WVP = transform.GetWorldMatrix() * Camera::GetInstance()->GetViewMatrix() * Camera::GetInstance()->GetProjection();
+		glUniformMatrix4fv(m_Shaders->WVPUniform, 1, GL_FALSE, &WVP.m[0][0]);
 	}
 
 	m_Model->Draw();

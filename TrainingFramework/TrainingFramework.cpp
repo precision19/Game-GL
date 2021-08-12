@@ -22,9 +22,9 @@ int Init ( ESContext *esContext )
 	PrefabManager::GetInstance()->LoadPrefabs("Level1");
 
 	SceneManager::CreateInstance();
-	SceneManager::GetInstance()->LoadScene("Level1");
-	Physic::CreateInstance();
-	SceneManager::GetInstance()->AddPhysicsToScene();
+	//SceneManager::GetInstance()->LoadScene("Level1");
+	//Physic::CreateInstance();
+	//SceneManager::GetInstance()->AddPhysicsToScene();
 
 	ContactManager::CreateInstance();
 

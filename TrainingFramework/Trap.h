@@ -14,7 +14,6 @@ public:
 	Trap();
 	~Trap();
 
-	void Draw();
 	void Update(float);
 
 };

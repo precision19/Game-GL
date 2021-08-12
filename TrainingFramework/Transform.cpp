@@ -8,6 +8,21 @@ Transform::Transform()
 	scale = Vector3(1, 1, 1);
 }
 
+Transform::Transform(const Transform& transform)
+{
+	position.x = transform.position.x;
+	position.y = transform.position.y;
+	position.z = transform.position.z;
+
+	rotation.x = transform.rotation.x;
+	rotation.y = transform.rotation.y;
+	rotation.z = transform.rotation.z;
+
+	scale.x = transform.scale.x;
+	scale.y = transform.scale.y;
+	scale.z = transform.scale.z;
+}
+
 Matrix Transform::GetWorldMatrix()
 {
 	Matrix scaleMatrix, rotationX, rotationY, rotationZ, translation;

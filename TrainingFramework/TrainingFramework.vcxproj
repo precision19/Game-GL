@@ -93,26 +93,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Animation2D.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ContactManager.cpp" />
     <ClCompile Include="CubeTexture.cpp" />
+    <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="DynamicBox.cpp" />
     <ClCompile Include="GroundBox.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="LevelState.cpp" />
+    <ClCompile Include="MapState.cpp" />
+    <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="MyContactListener.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Physic.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerPrefs.cpp" />
     <ClCompile Include="PrefabManager.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Renderer2D.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shaders.cpp" />
+    <ClCompile Include="StateBase.cpp" />
+    <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="Switch.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TrainingFramework.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -124,28 +133,37 @@
     <ClCompile Include="TreasureChest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation2D.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ContactManager.h" />
     <ClInclude Include="CubeTexture.h" />
+    <ClInclude Include="Dungeon.h" />
     <ClInclude Include="DynamicBox.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GroundBox.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="LevelState.h" />
+    <ClInclude Include="MapState.h" />
+    <ClInclude Include="MenuState.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="MyContactListener.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Physic.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerPrefs.h" />
     <ClInclude Include="PrefabManager.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Renderer2D.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shaders.h" />
+    <ClInclude Include="StateBase.h" />
+    <ClInclude Include="StateManager.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Switch.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />

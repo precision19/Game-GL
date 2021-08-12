@@ -1,6 +1,5 @@
 #pragma once
-#include "ResourceManager.h"
-#include "Renderer2D.h"
+#include "Animation2D.h"
 
 class PrefabManager
 {
@@ -15,7 +14,6 @@ public:
 	PrefabManager();
 	void LoadPrefabs(string);
 	Renderer* GetRenderer(int);
-
 	void DestroyAllPrefab();
 	~PrefabManager();
 };

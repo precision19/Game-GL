@@ -6,7 +6,7 @@ using namespace std;
 class Component
 {
 public:
-	Transform* transform;
+	Transform* m_Transform;
 	bool enable;
 	Component();
 	void SetTransform(Transform*);

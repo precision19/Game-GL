@@ -94,5 +94,8 @@ Vector2 Input::GetDeltaTouch()
 
 Vector2 Input::GetTouchPosition()
 {
-	return ms_Instance->m_TouchPosition;
+	Vector2 touchPosition = ms_Instance->m_TouchPosition;
+	touchPosition.x -= Globals::screenWidth / 2;
+	touchPosition.y -= Globals::screenHeight / 2;
+	return touchPosition;
 }

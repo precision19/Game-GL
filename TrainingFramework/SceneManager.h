@@ -1,7 +1,4 @@
 #pragma once
-#include <vector>
-#include "Object.h"
-#include "Camera.h"
 #include "PrefabManager.h"
 #include "box2d/box2d.h"
 #include "Box.h"
@@ -12,13 +9,16 @@
 #include "MyContactListener.h"
 #include "ContactManager.h"
 #include "Physic.h"
-
+#include "MenuState.h"
+#include "MapState.h"
+#include "LevelState.h"
 
 class SceneManager
 {
 protected:
 	static SceneManager* ms_Instance;
 	MyContactListener* myContactListenerInstance;
+	StateManager* m_StateManager;
 public:
 	static void CreateInstance();
 	static SceneManager* GetInstance();

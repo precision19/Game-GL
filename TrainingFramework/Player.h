@@ -1,19 +1,20 @@
 #pragma once
-#include "Component.h"
 #include "Object.h"
-
 
 class Player : public Object
 {
+protected:
+	vector<Renderer*> m_Animations;
+	int m_currentAnimationId;
+	float m_Speed;
+	float m_JumpForce;
 public:
-	int m_Health;
-	int m_Life;
-
-	void SetCurrentAnimation();
-	void Draw();
+	Player();
+	void SetSpeed(float);
+	void SetJumpForce(float);
+	void AddAnimation(Renderer*);
 	void Update(float);
 
-	Player(int health, int life);
 	~Player();
 };
 

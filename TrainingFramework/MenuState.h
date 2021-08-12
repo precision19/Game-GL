@@ -1,11 +1,20 @@
 #pragma once
-#include "StateBase.h"
+#include "StateManager.h"
+#include "Button.h"
+#include "PrefabManager.h"
 
-
-class MenuState : public StateBase {
+class MenuState : public StateBase 
+{
+protected:
+	StateManager* m_StateManager;
+	vector<Object*> m_Objects;
+	Button* m_PlayButton;
+	Button* m_SoundButton;
 public:
 	MenuState();
-	void Update(float deltaTime) override;
-	void Draw() override;
-    void Destroy() override;
+	void SetStateManager(StateManager*);
+	void OnStart();
+	void Update(float deltaTime);
+	void Draw();
+	~MenuState();
 };

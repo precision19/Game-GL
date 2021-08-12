@@ -3,76 +3,68 @@
 
 Object::Object()
 {
-	currentAnim = 0;
-	i = 0;
+	m_Name = "GameObject";
+	ID = -1;
+}
+
+Object::Object(string name)
+{
+	m_Name = name;
+}
+
+Object* Object::Clone()
+{
+	Object* result = new Object();
+
+	result->m_Name = m_Name;
+	result->m_Dimension = m_Dimension;
+	result->m_Transform = m_Transform;
+	result->m_Renderer = m_Renderer->Clone();
+
+	return result;
 }
 
 void Object::SetNativeSize(int k)
 {
-	if (currentAnim == k)
-	{
-		Vector3 size = m_Renderer.at(k)->GetSize();		
-		m_Dimension = Vector2(size.x, size.y);
-
-	}
-}
-
-void Object::SetCurrentAnimation(int keys)
-{
-	if (VK_SPACE)
-	{
-		currentAnim = 1;
-	}
-	else
-	{
-		currentAnim = 0;
-	}
-
+	m_Dimension = Vector2(m_Renderer->GetTextureSize().x * m_Transform.scale.x, m_Renderer->GetTextureSize().y * m_Transform.scale.y);
 }
 
 void Object::SetPosition(Vector3 position)
 {
-	transform.position = position;
+	m_Transform.position = position;
 }
 
 Vector3 Object::GetPosition() 
 {
-	return transform.position;
+	return m_Transform.position;
 }
 
 void Object::SetScale(Vector3 scale)
 {
-	transform.scale = scale;
+	m_Transform.scale = scale;
 }
 
 void Object::SetRotation(Vector3 rotation)
 {
-	transform.rotation = rotation * PI / 180;
+	m_Transform.rotation = rotation * PI / 180;
 }
 
 void Object::SetRenderer(int id)
 {
-	m_Renderer.push_back(PrefabManager::GetInstance()->GetRenderer(id));
-	m_Renderer.at(i)->SetTransform(&transform);
-	++i;
+	m_Renderer = PrefabManager::GetInstance()->GetRenderer(id)->Clone();
 }
 
 void Object::Draw()
 {
-	m_Renderer.at(currentAnim)->Draw();
+	m_Renderer->Draw(m_Transform);
 }
 
 void Object::Update(float deltaTime)
 {
-	m_Renderer.at(currentAnim)->Update(deltaTime);
+	m_Renderer->Update(deltaTime);
 }
 
 Object::~Object()
 {
-	for (int i = 0; i < m_Renderer.size(); i++)
-	{
-		delete m_Renderer.at(i);
-	}
-	m_Renderer.clear();
-
+	delete m_Renderer;
 }

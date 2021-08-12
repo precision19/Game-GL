@@ -1,15 +1,18 @@
 #pragma once
-#include "SceneManager.h"
-#include "PrefabManager.h"
-#include "ResourceManager.h"
-#include "Camera.h"
-#include "Input.h"
-#include "StateManager.h"
+#include <string>
 
-class StateBase {
+using namespace std;
+
+class StateBase 
+{
+protected:
+	string m_Name;
 public:
-	StateManager* stateManager;
-	virtual void Update(float deltaTime) = 0;
-	virtual void Draw() = 0;
-	virtual void Destroy() = 0;
+	StateBase();
+	string GetName();
+	virtual void OnStart();
+	virtual void Draw();
+	virtual void Update(float);
+	virtual void OnTranslation();
+	virtual ~StateBase();
 };

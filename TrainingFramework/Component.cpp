@@ -4,7 +4,7 @@
 Component::Component()
 {
 	enable = true;
-	transform = NULL;
+	m_Transform = NULL;
 }
 
 Component::~Component()
@@ -13,7 +13,7 @@ Component::~Component()
 
 void Component::SetTransform(Transform* objectTransform)
 {
-	transform = objectTransform;
+	m_Transform = objectTransform;
 }
 
 void Component::Update(float)

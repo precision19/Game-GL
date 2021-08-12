@@ -1,35 +1,44 @@
 #include "stdafx.h"
 #include "Player.h"
 
-Player::Player(int health, int life) : m_Health(health), m_Life(life)
+Player::Player()
 {
-	currentAnim = 0;
-	
+	m_currentAnimationId = 0;
 }
 
-Player::~Player()
+void Player::SetSpeed(float speed)
 {
+	m_Speed = speed;
 }
 
-void Player::SetCurrentAnimation()
+void Player::SetJumpForce(float jumpForce)
 {
-	if (GetAsyncKeyState(VK_SPACE))
-	{
-		currentAnim = 1;
-	}
-	else
-	{
-		currentAnim = 0;
-	}
+	m_JumpForce = jumpForce;
 }
 
-void Player::Draw()
+void Player::AddAnimation(Renderer* renderer)
 {
-	m_Renderer.at(currentAnim)->Draw();
+	m_Animations.push_back(renderer);
+	if (m_Renderer == NULL)
+		m_Renderer = renderer;
 }
 
 void Player::Update(float deltaTime)
 {
-	m_Renderer.at(currentAnim)->Update(deltaTime);
-	this->SetCurrentAnimation();
+	// TEST
+	if (Input::GetTouch() && m_currentAnimationId == 0)
+	{
+		m_currentAnimationId = 1;
+		m_Renderer = m_Animations.at(m_currentAnimationId);
+	}
+	else if (!Input::GetTouch() && m_currentAnimationId == 1)
+	{
+		m_currentAnimationId = 0;
+		m_Renderer = m_Animations.at(m_currentAnimationId);
+	}
+
+}
+
+Player::~Player()
+{
 }

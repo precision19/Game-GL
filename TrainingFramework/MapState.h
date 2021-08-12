@@ -1,11 +1,14 @@
 #pragma once
-#pragma once
-#include "StateBase.h"
+#include "StateManager.h"
 
-class MapState : public StateBase {
+class MapState : public StateBase 
+{
+protected: 
+	StateManager* m_StateManager;
 public:
 	MapState();
-	void Update(float deltaTime) override;
-	void Draw() override;
-	void Destroy() override;
+	void SetStateManager(StateManager*);
+	void OnStart();
+	void Update(float deltaTime);
+	void Draw();
 };

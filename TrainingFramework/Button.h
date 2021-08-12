@@ -2,24 +2,26 @@
 #include "../Utilities/Math.h"
 #include <map>
 #include <vector>
-#include "Component.h"
 #include "Input.h"
+#include "Object.h"
 
-class Button : public Component
+class Button : public Object
 {
 protected:
-	Component* m_Target;
-	Vector2 m_Position;
-	Vector2 m_Size;
+	Renderer* m_IdleRenderer;
+	Renderer* m_OnPressRenerer;
 	bool m_IsPressing;
 	bool m_IsSkipped;
-	vector<Component*> m_Components;
-	vector<int> m_CallBackFunctionIDs;
-public:
-	Button(Vector2, Vector2);
-	void SetSize(Vector2);
-	void AddListener(Component*, int);
-	void Update(float);
+	bool m_WasJustPressed;
+
 	bool CheckClick();
-	virtual void OnClick();
+	virtual void Idle();
+	virtual void OnPressing();
+	virtual void OnClicked();
+public:
+	Button();
+	void SetRenderer(int);
+	void Update(float);
+	virtual bool JustPressed();
+	~Button();
 };
