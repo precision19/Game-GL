@@ -31,7 +31,7 @@ public:
 	void SetScale(Vector3);
 	void SetRotation(Vector3);
 	void SetRenderer(int);
-	void SetNativeSize(int);
+	void SetNativeSize();
 	
 	Vector3 GetPosition();
 	Vector2 GetDimension() { return m_Dimension; }

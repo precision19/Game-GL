@@ -116,7 +116,7 @@ void SceneManager::LoadScene(string sceneName)
 		fscanf(f, "RENDERER %d\n", &id);
 		object->SetRenderer(id);
 
-		object->SetNativeSize(0);
+		object->SetNativeSize();
 
 		m_vObjects.push_back(object);
 	}

@@ -202,6 +202,9 @@
     <Image Include="Textures\DEAD\Dead__8.tga" />
     <Image Include="Textures\Idle__000.tga" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Managers\GameObjectPrefab.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

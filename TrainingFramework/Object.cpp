@@ -24,7 +24,7 @@ Object* Object::Clone()
 	return result;
 }
 
-void Object::SetNativeSize(int k)
+void Object::SetNativeSize()
 {
 	m_Dimension = Vector2(m_Renderer->GetTextureSize().x * m_Transform.scale.x, m_Renderer->GetTextureSize().y * m_Transform.scale.y);
 }

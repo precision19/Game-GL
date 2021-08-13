@@ -2,6 +2,7 @@
 #include "StateManager.h"
 #include "Button.h"
 #include "Dungeon.h"
+#include "Trap.h"
 
 class LevelState : public StateBase 
 {

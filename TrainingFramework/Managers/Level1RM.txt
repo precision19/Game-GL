@@ -1,7 +1,7 @@
 #Models: 1
 NAME Sprite
 
-#2DTextures: 8
+#2DTextures: 9
 0. Block	REPEAT LINEAR LINEAR
 1. Rect	REPEAT LINEAR LINEAR
 2. Player/Idle/0	REPEAT LINEAR LINEAR
@@ -10,6 +10,7 @@ NAME Sprite
 5. Player/Idle/3	REPEAT LINEAR LINEAR
 6. Player/Jump/up   REPEAT LINEAR LINEAR
 7. Player/Jump/down REPEAT LINEAR LINEAR
+8. Star/coinS_1    REPEAT LINEAR LINEAR
 
 #CubeTextures: 0
 
