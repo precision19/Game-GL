@@ -10,9 +10,9 @@ protected:
 public:
 	StateManager();
 	void AddState(StateBase*);
-	void Update(float deltaTime);
-	void Draw();
+	virtual void Update(float deltaTime);
+	virtual void Draw();
 	void SwitchState(int);
 	void SwitchState(string);
-	~StateManager();
+	virtual ~StateManager();
 };

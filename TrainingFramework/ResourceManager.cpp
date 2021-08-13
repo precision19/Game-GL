@@ -25,7 +25,62 @@ void ResourceManager::DestroyInstance()
 
 ResourceManager::ResourceManager()
 {
+	string path = "Managers/RM.txt";
+	FILE* f = fopen(path.c_str(), "r+");
 
+	if (f == NULL)
+	{
+		printf("Invalid file %s\n", path.c_str());
+		exit(1);
+	}
+
+	int amount;
+	char keyword[30], name[40];
+	fscanf(f, "#Models: %d\n", &amount);
+	for (int i = 0; i < amount; i++)
+	{
+		fscanf(f, "%s %s\n", keyword, name);
+		Model* model = new Model(name, strcmp(keyword, "TERRAIN") == 0);
+		m_Models.push_back(model);
+	}
+
+	fscanf(f, "#2D Textures: %d\n", &amount);
+	for (int i = 0; i < amount; i++)
+	{
+		char wrap[20], filterMin[20], filterMag[20];
+		fscanf(f, "%s %s\t%s %s %s\n", keyword, name, wrap, filterMin, filterMag);
+		Texture* texture = new Texture(name, wrap, filterMin, filterMag);
+		m_Textures.push_back(texture);
+	}
+
+	fscanf(f, "#Cube Textures: %d\n", &amount);
+	for (int i = 0; i < amount; i++)
+	{
+		char wrap[20], filterMin[20], filterMag[20];
+		fscanf(f, "%s %s %s\t%s\n", wrap, filterMin, filterMag, name);
+		string path = "Textures/" + string(name);
+		CubeTexture* texture = new CubeTexture(path.c_str(), wrap, filterMin, filterMag);
+		m_CubeTextures.push_back(texture);
+	}
+
+	fscanf(f, "#Shaders: %d\n", &amount);
+	for (int i = 0; i < amount; i++)
+	{
+		int stateAmount;
+		fscanf(f, "%s %s - %d STATE(S)", keyword, name, &stateAmount);
+		Shaders* shaders = new Shaders(name);
+
+		for (int j = 0; j < stateAmount; j++)
+		{
+			int iBool;
+			fscanf(f, "%s %d\n", keyword, &iBool);
+			shaders->SetStates(keyword, iBool);
+		}
+
+		m_vShaders.push_back(shaders);
+	}
+
+	fclose(f);
 }
 
 void ResourceManager::LoadResource(string sceneName)

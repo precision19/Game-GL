@@ -3,7 +3,24 @@
 
 Player::Player()
 {
+	m_Name = "Player";
+	m_ID = ms_IDMaker;
+	ms_IDMaker++;
+	m_Collider = NULL;
 	m_currentAnimationId = 0;
+}
+
+void Player::CreateCollider()
+{
+	if (m_Collider == NULL)
+	{
+		m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_PLAYER);
+		Physic::GetInstance()->AddBox(m_Collider);
+	}
+	else
+	{
+		printf("%s already has a collider", m_Name.c_str());
+	}
 }
 
 void Player::SetSpeed(float speed)

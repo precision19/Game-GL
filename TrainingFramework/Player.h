@@ -1,7 +1,7 @@
 #pragma once
-#include "Object.h"
+#include "GameObject.h"
 
-class Player : public Object
+class Player : public GameObject
 {
 protected:
 	vector<Renderer*> m_Animations;
@@ -10,6 +10,7 @@ protected:
 	float m_JumpForce;
 public:
 	Player();
+	void CreateCollider();
 	void SetSpeed(float);
 	void SetJumpForce(float);
 	void AddAnimation(Renderer*);

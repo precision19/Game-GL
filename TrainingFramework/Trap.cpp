@@ -19,7 +19,7 @@ Trap* Trap::Clone()
 	Trap* result = new Trap();
 
 	result->m_Name = m_Name;
-	result->m_Dimension = m_Dimension;
+	//result->m_Dimension = m_Dimension;
 	result->m_Transform = m_Transform;
 	result->m_Renderer = m_Renderer->Clone();
 

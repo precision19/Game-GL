@@ -19,10 +19,10 @@ void LevelState::OnStart()
 
 	int amount, id, iBool;
 	float x, y, z;
-	char keyword[30], type[10];
+	char keyword[30], name[20];
 
-	Object* objectPrefab = new Object();
-	Object* trap = new Trap();
+	GameObject* blockPrefab = NULL;
+	GameObject* playerPrefab = NULL;
 
 	string path0 = "Managers/GameObjectPrefab.txt";
 	FILE* file = fopen(path0.c_str(), "r+");
@@ -33,37 +33,32 @@ void LevelState::OnStart()
 		exit(1);
 	}
 
-	fscanf(file, "#%s %d\n", keyword, &amount);
+	fscanf(file, "#PrefabObject: %d\n", &amount);
 	
 	for (int i = 0; i < amount; i++)
 	{
 		
-		fscanf(file, "ID %d\n", &id);
+		fscanf(file, "%s %s\n", keyword, name);
 
-		fscanf(file, "TYPE %s\n", type);
-
-		if (!strcmp(type, "GROUND"))
+		if (strcmp(name, "Block") == 0)
 		{
-			Object* test = new Object();
-			fscanf(file, "SCALE %f %f %f\n", &x, &y, &z);
-			test->SetScale(Vector3(x, y, z));
-
+			Block* block = new Block();
+			fscanf(file, "COLLIDER_SIZE %f\n", &x);
+			block->SetCollider(x);
 			fscanf(file, "RENDERER %d\n", &id);
-			test->SetRenderer(id);
-			objectPrefab = test;
+			block->SetRenderer(id);
+			blockPrefab = block;
 		}
 		else
 		{
-			Object* test = new Trap();
-			fscanf(file, "SCALE %f %f %f\n", &x, &y, &z);
-			test->SetScale(Vector3(x, y, z));
-
+			Player* player = new Player();
+			fscanf(file, "COLLIDER_SIZE %f\n", &x);
+			player->SetCollider(x);
 			fscanf(file, "RENDERER %d\n", &id);
-			test->SetRenderer(id);
-			trap = test;
+			player->SetRenderer(id);
+			playerPrefab = player;
 		}
 	}
-
 
 	string path = "Managers/Level3SM.txt";
 	FILE* f = fopen(path.c_str(), "r+");
@@ -92,47 +87,42 @@ void LevelState::OnStart()
 
 			if (iBool == 1)
 			{
-				Object* block = objectPrefab->Clone();
+				GameObject* block = (GameObject*)blockPrefab->Clone();
 				block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
+				block->CreateCollider();
 				m_GameObjects.push_back(block);
 			}
 			if (iBool == 2)
 			{
-				Object* block = trap->Clone();
-				block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
-				m_GameObjects.push_back(block);
+				playerPrefab->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
+				playerPrefab->CreateCollider();
+				m_GameObjects.push_back(playerPrefab);
 			}  
 		}
 	}
 
-	delete trap;
-	delete objectPrefab;
+	delete blockPrefab;
+
 	fclose(f);
 	fclose(file);
 }
 
-void LevelState::CreateDungeon(Object* block)
-{
-
-}
-
 void LevelState::Update(float deltaTime)
 {
-	/*for each (Object * obj in m_GameObjects)
-		obj->Update(deltaTime);*/
+	for each (Object * object in m_GameObjects)
+		object->Update(deltaTime);
 
-	for (int i = 0; i < m_GameObjects.size(); i++)
-		m_GameObjects.at(i)->Update(deltaTime);
+	Physic::GetInstance()->Update(deltaTime);
 }
 
 void LevelState::Draw()
 {
-	for (int i = 0; i < m_GameObjects.size(); i++)
-		m_GameObjects.at(i)->Draw();
+	for each (Object * object in m_GameObjects)
+		object->Draw();
 }
 
 LevelState::~LevelState()
 {
-	for (int i = 0; i < m_GameObjects.size(); i++)
-		delete m_GameObjects.at(i);
+	for each (Object * object in m_GameObjects)
+		delete object;
 }

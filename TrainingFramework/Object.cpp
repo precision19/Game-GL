@@ -3,8 +3,7 @@
 
 Object::Object()
 {
-	m_Name = "GameObject";
-	ID = -1;
+	m_Name = "Object";
 }
 
 Object::Object(string name)
@@ -17,24 +16,28 @@ Object* Object::Clone()
 	Object* result = new Object();
 
 	result->m_Name = m_Name;
-	result->m_Dimension = m_Dimension;
 	result->m_Transform = m_Transform;
 	result->m_Renderer = m_Renderer->Clone();
 
 	return result;
 }
 
-void Object::SetNativeSize()
-{
-	m_Dimension = Vector2(m_Renderer->GetTextureSize().x * m_Transform.scale.x, m_Renderer->GetTextureSize().y * m_Transform.scale.y);
-}
+//void Object::SetNativeSize()
+//{
+//	m_Dimension = Vector2(m_Renderer->GetTextureSize().x * m_Transform.scale.x, m_Renderer->GetTextureSize().y * m_Transform.scale.y);
+//}
 
 void Object::SetPosition(Vector3 position)
 {
 	m_Transform.position = position;
 }
 
-Vector3 Object::GetPosition() 
+string Object::GetName()
+{
+	return m_Name;
+}
+
+Vector3 Object::GetPosition()
 {
 	return m_Transform.position;
 }

@@ -3,16 +3,19 @@
 
 ContactManager* ContactManager::s_InstanceContact = NULL;
 
-ContactManager::ContactManager(){
-	m_numContacts.clear();
-}
-ContactManager::~ContactManager(){}
-void ContactManager::CreateInstance() {
+void ContactManager::CreateInstance() 
+{
 	if (s_InstanceContact == NULL)
 		s_InstanceContact = new ContactManager();
 }
 
-void ContactManager::DestroyInstance() {
+ContactManager* ContactManager::GetInstance() 
+{
+	return s_InstanceContact;
+}
+
+void ContactManager::DestroyInstance() 
+{
 	if (s_InstanceContact)
 	{
 		delete s_InstanceContact;
@@ -20,32 +23,51 @@ void ContactManager::DestroyInstance() {
 	}
 }
 
-ContactManager* ContactManager::GetInstance() {
-	return s_InstanceContact;
+ContactManager::ContactManager()
+{
+	m_numContacts.clear();
 }
 
-void ContactManager::BenginContact(Object* obj1, Object* obj2) {
-	if (m_numContacts[{obj1->GetID(), obj2->GetID()}] < INT_MAX) {
-		m_numContacts[{obj1->GetID(), obj2->GetID()}]++;
-	}
-	if (m_numContacts[{obj2->GetID(), obj1->GetID()}] < INT_MAX) {
-		m_numContacts[{obj2->GetID(), obj1->GetID()}]++;
+ContactManager::~ContactManager()
+{
+}
+
+void ContactManager::BenginContact(GameObject* obj1, GameObject* obj2)
+{
+	m_numContacts[{obj1->GetID(), obj2->GetID()}]++;
+	m_numContacts[{obj2->GetID(), obj1->GetID()}]++;
+	
+	if (m_numContacts[{obj1->GetID(), obj2->GetID()}] == 1)
+	{
+		obj1->OnColliderEnter(obj2);
+		obj2->OnColliderEnter(obj1);
 	}
 }
 
-void ContactManager::EndContact(Object* obj1, Object* obj2) {
+void ContactManager::EndContact(GameObject* obj1, GameObject* obj2)
+{
 	m_numContacts[{obj1->GetID(), obj2->GetID()}]--;
 	m_numContacts[{obj2->GetID(), obj1->GetID()}]--;
-}
 
-void ContactManager::HandleContact(vector<Object*>&m_vObject) {
-	for (int i = 0; i < m_vObject.size(); i++) {
-		for (int j = i + 1; j < m_vObject.size(); j++) {
-			if (m_numContacts[{m_vObject[i]->GetID(), m_vObject[j]->GetID()}]) {
-				printf("Collision of Object %d and Object %d\n", m_vObject[i]->GetID(), m_vObject[j]->GetID());
-			}
-		}
+	if (m_numContacts[{obj2->GetID(), obj1->GetID()}] == 0)
+	{
+		obj1->OnColliderExit(obj2);
+		obj2->OnColliderExit(obj1);
 	}
 }
+//
+//void ContactManager::HandleContact(vector<GameObject*>&objects)
+//{
+//	for (int i = 0; i < objects.size(); i++) 
+//	{
+//		for (int j = i + 1; j < objects.size(); j++) 
+//		{
+//			if (m_numContacts[{objects[i]->GetID(), objects[j]->GetID()}]) 
+//			{
+//				printf("Collision of Object %d and Object %d\n", objects[i]->GetID(), objects[j]->GetID());
+//			}
+//		}
+//	}
+//}
 
 

@@ -1,9 +1,9 @@
 #Models: 1
 0. Sprite
 
-#2D Textures: 12
+#2D Textures: 14
 0. Block	REPEAT LINEAR LINEAR
-1. SawBlade/saw_blade	REPEAT LINEAR LINEAR
+1. Player	REPEAT LINEAR LINEAR
 2. Player/Idle/0	REPEAT LINEAR LINEAR
 3. Player/Idle/1	REPEAT LINEAR LINEAR
 4. Player/Idle/2	REPEAT LINEAR LINEAR
@@ -14,6 +14,8 @@
 9. Player/Run/4	REPEAT LINEAR LINEAR
 10. Player/Run/5	REPEAT LINEAR LINEAR
 11. Player/Run/6	REPEAT LINEAR LINEAR
+12. PlayButton	REPEAT LINEAR LINEAR
+13. PlayButtonOnPress	REPEAT LINEAR LINEAR
 
 #Cube Textures: 0
 

@@ -1,6 +1,5 @@
 #pragma once
-#include <map>
-#include "Object.h"
+#include "GameObject.h"
 using namespace std;
 
 class ContactManager
@@ -11,11 +10,11 @@ private:
 public:
 	ContactManager();
 	~ContactManager();
-	static ContactManager* GetInstance();
 	static void CreateInstance();
+	static ContactManager* GetInstance();
 	static void DestroyInstance();
-	void BenginContact(Object*, Object*);
-	void EndContact(Object*, Object*);
-	void HandleContact(vector<Object*>&m_vObject);
+	void BenginContact(GameObject*, GameObject*);
+	void EndContact(GameObject*, GameObject*);
+	/*void HandleContact(vector<GameObject*>&m_vObject);*/
 };
 

@@ -3,12 +3,15 @@
 #include "Button.h"
 #include "Dungeon.h"
 #include "Trap.h"
+#include "GameObject.h"
+#include "Block.h"
+#include "Player.h"
 
 class LevelState : public StateBase 
 {
 protected:
 	StateManager* m_StateManager;
-	vector<Object*> m_GameObjects;
+	vector<GameObject*> m_GameObjects;
 	Button* m_PauseButton;
 	Button* m_StartButton;
 	vector<Object*> m_PauseMenu;
@@ -20,7 +23,6 @@ public:
 	LevelState();
 	void SetStateManager(StateManager*);
 	void OnStart();
-	void CreateDungeon(Object*);
 	void Draw();
 	void Update(float);
 	~LevelState();

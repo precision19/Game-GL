@@ -1,13 +1,19 @@
 #pragma once
-#include "box2d/box2d.h"
-#include "DynamicBox.h"
 #include "ContactManager.h"
-class MyContactListener:public b2ContactListener
+
+class MyContactListener : public b2ContactListener
 {
+protected:
+	static MyContactListener* ms_Instance;
 public:
+	static void CreateInstance();
+	static void DestroyInstance();
+
+	MyContactListener();
+
 	void BeginContact(b2Contact*);
 	void EndContact(b2Contact*);
-	MyContactListener();
+
 	~MyContactListener();
 };
 

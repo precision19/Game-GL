@@ -1,27 +1,30 @@
 #pragma once
-#include "box2d/box2d.h"
 #include <memory>
-#include "MyContactListener.h"
 #include "Box.h"
-#include "GroundBox.h"
-#include "DynamicBox.h"
-#include "SceneManager.h"
+#include <vector>
+
+using namespace std;
 
 class Physic
 {
 private:
 	static Physic* s_InstancePhysic;
-	std::unique_ptr<b2World>m_world;
-	MyContactListener* myContactListenerInstance;
-	std::vector<Box*>m_boxes;
+
+	vector<Box*> m_boxes;
+	unique_ptr<b2World> m_world;
+	//MyContactListener* myContactListenerInstance;
 public:
-	bool jumpPressed = 0;
-	Physic();
-	~Physic();
+	//bool jumpPressed = 0;
 	static void CreateInstance();
-	static void DestroyInstance();
 	static Physic* GetInstance();
-	void InitBox(vector<Object*>& m_vObejcts);
-	void Update(float deltaTime, vector<Object*>&m_vObjects);
+	static void DestroyInstance();
+
+	Physic();
+	void AddBox(Box*);
+	b2World* GetWorld();
+	//void InitBox(vector<GameObject*>&);
+	//void Update(float deltaTime, vector<GameObject*>&);
+	void Update(float deltaTime);
+	~Physic();
 };
 

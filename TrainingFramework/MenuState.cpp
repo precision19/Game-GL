@@ -95,7 +95,6 @@ void MenuState::Update(float deltaTime)
 	if (m_PlayButton->JustPressed())
 	{
 		// TODO: switch state
-		printf("open level 3");
 		m_StateManager->SwitchState("Level");	// TEMP
 	}
 }

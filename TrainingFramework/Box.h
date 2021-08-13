@@ -16,13 +16,15 @@ enum Mask {
 	MASK_SENSOR = 0xFFFF
 };
 
-class Box {
+class Box 
+{
 private:
-	bool IsDynamic;
+	/*bool IsDynamic;*/
 public:
 	Box();
 	virtual ~Box();
-	virtual void Init(b2World* world, Vector2 position, Vector2 dimension);
-	int GetDynmaic() { return IsDynamic; }
-	void SetDynamic(bool dynamic) { IsDynamic = dynamic; }
+	virtual void Update();
+	//virtual void Init(b2World* world, Vector2 position, Vector2 dimension);
+	//int GetDynmaic() { return IsDynamic; }
+	//void SetDynamic(bool dynamic) { IsDynamic = dynamic; }
 };

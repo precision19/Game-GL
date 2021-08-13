@@ -1,4 +1,4 @@
-#Renderers: 4
+#Renderers: 6
 0. Block
 TYPE 2D
 MODEL 0
@@ -28,3 +28,15 @@ FRAMES 6
 6 7 8 9 10 11
 FPS 8
 LOOP 1
+
+4. PlayButton
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 12
+
+5. PlayButtonOnPress
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 13

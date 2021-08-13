@@ -6,27 +6,19 @@
 #include "Globals.h"
 #include <conio.h>
 #include "SceneManager.h"
-#include "ContactManager.h"
 #include "Input.h"
-#include "Physic.h"
+#include "MyContactListener.h"
 
 int Init ( ESContext *esContext )
 {
 	Input::CreateInstance();
 	Camera::CreateInstance();
-
 	ResourceManager::CreateInstance();
-	ResourceManager::GetInstance()->LoadResource("Level1");
-
 	PrefabManager::CreateInstance();
-	PrefabManager::GetInstance()->LoadPrefabs("Level1");
-
 	SceneManager::CreateInstance();
-	//SceneManager::GetInstance()->LoadScene("Level1");
-	//Physic::CreateInstance();
-	//SceneManager::GetInstance()->AddPhysicsToScene();
-
+	Physic::CreateInstance();
 	ContactManager::CreateInstance();
+	MyContactListener::CreateInstance();
 
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
@@ -50,17 +42,7 @@ void Update ( ESContext *esContext, float deltaTime )
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 {
-	//printf("%d %c\n", bIsPressed, key);
 	Input::SetKeyPressed(key, bIsPressed);
-	if (key == 'J') {
-		if (bIsPressed) {
-			Physic::GetInstance()->jumpPressed = 1;
-		}
-		else {
-			Physic::GetInstance()->jumpPressed = 0;
-		}
-	}
-	//printf("%c\n", key);
 }
 
 void TouchActionDown(ESContext* esContext, int x, int y)
@@ -90,8 +72,9 @@ void CleanUp()
 	ResourceManager::DestroyInstance();
 	PrefabManager::DestroyInstance();
 	SceneManager::DestroyInstance();
-	ContactManager::DestroyInstance();
 	Physic::DestroyInstance();
+	ContactManager::DestroyInstance();
+	MyContactListener::DestroyInstance();
 }
 
 int _tmain(int argc, _TCHAR* argv[])

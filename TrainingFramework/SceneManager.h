@@ -8,25 +8,23 @@
 #include "MapState.h"
 #include "LevelState.h"
 
-class SceneManager
+class SceneManager : public StateManager
 {
 protected:
 	static SceneManager* ms_Instance;
-	MyContactListener* myContactListenerInstance;
-	StateManager* m_StateManager;
+	//MyContactListener* myContactListenerInstance;
 public:
 	static void CreateInstance();
 	static SceneManager* GetInstance();
 	static void DestroyInstance();
 
-	vector<Object*> m_vObjects;
+	//vector<Object*> m_vObjects;
 
 	SceneManager();
-	void LoadScene(string);
-	void AddPhysicsToScene();
+	//void LoadScene(string);
+	//void AddPhysicsToScene();
 	void Draw();
 	void Update(float);
-	void DestroyAllObjects();
-	~SceneManager();
+	//void DestroyAllObjects();
 };
 
