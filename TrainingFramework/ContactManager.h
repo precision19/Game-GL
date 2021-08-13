@@ -2,10 +2,11 @@
 #include "GameObject.h"
 using namespace std;
 
+class GameObject;
 class ContactManager
 {
 private:
-	map<pair<int, int>, int>m_numContacts;
+	map<pair<int, int>, bool>m_numContacts;
 	static ContactManager* s_InstanceContact;
 public:
 	ContactManager();

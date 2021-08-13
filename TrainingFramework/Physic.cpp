@@ -26,8 +26,7 @@ Physic::Physic()
 	m_world = std::make_unique<b2World>(gravity);
 	m_world.get()->SetGravity(b2Vec2(0.0f, -10.0f));
 
-	//myContactListenerInstance = new MyContactListener();
-	//m_world.get()->SetContactListener(myContactListenerInstance);
+	m_world.get()->SetContactListener(MyContactListener::GetInstance());
 }
 
 void Physic::AddBox(Box* box)

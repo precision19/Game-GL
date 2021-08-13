@@ -8,7 +8,7 @@ protected:
 public:
 	static void CreateInstance();
 	static void DestroyInstance();
-
+	static MyContactListener* GetInstance();
 	MyContactListener();
 
 	void BeginContact(b2Contact*);
