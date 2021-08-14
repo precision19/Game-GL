@@ -42,7 +42,7 @@ void Update ( ESContext *esContext, float deltaTime )
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 {
-	Input::SetKeyPressed(key, bIsPressed);
+	//Input::SetKeyPressed(key, bIsPressed);
 }
 
 void TouchActionDown(ESContext* esContext, int x, int y)

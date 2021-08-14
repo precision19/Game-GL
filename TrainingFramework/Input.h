@@ -5,19 +5,11 @@
 
 using namespace std;
 
-enum KeyCode
-{
-	Space,
-	Ctrl,
-	W,
-	A,
-	S,
-	D,
-	Up,
-	Left,
-	Down,
-	Right
-};
+#define BUTTON_PLAY -1
+#define BUTTON_SOUND -2
+#define BUTTON_MENU -3
+#define BUTTON_START -4
+#define BUTTON_PAUSE -5
 
 class Input
 {
@@ -27,8 +19,7 @@ protected:
 	bool m_isTouching;
 	Vector2 m_PreviousTouchPosition;
 	Vector2 m_TouchPosition;
-	int m_KeyPressed;
-	map<unsigned, int> m_KeyMap;
+	int m_ButtonClicked;
 public:
 	static void CreateInstance();
 	static Input* GetInstance();
@@ -36,9 +27,9 @@ public:
 
 	Input();
 	~Input();
-	static void SetKeyPressed(unsigned char, bool);
-	static bool GetKeyDown(KeyCode);
-	static bool GetKeyUp(KeyCode);
+	static void SetButtonBuffer(int);
+	static bool CheckButtonBuffer(int);
+
 	static void SetTouchStatus(bool);
 	static void SetTouchPosition(Vector2);
 	static bool GetTouch();

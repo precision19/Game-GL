@@ -3,11 +3,11 @@
 
 Button::Button()
 {
+	m_Name = "Button";
 	m_IdleRenderer = NULL;
 	m_OnPressRenerer = NULL;
 	m_IsSkipped = false;
 	m_IsPressing = false;
-	m_WasJustPressed = false;
 }
 
 void Button::SetRenderer(int id)
@@ -21,6 +21,11 @@ void Button::SetRenderer(int id)
 	{
 		m_OnPressRenerer = PrefabManager::GetInstance()->GetRenderer(id)->Clone();
 	}
+}
+
+void Button::SetButtonID(int id)
+{
+	m_ButtonID = id;
 }
 
 void Button::Update(float deltaTime)
@@ -57,28 +62,12 @@ void Button::Update(float deltaTime)
 			{
 				m_IsPressing = false;
 				m_IsSkipped = true;
-				//m_Renderer = m_IdleRenderer;
 				Idle();
 			}
 		}
 	}
 }
 
-bool Button::JustPressed()
-{
-	if (m_WasJustPressed)
-	{
-		Idle();
-		m_WasJustPressed = false;
-		return true;
-	}
-	return false;
-}
-
-Button::~Button()
-{
-	delete m_OnPressRenerer;
-}
 
 bool Button::CheckClick()
 {
@@ -106,5 +95,10 @@ void Button::OnPressing()
 
 void Button::OnClicked()
 {
-	m_WasJustPressed = true;
+	Input::SetButtonBuffer(m_ButtonID);
+}
+
+Button::~Button()
+{
+	delete m_OnPressRenerer;
 }

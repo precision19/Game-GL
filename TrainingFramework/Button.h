@@ -10,9 +10,11 @@ class Button : public Object
 protected:
 	Renderer* m_IdleRenderer;
 	Renderer* m_OnPressRenerer;
+
 	bool m_IsPressing;
 	bool m_IsSkipped;
-	bool m_WasJustPressed;
+
+	int m_ButtonID;
 
 	bool CheckClick();
 	virtual void Idle();
@@ -20,8 +22,8 @@ protected:
 	virtual void OnClicked();
 public:
 	Button();
-	void SetRenderer(int);
+	virtual void SetRenderer(int);
+	void SetButtonID(int);
 	void Update(float);
-	virtual bool JustPressed();
 	~Button();
 };

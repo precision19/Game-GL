@@ -37,30 +37,35 @@ MenuState::MenuState()
 	}
 
 	fscanf(f, "#PlayButton\n");
-	m_PlayButton = new Button();
+	Button* PlayButton = new Button();
 	fscanf(f, "RENDERER %d\n", &id);
-	m_PlayButton->SetRenderer(id);
+	PlayButton->SetRenderer(id);
 	fscanf(f, "RENDERER %d\n", &id);
-	m_PlayButton->SetRenderer(id);
+	PlayButton->SetRenderer(id);
 	fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
-	m_PlayButton->SetPosition(Vector3(x, y, z));
+	PlayButton->SetPosition(Vector3(x, y, z));
 	fscanf(f, "ROTATION %f %f %f\n", &x, &y, &z);
-	m_PlayButton->SetRotation(Vector3(x, y, z));
+	PlayButton->SetRotation(Vector3(x, y, z));
 	fscanf(f, "SCALE %f %f %f\n", &x, &y, &z);
-	m_PlayButton->SetScale(Vector3(x, y, z));
+	PlayButton->SetScale(Vector3(x, y, z));
+	PlayButton->SetButtonID(BUTTON_PLAY);
 
 	fscanf(f, "#SoundButton\n");
-	m_SoundButton = new Button();
+	Button* SoundButton = new Button();
 	fscanf(f, "RENDERER %d\n", &id);
-	m_SoundButton->SetRenderer(id);
+	SoundButton->SetRenderer(id);
 	fscanf(f, "RENDERER %d\n", &id);
-	m_SoundButton->SetRenderer(id);
+	SoundButton->SetRenderer(id);
 	fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
-	m_SoundButton->SetPosition(Vector3(x, y, z));
+	SoundButton->SetPosition(Vector3(x, y, z));
 	fscanf(f, "ROTATION %f %f %f\n", &x, &y, &z);
-	m_SoundButton->SetRotation(Vector3(x, y, z));
+	SoundButton->SetRotation(Vector3(x, y, z));
 	fscanf(f, "SCALE %f %f %f\n", &x, &y, &z);
-	m_SoundButton->SetScale(Vector3(x, y, z));
+	SoundButton->SetScale(Vector3(x, y, z));
+	SoundButton->SetButtonID(BUTTON_SOUND);
+
+	m_Objects.push_back(PlayButton);
+	m_Objects.push_back(SoundButton);
 
 	fclose(f);
 }
@@ -78,21 +83,15 @@ void MenuState::OnStart()
 
 void MenuState::Update(float deltaTime)
 {
-	for (int i = 0; i < m_Objects.size(); i++)
-	{
-		m_Objects.at(i)->Update(deltaTime);
-	}
+	for each (Object * object in m_Objects)
+			object->Update(deltaTime);
 
-	m_PlayButton->Update(deltaTime);
-	m_SoundButton->Update(deltaTime);
-
-	if (m_SoundButton->JustPressed())
+	if (Input::CheckButtonBuffer(BUTTON_SOUND))
 	{
 		// TODO: turn on/off sound
 		printf("Sound button is clicked");
 	}
-
-	if (m_PlayButton->JustPressed())
+	if (Input::CheckButtonBuffer(BUTTON_PLAY))
 	{
 		// TODO: switch state
 		m_StateManager->SwitchState("Level");	// TEMP
@@ -101,23 +100,12 @@ void MenuState::Update(float deltaTime)
 
 void MenuState::Draw() 
 {
-	for (int i = 0; i < m_Objects.size(); i++)
-	{
-		m_Objects.at(i)->Draw();
-	}
-
-	m_PlayButton->Draw();
-	m_SoundButton->Draw();
+	for each (Object * object in m_Objects)
+		object->Draw();
 }
 
 MenuState::~MenuState()
 {
-
-	for (int i = 0; i < m_Objects.size(); i++)
-	{
-		delete m_Objects.at(i);
-	}
-
-	delete m_PlayButton;
-	delete m_SoundButton;
+	for each (Object * object in m_Objects)
+		delete object;
 }

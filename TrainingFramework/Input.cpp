@@ -30,23 +30,7 @@ Input::Input()
 	m_isTouching = false;
 	m_TouchPosition = Vector2();
 	m_PreviousTouchPosition = m_TouchPosition;
-
-	m_KeyPressed = 0;
-
-	m_KeyMap[VK_SPACE] = Space;
-	m_KeyMap[VK_CONTROL] = Ctrl;
-	m_KeyMap['W'] = W;
-	m_KeyMap['w'] = W;
-	m_KeyMap['A'] = A;
-	m_KeyMap['a'] = A;
-	m_KeyMap['S'] = S;
-	m_KeyMap['s'] = S;
-	m_KeyMap['D'] = D;
-	m_KeyMap['d'] = D;
-	m_KeyMap[VK_UP] = Up;
-	m_KeyMap[VK_LEFT] = Left;
-	m_KeyMap[VK_DOWN] = Down;
-	m_KeyMap[VK_RIGHT] = Right;
+	m_ButtonClicked = 0;
 }
 
 Input::~Input()
@@ -54,20 +38,19 @@ Input::~Input()
 
 }
 
-void Input::SetKeyPressed(unsigned char key, bool isPressed)
+void Input::SetButtonBuffer(int buttonID)
 {
-	int keyId = ms_Instance->m_KeyMap[key];
-	ms_Instance->m_KeyPressed = isPressed ? (ms_Instance->m_KeyPressed | (1 << keyId)) : (ms_Instance->m_KeyPressed ^ (1 << keyId));
+	ms_Instance->m_ButtonClicked = ms_Instance->m_ButtonClicked | (1 << buttonID);
 }
 
-bool Input::GetKeyDown(KeyCode key)
+bool Input::CheckButtonBuffer(int buttonID)
 {
-	return (ms_Instance->m_KeyPressed & (1 << key));
-}
-
-bool Input::GetKeyUp(KeyCode key)
-{
-	return !(ms_Instance->m_KeyPressed & (1 << key));
+	if (ms_Instance->m_ButtonClicked & (1 << buttonID))
+	{
+		ms_Instance->m_ButtonClicked = ms_Instance->m_ButtonClicked ^ (1 << buttonID);
+		return true;
+	}
+	return false;
 }
 
 void Input::SetTouchStatus(bool status)
