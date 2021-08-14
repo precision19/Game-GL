@@ -50,7 +50,7 @@ void DynamicBox::Update(float deltaTime)
 	Vector2 gravity = Vector2(Physic::GetInstance()->GetWorld()->GetGravity().x, Physic::GetInstance()->GetWorld()->GetGravity().y);
 	Object* obj = (Object*)body->GetUserData().pointer;
 	obj->SetPosition(Vector3(body->GetPosition().x, body->GetPosition().y, obj->GetPosition().z));
-	if (obj->GetName() == "Player")
+	/*if (obj->GetName() == "Player")
 	{
 		if (Input::GetKeyDown(J)) {
 			ApplyForce(Vector2(70.0f,  8000.0f));
@@ -58,7 +58,7 @@ void DynamicBox::Update(float deltaTime)
 		if (Input::GetKeyUp(J)) {
 			SetVelocity(Vector2(70.0f, GetVelocity().y));
 		}
-	}
+	}*/
 }
 
 Vector2 DynamicBox::GetVelocity() {

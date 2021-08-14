@@ -43,17 +43,10 @@ void Player::AddAnimation(Renderer* renderer)
 void Player::Update(float deltaTime)
 {
 	// TEST
-	if (Input::GetTouch() && m_currentAnimationId == 0)
+	if (Input::GetTouch())
 	{
-		m_currentAnimationId = 1;
-		m_Renderer = m_Animations.at(m_currentAnimationId);
+		((DynamicBox*)m_Collider)->ApplyForce(Vector2(70.0f, 8000.0f));
 	}
-	else if (!Input::GetTouch() && m_currentAnimationId == 1)
-	{
-		m_currentAnimationId = 0;
-		m_Renderer = m_Animations.at(m_currentAnimationId);
-	}
-
 }
 
 Player::~Player()
