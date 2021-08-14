@@ -18,6 +18,10 @@ void MyContactListener::DestroyInstance()
     }
 }
 
+MyContactListener* MyContactListener::GetInstance() {
+    return ms_Instance;
+}
+
 MyContactListener::MyContactListener()
 {
 

@@ -11,6 +11,6 @@ Box::~Box()
 
 }
 
-void Box::Update()
+void Box::Update(float deltaTime)
 {
 }

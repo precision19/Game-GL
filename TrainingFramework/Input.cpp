@@ -53,6 +53,10 @@ bool Input::CheckButtonBuffer(int buttonID)
 	return false;
 }
 
+bool Input::GetKeyDown(KeyCode key) {
+	return (ms_Instance->m_KeyPressed & (1 << key));
+}
+
 void Input::SetTouchStatus(bool status)
 {
 	ms_Instance->m_isTouching = status;

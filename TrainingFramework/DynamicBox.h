@@ -14,7 +14,7 @@ public:
 	b2Body* getBody() { return body; }
 	b2Fixture* getFixture() { return fixture; }
 	void ApplyForce(Vector2);
-	void Update();
-	void Update(b2World*);
-	void UpdatePlayer(b2World*);
+	void Update(float);
+	Vector2 GetVelocity();
+	void SetVelocity(Vector2);
 };

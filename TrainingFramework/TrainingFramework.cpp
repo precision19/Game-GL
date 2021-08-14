@@ -16,9 +16,9 @@ int Init ( ESContext *esContext )
 	ResourceManager::CreateInstance();
 	PrefabManager::CreateInstance();
 	SceneManager::CreateInstance();
-	Physic::CreateInstance();
 	ContactManager::CreateInstance();
 	MyContactListener::CreateInstance();
+	Physic::CreateInstance();
 
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 

@@ -24,10 +24,9 @@ Physic::Physic()
 {
 	b2Vec2 gravity(0.0f, -10.0f);
 	m_world = std::make_unique<b2World>(gravity);
-	m_world.get()->SetGravity(b2Vec2(0.0f, -10.0f));
+	m_world.get()->SetGravity(b2Vec2(0.0f, -100.0f));
 
-	//myContactListenerInstance = new MyContactListener();
-	//m_world.get()->SetContactListener(myContactListenerInstance);
+	m_world.get()->SetContactListener(MyContactListener::GetInstance());
 }
 
 void Physic::AddBox(Box* box)
@@ -85,7 +84,7 @@ void Physic::Update(float deltaTime)
 {
 	m_world.get()->Step(deltaTime, 6, 2);
 	for each (Box * body in m_boxes)
-		body->Update();
+		body->Update(deltaTime);
 //	ContactManager::GetInstance()->HandleContact(objects);
 }
 
