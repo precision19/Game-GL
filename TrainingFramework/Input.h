@@ -13,6 +13,7 @@ enum KeyCode
 	A,
 	S,
 	D,
+	J,
 	Up,
 	Left,
 	Down,
@@ -37,8 +38,8 @@ public:
 	Input();
 	~Input();
 	static void SetKeyPressed(unsigned char, bool);
-	static bool GetKeyDown(KeyCode);
 	static bool GetKeyUp(KeyCode);
+	static bool GetKeyDown(KeyCode);
 	static void SetTouchStatus(bool);
 	static void SetTouchPosition(Vector2);
 	static bool GetTouch();

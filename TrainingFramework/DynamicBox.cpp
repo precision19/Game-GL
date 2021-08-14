@@ -21,10 +21,15 @@ DynamicBox::DynamicBox(Object* object, float radius, Category category)
 	fixtureDef.shape = &circleShape;
 	fixtureDef.density = 1.0f;
 	fixtureDef.friction = 0.3f;
-	if (object->GetName() == "Player")
+	if (category == CATEGORY_PLAYER)
 	{
 		fixtureDef.filter.maskBits = MASK_PLAYER;
 		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
+	}
+	if (category == CATEGORY_NOTGRAVITY) {
+		body->SetGravityScale(0);
+		fixtureDef.filter.maskBits = MASK_NOTGRAVITY;
+		fixtureDef.filter.categoryBits = CATEGORY_NOTGRAVITY;
 	}
 	fixture = body->CreateFixture(&fixtureDef);
 }
@@ -34,67 +39,34 @@ DynamicBox::~DynamicBox()
 
 }
 
-//void DynamicBox::Init(b2World* world, Vector2 position, Vector2 dimension, Object* obj) 
-//{
-//	//make the body
-//	b2BodyDef bodyDef;
-//	bodyDef.type = b2_dynamicBody;
-//	bodyDef.position.Set(position.x, position.y);
-//
-//	b2BodyUserData bdt;
-//	bdt.pointer = (uintptr_t)obj;
-//	bodyDef.userData = bdt;
-//		
-//	body = world->CreateBody(&bodyDef);
-//	b2CircleShape circleShape;
-//	circleShape.m_radius = min(dimension.x / 2.0f, dimension.y / 2.0f);
-//
-//	b2FixtureDef fixtureDef;
-//	fixtureDef.shape = &circleShape;
-//	fixtureDef.density = 1.0f;
-//	fixtureDef.friction = 0.3f;
-//	//fixtureDef.isSensor = true;
-//	if (obj->GetName() == "Player")
-//	{
-//		fixtureDef.filter.maskBits = MASK_PLAYER;
-//		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
-//	}
-//	fixture = body->CreateFixture(&fixtureDef);
-//}
 
 void DynamicBox::ApplyForce(Vector2 direction) 
 {
-	body->ApplyForce(b2Vec2(direction.x, direction.y), body->GetWorldCenter(), 1);
+	body->ApplyLinearImpulse(b2Vec2(direction.x, direction.y), body->GetWorldCenter(), 0);
 }
 
-void DynamicBox::Update()
+void DynamicBox::Update(float deltaTime)
 {
 	Vector2 gravity = Vector2(Physic::GetInstance()->GetWorld()->GetGravity().x, Physic::GetInstance()->GetWorld()->GetGravity().y);
-
-	/*ApplyForce(Vector2(body->GetMass() * gravity.x, body->GetMass() * gravity.y));*/
 	Object* obj = (Object*)body->GetUserData().pointer;
 	obj->SetPosition(Vector3(body->GetPosition().x, body->GetPosition().y, obj->GetPosition().z));
 	if (obj->GetName() == "Player")
 	{
-		body->SetLinearVelocity(b2Vec2(30.0f, body->GetLinearVelocity().y));
+		if (Input::GetKeyDown(J)) {
+			ApplyForce(Vector2(70.0f,  8000.0f));
+		}
+		if (Input::GetKeyUp(J)) {
+			SetVelocity(Vector2(70.0f, GetVelocity().y));
+		}
 	}
 }
 
-void DynamicBox::Update(b2World* m_world) 
-{
-	ApplyForce(Vector2(body->GetMass() * m_world->GetGravity().x, body->GetMass() * m_world->GetGravity().y));
-	Object* obj = (Object*)body->GetUserData().pointer;
-	obj->SetPosition(Vector3(body->GetPosition().x, body->GetPosition().y, obj->GetPosition().z));
-
-	//if (obj->GetName() == "Player")
-	//{
-	//	ApplyForce(Vector2(-body->GetMass() * m_world->GetGravity().y, body->GetMass() * m_world->GetGravity().x));
-	//}
+Vector2 DynamicBox::GetVelocity() {
+	return Vector2(body->GetLinearVelocity().x, body->GetLinearVelocity().y);
 }
 
-void DynamicBox::UpdatePlayer(b2World* m_world) 
-{
-	body->SetGravityScale(1);
-	ApplyForce(Vector2(-2 * body->GetMass() * m_world->GetGravity().x, -2 * body->GetMass() * m_world->GetGravity().y));
+void DynamicBox::SetVelocity(Vector2 velo) {
+	body->SetLinearVelocity(b2Vec2(velo.x, velo.y));
 }
+
 

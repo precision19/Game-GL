@@ -43,6 +43,8 @@ Input::Input()
 	m_KeyMap['s'] = S;
 	m_KeyMap['D'] = D;
 	m_KeyMap['d'] = D;
+	m_KeyMap['J'] = J;
+	m_KeyMap['j'] = J;
 	m_KeyMap[VK_UP] = Up;
 	m_KeyMap[VK_LEFT] = Left;
 	m_KeyMap[VK_DOWN] = Down;
@@ -56,18 +58,19 @@ Input::~Input()
 
 void Input::SetKeyPressed(unsigned char key, bool isPressed)
 {
+	/*printf("%c\n", key);*/
 	int keyId = ms_Instance->m_KeyMap[key];
 	ms_Instance->m_KeyPressed = isPressed ? (ms_Instance->m_KeyPressed | (1 << keyId)) : (ms_Instance->m_KeyPressed ^ (1 << keyId));
 }
 
-bool Input::GetKeyDown(KeyCode key)
-{
-	return (ms_Instance->m_KeyPressed & (1 << key));
-}
 
 bool Input::GetKeyUp(KeyCode key)
 {
 	return !(ms_Instance->m_KeyPressed & (1 << key));
+}
+
+bool Input::GetKeyDown(KeyCode key) {
+	return (ms_Instance->m_KeyPressed & (1 << key));
 }
 
 void Input::SetTouchStatus(bool status)
