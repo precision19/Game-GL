@@ -23,7 +23,6 @@ void Block::CreateCollider()
 	if (m_Collider == NULL)
 	{
 		m_Collider = new GroundBox(this, Vector2(m_ColliderSize, m_ColliderSize), CATEGORY_GROUND);
-		Physic::GetInstance()->AddBox(m_Collider);
 	}
 	else
 	{

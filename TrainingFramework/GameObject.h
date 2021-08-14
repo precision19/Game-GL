@@ -21,5 +21,6 @@ public:
 	int GetID();
 	virtual void OnColliderEnter(GameObject*);
 	virtual void OnColliderExit(GameObject*);
+	~GameObject();
 };
 

@@ -11,6 +11,3 @@ Box::~Box()
 
 }
 
-void Box::Update(float deltaTime)
-{
-}

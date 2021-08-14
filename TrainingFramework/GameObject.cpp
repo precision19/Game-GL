@@ -38,7 +38,6 @@ void GameObject::CreateCollider()
     if (m_Collider == NULL)
     {
         m_Collider = new Box();
-        Physic::GetInstance()->AddBox(m_Collider);
     }
     else
     {
@@ -61,3 +60,6 @@ void GameObject::OnColliderExit(GameObject* other)
     printf("Object %d and object %d exit contact\n", m_ID, other->m_ID);
 }
 
+GameObject::~GameObject() {
+    delete m_Collider;
+}

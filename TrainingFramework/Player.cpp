@@ -15,7 +15,6 @@ void Player::CreateCollider()
 	if (m_Collider == NULL)
 	{
 		m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_PLAYER);
-		Physic::GetInstance()->AddBox(m_Collider);
 	}
 	else
 	{
@@ -42,10 +41,14 @@ void Player::AddAnimation(Renderer* renderer)
 
 void Player::Update(float deltaTime)
 {
-	// TEST
+	Vector2 gravity = Vector2(Physic::GetInstance()->GetWorld()->GetGravity().x, Physic::GetInstance()->GetWorld()->GetGravity().y);
+	DynamicBox* db = (DynamicBox*)m_Collider;
+	SetPosition(Vector3(db->getBody()->GetPosition().x, db->getBody()->GetPosition().y, GetPosition().z));
+	db->SetVelocity(Vector2(50.0f, db->GetVelocity().y));
+
 	if (Input::GetTouch())
 	{
-		((DynamicBox*)m_Collider)->ApplyForce(Vector2(70.0f, 8000.0f));
+		((DynamicBox*)m_Collider)->ApplyForce(Vector2(50.0f, 8000.0f));
 	}
 }
 

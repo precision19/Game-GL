@@ -21,12 +21,8 @@ enum Mask {
 class Box 
 {
 private:
-	/*bool IsDynamic;*/
+
 public:
 	Box();
 	virtual ~Box();
-	virtual void Update(float);
-	//virtual void Init(b2World* world, Vector2 position, Vector2 dimension);
-	//int GetDynmaic() { return IsDynamic; }
-	//void SetDynamic(bool dynamic) { IsDynamic = dynamic; }
 };
