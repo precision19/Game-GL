@@ -20,7 +20,7 @@ Physic* Physic::GetInstance() {
 	return s_InstancePhysic;
 }
 
-Physic::Physic() 
+Physic::Physic()
 {
 	b2Vec2 gravity(0.0f, -10.0f);
 	m_world = std::make_unique<b2World>(gravity);
@@ -28,7 +28,6 @@ Physic::Physic()
 
 	m_world.get()->SetContactListener(MyContactListener::GetInstance());
 }
-
 
 b2World* Physic::GetWorld()
 {

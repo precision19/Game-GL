@@ -6,9 +6,6 @@ GroundBox::GroundBox(Object* object, Vector2 dimension, Category category)
 {
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(object->GetPosition().x, object->GetPosition().y);
-	b2BodyUserData bdt;
-	bdt.pointer = (uintptr_t)object;
-	groundBodyDef.userData = bdt;
 	b2Body* groundBody = Physic::GetInstance()->GetWorld()->CreateBody(&groundBodyDef);
 	//make the ground fixture
 	b2PolygonShape groundBox;
@@ -33,10 +30,26 @@ GroundBox::GroundBox(Object* object, Vector2 dimension, Category category)
 		fixtureDef.filter.categoryBits = MASK_SENSOR;
 		fixtureDef.isSensor = true;
 	}
+	b2FixtureUserData fudt;
+	fudt.pointer = (uintptr_t)object;
+	fixtureDef.userData = fudt;
 	groundBody->CreateFixture(&fixtureDef);
+	foot = new Sensor(FOOT);
+	if (category == CATEGORY_GROUND)
+	{
+		//tao foot sensor
+		fixtureDef.filter.categoryBits = CATEGORY_SENSOR;
+		fixtureDef.filter.categoryBits = MASK_SENSOR;
+		groundBox.SetAsBox((dimension.x / 2.0f) - 0.1f, 1.0f, b2Vec2(0.0f, (dimension.y / 2.0f) - 1.0f), 0);
+		fixtureDef.shape = &groundBox;
+		b2FixtureUserData fudt2;
+		fudt2.pointer = (uintptr_t)foot;
+		fixtureDef.userData = fudt2;
+		groundBody->CreateFixture(&fixtureDef);
+	}
 }
 
 GroundBox::~GroundBox() 
 {
-
+	//delete foot;
 }

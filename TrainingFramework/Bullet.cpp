@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Bullet.h"
+#include "GroundBox.h"
 
 Bullet::Bullet()
 {

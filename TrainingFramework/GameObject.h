@@ -1,6 +1,6 @@
 #pragma once
-#include "DynamicBox.h"
-#include "GroundBox.h"
+#include "Box.h"
+#include "Object.h"
 
 class GameObject :
     public Object

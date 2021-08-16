@@ -34,8 +34,8 @@ MyContactListener::~MyContactListener()
 
 void MyContactListener::BeginContact(b2Contact* contact) 
 {
-    GameObject* obj1 = (GameObject*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-    GameObject* obj2 = (GameObject*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+    GameObject* obj1 = (GameObject*)contact->GetFixtureA()->GetUserData().pointer;
+    GameObject* obj2 = (GameObject*)contact->GetFixtureB()->GetUserData().pointer;
 
     if (obj1 && obj2) 
         ContactManager::GetInstance()->BenginContact(obj1, obj2);
@@ -43,8 +43,8 @@ void MyContactListener::BeginContact(b2Contact* contact)
 
 void MyContactListener::EndContact(b2Contact* contact) 
 {
-    GameObject* obj1 = (GameObject*)contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-    GameObject* obj2 = (GameObject*)contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+    GameObject* obj1 = (GameObject*)contact->GetFixtureA()->GetUserData().pointer;
+    GameObject* obj2 = (GameObject*)contact->GetFixtureB()->GetUserData().pointer;
 
     if (obj1 && obj2)
         ContactManager::GetInstance()->EndContact(obj1, obj2);

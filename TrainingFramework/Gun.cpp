@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Gun.h"
+#include "GroundBox.h"
 
 Gun::Gun()
 {

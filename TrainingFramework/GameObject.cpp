@@ -52,12 +52,12 @@ int GameObject::GetID()
 
 void GameObject::OnColliderEnter(GameObject* other)
 {
-    printf("Object %d and object %d begin contact\n", m_ID, other->m_ID);
+    //printf("Object %d and object %d begin contact\n", m_ID, other->m_ID);
 }
 
 void GameObject::OnColliderExit(GameObject* other)
 {
-    printf("Object %d and object %d exit contact\n", m_ID, other->m_ID);
+    //printf("Object %d and object %d exit contact\n", m_ID, other->m_ID);
 }
 
 GameObject::~GameObject() {
