@@ -120,7 +120,6 @@
     <ClCompile Include="Renderer2D.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Sensor.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="StateBase.cpp" />
     <ClCompile Include="StateManager.cpp" />
@@ -164,7 +163,6 @@
     <ClInclude Include="Renderer2D.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Sensor.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="StateBase.h" />
     <ClInclude Include="StateManager.h" />

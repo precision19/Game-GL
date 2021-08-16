@@ -8,15 +8,19 @@ DynamicBox::DynamicBox(Object* object, float radius, Category category)
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(object->GetPosition().x, object->GetPosition().y);
 
+	b2BodyUserData bdt;
+	bdt.pointer = (uintptr_t)object;
+	bodyDef.userData = bdt;
+
 	body = Physic::GetInstance()->GetWorld()->CreateBody(&bodyDef);
 	b2CircleShape circleShape;
 
-	circleShape.m_p = b2Vec2(0.0f, 0.0f);
 	circleShape.m_radius = radius;
 
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &circleShape;
 	fixtureDef.density = 1.0f;
+	fixtureDef.friction = 0.3f;
 	if (category == CATEGORY_PLAYER)
 	{
 		fixtureDef.filter.maskBits = MASK_PLAYER;
@@ -27,11 +31,7 @@ DynamicBox::DynamicBox(Object* object, float radius, Category category)
 		fixtureDef.filter.maskBits = MASK_NOTGRAVITY;
 		fixtureDef.filter.categoryBits = CATEGORY_NOTGRAVITY;
 	}
-	b2FixtureUserData fudt;
-	fudt.pointer = (uintptr_t)object;
-	fixtureDef.userData = fudt;
 	fixture = body->CreateFixture(&fixtureDef);
-	
 }
 
 DynamicBox::~DynamicBox()

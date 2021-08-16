@@ -1,6 +1,6 @@
 #pragma once
-#include "Box.h"
-#include "Object.h"
+#include "DynamicBox.h"
+#include "GroundBox.h"
 
 class GameObject :
     public Object
@@ -19,7 +19,6 @@ public:
 	float GetCollider() { return m_ColliderSize; };
 	virtual void CreateCollider();
 	int GetID();
-	Box* GetColliderBox() { return m_Collider; };
 	virtual void OnColliderEnter(GameObject*);
 	virtual void OnColliderExit(GameObject*);
 	~GameObject();
