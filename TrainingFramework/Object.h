@@ -7,10 +7,11 @@
 class Object
 {
 protected:
-	string m_Name;
+
 	Transform m_Transform;
 	Renderer* m_Renderer;
 public:
+	string m_Name;
 	Object();
 	Object(string);
 	virtual Object* Clone();
