@@ -8,6 +8,14 @@ Renderer::Renderer()
 	m_Shaders = NULL;
 }
 
+Renderer::Renderer(string name)
+{
+	m_Name = name;
+	m_Model = NULL;
+	m_Texture = NULL;
+	m_Shaders = NULL;
+}
+
 Renderer* Renderer::Clone()
 {
 	Renderer* result = new Renderer();
@@ -45,6 +53,11 @@ void Renderer::SetShaders(int id)
 void Renderer::SetShaders(string name)
 {
 	m_Shaders = ResourceManager::GetInstance()->GetShaders(name);
+}
+
+string Renderer::GetName()
+{
+	return m_Name;
 }
 
 Vector3 Renderer::GetTextureSize()

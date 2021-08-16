@@ -29,9 +29,9 @@ SceneManager::SceneManager()
 	menuState->SetStateManager(this);
 	AddState(menuState);
 
-	//MapState* mapState = new MapState();
-	//menuState->SetStateManager(m_StateManager);
-	//m_StateManager->AddState(menuState);
+	MapState* mapState = new MapState();
+	mapState->SetStateManager(this);
+	AddState(mapState);
 
 	LevelState* levelState = new LevelState();
 	levelState->SetStateManager(this);

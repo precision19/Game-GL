@@ -6,10 +6,19 @@
 #include "GameObject.h"
 #include "Block.h"
 #include "Player.h"
+#include "Bullet.h"
+#include "Gun.h"
 
 class LevelState : public StateBase 
 {
 protected:
+
+	Bullet* m_bullet;
+	int m_i;
+	float m_Time;
+
+	vector<GameObject*> m_BulletObjects;
+
 	StateManager* m_StateManager;
 	vector<GameObject*> m_GameObjects;
 	Button* m_PauseButton;

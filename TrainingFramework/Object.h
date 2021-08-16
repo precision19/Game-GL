@@ -7,10 +7,11 @@
 class Object
 {
 protected:
-	string m_Name;
+
 	Transform m_Transform;
 	Renderer* m_Renderer;
 public:
+	string m_Name;
 	Object();
 	Object(string);
 	virtual Object* Clone();
@@ -18,7 +19,8 @@ public:
 	void SetPosition(Vector3);
 	void SetScale(Vector3);
 	void SetRotation(Vector3);
-	void SetRenderer(int);
+	virtual void SetRenderer(int);
+	virtual void SetRenderer(string);
 	
 	string GetName();
 	Vector3 GetPosition();

@@ -57,6 +57,11 @@ void Object::SetRenderer(int id)
 	m_Renderer = PrefabManager::GetInstance()->GetRenderer(id)->Clone();
 }
 
+void Object::SetRenderer(string name)
+{
+	m_Renderer = PrefabManager::GetInstance()->GetRenderer(name)->Clone();
+}
+
 void Object::Draw()
 {
 	m_Renderer->Draw(m_Transform);
