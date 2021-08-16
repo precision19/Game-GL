@@ -96,6 +96,7 @@
     <ClCompile Include="Animation2D.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="DynamicBox.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GroundBox.cpp" />
+    <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LevelState.cpp" />
     <ClCompile Include="MapState.cpp" />
@@ -138,6 +140,7 @@
     <ClInclude Include="Animation2D.h" />
     <ClInclude Include="Block.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
@@ -148,6 +151,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GroundBox.h" />
+    <ClInclude Include="Gun.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LevelState.h" />
     <ClInclude Include="MapState.h" />
@@ -204,6 +208,7 @@
     <Image Include="Textures\DEAD\Dead__6.tga" />
     <Image Include="Textures\DEAD\Dead__7.tga" />
     <Image Include="Textures\DEAD\Dead__8.tga" />
+    <Image Include="Textures\Gun\Gun.tga" />
     <Image Include="Textures\Idle__000.tga" />
   </ItemGroup>
   <ItemGroup>

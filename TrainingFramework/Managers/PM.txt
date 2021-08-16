@@ -1,11 +1,11 @@
-#Renderers: 8
+#Renderers: 9
 0. Block
 TYPE 2D
 MODEL 0
 SHADER 0
 TEXTURE 0
 
-1. Rect
+1. Ball
 TYPE 2D
 MODEL 0
 SHADER 0
@@ -41,14 +41,20 @@ MODEL 0
 SHADER 0
 TEXTURE 13
 
-6. MapBackground
+6. Gun
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 14
+
+7. MapBackground
 TYPE 2D
 MODEL 0
 SHADER 0
 TEXTURE 15
 
-7. LevelButton
+8. LevelButton
 TYPE 2D
 MODEL 0
 SHADER 0
-TEXTURE 14
+TEXTURE 16
