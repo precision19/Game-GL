@@ -22,7 +22,9 @@ protected:
 	virtual void OnClicked();
 public:
 	Button();
+	Button(string);
 	virtual void SetRenderer(int);
+	virtual void SetRenderer(string);
 	void SetButtonID(int);
 	void Update(float);
 	~Button();

@@ -1,7 +1,7 @@
 #Models: 1
 0. Sprite
 
-#2D Textures: 14
+#2D Textures: 16
 0. Block	REPEAT LINEAR LINEAR
 1. Player	REPEAT LINEAR LINEAR
 2. Player/Idle/0	REPEAT LINEAR LINEAR
@@ -16,6 +16,8 @@
 11. Player/Run/6	REPEAT LINEAR LINEAR
 12. PlayButton	REPEAT LINEAR LINEAR
 13. PlayButtonOnPress	REPEAT LINEAR LINEAR
+14. LevelButton	REPEAT LINEAR LINEAR
+15. LevelMapBackground	REPEAT LINEAR LINEAR
 
 #Cube Textures: 0
 

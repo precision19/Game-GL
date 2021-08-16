@@ -12,6 +12,7 @@ protected:
 	bool m_Loop;
 public:
 	Animation2D();
+	Animation2D(string);
 	Renderer* Clone();
 	void SetTexture(int);
 	void SetTexture(string);

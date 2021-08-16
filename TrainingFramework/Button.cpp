@@ -10,6 +10,15 @@ Button::Button()
 	m_IsPressing = false;
 }
 
+Button::Button(string name)
+{
+	m_Name = name;
+	m_IdleRenderer = NULL;
+	m_OnPressRenerer = NULL;
+	m_IsSkipped = false;
+	m_IsPressing = false;
+}
+
 void Button::SetRenderer(int id)
 {
 	if (m_IdleRenderer == NULL)
@@ -20,6 +29,19 @@ void Button::SetRenderer(int id)
 	else
 	{
 		m_OnPressRenerer = PrefabManager::GetInstance()->GetRenderer(id)->Clone();
+	}
+}
+
+void Button::SetRenderer(string name)
+{
+	if (m_IdleRenderer == NULL)
+	{
+		m_IdleRenderer = PrefabManager::GetInstance()->GetRenderer(name)->Clone();
+		m_Renderer = m_IdleRenderer;
+	}
+	else
+	{
+		m_OnPressRenerer = PrefabManager::GetInstance()->GetRenderer(name)->Clone();
 	}
 }
 
@@ -90,7 +112,8 @@ void Button::Idle()
 
 void Button::OnPressing()
 {
-	m_Renderer = m_OnPressRenerer;
+	if (m_OnPressRenerer != NULL)
+		m_Renderer = m_OnPressRenerer;
 }
 
 void Button::OnClicked()

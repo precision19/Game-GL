@@ -4,6 +4,8 @@
 LevelState::LevelState() 
 {
 	m_Name = "Level";
+
+	// TO DO: load game object prefabs
 }
 
 void LevelState::SetStateManager(StateManager* stateManager)

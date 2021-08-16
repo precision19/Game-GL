@@ -1,4 +1,4 @@
-#Renderers: 6
+#Renderers: 8
 0. Block
 TYPE 2D
 MODEL 0
@@ -40,3 +40,15 @@ TYPE 2D
 MODEL 0
 SHADER 0
 TEXTURE 13
+
+6. MapBackground
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 15
+
+7. LevelButton
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 14

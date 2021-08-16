@@ -3,17 +3,15 @@
 
 MenuState::MenuState()
 {
+	m_Name = "Menu";
 	string path = "Managers/MenuSM.txt";
-
 	FILE* f = fopen(path.c_str(), "r+");
-
 	if (f == NULL)
 	{
 		printf("Invalid file %s\n", path.c_str());
 		exit(1);
 	}
-
-	int amount, id;
+		int amount, id;
 	float x, y, z;
 	char keyword[20], name[20];
 
@@ -94,7 +92,7 @@ void MenuState::Update(float deltaTime)
 	if (Input::CheckButtonBuffer(BUTTON_PLAY))
 	{
 		// TODO: switch state
-		m_StateManager->SwitchState("Level");	// TEMP
+		m_StateManager->SwitchState("Map");	// TEMP
 	}
 }
 

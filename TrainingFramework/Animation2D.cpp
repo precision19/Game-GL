@@ -3,8 +3,19 @@
 
 Animation2D::Animation2D()
 {
-	//m_Model = ResourceManager::GetInstance()->GetModel("Sprite");
-	//m_Shaders = ResourceManager::GetInstance()->GetShaders("Sprite");
+	m_Name = "Animation 2D";
+	m_Model = NULL;
+	m_Shaders = NULL;
+	m_Texture = NULL;
+	m_CurrentSpriteId = 0;
+	m_animationCurrent = 0;
+	m_FramePerSec = 0;
+	m_Loop = true;
+}
+
+Animation2D::Animation2D(string name)
+{
+	m_Name = name;
 	m_Model = NULL;
 	m_Shaders = NULL;
 	m_Texture = NULL;

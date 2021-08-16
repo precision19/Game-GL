@@ -18,7 +18,8 @@ public:
 	void SetPosition(Vector3);
 	void SetScale(Vector3);
 	void SetRotation(Vector3);
-	void SetRenderer(int);
+	virtual void SetRenderer(int);
+	virtual void SetRenderer(string);
 	
 	string GetName();
 	Vector3 GetPosition();

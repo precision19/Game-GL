@@ -14,6 +14,7 @@ public:
 	PrefabManager();
 	void LoadPrefabs(string);
 	Renderer* GetRenderer(int);
+	Renderer* GetRenderer(string);
 	void DestroyAllPrefab();
 	~PrefabManager();
 };

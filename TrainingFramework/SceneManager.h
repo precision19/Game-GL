@@ -12,6 +12,7 @@ class SceneManager : public StateManager
 {
 protected:
 	static SceneManager* ms_Instance;
+	int m_TargetLevel;
 	//MyContactListener* myContactListenerInstance;
 public:
 	static void CreateInstance();
