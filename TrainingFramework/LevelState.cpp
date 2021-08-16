@@ -60,13 +60,6 @@ void LevelState::OnStart()
 
 		if (strcmp(name, "Bullet") == 0)
 		{
-			Player* player = new Player();
-			fscanf(filePre, "COLLIDER_SIZE %f\n", &x);
-			player->SetCollider(x);
-			fscanf(filePre, "RENDERER %d\n", &id);
-			player->SetRenderer(id);
-			playerPrefab = player; 
-
 			Bullet* bullet = new Bullet();
 			fscanf(filePre, "COLLIDER_SIZE %f\n", &x);
 			bullet->SetCollider(x);

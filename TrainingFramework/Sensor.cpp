@@ -20,6 +20,7 @@ void Sensor::CreateCollider()
 	if (m_Collider == NULL)
 	{
 		m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_SENSOR);
+		Physic::GetInstance()->AddBox(m_Collider);
 	}
 	else
 	{

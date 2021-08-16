@@ -22,6 +22,7 @@ Physic* Physic::GetInstance() {
 
 Physic::Physic()
 {
+	m_boxes.clear();
 	b2Vec2 gravity(0.0f, -10.0f);
 	m_world = std::make_unique<b2World>(gravity);
 	m_world.get()->SetGravity(b2Vec2(0.0f, -100.0f));
@@ -42,6 +43,8 @@ void Physic::Update(float deltaTime)
 
 Physic::~Physic() 
 {
-
+	for (int i = 0; i < m_boxes.size(); i++) {
+		delete m_boxes[i];
+	}
 }
 
