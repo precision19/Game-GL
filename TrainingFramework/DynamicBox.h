@@ -2,6 +2,7 @@
 #include <math.h>
 #include "Object.h"
 #include "Physic.h"
+#include "Player.h"
 
 class DynamicBox : public Box {
 private:

@@ -109,10 +109,12 @@ void LevelState::OnStart()
 
 void LevelState::Update(float deltaTime)
 {
-	for each (Object * object in m_GameObjects)
-		object->Update(deltaTime);
-
 	Physic::GetInstance()->Update(deltaTime);
+
+	for each (Object * object in m_GameObjects) {
+		object->Update(deltaTime);
+	}
+
 }
 
 void LevelState::Draw()

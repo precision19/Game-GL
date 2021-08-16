@@ -37,7 +37,6 @@ void ContactManager::BenginContact(GameObject* obj1, GameObject* obj2)
 	m_numContacts[{obj1->GetID(), obj2->GetID()}] = 1;
 	m_numContacts[{obj2->GetID(), obj1->GetID()}] = 1;
 	
-	//printf("%d\n", m_numContacts[{obj2->GetID(), obj1->GetID()}]);
 	if (m_numContacts[{obj1->GetID(), obj2->GetID()}])
 	{
 		obj1->OnColliderEnter(obj2);

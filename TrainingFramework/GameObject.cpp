@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GameObject.h"
+#include <iostream>
 
 int GameObject::ms_IDMaker = 0;
 
@@ -52,12 +53,12 @@ int GameObject::GetID()
 
 void GameObject::OnColliderEnter(GameObject* other)
 {
-    printf("Object %d and object %d begin contact\n", m_ID, other->m_ID);
+    
 }
 
 void GameObject::OnColliderExit(GameObject* other)
 {
-    printf("Object %d and object %d exit contact\n", m_ID, other->m_ID);
+    
 }
 
 GameObject::~GameObject() {

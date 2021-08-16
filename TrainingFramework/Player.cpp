@@ -8,6 +8,7 @@ Player::Player()
 	ms_IDMaker++;
 	m_Collider = NULL;
 	m_currentAnimationId = 0;
+	canJump = 0;
 }
 
 void Player::CreateCollider()
@@ -44,11 +45,25 @@ void Player::Update(float deltaTime)
 	Vector2 gravity = Vector2(Physic::GetInstance()->GetWorld()->GetGravity().x, Physic::GetInstance()->GetWorld()->GetGravity().y);
 	DynamicBox* db = (DynamicBox*)m_Collider;
 	SetPosition(Vector3(db->getBody()->GetPosition().x, db->getBody()->GetPosition().y, GetPosition().z));
-	db->SetVelocity(Vector2(50.0f, db->GetVelocity().y));
-
-	if (Input::GetTouch())
+	if (Input::GetTouch() && canJump > 0)
 	{
-		((DynamicBox*)m_Collider)->ApplyForce(Vector2(50.0f, 8000.0f));
+		float impulse = db->getBody()->GetMass() * 1000;
+		db->ApplyForce(Vector2(0.0f, impulse));
+	}
+	db->SetVelocity(Vector2(70.0f, db->GetVelocity().y));
+}
+
+void Player::OnColliderEnter(GameObject* other) {
+	if (other->GetName() == "Sensor") {
+		Sensor* s = (Sensor*)other;
+		if (s->GetPos() == FOOT) { canJump++; }
+	}
+}
+
+void Player::OnColliderExit(GameObject* other) {
+	if (other->GetName() == "Sensor") {
+		Sensor* s = (Sensor*)other;
+		if (s->GetPos() == FOOT) { canJump--; }
 	}
 }
 
