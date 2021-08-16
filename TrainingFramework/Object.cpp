@@ -9,6 +9,7 @@ Object::Object()
 Object::Object(string name)
 {
 	m_Name = name;
+	m_Renderer = NULL;
 }
 
 Object* Object::Clone()
@@ -73,6 +74,6 @@ void Object::Update(float deltaTime)
 }
 
 Object::~Object()
-{
+{	
 	delete m_Renderer;
 }

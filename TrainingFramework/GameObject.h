@@ -17,10 +17,12 @@ public:
 	virtual Object* Clone();
 	void SetCollider(float);
 	float GetCollider() { return m_ColliderSize; };
+	Box* GetColliderBox() { return m_Collider; };
+	void SetColliderBox(Box* box) { m_Collider = box; };
 	virtual void CreateCollider();
 	int GetID();
 	virtual void OnColliderEnter(GameObject*);
 	virtual void OnColliderExit(GameObject*);
-	~GameObject();
+	virtual ~GameObject();
 };
 

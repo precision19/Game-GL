@@ -168,6 +168,7 @@ void LevelState::OnStart()
 	delete bulletPrefab;
 	delete gunPrefab;
 
+
 	fclose(filePre);
 	fclose(fileMap);
 }

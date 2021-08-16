@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "DynamicBox.h"
+#include "Player.h"
 
 DynamicBox::DynamicBox(Object* object, float radius, Category category)
 {
@@ -10,12 +11,10 @@ DynamicBox::DynamicBox(Object* object, float radius, Category category)
 
 	body = Physic::GetInstance()->GetWorld()->CreateBody(&bodyDef);
 	b2CircleShape circleShape;
-
 	circleShape.m_radius = radius;
-
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &circleShape;
-	fixtureDef.density = 1.0f;
+	fixtureDef.density = 10.0f;
 	fixtureDef.friction = 0.3f;
 	if (category == CATEGORY_PLAYER)
 	{

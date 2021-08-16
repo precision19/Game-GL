@@ -1,4 +1,3 @@
-@@ - 0, 0 + 1, 30 @@
 #include "stdafx.h"
 #include "Sensor.h"
 
@@ -8,10 +7,12 @@ Sensor::Sensor(Pos pos) {
 	ms_IDMaker++;
 	m_Collider = NULL;
 	this->pos = pos;
+	numContact = 0;
 }
 
 Sensor::~Sensor() {
-
+	m_Renderer = NULL;
+	m_Collider = NULL;
 }
 
 void Sensor::CreateCollider()
@@ -28,4 +29,16 @@ void Sensor::CreateCollider()
 
 void Sensor::Update(float deltaTime) {
 
+}
+
+void Sensor::OnColliderEnter(GameObject* other) {
+	if (other->GetName() == "Block") {
+		numContact++;
+	}
+}
+
+void Sensor::OnColliderExit(GameObject* other) {
+	if (other->GetName() == "Block") {
+		numContact--;
+	}
 }

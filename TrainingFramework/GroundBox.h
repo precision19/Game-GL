@@ -6,8 +6,9 @@
 class GroundBox : public Box 
 {
 protected:
-	Sensor* foot, *head, *left, *right;
+	b2Body* groundBody;
 public:
 	GroundBox(Object*, Vector2, Category);
 	~GroundBox();
+	b2Body* getBody() { return groundBody; };
 };
