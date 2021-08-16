@@ -50,6 +50,8 @@ void Player::Update(float deltaTime)
 	{
 		((DynamicBox*)m_Collider)->ApplyForce(Vector2(50.0f, 8000.0f));
 	}
+
+	m_Renderer->Update(deltaTime);
 }
 
 Player::~Player()

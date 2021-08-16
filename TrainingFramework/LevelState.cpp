@@ -27,7 +27,7 @@ void LevelState::OnStart()
 	char keyword[30], name[20];
 
 	GameObject* blockPrefab = NULL;
-//	GameObject* playerPrefab = NULL;
+	GameObject* playerPrefab = NULL;
 	GameObject* bulletPrefab = NULL;
 	GameObject* gunPrefab = NULL;
 
@@ -60,12 +60,12 @@ void LevelState::OnStart()
 
 		if (strcmp(name, "Bullet") == 0)
 		{
-/*			Player* player = new Player();
-			fscanf(file, "COLLIDER_SIZE %f\n", &x);
+			Player* player = new Player();
+			fscanf(filePre, "COLLIDER_SIZE %f\n", &x);
 			player->SetCollider(x);
-			fscanf(file, "RENDERER %d\n", &id);
+			fscanf(filePre, "RENDERER %d\n", &id);
 			player->SetRenderer(id);
-			playerPrefab = player; */
+			playerPrefab = player; 
 
 			Bullet* bullet = new Bullet();
 			fscanf(filePre, "COLLIDER_SIZE %f\n", &x);
@@ -100,7 +100,8 @@ void LevelState::OnStart()
 			fscanf(filePre, "RENDERER %d\n", &id);
 			player->SetRenderer(id);
 			fscanf(filePre, "SPEED %f\n", &speed);
-//			playerPrefab = player;
+			// Set speed
+			playerPrefab = player;
 		}
 	}
 
@@ -136,12 +137,12 @@ void LevelState::OnStart()
 				block->CreateCollider();
 				m_GameObjects.push_back(block);
 			}
-/*			if (iBool == 2)
+			if (iBool == 3)
 			{
 				playerPrefab->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
 				playerPrefab->CreateCollider();
 				m_GameObjects.push_back(playerPrefab);
-			}  */
+			}  
 			if (iBool == 2)
 			{
 				GameObject* bullet = (GameObject*)bulletPrefab->Clone();
