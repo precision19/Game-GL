@@ -35,6 +35,7 @@ GroundBox::GroundBox(Object* object, Vector2 dimension, Category category)
 	fixtureDef.userData = fudt;
 	groundBody->CreateFixture(&fixtureDef);
 	foot = new Sensor(FOOT);
+	left = new Sensor(LEFT);
 	if (category == CATEGORY_GROUND)
 	{
 		//tao foot sensor
@@ -45,6 +46,26 @@ GroundBox::GroundBox(Object* object, Vector2 dimension, Category category)
 		b2FixtureUserData fudt2;
 		fudt2.pointer = (uintptr_t)foot;
 		fixtureDef.userData = fudt2;
+		groundBody->CreateFixture(&fixtureDef);
+
+		//tao left sensor
+		fixtureDef.filter.categoryBits = CATEGORY_SENSOR;
+		fixtureDef.filter.categoryBits = MASK_SENSOR;
+		groundBox.SetAsBox(1.0f, (dimension.y / 2.0f) - 0.1f, b2Vec2(1.0f-(dimension.x / 2.0f), 0.0f), 0);
+		fixtureDef.shape = &groundBox;
+		b2FixtureUserData fudt3;
+		fudt3.pointer = (uintptr_t)left;
+		fixtureDef.userData = fudt3;
+		groundBody->CreateFixture(&fixtureDef);
+
+		//tao right sensor
+		fixtureDef.filter.categoryBits = CATEGORY_SENSOR;
+		fixtureDef.filter.categoryBits = MASK_SENSOR;
+		groundBox.SetAsBox(1.0f, (dimension.y / 2.0f) - 0.1f, b2Vec2((dimension.x / 2.0f)-1.0f, 0.0f), 0);
+		fixtureDef.shape = &groundBox;
+		b2FixtureUserData fudt4;
+		fudt4.pointer = (uintptr_t)left;
+		fixtureDef.userData = fudt4;
 		groundBody->CreateFixture(&fixtureDef);
 	}
 }

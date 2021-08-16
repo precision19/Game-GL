@@ -10,6 +10,9 @@ protected:
 	float m_Speed;
 	float m_JumpForce;
 public:
+	float veloX;
+	int canSurf;
+	bool surf;
 	Player();
 	void CreateCollider();
 	void SetSpeed(float);

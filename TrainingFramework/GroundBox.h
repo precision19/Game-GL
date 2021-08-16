@@ -6,7 +6,7 @@
 class GroundBox : public Box 
 {
 protected:
-	Sensor* foot;
+	Sensor* foot, *head, *left, *right;
 public:
 	GroundBox(Object*, Vector2, Category);
 	~GroundBox();
