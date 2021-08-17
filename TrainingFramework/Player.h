@@ -13,6 +13,7 @@ protected:
 public:
 	Sensor* foot, *right, *left;
 
+	float surfTime;
 	int canSurf;
 	bool surf;
 	Player();
@@ -25,6 +26,7 @@ public:
 
 	void Update(float);
 	void UpdateSensorOfPlayer(float);
+	void ConsiderJumpingAndSurfing();
 
 	void SetJump(int jump) { canJump = jump; };
 	int GetJump() { return canJump; };

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Sensor.h"
+#include "GroundBox.h"
 
 Sensor::Sensor(Pos pos) {
 	m_Name = "Sensor";
@@ -19,8 +20,13 @@ void Sensor::CreateCollider()
 {
 	if (m_Collider == NULL)
 	{
-		m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_SENSOR);
-		Physic::GetInstance()->AddBox(m_Collider);
+		if (pos != OTHER) {
+			m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_SENSOR_PLAYER);
+			Physic::GetInstance()->AddBox(m_Collider);
+		}
+		else {
+			m_Collider = new GroundBox(this, Vector2(m_ColliderSize, m_ColliderSize), CATEGORY_SENSOR);
+		}
 	}
 	else
 	{

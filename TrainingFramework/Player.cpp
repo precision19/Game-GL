@@ -15,6 +15,7 @@ Player::Player()
 	canSurf = 0;
 	surf = 0;
 	m_SpeedX = 70.0f;
+	surfTime = 1;
 }
 
 void Player::CreateCollider()
@@ -33,17 +34,17 @@ void Player::CreateCollider()
 void Player::CreateSensorCollider() {
 	foot = new Sensor(FOOT);
 	foot->SetCollider(0.1f);
-	foot->SetPosition(Vector3(GetPosition().x, GetPosition().y - m_ColliderSize, GetPosition().z));
+	foot->SetPosition(Vector3(GetPosition().x, GetPosition().y - m_ColliderSize + 0.1f, GetPosition().z));
 	foot->CreateCollider();
 
 	left = new Sensor(SIDE);
 	left->SetCollider(0.1f);
-	left->SetPosition(Vector3(GetPosition().x - m_ColliderSize, GetPosition().y, GetPosition().z));
+	left->SetPosition(Vector3(GetPosition().x - m_ColliderSize +0.1f, GetPosition().y, GetPosition().z));
 	left->CreateCollider();
 
 	right = new Sensor(SIDE);
 	right->SetCollider(0.1f);
-	right->SetPosition(Vector3(GetPosition().x + m_ColliderSize, GetPosition().y, GetPosition().z));
+	right->SetPosition(Vector3(GetPosition().x + m_ColliderSize-0.1f, GetPosition().y, GetPosition().z));
 	right->CreateCollider();
 }
 
@@ -71,34 +72,23 @@ void Player::Update(float deltaTime)
 	SetPosition(Vector3(db->getBody()->GetPosition().x, db->getBody()->GetPosition().y, GetPosition().z));
 
 	UpdateSensorOfPlayer(deltaTime);
+	ConsiderJumpingAndSurfing();
 
-	if (foot->GetNumContact()) canJump = 1;
-	else canJump = 0;
-	
-	if (left->GetNumContact()) {
-		canSurf = 1;
-		printf("Collision with right side of block\n");
+	if (Input::GetTouch() && canSurf > 0 && surf == 0) {
+		surf = 1;
+		Input::SetTouchStatus(false);
 	}
-	else if (right->GetNumContact()) {
-		canSurf = 1;
-		printf("Collision with left side of block\n");
-	}
-	else canSurf = 0;
-
-	if (!canSurf) surf = 0;
-	if (surf) {
-		float impulse = db->getBody()->GetMass() * 1000;
+	else if (surf) {
+		float impulse = db->getBody()->GetMass() * 100;
 		db->ApplyForce(Vector2(0.0f, impulse));
+		surfTime -= deltaTime;
 		if (Input::GetTouch()) {
 			surf = 0;
 			SetSpeed(-m_SpeedX);
 		}
 	}
 	else {
-		if (Input::GetTouch() && canSurf > 0 && surf == 0) {
-			surf = 1;
-		}
-		else if (Input::GetTouch() && canJump)
+		if (Input::GetTouch() && canJump)
 		{
 			float impulse = db->getBody()->GetMass() * 1000;
 			db->ApplyForce(Vector2(0.0f, impulse));
@@ -133,4 +123,21 @@ Player::~Player()
 	delete foot;
 	delete left;
 	delete right;
+}
+
+void Player::ConsiderJumpingAndSurfing() {
+	if (foot->GetNumContact()) canJump = 1;
+	else canJump = 0;
+
+	if (left->GetNumContact()) {
+		canSurf = 1;
+		printf("Collision with right side of block\n");
+	}
+
+	else if (right->GetNumContact()) {
+		canSurf = 1;
+		printf("Collision with left side of block\n");
+	}
+	else canSurf = 0;
+	if (!canSurf) surf = 0;
 }
