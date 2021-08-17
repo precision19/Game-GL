@@ -22,8 +22,8 @@ MenuState::MenuState()
 
 		Object* object = new Object(name);
 
-		fscanf(f, "RENDERER %d\n", &id);
-		object->SetRenderer(id);
+		fscanf(f, "RENDERER %s\n", name);
+		object->SetRenderer(name);
 		fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
 		object->SetPosition(Vector3(x, y, z));
 		fscanf(f, "ROTATION %f %f %f\n", &x, &y, &z);
@@ -36,10 +36,10 @@ MenuState::MenuState()
 
 	fscanf(f, "#PlayButton\n");
 	Button* PlayButton = new Button();
-	fscanf(f, "RENDERER %d\n", &id);
-	PlayButton->SetRenderer(id);
-	fscanf(f, "RENDERER %d\n", &id);
-	PlayButton->SetRenderer(id);
+	fscanf(f, "RENDERER %s\n", name);
+	PlayButton->SetRenderer(name);
+	fscanf(f, "RENDERER %s\n", name);
+	PlayButton->SetRenderer(name);
 	fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
 	PlayButton->SetPosition(Vector3(x, y, z));
 	fscanf(f, "ROTATION %f %f %f\n", &x, &y, &z);
@@ -50,10 +50,10 @@ MenuState::MenuState()
 
 	fscanf(f, "#SoundButton\n");
 	Button* SoundButton = new Button();
-	fscanf(f, "RENDERER %d\n", &id);
-	SoundButton->SetRenderer(id);
-	fscanf(f, "RENDERER %d\n", &id);
-	SoundButton->SetRenderer(id);
+	fscanf(f, "RENDERER %s\n", name);
+	SoundButton->SetRenderer(name);
+	fscanf(f, "RENDERER %s\n", name);
+	SoundButton->SetRenderer(name);
 	fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
 	SoundButton->SetPosition(Vector3(x, y, z));
 	fscanf(f, "ROTATION %f %f %f\n", &x, &y, &z);

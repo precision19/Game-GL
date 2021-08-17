@@ -133,6 +133,25 @@ void LevelState::OnStart()
 		exit(1);
 	}
 
+	fscanf(fileMap, "#Objects: %d\n", &amount);
+	for (int i = 0; i < amount; i++)
+	{
+		fscanf(fileMap, "%s %s\n", keyword, name);
+
+		Object* object = new Object(name);
+
+		fscanf(fileMap, "RENDERER %s\n", name);
+		object->SetRenderer(name);
+		fscanf(fileMap, "POSITION %f %f %f\n", &x, &y, &z);
+		object->SetPosition(Vector3(x, y, z));
+		fscanf(fileMap, "ROTATION %f %f %f\n", &x, &y, &z);
+		object->SetRotation(Vector3(x, y, z));
+		fscanf(fileMap, "SCALE %f %f %f\n", &x, &y, &z);
+		object->SetScale(Vector3(x, y, z));
+
+		m_GameObjects.push_back(object);
+	}
+
 	fscanf(fileMap, "#%s\n", keyword);
 	if (strcmp(keyword, "Dungeon"))
 		printf("WARNING: level format is not correct");
@@ -204,27 +223,6 @@ void LevelState::OnStart()
 	delete blockPrefab;
 	delete bulletPrefab;
 	delete gunPrefab;
-
-
-	fscanf(fileMap, "#Decorations: %d\n", &amount);
-	for (int i = 0; i < amount; i++)
-	{
-		fscanf(fileMap, "%s %s\n", keyword, name);
-
-		Object* object = new Object(name);
-
-		fscanf(fileMap, "RENDERER %s\n", name);
-		object->SetRenderer(name);
-		fscanf(fileMap, "POSITION %f %f %f\n", &x, &y, &z);
-		object->SetPosition(Vector3(x, y, z));
-		fscanf(fileMap, "ROTATION %f %f %f\n", &x, &y, &z);
-		object->SetRotation(Vector3(x, y, z));
-		fscanf(fileMap, "SCALE %f %f %f\n", &x, &y, &z);
-		object->SetScale(Vector3(x, y, z));
-
-		m_Decorations.push_back(object);
-	}
-
 	delete starPrefab;
 
 	fclose(filePre);

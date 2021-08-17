@@ -47,9 +47,9 @@ void Star::Draw()
 
 void Star::Update(float deltaTime)
 {
+	m_Renderer->Update(deltaTime);
 	if (isCollistion())
 	{
-		m_Renderer->Update(deltaTime);
 		isCollisted = true;
 	}	
 }
