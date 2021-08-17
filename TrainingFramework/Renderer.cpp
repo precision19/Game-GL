@@ -6,6 +6,7 @@ Renderer::Renderer()
 	m_Model = NULL;
 	m_Texture = NULL;
 	m_Shaders = NULL;
+	m_Opacity = 1.0;
 }
 
 Renderer::Renderer(string name)
@@ -14,6 +15,14 @@ Renderer::Renderer(string name)
 	m_Model = NULL;
 	m_Texture = NULL;
 	m_Shaders = NULL;
+	m_Opacity = 1.0;
+}
+
+void Renderer::SetOpacity(float opacity)
+{
+	m_Opacity = opacity;
+	if (m_Opacity < 0) m_Opacity = 0.0;
+	if (m_Opacity > 1) m_Opacity = 1.0;
 }
 
 Renderer* Renderer::Clone()
@@ -74,6 +83,11 @@ void Renderer::Draw(Transform transform)
 	if (m_Shaders->textureUniform != -1)
 	{
 		glUniform1i(m_Shaders->textureUniform, 0);
+	}
+
+	if (m_Shaders->opacityUniform != -1)
+	{
+		glUniform1f(m_Shaders->opacityUniform, m_Opacity);
 	}
 
 	if (m_Shaders->positionAttribute != -1)

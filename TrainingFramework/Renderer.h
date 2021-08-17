@@ -13,9 +13,11 @@ protected:
 	Model* m_Model;
 	Texture* m_Texture;
 	Shaders* m_Shaders;
+	float m_Opacity;
 public:
 	Renderer();
 	Renderer(string);
+	void SetOpacity(float);
 	virtual Renderer* Clone();
 	void SetModel(int);
 	void SetModel(string);
