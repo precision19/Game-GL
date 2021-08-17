@@ -24,6 +24,9 @@ int Init ( ESContext *esContext )
 	LevelsMapScene = new SceneManager("Managers/Level1");
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	return 0;
 }

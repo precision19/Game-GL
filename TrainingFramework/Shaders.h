@@ -1,8 +1,8 @@
 #pragma once
 #include "../Utilities/utilities.h"
-#include "Vertex.h"
-#include "Camera.h"
-#include <ctime>
+#include <string>
+
+using namespace std;
 
 #define DEPTH_TEST 1
 #define CULL_FACE 1 << 1
@@ -11,11 +11,11 @@
 class Shaders 
 {
 protected:
+	string m_Name;
 	int m_States;
 public:
+	string GetName();
 	GLuint program, vertexShader, fragmentShader;
-	char fileVS[260];
-	char fileFS[260];
 	GLint positionAttribute;
 	GLint colorAttribute;
 	GLint uvAttribute;
@@ -24,6 +24,7 @@ public:
 	GLint fogStartUniform;
 	GLint fogLengthUniform;
 
+	GLint opacityUniform;
 	GLint tilingUniform;
 	GLint heightmapUniform;
 	GLint textureUniform;
@@ -33,9 +34,9 @@ public:
 	GLint texture3Uniform;
 	GLint WVPUniform;
 	GLint timeUniform;
-	clock_t m_Timer;
-	Shaders(char* fileVertexShader, char* fileFragmentShader);
+
+	Shaders(string);
 	void SetStates(char*, int);
-	void Use(Matrix);
+	void UseState();
 	~Shaders();
 };

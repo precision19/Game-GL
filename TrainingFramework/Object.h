@@ -10,29 +10,14 @@
 
 class Object
 {
-protected: 
-	int m_modelId;
-	vector<int> m_TextureIds;
-	vector<int> m_CubeTextureIds;
-	int m_shadersId;
-
-	Model* m_Model;
-	Texture* m_Texture;
-	vector<Texture*> m_Textures;
-	Shaders* m_Shaders;
-
-	Sprite* m_Sprite;
-	int m_spriteId;
-
-	Vector3 m_Scale;
-	Vector3 m_Rotation;
-	Vector3 m_Position;
-
-	Matrix GetWVP();
-
-	vector<Component*> m_Components;
+protected:
+	Transform m_Transform;
+	Renderer* m_Renderer;
+	string m_Name;
 public:
-	Transform* transform;
+	Object();
+	Object(string);
+	virtual Object* Clone();
 
 	Object();
 	void Init(ResourceManager* resource);
