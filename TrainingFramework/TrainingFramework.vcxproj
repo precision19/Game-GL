@@ -111,6 +111,7 @@
     <ClCompile Include="DynamicBox.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GroundBox.cpp" />
+    <ClCompile Include="Guard.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="LevelState.cpp" />
@@ -129,6 +130,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sensor.cpp" />
     <ClCompile Include="Shaders.cpp" />
+    <ClCompile Include="Star.cpp" />
     <ClCompile Include="StateBase.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="Switch.cpp" />
@@ -140,7 +142,6 @@
     </ClCompile>
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Trap.cpp" />
-    <ClCompile Include="TreasureChest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation2D.h" />
@@ -158,6 +159,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GroundBox.h" />
+    <ClInclude Include="Guard.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LevelState.h" />
@@ -176,6 +178,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sensor.h" />
     <ClInclude Include="Shaders.h" />
+    <ClInclude Include="Star.h" />
     <ClInclude Include="StateBase.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="stdafx.h" />
@@ -184,7 +187,6 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Trap.h" />
-    <ClInclude Include="TreasureChest.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>

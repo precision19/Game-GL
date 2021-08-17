@@ -21,6 +21,11 @@ public:
 	void SetColliderBox(Box* box) { m_Collider = box; };
 	virtual void CreateCollider();
 	int GetID();
+	
+	// only Guard
+	virtual void SetPositionStart(Vector3);
+	virtual void SetPositionEnd(Vector3);
+
 	virtual void OnColliderEnter(GameObject*);
 	virtual void OnColliderExit(GameObject*);
 	virtual ~GameObject();
