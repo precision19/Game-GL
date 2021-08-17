@@ -26,6 +26,7 @@ public:
 	GLint fogStartUniform;
 	GLint fogLengthUniform;
 
+	GLint opacityUniform;
 	GLint tilingUniform;
 	GLint heightmapUniform;
 	GLint textureUniform;

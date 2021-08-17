@@ -39,6 +39,7 @@ Shaders::Shaders(string name)
 	fogStartUniform = glGetUniformLocation(program, "u_fogStart");
 	fogLengthUniform = glGetUniformLocation(program, "u_fogLength");
 
+	opacityUniform = glGetUniformLocation(program, "u_opacity");
 	tilingUniform = glGetUniformLocation(program, "u_tiling");
 	heightmapUniform = glGetUniformLocation(program, "u_heightmap");
 	textureUniform = glGetUniformLocation(program, "u_texture");

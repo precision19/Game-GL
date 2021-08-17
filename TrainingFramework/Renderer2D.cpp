@@ -7,6 +7,7 @@ Renderer2D::Renderer2D()
 	m_Model = NULL;
 	m_Texture = NULL;
 	m_Shaders = NULL;
+	m_Opacity = 1.0;
 }
 
 Renderer2D::Renderer2D(string name)
@@ -15,6 +16,7 @@ Renderer2D::Renderer2D(string name)
 	m_Model = NULL;
 	m_Texture = NULL;
 	m_Shaders = NULL;
+	m_Opacity = 1.0;
 }
 
 Renderer* Renderer2D::Clone()
@@ -35,6 +37,11 @@ void Renderer2D::Draw(Transform transform)
 	if (m_Shaders->textureUniform != -1)
 	{
 		glUniform1i(m_Shaders->textureUniform, 0);
+	}
+
+	if (m_Shaders->opacityUniform != -1)
+	{
+		glUniform1f(m_Shaders->opacityUniform, m_Opacity);
 	}
 
 	if (m_Shaders->positionAttribute != -1)

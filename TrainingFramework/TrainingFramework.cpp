@@ -24,7 +24,11 @@ int Init ( ESContext *esContext )
 
 	AudioManager::CreateInstance();
 	AudioManager::GetInstance()->PlayMusic("Sounds/Test.ogg");
-	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+	glClearColor ( 0.0f, 0.0f, 0.0f, 1.0f );
+
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
 	return 0;
 }
