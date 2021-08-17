@@ -8,6 +8,7 @@
 #include "SceneManager.h"
 #include "Input.h"
 #include "MyContactListener.h"
+#include "AudioManager.h"
 
 int Init ( ESContext *esContext )
 {
@@ -20,6 +21,8 @@ int Init ( ESContext *esContext )
 	MyContactListener::CreateInstance();
 	Physic::CreateInstance();
 
+	AudioManager::CreateInstance();
+	AudioManager::GetInstance()->PlayMusic("Sounds/Test.ogg");
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
 	return 0;
@@ -47,22 +50,22 @@ void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 
 void TouchActionDown(ESContext* esContext, int x, int y)
 {
-	y = Globals::screenHeight - y;
-	Input::SetTouchPosition(Vector2(x, y));
-	Input::SetTouchStatus(true);
+	//y = Globals::screenHeight - y;
+	//Input::SetTouchPosition(Vector2(x, y));
+	//Input::SetTouchStatus(true);
 }
 
 void TouchActionUp(ESContext* esContext, int x, int y)
 {
-	y = Globals::screenHeight - y;
-	Input::SetTouchPosition(Vector2(x, y));
-	Input::SetTouchStatus(false);
+	//y = Globals::screenHeight - y;
+	//Input::SetTouchPosition(Vector2(x, y));
+	//Input::SetTouchStatus(false);
 }
 
 void TouchActionMove(ESContext* esContext, int x, int y)
 {
-	y = Globals::screenHeight - y;
-	Input::SetTouchPosition(Vector2(x, y));
+	//y = Globals::screenHeight - y;
+	//Input::SetTouchPosition(Vector2(x, y));
 }
 
 void CleanUp()
