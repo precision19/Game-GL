@@ -50,6 +50,14 @@ int GameObject::GetID()
     return m_ID;
 }
 
+void GameObject::SetPositionStart(Vector3)
+{
+}
+
+void GameObject::SetPositionEnd(Vector3)
+{
+}
+
 void GameObject::OnColliderEnter(GameObject* other)
 {
     //printf("Object %d and object %d begin contact\n", m_ID, other->m_ID);

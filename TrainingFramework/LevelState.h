@@ -8,6 +8,8 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Gun.h"
+#include "Guard.h"
+#include "Star.h"
 
 class LevelState : public StateBase 
 {

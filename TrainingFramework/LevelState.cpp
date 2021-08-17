@@ -30,6 +30,8 @@ void LevelState::OnStart()
 	GameObject* playerPrefab = NULL;
 	GameObject* bulletPrefab = NULL;
 	GameObject* gunPrefab = NULL;
+	GameObject* guardPrefab = NULL;
+	GameObject* starPrefab = NULL;
 
 	string path0 = "Managers/GameObjectPrefab.txt";
 	FILE* filePre = fopen(path0.c_str(), "r+");
@@ -96,6 +98,33 @@ void LevelState::OnStart()
 			// Set speed
 			playerPrefab = player;
 		}
+
+		if (strcmp(name, "Guard") == 0)
+		{
+			Guard* guard = new Guard();
+			fscanf(filePre, "COLLIDER_SIZE %f\n", &x);
+			guard->SetCollider(x);
+			fscanf(filePre, "RENDERER %d\n", &id);
+			guard->SetRenderer(id);
+			fscanf(filePre, "SPEED %f\n", &speed);
+			// Set speed
+			guard->SetSpeed(speed);
+			guardPrefab = guard;
+		}
+
+		if (strcmp(name, "Star") == 0)
+		{
+			Star* star = new Star();
+			fscanf(filePre, "COLLIDER_SIZE %f\n", &x);
+			star->SetCollider(x);
+			fscanf(filePre, "RENDERER %d\n", &id);
+			star->SetRenderer(id);
+			fscanf(filePre, "SPEED %f\n", &speed);
+			// Set speed
+//			star->SetSpeed(speed);
+			star->SetScale(Vector3(0.12, 0.12, 0.12));
+			starPrefab = star;
+		}
 	}
 
 	string path = "Managers/Level3SM.txt";
@@ -149,6 +178,23 @@ void LevelState::OnStart()
 				gun->CreateCollider();
 				m_GameObjects.push_back(gun);
 			}
+
+			if (iBool == 4)
+			{
+				guardPrefab->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
+				guardPrefab->SetPositionStart(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
+				guardPrefab->SetPositionEnd(Dungeon::GirdToWord(j + 1, Dungeon::Height - i - 1, 0));
+				guardPrefab->CreateCollider();
+				m_GameObjects.push_back(guardPrefab);
+			}
+
+			if (iBool == 5)
+			{
+				GameObject* star = (GameObject*)starPrefab->Clone();
+				star->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
+				star->CreateCollider();
+				m_GameObjects.push_back(star);
+			}
 		}
 	}
 	
@@ -160,7 +206,7 @@ void LevelState::OnStart()
 	delete blockPrefab;
 	delete bulletPrefab;
 	delete gunPrefab;
-
+	delete starPrefab;
 
 	fclose(filePre);
 	fclose(fileMap);
@@ -171,7 +217,6 @@ void LevelState::Update(float deltaTime)
 	m_Time += deltaTime;
 	if (m_i < m_BulletObjects.size())
 	{
-//		m_i = 0;
 		for (int k = 0; k <= m_i; k++)
 		{
 			m_BulletObjects.at(k)->Update(deltaTime);
