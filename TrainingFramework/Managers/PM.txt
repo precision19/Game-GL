@@ -1,4 +1,4 @@
-#Renderers: 9
+#Renderers: 11
 0. Block
 TYPE 2D
 MODEL 0
@@ -58,3 +58,15 @@ TYPE 2D
 MODEL 0
 SHADER 0
 TEXTURE 16
+
+9. MenuBackground
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 17
+
+10. DungeonBackground
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 18
