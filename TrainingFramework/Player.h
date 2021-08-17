@@ -10,12 +10,11 @@ protected:
 	int m_currentAnimationId;
 	float m_SpeedX;
 	float m_JumpForce;
+	float m_SlideSpeed;
+	int canSlide;
+	bool slide;
+	Sensor* foot, * right, * left;
 public:
-	Sensor* foot, *right, *left;
-
-	float surfTime;
-	int canSurf;
-	bool surf;
 	Player();
 	void CreateCollider();
 	void CreateSensorCollider();

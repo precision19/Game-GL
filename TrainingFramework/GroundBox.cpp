@@ -9,7 +9,6 @@ GroundBox::GroundBox(Object* object, Vector2 dimension, Category category)
 	groundBody = Physic::GetInstance()->GetWorld()->CreateBody(&groundBodyDef);
 	b2FixtureDef fixtureDef;
 	b2PolygonShape groundBox;
-	b2CircleShape circleShape;
 	if (category == CATEGORY_GROUND)
 	{
 		//make the ground fixture
@@ -26,15 +25,6 @@ GroundBox::GroundBox(Object* object, Vector2 dimension, Category category)
 		fixtureDef.density = 0.0f;
 		fixtureDef.filter.categoryBits = category;
 		fixtureDef.filter.categoryBits = MASK_NONE;
-	}
-	else if (category == CATEGORY_SENSOR)
-	{
-		circleShape.m_radius = dimension.x;
-		fixtureDef.shape = &circleShape;
-		fixtureDef.density = 0.0f;
-		fixtureDef.filter.categoryBits = category;
-		fixtureDef.filter.categoryBits = MASK_SENSOR;
-		fixtureDef.isSensor = true;
 	}
 	b2FixtureUserData fudt;
 	fudt.pointer = (uintptr_t)object;

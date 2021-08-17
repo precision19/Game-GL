@@ -12,10 +12,10 @@ Player::Player()
 	m_Collider = NULL;
 	m_currentAnimationId = 0;
 	canJump = 0;
-	canSurf = 0;
-	surf = 0;
+	canSlide = 0;
+	slide = 0;
 	m_SpeedX = 70.0f;
-	surfTime = 1;
+	m_SlideSpeed = -30.0f;
 }
 
 void Player::CreateCollider()
@@ -74,26 +74,27 @@ void Player::Update(float deltaTime)
 	UpdateSensorOfPlayer(deltaTime);
 	ConsiderJumpingAndSurfing();
 
-	if (Input::GetTouch() && canSurf > 0 && surf == 0) {
-		surf = 1;
+	if (Input::GetTouch() && canSlide && !slide) {
+		slide = 1;
 		Input::SetTouchStatus(false);
 	}
-	else if (surf) {
-		float impulse = db->getBody()->GetMass() * 100;
+	else if (slide) {
+		float impulse = db->getBody()->GetMass() * 1000;
 		db->ApplyForce(Vector2(0.0f, impulse));
-		surfTime -= deltaTime;
-		if (Input::GetTouch()) {
-			surf = 0;
-			SetSpeed(-m_SpeedX);
-		}
+		slide = 0;
+		SetSpeed(-m_SpeedX);
 	}
 	else {
+		if (canSlide && db->GetVelocity().y < 0) {
+			db->SetVelocity(Vector2(m_SpeedX, m_SlideSpeed));
+		}
 		if (Input::GetTouch() && canJump)
 		{
 			float impulse = db->getBody()->GetMass() * 1000;
 			db->ApplyForce(Vector2(0.0f, impulse));
 		}
 	}
+	//printf("%f\n", db->GetVelocity().y);
 	db->SetVelocity(Vector2(m_SpeedX, db->GetVelocity().y));
 
 	m_Renderer->Update(deltaTime);
@@ -130,14 +131,14 @@ void Player::ConsiderJumpingAndSurfing() {
 	else canJump = 0;
 
 	if (left->GetNumContact()) {
-		canSurf = 1;
+		canSlide = 1;
 		printf("Collision with right side of block\n");
 	}
 
 	else if (right->GetNumContact()) {
-		canSurf = 1;
+		canSlide = 1;
 		printf("Collision with left side of block\n");
 	}
-	else canSurf = 0;
-	if (!canSurf) surf = 0;
+	else canSlide = 0;
+	if (!canSlide) slide = 0;
 }

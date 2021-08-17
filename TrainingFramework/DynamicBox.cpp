@@ -19,17 +19,23 @@ DynamicBox::DynamicBox(Object* object, float radius, Category category)
 	if (category == CATEGORY_PLAYER)
 	{
 		fixtureDef.filter.maskBits = MASK_PLAYER;
-		fixtureDef.filter.categoryBits = CATEGORY_PLAYER;
+		fixtureDef.filter.categoryBits = category;
 	}
 	if (category == CATEGORY_NOTGRAVITY) {
 		body->SetGravityScale(0);
 		fixtureDef.filter.maskBits = MASK_NOTGRAVITY;
-		fixtureDef.filter.categoryBits = CATEGORY_NOTGRAVITY;
+		fixtureDef.filter.categoryBits = category;
+	}
+	if (category == CATEGORY_SENSOR) {
+		body->SetGravityScale(0);
+		fixtureDef.isSensor = true;
+		fixtureDef.filter.maskBits = MASK_SENSOR;
+		fixtureDef.filter.categoryBits = category;
 	}
 	if (category == CATEGORY_SENSOR_PLAYER) {
 		fixtureDef.isSensor = true;
 		fixtureDef.filter.maskBits = MASK_SENSOR_PLAYER;
-		fixtureDef.filter.categoryBits = CATEGORY_SENSOR_PLAYER;
+		fixtureDef.filter.categoryBits = category;
 	}
 	b2FixtureUserData fudt;
 	fudt.pointer = (uintptr_t)object;
