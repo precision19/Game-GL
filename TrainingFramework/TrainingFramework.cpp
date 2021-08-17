@@ -2,13 +2,14 @@
 //
 
 #include "stdafx.h"
-#include "../Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
 #include "Globals.h"
 #include <conio.h>
 #include "SceneManager.h"
 #include "Input.h"
 #include "MyContactListener.h"
 #include "AudioManager.h"
+#include "../Utilities/Math.h" // if you use STL, please include this line AFTER all other include
+
 
 int Init ( ESContext *esContext )
 {
@@ -50,22 +51,22 @@ void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 
 void TouchActionDown(ESContext* esContext, int x, int y)
 {
-	//y = Globals::screenHeight - y;
-	//Input::SetTouchPosition(Vector2(x, y));
-	//Input::SetTouchStatus(true);
+	y = Globals::screenHeight - y;
+	Input::SetTouchPosition(Vector2(x, y));
+	Input::SetTouchStatus(true);
 }
 
 void TouchActionUp(ESContext* esContext, int x, int y)
 {
-	//y = Globals::screenHeight - y;
-	//Input::SetTouchPosition(Vector2(x, y));
-	//Input::SetTouchStatus(false);
+	y = Globals::screenHeight - y;
+	Input::SetTouchPosition(Vector2(x, y));
+	Input::SetTouchStatus(false);
 }
 
 void TouchActionMove(ESContext* esContext, int x, int y)
 {
-	//y = Globals::screenHeight - y;
-	//Input::SetTouchPosition(Vector2(x, y));
+	y = Globals::screenHeight - y;
+	Input::SetTouchPosition(Vector2(x, y));
 }
 
 void CleanUp()
@@ -78,6 +79,7 @@ void CleanUp()
 	Physic::DestroyInstance();
 	ContactManager::DestroyInstance();
 	MyContactListener::DestroyInstance();
+	AudioManager::DestroyInstance();
 }
 
 int _tmain(int argc, _TCHAR* argv[])

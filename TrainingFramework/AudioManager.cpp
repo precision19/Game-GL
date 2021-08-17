@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "AudioManager.h"
+#include <iostream>
 
 AudioManager* AudioManager::ms_Instance = NULL;
 void AudioManager::CreateInstance()
@@ -44,10 +45,10 @@ float AudioManager::GetPitch() {
 }
 
 
-void AudioManager::PlayMusic(string musicFile) {
+void AudioManager::PlayMusic(std::string musicFile) {
 	this->musicFile = musicFile;
 	if (!this->music.openFromFile(this->musicFile)) {
-		cout << "ERROR" << endl;
+		std::cout << "ERROR" << std::endl;
 	}
 	this->music.play();
 	this->music.setLoop(true);
