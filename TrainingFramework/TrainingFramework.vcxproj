@@ -220,6 +220,12 @@
     <Image Include="Textures\DEAD\Dead__6.tga" />
     <Image Include="Textures\DEAD\Dead__7.tga" />
     <Image Include="Textures\DEAD\Dead__8.tga" />
+    <Image Include="Textures\Guard\1.tga" />
+    <Image Include="Textures\Guard\2.tga" />
+    <Image Include="Textures\Guard\3.tga" />
+    <Image Include="Textures\Guard\4.tga" />
+    <Image Include="Textures\Guard\5.tga" />
+    <Image Include="Textures\Guard\6.tga" />
     <Image Include="Textures\Gun\Gun.tga" />
     <Image Include="Textures\Idle__000.tga" />
     <Image Include="Textures\SawBlade\Blade4.tga" />

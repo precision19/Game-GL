@@ -314,6 +314,12 @@
     <Image Include="Textures\Chest\chest_07.tga" />
     <Image Include="Textures\Gun\Gun.tga" />
     <Image Include="Textures\SawBlade\Blade4.tga" />
+    <Image Include="Textures\Guard\1.tga" />
+    <Image Include="Textures\Guard\2.tga" />
+    <Image Include="Textures\Guard\3.tga" />
+    <Image Include="Textures\Guard\4.tga" />
+    <Image Include="Textures\Guard\5.tga" />
+    <Image Include="Textures\Guard\6.tga" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Managers\GameObjectPrefab.txt" />

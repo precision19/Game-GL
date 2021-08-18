@@ -1,7 +1,7 @@
 #Models: 1
 0. Sprite
 
-#2D Textures: 34
+#2D Textures: 40
 0. Block	REPEAT LINEAR LINEAR
 1. Bullet	REPEAT LINEAR LINEAR
 2. Player/Idle/0	REPEAT LINEAR LINEAR
@@ -36,7 +36,12 @@
 31. Chest/chest_05  REPEAT LINEAR LINEAR
 32. Chest/chest_06  REPEAT LINEAR LINEAR
 33. Chest/chest_07  REPEAT LINEAR LINEAR
-
+34. Guard/1       REPEAT LINEAR LINEAR
+35. Guard/2       REPEAT LINEAR LINEAR
+36. Guard/3       REPEAT LINEAR LINEAR
+37. Guard/4       REPEAT LINEAR LINEAR
+38. Guard/5       REPEAT LINEAR LINEAR
+39. Guard/6       REPEAT LINEAR LINEAR
 
 #Cube Textures: 0
 
