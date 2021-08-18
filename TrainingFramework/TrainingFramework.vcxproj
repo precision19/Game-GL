@@ -222,7 +222,7 @@
     <Image Include="Textures\DEAD\Dead__8.tga" />
     <Image Include="Textures\Gun\Gun.tga" />
     <Image Include="Textures\Idle__000.tga" />
-    <Image Include="Textures\SawBlade\Blade33.tga" />
+    <Image Include="Textures\SawBlade\Blade4.tga" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Managers\GameObjectPrefab.txt" />

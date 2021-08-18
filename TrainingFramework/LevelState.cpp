@@ -135,7 +135,7 @@ void LevelState::OnStart()
 			blade->SetRenderer(id);
 			fscanf(filePre, "SPEED %f\n", &speed);
 
-			blade->SetScale(Vector3(1.5, 1.5, 1.5));
+			blade->SetScale(Vector3(0.1, 0.1, 0.1));
 			bladePrefab = blade;
 		}
 	}
@@ -213,9 +213,9 @@ void LevelState::OnStart()
 
 			if (iBool == 4)
 			{
-				guardPrefab->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
-				guardPrefab->SetPositionStart(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
-				guardPrefab->SetPositionEnd(Dungeon::GirdToWord(j + 1, Dungeon::Height - i - 1, 0));
+				guardPrefab->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1.3, 0));
+				guardPrefab->SetPositionStart(Dungeon::GirdToWord(j, Dungeon::Height - i - 1.3, 0));
+				guardPrefab->SetPositionEnd(Dungeon::GirdToWord(j + 1, Dungeon::Height - i - 1.3, 0));
 				guardPrefab->CreateCollider();
 				m_GameObjects.push_back(guardPrefab);
 			}
@@ -230,7 +230,7 @@ void LevelState::OnStart()
 			if (iBool == 6)
 			{
 				GameObject* blade = (GameObject*)bladePrefab->Clone();
-				blade->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
+				blade->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1.5, 0));
 				blade->CreateCollider();
 				m_GameObjects.push_back(blade);
 			}

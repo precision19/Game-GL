@@ -8,7 +8,7 @@ SawBlade::SawBlade()
 	ms_IDMaker++;
 	m_Collider = NULL;
 	m_Time = 0;
-	m_angle = 30.0;
+	m_angle = 10.0;
 	m_rotate = Vector3(0, 0, 1);
 }
 
@@ -44,8 +44,9 @@ void SawBlade::Draw()
 
 void SawBlade::Update(float deltaTime)
 {
+
 	m_Time += deltaTime;
-	if (m_Time > 0.5)
+	if (m_Time > 0.1)
 	{
 		m_Transform.rotation += m_rotate * m_angle * PI / 180;
 		m_Time = 0;
