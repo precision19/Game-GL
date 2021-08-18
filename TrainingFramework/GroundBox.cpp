@@ -34,5 +34,5 @@ GroundBox::GroundBox(Object* object, Vector2 dimension, Category category)
 
 GroundBox::~GroundBox() 
 {
-	//delete foot;
+	/*groundBody->GetWorld()->DestroyBody(groundBody);*/
 }

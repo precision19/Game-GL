@@ -14,6 +14,7 @@ Player::Player()
 	canJump = 0;
 	canSlide = 0;
 	slide = 0;
+	jump = 0;
 	m_SpeedX = 70.0f;
 	m_SlideSpeed = -30.0f;
 }
@@ -67,36 +68,13 @@ void Player::AddAnimation(Renderer* renderer)
 
 void Player::Update(float deltaTime)
 {
-	Vector2 gravity = Vector2(Physic::GetInstance()->GetWorld()->GetGravity().x, Physic::GetInstance()->GetWorld()->GetGravity().y);
 	DynamicBox* db = (DynamicBox*)m_Collider;
 	SetPosition(Vector3(db->getBody()->GetPosition().x, db->getBody()->GetPosition().y, GetPosition().z));
 
 	UpdateSensorOfPlayer(deltaTime);
-	ConsiderJumpingAndSurfing();
-
-	if (Input::GetTouch() && canSlide && !slide) {
-		slide = 1;
-		Input::SetTouchStatus(false);
-	}
-	else if (slide) {
-		float impulse = db->getBody()->GetMass() * 1000;
-		db->ApplyForce(Vector2(0.0f, impulse));
-		slide = 0;
-		SetSpeed(-m_SpeedX);
-	}
-	else {
-		if (canSlide && db->GetVelocity().y < 0) {
-			db->SetVelocity(Vector2(m_SpeedX, m_SlideSpeed));
-		}
-		if (Input::GetTouch() && canJump)
-		{
-			float impulse = db->getBody()->GetMass() * 1000;
-			db->ApplyForce(Vector2(0.0f, impulse));
-		}
-	}
-	//printf("%f\n", db->GetVelocity().y);
-	db->SetVelocity(Vector2(m_SpeedX, db->GetVelocity().y));
-
+	ConsiderJumpAndSlide();
+	HandleJumpAndSlide();
+	
 	m_Renderer->Update(deltaTime);
 }
 
@@ -112,7 +90,7 @@ void Player::UpdateSensorOfPlayer(float deltaTime) {
 }
 
 void Player::OnColliderEnter(GameObject* other) {
-	
+
 }
 
 void Player::OnColliderExit(GameObject* other) {
@@ -126,7 +104,7 @@ Player::~Player()
 	delete right;
 }
 
-void Player::ConsiderJumpingAndSurfing() {
+void Player::ConsiderJumpAndSlide() {
 	if (foot->GetNumContact()) canJump = 1;
 	else canJump = 0;
 
@@ -141,4 +119,40 @@ void Player::ConsiderJumpingAndSurfing() {
 	}
 	else canSlide = 0;
 	if (!canSlide) slide = 0;
+}
+
+void Player::HandleJumpAndSlide() {
+	DynamicBox* db = (DynamicBox*)m_Collider;
+	if (canJump) {
+
+		if (!Input::GetTouch() && !canSlide) {
+			/*float impulse = db->getBody()->GetMass() * 1500;
+			db->ApplyForce(Vector2(0.0f, -impulse));*/
+			db->SetVelocity(Vector2(m_SpeedX, -1000.0f));
+		}
+		else if (Input::GetTouch() && !canSlide) {
+			float impulse = db->getBody()->GetMass() * 100;
+			db->ApplyForce(Vector2(0.0f, impulse));
+		}
+		else if (Input::GetTouch() && canSlide) {
+			float impulse = db->getBody()->GetMass() * 150;
+			db->ApplyForce(Vector2(0.0f, impulse));
+			Input::SetTouchStatus(false);
+		}
+	}
+	else if (Input::GetTouch() && canSlide && !slide) {
+		slide = 1;
+		Input::SetTouchStatus(false);
+	}
+	else if (slide) {
+		float impulse = db->getBody()->GetMass() * 100;
+		db->ApplyForce(Vector2(0.0f, impulse));
+		slide = 0;
+		SetSpeed(-m_SpeedX);
+	}
+	else if (canSlide && db->GetVelocity().y < 0) {
+		db->SetVelocity(Vector2(m_SpeedX, m_SlideSpeed));
+	}
+
+	db->SetVelocity(Vector2(m_SpeedX, db->GetVelocity().y));
 }

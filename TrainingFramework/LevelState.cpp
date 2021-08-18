@@ -275,11 +275,20 @@ void LevelState::Draw()
 
 LevelState::~LevelState()
 {
-	for each (Object * object in m_GameObjects)
+	for each (Object * object in m_GameObjects) {
 		delete object;
+		object = NULL;
+	}
 
-	for each (Object * object in m_BulletObjects)
+	for each (Object * object in m_BulletObjects) {
 		delete object;
+		object = NULL;
+	}
+
+	for each (Object * object in m_Decorations) {
+		delete object;
+		object = NULL;
+	}
 
 	delete m_bullet;
 }

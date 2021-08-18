@@ -46,11 +46,11 @@ void ContactManager::BenginContact(GameObject* obj1, GameObject* obj2)
 
 void ContactManager::EndContact(GameObject* obj1, GameObject* obj2)
 {
-	m_numContacts[{obj1->GetID(), obj2->GetID()}] = 0;
-	m_numContacts[{obj2->GetID(), obj1->GetID()}] = 0;
 
-	if (m_numContacts[{obj2->GetID(), obj1->GetID()}] == 0)
+	if (m_numContacts[{obj2->GetID(), obj1->GetID()}] == 1)
 	{
+		m_numContacts[{obj1->GetID(), obj2->GetID()}] = 0;
+		m_numContacts[{obj2->GetID(), obj1->GetID()}] = 0;
 		obj1->OnColliderExit(obj2);
 		obj2->OnColliderExit(obj1);
 	}

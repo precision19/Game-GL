@@ -13,6 +13,7 @@ protected:
 	float m_SlideSpeed;
 	int canSlide;
 	bool slide;
+	bool jump;
 	Sensor* foot, * right, * left;
 public:
 	Player();
@@ -25,7 +26,8 @@ public:
 
 	void Update(float);
 	void UpdateSensorOfPlayer(float);
-	void ConsiderJumpingAndSurfing();
+	void ConsiderJumpAndSlide();
+	void HandleJumpAndSlide();
 
 	void SetJump(int jump) { canJump = jump; };
 	int GetJump() { return canJump; };

@@ -45,7 +45,7 @@ DynamicBox::DynamicBox(Object* object, float radius, Category category)
 
 DynamicBox::~DynamicBox()
 {
-
+	body->GetWorld()->DestroyBody(body);
 }
 
 

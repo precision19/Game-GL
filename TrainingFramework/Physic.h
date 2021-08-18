@@ -9,6 +9,7 @@ using namespace std;
 class Physic
 {
 private:
+	float accumutator;
 	static Physic* s_InstancePhysic;
 	vector<Box*>m_boxes;
 	unique_ptr<b2World> m_world;
