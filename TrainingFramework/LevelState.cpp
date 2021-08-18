@@ -70,7 +70,6 @@ void LevelState::OnStart()
 			fscanf(filePre, "SPEED %f\n", &speed);
 			bullet->SetSpeed(speed);
 			fscanf(filePre, "NUMBER BULLETS %d\n", &numBullets);
-			bullet->SetScale(Vector3(0.03, 0.03, 0));
 			bulletPrefab = bullet;
 			m_bullet = bullet;
 		}
@@ -83,7 +82,6 @@ void LevelState::OnStart()
 			fscanf(filePre, "RENDERER %d\n", &id);
 			gun->SetRenderer(id);
 			fscanf(filePre, "SPEED %f\n", &speed);
-			gun->SetScale(Vector3(0.1, 0.1, 0));
 			gunPrefab = gun;
 		}
 
@@ -135,6 +133,25 @@ void LevelState::OnStart()
 		exit(1);
 	}
 
+	fscanf(fileMap, "#Objects: %d\n", &amount);
+	for (int i = 0; i < amount; i++)
+	{
+		fscanf(fileMap, "%s %s\n", keyword, name);
+
+		Object* object = new Object(name);
+
+		fscanf(fileMap, "RENDERER %s\n", name);
+		object->SetRenderer(name);
+		fscanf(fileMap, "POSITION %f %f %f\n", &x, &y, &z);
+		object->SetPosition(Vector3(x, y, z));
+		fscanf(fileMap, "ROTATION %f %f %f\n", &x, &y, &z);
+		object->SetRotation(Vector3(x, y, z));
+		fscanf(fileMap, "SCALE %f %f %f\n", &x, &y, &z);
+		object->SetScale(Vector3(x, y, z));
+
+		m_GameObjects.push_back(object);
+	}
+
 	fscanf(fileMap, "#%s\n", keyword);
 	if (strcmp(keyword, "Dungeon"))
 		printf("WARNING: level format is not correct");
@@ -155,7 +172,7 @@ void LevelState::OnStart()
 			if (iBool == 1)
 			{
 				GameObject* block = (GameObject*)blockPrefab->Clone();
-				block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
+				block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
 				block->CreateCollider();
 				m_GameObjects.push_back(block);
 			}
@@ -244,6 +261,9 @@ void LevelState::Update(float deltaTime)
 
 void LevelState::Draw()
 {
+	for each (Object * object in m_Decorations)
+		object->Draw();
+
 	for each (Object * object in m_BulletObjects)
 		object->Draw();
 

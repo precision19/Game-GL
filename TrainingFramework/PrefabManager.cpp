@@ -168,8 +168,8 @@ Renderer* PrefabManager::GetRenderer(int id)
 {
 	if (id < 0 || id >= m_Renderers.size())
 	{
-		exit(1);
 		printf("ERROR: can not find renderer with id: %d", id);
+		exit(1);
 		return NULL;
 	}
 	return m_Renderers.at(id);

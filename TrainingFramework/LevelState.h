@@ -20,9 +20,9 @@ protected:
 	float m_Time;
 
 	vector<GameObject*> m_BulletObjects;
-
+	vector<Object*> m_Decorations;
 	StateManager* m_StateManager;
-	vector<GameObject*> m_GameObjects;
+	vector<Object*> m_GameObjects;
 	Button* m_PauseButton;
 	Button* m_StartButton;
 	vector<Object*> m_PauseMenu;
