@@ -34,6 +34,7 @@ void LevelState::OnStart()
 	GameObject* guardPrefab = NULL;
 	GameObject* starPrefab = NULL;
 	GameObject* bladePrefab = NULL;
+	GameObject* chestPrefab = NULL;
 
 	string path0 = "Managers/GameObjectPrefab.txt";
 	FILE* filePre = fopen(path0.c_str(), "r+");
@@ -138,6 +139,20 @@ void LevelState::OnStart()
 			blade->SetScale(Vector3(0.1, 0.1, 0.1));
 			bladePrefab = blade;
 		}
+
+		if (strcmp(name, "TreasureChest") == 0)
+		{
+			TreasureChest* chest = new TreasureChest();
+			fscanf(filePre, "COLLIDER_SIZE %f\n", &x);
+			chest->SetCollider(x);
+			fscanf(filePre, "RENDERER %d\n", &id);
+			chest->SetRenderer(id);
+			chest->SetRenderer(id + 1);
+			fscanf(filePre, "SPEED %f\n", &speed);
+
+			chest->SetScale(Vector3(1.5, 1.5, 1.5));
+			chestPrefab = chest;
+		}
 	}
 
 	string path = "Managers/Level3SM.txt";
@@ -227,12 +242,20 @@ void LevelState::OnStart()
 				star->CreateCollider();
 				m_GameObjects.push_back(star);
 			}
+
 			if (iBool == 6)
 			{
 				GameObject* blade = (GameObject*)bladePrefab->Clone();
 				blade->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1.5, 0));
 				blade->CreateCollider();
 				m_GameObjects.push_back(blade);
+			}
+
+			if (iBool == 7)
+			{
+				chestPrefab->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1.2, 0));
+				chestPrefab->CreateCollider();
+				m_GameObjects.push_back(chestPrefab);
 			}
 		}
 	}
@@ -247,6 +270,7 @@ void LevelState::OnStart()
 	delete gunPrefab;
 	delete starPrefab;
 	delete bladePrefab;
+//	delete chestPrefab;
 
 	fclose(filePre);
 	fclose(fileMap);

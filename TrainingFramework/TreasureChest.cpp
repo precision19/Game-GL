@@ -8,11 +8,16 @@ TreasureChest::TreasureChest()
 	ms_IDMaker++;
 	m_Collider = NULL;
 	isWinner = false;
+	m_currentAnimation = 0;
 }
 
 TreasureChest::~TreasureChest()
 {
+	for (int i = 0; i < m_Animations.size(); i++)
+		delete m_Animations.at(i);
+	m_Animations.clear();
 
+	m_Renderer = NULL;
 }
 
 bool TreasureChest::isCollistion()
@@ -22,9 +27,12 @@ bool TreasureChest::isCollistion()
 
 void TreasureChest::AddAnimations(Renderer* renderer)
 {
-	m_Animations.push_back(renderer);
-	if (m_Renderer == NULL)
-		m_Renderer = renderer;
+}
+
+void TreasureChest::SetRenderer(int id)
+{
+	m_Renderer = PrefabManager::GetInstance()->GetRenderer(id)->Clone();
+	m_Animations.push_back(m_Renderer);
 }
 
 void TreasureChest::CreateCollider()
@@ -41,7 +49,7 @@ void TreasureChest::CreateCollider()
 
 void TreasureChest::Draw()
 {
-	m_Renderer->Draw(m_Transform);
+	m_Animations.at(m_currentAnimation)->Draw(m_Transform);
 }
 
 void TreasureChest::Update(float deltaTime)
@@ -50,13 +58,17 @@ void TreasureChest::Update(float deltaTime)
 	{
 		isWinner = true;
 	}
-	m_Renderer->Update(deltaTime);
+	m_Animations.at(m_currentAnimation)->Update(deltaTime);
 }
 
 void TreasureChest::OnColliderEnter(GameObject* other)
 {
 	if (other->GetName() == "Player")
+	{
 		isWinner = true;
+		m_currentAnimation = 1;
+		m_Animations.at(m_currentAnimation)->SetLoop(false);
+	}
 }
 
 void TreasureChest::OnColliderExit(GameObject*)

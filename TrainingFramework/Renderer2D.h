@@ -9,6 +9,7 @@ public:
 	Renderer2D(string);
 	virtual Renderer* Clone();
 	void Draw(Transform);
+	virtual void SetLoop(bool);
 	virtual ~Renderer2D();
 };
 

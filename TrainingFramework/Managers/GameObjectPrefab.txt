@@ -1,4 +1,4 @@
-#PrefabObject: 7
+#PrefabObject: 8
 0. Block
 COLLIDER_SIZE 64
 RENDERER 0
@@ -33,4 +33,9 @@ SPEED 40
 6. SawBlade
 COLLIDER_SIZE 32
 RENDERER 12
+SPEED 40
+
+7. TreasureChest
+COLLIDER_SIZE 32
+RENDERER 13
 SPEED 40

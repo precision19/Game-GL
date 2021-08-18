@@ -5,6 +5,8 @@
 class TreasureChest : public GameObject
 {
 public:
+
+	int m_currentAnimation;
 	bool isWinner;
 	vector<Renderer* > m_Animations;
 
@@ -13,6 +15,7 @@ public:
 
 	bool isCollistion();
 	void AddAnimations(Renderer*);
+	void SetRenderer(int);
 
 	void CreateCollider();
 	void Draw();

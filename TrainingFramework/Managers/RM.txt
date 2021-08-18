@@ -1,7 +1,7 @@
 #Models: 1
 0. Sprite
 
-#2D Textures: 26
+#2D Textures: 34
 0. Block	REPEAT LINEAR LINEAR
 1. Bullet	REPEAT LINEAR LINEAR
 2. Player/Idle/0	REPEAT LINEAR LINEAR
@@ -28,6 +28,15 @@
 23. SawBlade/Blade4  REPEAT LINEAR LINEAR
 24. MenuBackground	REPEAT LINEAR LINEAR
 25. DungeonBackground	REPEAT LINEAR LINEAR
+26. Chest/chest_00  REPEAT LINEAR LINEAR
+27. Chest/chest_01  REPEAT LINEAR LINEAR
+28. Chest/chest_02  REPEAT LINEAR LINEAR
+29. Chest/chest_03  REPEAT LINEAR LINEAR
+30. Chest/chest_04  REPEAT LINEAR LINEAR
+31. Chest/chest_05  REPEAT LINEAR LINEAR
+32. Chest/chest_06  REPEAT LINEAR LINEAR
+33. Chest/chest_07  REPEAT LINEAR LINEAR
+
 
 #Cube Textures: 0
 

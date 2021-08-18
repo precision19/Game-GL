@@ -11,6 +11,7 @@
 #include "Guard.h"
 #include "Star.h"
 #include "SawBlade.h"
+#include "TreasureChest.h"
 #include "AudioManager.h"
 
 class LevelState : public StateBase 

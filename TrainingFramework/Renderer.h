@@ -29,6 +29,7 @@ public:
 	Vector3 GetTextureSize();
 	virtual void Draw(Transform);
 	virtual void Update(float);
+	virtual void SetLoop(bool);
 	virtual ~Renderer();
 };
 
