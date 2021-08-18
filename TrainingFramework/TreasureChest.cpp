@@ -56,13 +56,14 @@ void TreasureChest::Update(float deltaTime)
 {
 	if (isCollistion())
 	{
-		isWinner = true;
+		isWinner = true;                                                                                                                                       
 	}
 	m_Animations.at(m_currentAnimation)->Update(deltaTime);
 }
 
 void TreasureChest::OnColliderEnter(GameObject* other)
 {
+	int cnt = 0;
 	if (other->GetName() == "Player")
 	{
 		isWinner = true;

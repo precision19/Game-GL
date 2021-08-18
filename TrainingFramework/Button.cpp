@@ -74,6 +74,7 @@ void Button::Update(float deltaTime)
 			{
 				m_IsPressing = true;
 				OnPressing();
+				AudioManager::GetInstance()->PlaySoundEffect("Click", false);
 			}
 			else
 				m_IsSkipped = true;

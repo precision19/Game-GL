@@ -131,6 +131,7 @@ void Player::HandleJumpAndSlide() {
 			else impulse = db->getBody()->GetMass() * 170;
 			db->ApplyForce(Vector2(0.0f, impulse));
 			onTheGround = 0;
+			AudioManager::GetInstance()->PlaySoundEffect("Jump", false);
 			Input::SetTouchStatus(false);
 		}
 	}
@@ -138,6 +139,7 @@ void Player::HandleJumpAndSlide() {
 		Input::SetTouchStatus(false);
 		float impulse = db->getBody()->GetMass() * 224;
 		db->ApplyForce(Vector2(0.0f, impulse));
+		AudioManager::GetInstance()->PlaySoundEffect("Jump", false);
 		SetSpeed(-m_SpeedX);
 	}
 	else if (canSlide && db->GetVelocity().y < 0) {

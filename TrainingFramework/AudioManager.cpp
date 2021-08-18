@@ -36,6 +36,14 @@ void AudioManager::SetPitch(float pitch)
 	music.setVolume(pitch);
 }
 
+AudioManager::AudioManager()
+{
+	musicFile = "";
+	soundFile = "";
+	volume = 1;
+	pitch = 1;
+}
+
 float AudioManager::GetVolume() {
 	return volume;
 }
@@ -44,6 +52,7 @@ float AudioManager::GetPitch() {
 	return pitch;
 }
 
+//Music
 void AudioManager::SetMusicFile(string name) 
 {
 	if (name == "Menu") 
@@ -70,13 +79,6 @@ void AudioManager::PlayBackgroundMusic(string name)
 }
 
 
-AudioManager::AudioManager()
-{
-	musicFile = "";
-	volume = 1;
-	pitch = 1;
-}
-
 void AudioManager::PlayMusic()
 {
 	if (!music.openFromFile(musicFile)) 
@@ -92,10 +94,26 @@ void AudioManager::StopMusic()
 {
 	this->music.stop();
 }
-
-
-void AudioManager::AdjustAudio() 
+//Sound effect
+void AudioManager::SetSoundFile(string name)
 {
+	soundFile = "Sounds/" + name + ".wav";
+	std::cout << this->soundFile << std::endl;
+}
 
+void AudioManager::PlaySound(bool isLoop) {
+	if (!soundBuffer.loadFromFile(soundFile)) {
+		std::cout << "Error: Can not play sound in file " << soundFile << std::endl;
+	}
+	sound.setBuffer(soundBuffer);
+	if (isLoop) sound.setLoop(true);
+	sound.play();
+	std::cout << "Playing sound in file: " << soundFile << std::endl;
+}
+
+void AudioManager::PlaySoundEffect(string name, bool isLoop)
+{
+	soundFile = "Sounds/" + name + ".wav";
+	PlaySound(isLoop);
 }
 

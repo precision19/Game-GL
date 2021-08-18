@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Sensor.h";
+#include "AudioManager.h"
 
 class Player : public GameObject
 {
