@@ -12,8 +12,7 @@ protected:
 	float m_JumpForce;
 	float m_SlideSpeed;
 	int canSlide;
-	bool slide;
-	bool jump;
+	bool onTheGround;
 	Sensor* foot, * right, * left;
 public:
 	Player();

@@ -13,8 +13,7 @@ Player::Player()
 	m_currentAnimationId = 0;
 	canJump = 0;
 	canSlide = 0;
-	slide = 0;
-	jump = 0;
+	onTheGround = 1;
 	m_SpeedX = 200.0f;
 	m_SlideSpeed = -80.0f;
 }
@@ -119,30 +118,26 @@ void Player::ConsiderJumpAndSlide() {
 		printf("Collision with left side of block\n");
 	}
 	else canSlide = 0;
-	if (!canSlide) slide = 0;
 }
 
 void Player::HandleJumpAndSlide() {
 	DynamicBox* db = (DynamicBox*)m_Collider;
+	if (canSlide && !canJump) onTheGround = 0;
+	else if (canJump && !onTheGround && db->GetVelocity().y < 0) onTheGround = 1;
 	if (canJump) {
-		if (Input::GetTouch() && !canSlide) {
-			float impulse = db->getBody()->GetMass() * 35;
+		if (Input::GetTouch()) {
+			float impulse;
+			if(canSlide) impulse = db->getBody()->GetMass() * 270;
+			else impulse = db->getBody()->GetMass() * 170;
 			db->ApplyForce(Vector2(0.0f, impulse));
-		}
-		else if (Input::GetTouch() && canSlide) {
-			float impulse = db->getBody()->GetMass() * 200;
-			db->ApplyForce(Vector2(0.0f, impulse));
+			onTheGround = 0;
 			Input::SetTouchStatus(false);
 		}
 	}
-	else if (Input::GetTouch() && canSlide && !slide) {
-		slide = 1;
+	else if (Input::GetTouch() && canSlide && !onTheGround) {
 		Input::SetTouchStatus(false);
-	}
-	else if (slide) {
 		float impulse = db->getBody()->GetMass() * 224;
 		db->ApplyForce(Vector2(0.0f, impulse));
-		slide = 0;
 		SetSpeed(-m_SpeedX);
 	}
 	else if (canSlide && db->GetVelocity().y < 0) {
