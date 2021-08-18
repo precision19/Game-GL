@@ -24,7 +24,7 @@ void Star::CreateCollider()
 {
 	if (m_Collider == NULL)
 	{
-		m_Collider = new GroundBox(this, Vector2(m_ColliderSize, m_ColliderSize), CATEGORY_NONE);
+		m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_SENSOR);
 	}
 	else
 	{

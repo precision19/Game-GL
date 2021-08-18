@@ -33,6 +33,7 @@ void LevelState::OnStart()
 	GameObject* gunPrefab = NULL;
 	GameObject* guardPrefab = NULL;
 	GameObject* starPrefab = NULL;
+	GameObject* bladePrefab = NULL;
 
 	string path0 = "Managers/GameObjectPrefab.txt";
 	FILE* filePre = fopen(path0.c_str(), "r+");
@@ -124,6 +125,19 @@ void LevelState::OnStart()
 			star->SetScale(Vector3(0.12, 0.12, 0.12));
 			starPrefab = star;
 		}
+
+		if (strcmp(name, "SawBlade") == 0)
+		{
+			SawBlade* blade = new SawBlade();
+			fscanf(filePre, "COLLIDER_SIZE %f\n", &x);
+			blade->SetCollider(x);
+			fscanf(filePre, "RENDERER %d\n", &id);
+			blade->SetRenderer(id);
+			fscanf(filePre, "SPEED %f\n", &speed);
+
+			blade->SetScale(Vector3(1.5, 1.5, 1.5));
+			bladePrefab = blade;
+		}
 	}
 
 	string path = "Managers/Level3SM.txt";
@@ -213,6 +227,13 @@ void LevelState::OnStart()
 				star->CreateCollider();
 				m_GameObjects.push_back(star);
 			}
+			if (iBool == 6)
+			{
+				GameObject* blade = (GameObject*)bladePrefab->Clone();
+				blade->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
+				blade->CreateCollider();
+				m_GameObjects.push_back(blade);
+			}
 		}
 	}
 	
@@ -225,6 +246,7 @@ void LevelState::OnStart()
 	delete bulletPrefab;
 	delete gunPrefab;
 	delete starPrefab;
+	delete bladePrefab;
 
 	fclose(filePre);
 	fclose(fileMap);

@@ -1,8 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
-#include "GroundBox.h"
-#include "Sensor.h";
+#include "DynamicBox.h"
 
 
 class Star : public GameObject
