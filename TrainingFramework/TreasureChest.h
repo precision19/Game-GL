@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "DynamicBox.h"
+#include "AudioManager.h"
 
 class TreasureChest : public GameObject
 {

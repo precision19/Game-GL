@@ -133,10 +133,12 @@ void Player::HandleJumpAndSlide() {
 		else if (Input::GetTouch() && !canSlide) {
 			float impulse = db->getBody()->GetMass() * 100;
 			db->ApplyForce(Vector2(0.0f, impulse));
+			AudioManager::GetInstance()->PlaySoundEffect("Jump", false);
 		}
 		else if (Input::GetTouch() && canSlide) {
 			float impulse = db->getBody()->GetMass() * 150;
 			db->ApplyForce(Vector2(0.0f, impulse));
+			AudioManager::GetInstance()->PlaySoundEffect("Jump", false);
 			Input::SetTouchStatus(false);
 		}
 	}
@@ -147,6 +149,7 @@ void Player::HandleJumpAndSlide() {
 	else if (slide) {
 		float impulse = db->getBody()->GetMass() * 100;
 		db->ApplyForce(Vector2(0.0f, impulse));
+		AudioManager::GetInstance()->PlaySoundEffect("Jump", false);
 		slide = 0;
 		SetSpeed(-m_SpeedX);
 	}
