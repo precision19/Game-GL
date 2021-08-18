@@ -11,20 +11,22 @@
 #include "../Utilities/Math.h" // if you use STL, please include this line AFTER all other include
 #include <iostream>
 
-bool run = false;
 int Init ( ESContext *esContext )
 {
 	Input::CreateInstance();
 	Camera::CreateInstance();
+	AudioManager::CreateInstance();
 	ResourceManager::CreateInstance();
 	PrefabManager::CreateInstance();
 	SceneManager::CreateInstance();
 	ContactManager::CreateInstance();
 	MyContactListener::CreateInstance();
 	Physic::CreateInstance();
-	AudioManager::CreateInstance();
 
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	return 0;
 }
@@ -43,8 +45,8 @@ void Update ( ESContext *esContext, float deltaTime )
 {
 	Camera::GetInstance()->Update(deltaTime);
 	SceneManager::GetInstance()->Update(deltaTime);
-	AudioManager::GetInstance()->GetMusic(SceneManager::GetInstance()->getCurrentState());
-	AudioManager::GetInstance()->PlayMusic();
+	//AudioManager::GetInstance()->SetMusicFile(SceneManager::GetInstance()->getCurrentState());
+	//AudioManager::GetInstance()->PlayMusic();
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)

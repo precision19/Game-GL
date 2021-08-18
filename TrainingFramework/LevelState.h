@@ -10,6 +10,7 @@
 #include "Gun.h"
 #include "Guard.h"
 #include "Star.h"
+#include "AudioManager.h"
 
 class LevelState : public StateBase 
 {

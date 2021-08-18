@@ -76,6 +76,7 @@ void MenuState::SetStateManager(StateManager* stateManager)
 void MenuState::OnStart()
 {
 	Camera::GetInstance()->SetDefault();
+	AudioManager::GetInstance()->PlayBackgroundMusic(m_Name);
 }
 
 

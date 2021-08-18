@@ -21,6 +21,7 @@ void LevelState::OnStart()
 	// TODO: goi PlayerPrefs de lay data
 	// DestroyAllObjects();
 	Camera::GetInstance()->SetDefault();
+	AudioManager::GetInstance()->PlayBackgroundMusic(m_Name);
 
 	int amount, id, iBool, numBullets;
 	float x, y, z, speed;
