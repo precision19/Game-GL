@@ -25,7 +25,7 @@ Physic::Physic()
 	m_boxes.clear();
 	b2Vec2 gravity(0.0f, -10.0f);
 	m_world = std::make_unique<b2World>(gravity);
-	m_world.get()->SetGravity(b2Vec2(0.0f, -100.0f));
+	m_world.get()->SetGravity(b2Vec2(0.0f, -500.0f));
 	accumutator = 0.0f;
 
 	m_world.get()->SetContactListener(MyContactListener::GetInstance());
@@ -40,9 +40,10 @@ b2World* Physic::GetWorld()
 void Physic::Update(float deltaTime)
 {
 	accumutator += deltaTime;
-	while (accumutator > 1.0f / 60) {
-		accumutator -= 1.0f / 60;
-		m_world.get()->Step(1.0f / 60, 6, 2);
+	float step = 1.0f / 240;
+	while (accumutator > step) {
+		accumutator -= step;
+		m_world.get()->Step(step, 60, 20);
 	}
 }
 
