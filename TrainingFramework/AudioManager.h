@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <SFML/Audio.hpp>
+#include "StateBase.h"
 
 
 class AudioManager {
@@ -16,13 +17,15 @@ public:
 	float volume;
 	float pitch;
 	
-	void Init(float, float);
-	void PlayMusic(std::string);
+	void PlayMusic();
 	void StopMusic();
 	void Update();
 	void SetVolume(float);
 	float GetVolume();
 	void SetPitch(float);
 	float GetPitch();
+	std::string GetMusicStatus();
+	std::string GetMusic(StateBase*);
+	std::string GetMusic(std::string);
 	void AdjustAudio();
 };

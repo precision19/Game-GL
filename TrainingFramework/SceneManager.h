@@ -13,6 +13,7 @@ class SceneManager : public StateManager
 protected:
 	static SceneManager* ms_Instance;
 	int m_TargetLevel;
+	//AudioManager* audioManager;
 	//MyContactListener* myContactListenerInstance;
 public:
 	static void CreateInstance();
@@ -26,6 +27,9 @@ public:
 	//void AddPhysicsToScene();
 	void Draw();
 	void Update(float);
+	StateBase* getCurrentState();
+	void Music();
+	bool CheckSwitchState();
 	//void DestroyAllObjects();
 };
 

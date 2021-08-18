@@ -44,22 +44,38 @@ float AudioManager::GetPitch() {
 	return this->pitch;
 }
 
+std::string AudioManager::GetMusic(StateBase* currentState) {
+	if (currentState->GetName() == "Menu") this->musicFile = "Sounds/Menu.ogg";
+	if (currentState->GetName() == "Map") this->musicFile = "Sounds/Map.ogg";
+	if (currentState->GetName() == "Level") this->musicFile = "Sounds/Level1.ogg";
+	std::cout << this->musicFile << std::endl;
+	return this->musicFile;
+}
 
-void AudioManager::PlayMusic(std::string musicFile) {
-	this->musicFile = musicFile;
-	if (!this->music.openFromFile(this->musicFile)) {
-		std::cout << "ERROR" << std::endl;
+std::string AudioManager::GetMusic(std::string musicFile) {
+	return this->musicFile = musicFile;
+}
+
+std::string AudioManager::GetMusicStatus() {
+	if (this->music.getStatus() == 0) return "Stopped";
+	if (this->music.getStatus() == 1) return "Paused";
+	if (this->music.getStatus() == 2) return "Playing";
+}
+
+
+void AudioManager::PlayMusic() {
+	if (!music.openFromFile(this->musicFile)) {
+		std::cout << "Error" << std::endl;
 	}
 	this->music.play();
 	this->music.setLoop(true);
+	std::cout << this->musicFile << std::endl;
 }
 
 void AudioManager::StopMusic() {
 	this->music.stop();
 }
 
-void AudioManager::Update() {
-}
 
 void AudioManager::AdjustAudio() {
 
