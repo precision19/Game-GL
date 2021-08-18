@@ -61,6 +61,8 @@ void MapState::SetStateManager(StateManager* stateManager)
 void MapState::OnStart()
 {
 	// Refresh level button
+	Camera::GetInstance()->SetDefault();
+	AudioManager::GetInstance()->PlayBackgroundMusic(m_Name);
 }
 
 void MapState::Update(float deltaTime) 

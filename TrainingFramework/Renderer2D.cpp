@@ -68,6 +68,10 @@ void Renderer2D::Draw(Transform transform)
 	m_Texture->BindBuffer(false);
 }
 
+void Renderer2D::SetLoop(bool)
+{
+}
+
 Renderer2D::~Renderer2D()
 {
 	

@@ -33,7 +33,6 @@ void StateManager::SwitchState(int id)
 		printf("WARNING: Can't find state with id: %s", id);
 		return;
 	}
-
 	m_CurrentState->OnTranslation();
 	m_CurrentState = m_States.at(id);
 	m_CurrentState->OnStart();

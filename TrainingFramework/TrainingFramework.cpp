@@ -7,14 +7,15 @@
 #include "SceneManager.h"
 #include "Input.h"
 #include "MyContactListener.h"
-#include "AudioManager.h"
+#include <thread>
 #include "../Utilities/Math.h" // if you use STL, please include this line AFTER all other include
-
+#include <iostream>
 
 int Init ( ESContext *esContext )
 {
 	Input::CreateInstance();
 	Camera::CreateInstance();
+	AudioManager::CreateInstance();
 	ResourceManager::CreateInstance();
 	PrefabManager::CreateInstance();
 	SceneManager::CreateInstance();
@@ -22,13 +23,10 @@ int Init ( ESContext *esContext )
 	MyContactListener::CreateInstance();
 	Physic::CreateInstance();
 
-	AudioManager::CreateInstance();
-	AudioManager::GetInstance()->PlayMusic("Sounds/Test.ogg");
-	glClearColor ( 0.0f, 0.0f, 0.0f, 1.0f );
+	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
-	glEnable(GL_CULL_FACE);
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	return 0;
 }
@@ -38,14 +36,17 @@ void Draw ( ESContext *esContext )
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	SceneManager::GetInstance()->Draw();
+	
 
 	eglSwapBuffers ( esContext->eglDisplay, esContext->eglSurface );
 }
-
+	
 void Update ( ESContext *esContext, float deltaTime )
 {
 	Camera::GetInstance()->Update(deltaTime);
 	SceneManager::GetInstance()->Update(deltaTime);
+	//AudioManager::GetInstance()->SetMusicFile(SceneManager::GetInstance()->getCurrentState());
+	//AudioManager::GetInstance()->PlayMusic();
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
@@ -86,12 +87,12 @@ void CleanUp()
 	AudioManager::DestroyInstance();
 }
 
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	ESContext esContext;
 
     esInitContext ( &esContext );
-
 	esCreateWindow ( &esContext, "King of Towers", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
 
 	if ( Init ( &esContext ) != 0 )

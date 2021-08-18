@@ -21,6 +21,7 @@ void LevelState::OnStart()
 	// TODO: goi PlayerPrefs de lay data
 	// DestroyAllObjects();
 	Camera::GetInstance()->SetDefault();
+	AudioManager::GetInstance()->PlayBackgroundMusic(m_Name);
 
 	int amount, id, iBool, numBullets;
 	float x, y, z, speed;
@@ -32,6 +33,8 @@ void LevelState::OnStart()
 	GameObject* gunPrefab = NULL;
 	GameObject* guardPrefab = NULL;
 	GameObject* starPrefab = NULL;
+	GameObject* bladePrefab = NULL;
+	GameObject* chestPrefab = NULL;
 
 	string path0 = "Managers/GameObjectPrefab.txt";
 	FILE* filePre = fopen(path0.c_str(), "r+");
@@ -123,6 +126,33 @@ void LevelState::OnStart()
 			star->SetScale(Vector3(0.12, 0.12, 0.12));
 			starPrefab = star;
 		}
+
+		if (strcmp(name, "SawBlade") == 0)
+		{
+			SawBlade* blade = new SawBlade();
+			fscanf(filePre, "COLLIDER_SIZE %f\n", &x);
+			blade->SetCollider(x);
+			fscanf(filePre, "RENDERER %d\n", &id);
+			blade->SetRenderer(id);
+			fscanf(filePre, "SPEED %f\n", &speed);
+
+			blade->SetScale(Vector3(0.1, 0.1, 0.1));
+			bladePrefab = blade;
+		}
+
+		if (strcmp(name, "TreasureChest") == 0)
+		{
+			TreasureChest* chest = new TreasureChest();
+			fscanf(filePre, "COLLIDER_SIZE %f\n", &x);
+			chest->SetCollider(x);
+			fscanf(filePre, "RENDERER %d\n", &id);
+			chest->SetRenderer(id);
+			chest->SetRenderer(id + 1);
+			fscanf(filePre, "SPEED %f\n", &speed);
+
+			chest->SetScale(Vector3(1.5, 1.5, 1.5));
+			chestPrefab = chest;
+		}
 	}
 
 	string path = "Managers/Level3SM.txt";
@@ -131,6 +161,25 @@ void LevelState::OnStart()
 	{
 		printf("Invalid file %s\n", path.c_str());
 		exit(1);
+	}
+
+	fscanf(fileMap, "#Objects: %d\n", &amount);
+	for (int i = 0; i < amount; i++)
+	{
+		fscanf(fileMap, "%s %s\n", keyword, name);
+
+		Object* object = new Object(name);
+
+		fscanf(fileMap, "RENDERER %s\n", name);
+		object->SetRenderer(name);
+		fscanf(fileMap, "POSITION %f %f %f\n", &x, &y, &z);
+		object->SetPosition(Vector3(x, y, z));
+		fscanf(fileMap, "ROTATION %f %f %f\n", &x, &y, &z);
+		object->SetRotation(Vector3(x, y, z));
+		fscanf(fileMap, "SCALE %f %f %f\n", &x, &y, &z);
+		object->SetScale(Vector3(x, y, z));
+
+		m_GameObjects.push_back(object);
 	}
 
 	fscanf(fileMap, "#%s\n", keyword);
@@ -179,9 +228,9 @@ void LevelState::OnStart()
 
 			if (iBool == 4)
 			{
-				guardPrefab->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
-				guardPrefab->SetPositionStart(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
-				guardPrefab->SetPositionEnd(Dungeon::GirdToWord(j + 1, Dungeon::Height - i - 1, 0));
+				guardPrefab->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1.3, 0));
+				guardPrefab->SetPositionStart(Dungeon::GirdToWord(j, Dungeon::Height - i - 1.3, 0));
+				guardPrefab->SetPositionEnd(Dungeon::GirdToWord(j + 1, Dungeon::Height - i - 1.3, 0));
 				guardPrefab->CreateCollider();
 				m_GameObjects.push_back(guardPrefab);
 			}
@@ -192,6 +241,21 @@ void LevelState::OnStart()
 				star->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
 				star->CreateCollider();
 				m_GameObjects.push_back(star);
+			}
+
+			if (iBool == 6)
+			{
+				GameObject* blade = (GameObject*)bladePrefab->Clone();
+				blade->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1.5, 0));
+				blade->CreateCollider();
+				m_GameObjects.push_back(blade);
+			}
+
+			if (iBool == 7)
+			{
+				chestPrefab->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1.2, 0));
+				chestPrefab->CreateCollider();
+				m_GameObjects.push_back(chestPrefab);
 			}
 		}
 	}
@@ -204,28 +268,9 @@ void LevelState::OnStart()
 	delete blockPrefab;
 	delete bulletPrefab;
 	delete gunPrefab;
-
-
-	fscanf(fileMap, "#Decorations: %d\n", &amount);
-	for (int i = 0; i < amount; i++)
-	{
-		fscanf(fileMap, "%s %s\n", keyword, name);
-
-		Object* object = new Object(name);
-
-		fscanf(fileMap, "RENDERER %s\n", name);
-		object->SetRenderer(name);
-		fscanf(fileMap, "POSITION %f %f %f\n", &x, &y, &z);
-		object->SetPosition(Vector3(x, y, z));
-		fscanf(fileMap, "ROTATION %f %f %f\n", &x, &y, &z);
-		object->SetRotation(Vector3(x, y, z));
-		fscanf(fileMap, "SCALE %f %f %f\n", &x, &y, &z);
-		object->SetScale(Vector3(x, y, z));
-
-		m_Decorations.push_back(object);
-	}
-
 	delete starPrefab;
+	delete bladePrefab;
+//	delete chestPrefab;
 
 	fclose(filePre);
 	fclose(fileMap);

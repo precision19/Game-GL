@@ -118,6 +118,10 @@ void Renderer::Update(float deltaTime)
 {
 }
 
+void Renderer::SetLoop(bool)
+{
+}
+
 Renderer::~Renderer()
 {
 	m_Model = NULL;

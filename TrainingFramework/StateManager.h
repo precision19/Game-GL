@@ -1,6 +1,7 @@
 #pragma once
 #include "StateBase.h"
 #include <vector>
+#include "AudioManager.h"
 
 class StateManager 
 {

@@ -1,18 +1,21 @@
+#Objects: 1
+1. DungeonBackground
+RENDERER DungeonBackground
+POSITION 0 0 -2
+ROTATION 0 0 0
+SCALE 1 1 1
+
 #Dungeon
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 3 0 0 0 0 0 0 0 0 0 0 0 1 1
 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0
 1 0 2 0 0 0 0 0 0 0 0 0 0 0 1 1
 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1
-1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
-1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1
-1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1
-1 0 0 0 4 0 0 0 5 0 0 0 0 0 1 0
+1 1 0 0 0 0 0 0 0 1 0 7 0 0 1 0
+1 0 2 0 0 0 0 0 0 1 0 1 0 0 1 1
+1 0 0 0 0 0 0 0 0 1 0 1 0 0 1 1
+1 0 0 3 0 0 0 0 0 1 0 1 0 0 1 0
+1 0 0 0 0 0 0 0 0 1 0 1 0 0 1 1
+1 0 0 0 0 0 0 0 0 1 0 1 0 0 1 1
+1 0 6 0 4 0 0 0 5 0 0 1 0 0 1 0
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
-
-#Decorations: 1
-1. DungeonBackground
-RENDERER DungeonBackground
-POSITION 0 0 -2
-ROTATION 0 0 0
-SCALE 1 1 1

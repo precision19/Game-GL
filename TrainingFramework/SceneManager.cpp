@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SceneManager.h"
+#include <iostream>
 
 SceneManager* SceneManager::ms_Instance = NULL;
 
@@ -25,6 +26,7 @@ void SceneManager::DestroyInstance()
 
 SceneManager::SceneManager() 
 { 
+	
 	MenuState* menuState = new MenuState();
 	menuState->SetStateManager(this);
 	AddState(menuState);
@@ -36,6 +38,7 @@ SceneManager::SceneManager()
 	LevelState* levelState = new LevelState();
 	levelState->SetStateManager(this);
 	AddState(levelState);
+
 }
 
 
@@ -137,6 +140,10 @@ void SceneManager::Update(float deltaTime)
 	m_CurrentState->Update(deltaTime);
 }
 
+
+StateBase* SceneManager::getCurrentState() {
+	return m_CurrentState;
+}
 //void SceneManager::DestroyAllObjects()
 //{
 //	//for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)

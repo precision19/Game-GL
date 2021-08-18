@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 #include <SFML/Audio.hpp>
+#include <string>
 
+using namespace std;
 
 class AudioManager {
 protected:
@@ -12,17 +14,20 @@ public:
 	static void DestroyInstance();
 
 	sf::Music music;
-	std::string musicFile;
+	string musicFile;
 	float volume;
 	float pitch;
+
+	AudioManager();
 	
-	void Init(float, float);
-	void PlayMusic(std::string);
+	void PlayMusic();
 	void StopMusic();
-	void Update();
 	void SetVolume(float);
 	float GetVolume();
 	void SetPitch(float);
 	float GetPitch();
+	string GetMusicStatus();
+	void PlayBackgroundMusic(string);
+	void SetMusicFile(string);
 	void AdjustAudio();
 };

@@ -127,6 +127,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Renderer2D.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="SawBlade.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sensor.cpp" />
     <ClCompile Include="Shaders.cpp" />
@@ -141,7 +142,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="Trap.cpp" />
+    <ClCompile Include="TreasureChest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation2D.h" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Renderer2D.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="SawBlade.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sensor.h" />
     <ClInclude Include="Shaders.h" />
@@ -186,7 +188,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="Trap.h" />
+    <ClInclude Include="TreasureChest.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
@@ -218,8 +220,15 @@
     <Image Include="Textures\DEAD\Dead__6.tga" />
     <Image Include="Textures\DEAD\Dead__7.tga" />
     <Image Include="Textures\DEAD\Dead__8.tga" />
+    <Image Include="Textures\Guard\1.tga" />
+    <Image Include="Textures\Guard\2.tga" />
+    <Image Include="Textures\Guard\3.tga" />
+    <Image Include="Textures\Guard\4.tga" />
+    <Image Include="Textures\Guard\5.tga" />
+    <Image Include="Textures\Guard\6.tga" />
     <Image Include="Textures\Gun\Gun.tga" />
     <Image Include="Textures\Idle__000.tga" />
+    <Image Include="Textures\SawBlade\Blade4.tga" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Managers\GameObjectPrefab.txt" />
