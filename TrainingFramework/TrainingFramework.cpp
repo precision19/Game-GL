@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "MyContactListener.h"
 #include <thread>
+#include "PlayerPrefs.h"
 #include "../Utilities/Math.h" // if you use STL, please include this line AFTER all other include
 #include <iostream>
 
@@ -22,6 +23,11 @@ int Init ( ESContext *esContext )
 	ContactManager::CreateInstance();
 	MyContactListener::CreateInstance();
 	Physic::CreateInstance();
+
+	PlayerPrefs::CreateInstance();
+	PlayerPrefs::GetInstance()->LoadData();
+
+	
 
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
@@ -97,7 +103,6 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	if ( Init ( &esContext ) != 0 )
 		return 0;
-
 	esRegisterDrawFunc ( &esContext, Draw );
 	esRegisterUpdateFunc ( &esContext, Update );
 	esRegisterKeyFunc ( &esContext, Key);

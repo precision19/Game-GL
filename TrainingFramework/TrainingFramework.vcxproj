@@ -232,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Managers\GameObjectPrefab.txt" />
+    <Text Include="Managers\PlayerPref.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
