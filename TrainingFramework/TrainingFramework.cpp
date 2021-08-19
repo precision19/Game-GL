@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "Input.h"
 #include "MyContactListener.h"
+#include "PlayerPrefs.h"
 #include <thread>
 #include "../Utilities/Math.h" // if you use STL, please include this line AFTER all other include
 #include <iostream>
@@ -23,6 +24,8 @@ int Init ( ESContext *esContext )
 	MyContactListener::CreateInstance();
 	Physic::CreateInstance();
 
+	PlayerPrefs::CreateInstance();
+	PlayerPrefs::GetInstance()->LoadData();
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
 	glEnable(GL_BLEND);

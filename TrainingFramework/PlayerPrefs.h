@@ -1,13 +1,18 @@
 #pragma once
 #include <vector>
+#include <string>
 
 using namespace std;
 
 class PlayerPrefs
 {
 protected:
+	struct mapData {
+		int levelID;
+		int stars;
+	};
 	static PlayerPrefs* ms_Instance;
-	vector<int> m_MapData;
+	vector<mapData> m_MapData;
 public:
 	static void CreateInstance();
 	static PlayerPrefs* GetInstance();

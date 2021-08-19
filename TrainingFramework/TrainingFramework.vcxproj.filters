@@ -323,5 +323,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Managers\GameObjectPrefab.txt" />
+    <Text Include="Managers\PlayerPref.txt" />
   </ItemGroup>
 </Project>
