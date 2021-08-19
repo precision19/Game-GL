@@ -150,6 +150,12 @@
     <ClCompile Include="SawBlade.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -287,6 +293,12 @@
     <ClInclude Include="SawBlade.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Readme.doc" />
@@ -320,9 +332,25 @@
     <Image Include="Textures\Guard\4.tga" />
     <Image Include="Textures\Guard\5.tga" />
     <Image Include="Textures\Guard\6.tga" />
+    <Image Include="Textures\Chest.tga" />
+    <Image Include="Textures\ChestBeOpened.tga" />
+    <Image Include="Textures\ChestOpened.tga" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Managers\GameObjectPrefab.txt" />
+    <Text Include="Managers\Level0SM.txt" />
+    <Text Include="Managers\Level1SM.txt" />
+    <Text Include="Managers\Level2SM.txt" />
+    <Text Include="Managers\Level3SM.txt" />
+    <Text Include="Managers\Level4SM.txt" />
+    <Text Include="Managers\Level5SM.txt" />
+    <Text Include="Managers\Level6SM.txt" />
+    <Text Include="Managers\Level7SM.txt" />
+    <Text Include="Managers\Level8SM.txt" />
+    <Text Include="Managers\LevelsMapSM.txt" />
     <Text Include="Managers\PlayerPref.txt" />
+    <Text Include="Managers\PM.txt" />
+    <Text Include="Managers\RM.txt" />
+    <Text Include="Managers\MenuSM.txt" />
   </ItemGroup>
 </Project>
