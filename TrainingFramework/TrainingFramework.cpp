@@ -10,6 +10,8 @@
 #include <thread>
 #include "../Utilities/Math.h" // if you use STL, please include this line AFTER all other include
 #include <iostream>
+#include "vld/vld.h"
+#include "vld/vld_def.h"
 
 int Init ( ESContext *esContext )
 {
@@ -113,7 +115,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	CleanUp();
 
 	//identifying memory leaks
-	MemoryDump();
+	//MemoryDump();
 	printf("Press any key...\n");
 	_getch();
 

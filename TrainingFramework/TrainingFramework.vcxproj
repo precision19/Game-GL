@@ -67,7 +67,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>box2d.lib;libEGL.lib;libGLESv2.lib;sfml-audio-d.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>box2d.lib;libEGL.lib;libGLESv2.lib;sfml-audio-d.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;vld.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
@@ -93,7 +93,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalLibraryDirectories>$(SolutionDir)\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>box2d.lib;libEGL.lib;libGLESv2.lib;sfml-audio-d.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>box2d.lib;libEGL.lib;libGLESv2.lib;sfml-audio-d.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;vld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -111,6 +111,7 @@
     <ClCompile Include="DynamicBox.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="GroundBox.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="Gun.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="DynamicBox.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GroundBox.h" />
     <ClInclude Include="Guard.h" />

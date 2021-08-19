@@ -181,7 +181,7 @@ Player::~Player()
 	m_Renderer = NULL;
 	if (foot) delete foot;
 	if (left) delete left;
-	if (right) delete right;
+	//if (right) delete right;
 }
 
 void Player::ConsiderJumpAndSlide() 
