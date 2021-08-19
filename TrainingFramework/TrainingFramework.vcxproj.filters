@@ -150,6 +150,12 @@
     <ClCompile Include="SawBlade.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -285,6 +291,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SawBlade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
