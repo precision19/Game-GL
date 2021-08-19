@@ -157,14 +157,13 @@ void Player::UpdateAnimation(float deltaTime)
 	}
 }
 
-void Player::OnColliderEnter(GameObject* other) 
+void Player::OnColliderEnter(GameObject* other)
 {
-	if (other->m_Name == "Saw Blade")
+	if (other->m_Name == "Saw Blade" || other->m_Name == "Guard")
 	{
 		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_DIE);
 	}
-
-	if (other->m_Name == "Chest")
+	else if (other->m_Name == "Chest")
 	{
 		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_WIN);
 	}
