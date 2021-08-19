@@ -15,6 +15,7 @@ public:
 	GameObject();
 	GameObject(string);
 	virtual Object* Clone();
+	virtual void Reset();
 	void SetCollider(float);
 	float GetCollider() { return m_ColliderSize; };
 	Box* GetColliderBox() { return m_Collider; };

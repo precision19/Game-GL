@@ -25,7 +25,7 @@ MapState::MapState()
 		fscanf(f, "%s %s\n", keyword, name);
 		Object* object = NULL;
 		fscanf(f, "TYPE %s\n", name);
-		if (strcmp(name, "BUTTON") == 0)
+		if (strcmp(name, "LEVEL_BUTTON") == 0)
 		{
 			object = new Button(name);
 			fscanf(f, "BUTTON_ID %d\n", &id);
@@ -70,12 +70,14 @@ void MapState::Update(float deltaTime)
 	for each (Object * object in m_Objects)
 		object->Update(deltaTime);
 
-	for (int i = 1; i <= 3; i++)
+	for (int i = 1; i <= 21; i++)
+	{
 		if (Input::CheckButtonBuffer(i))
 		{
 			printf("open level %d\n", i);
 			m_StateManager->SwitchState("Level");
 		}
+	}
 }
 
 void MapState::Draw() 

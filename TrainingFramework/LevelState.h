@@ -17,8 +17,15 @@
 class LevelState : public StateBase 
 {
 protected:
-
-	Bullet* m_bullet;
+	Player* m_Player;
+	Object* m_Gate;
+	TreasureChest* m_Chest;
+	Star* m_StarPrefab;
+	Block* m_BlockPrefab;
+	SawBlade* m_SawPrefab;
+	Guard* m_GuardPrefab;
+	Bullet* m_BulletPrefab;
+	Gun* m_GunPrefab;
 	int m_i;
 	float m_Time;
 
@@ -26,17 +33,12 @@ protected:
 	vector<Object*> m_Decorations;
 	StateManager* m_StateManager;
 	vector<Object*> m_GameObjects;
-	Button* m_PauseButton;
-	Button* m_StartButton;
 	vector<Object*> m_PauseMenu;
-	Button* m_ReturnMapButton;
-	Button* m_RestartButton;
-	Button* m_SoundButton;
-
 public:
 	LevelState();
 	void SetStateManager(StateManager*);
 	void OnStart();
+	void Restart();
 	void Draw();
 	void Update(float);
 	~LevelState();

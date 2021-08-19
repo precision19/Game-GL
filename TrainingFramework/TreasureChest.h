@@ -17,6 +17,7 @@ public:
 	bool isCollistion();
 	void AddAnimations(Renderer*);
 	void SetRenderer(int);
+	void SetRenderer(string);
 
 	void CreateCollider();
 	void Draw();

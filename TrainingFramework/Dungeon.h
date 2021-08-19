@@ -11,5 +11,6 @@ public:
 	static const int CellSize = 64;
 
 	static Vector3 GirdToWord(float, float, float);
+	static Vector3 GridToWorld(float, float);
 };
 

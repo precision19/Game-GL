@@ -48,7 +48,6 @@ DynamicBox::~DynamicBox()
 	body->GetWorld()->DestroyBody(body);
 }
 
-
 void DynamicBox::ApplyForce(Vector2 direction) 
 {
 	body->ApplyLinearImpulse(b2Vec2(direction.x, direction.y), body->GetWorldCenter(), 0);

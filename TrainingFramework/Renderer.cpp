@@ -71,11 +71,22 @@ string Renderer::GetName()
 
 Vector3 Renderer::GetTextureSize()
 {
+	if (m_Texture == NULL)
+	{
+		printf("WARNING: Can't get size of null texture");
+		return Vector3(1, 1, 1);
+	}
 	return m_Texture->GetSize();
 }
 
 void Renderer::Draw(Transform transform)
 {
+	if (m_Model == NULL || m_Shaders == NULL || m_Texture == NULL)
+	{
+		printf("WARNING: An object isn't renderered");
+		return;
+	}
+
 	m_Model->BindBuffer();
 	m_Texture->BindBuffer();
 	glUseProgram(m_Shaders->program);

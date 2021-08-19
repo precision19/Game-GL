@@ -33,6 +33,11 @@ Object* GameObject::Clone()
     return copy;
 }
 
+void GameObject::Reset()
+{
+
+}
+
 void GameObject::CreateCollider()
 {
     if (m_Collider == NULL)

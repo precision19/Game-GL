@@ -147,6 +147,11 @@ void ResourceManager::LoadResource(string sceneName)
 
 Model* ResourceManager::GetModel(int id)
 {
+	if (id < 0 || id > m_Models.size())
+	{
+		printf("WARNING: Can't find model %d\n", id);
+		return NULL;
+	}
 	return m_Models.at(id);
 }
 
@@ -161,6 +166,11 @@ Model* ResourceManager::GetModel(string name)
 
 Texture* ResourceManager::GetTexture(int id)
 {
+	if (id < 0 || id > m_Textures.size())
+	{
+		printf("WARNING: Can't find texture %d\n", id);
+		return NULL;
+	}
 	return m_Textures.at(id);
 }
 
@@ -175,6 +185,11 @@ Texture* ResourceManager::GetTexture(string name)
 
 Shaders* ResourceManager::GetShaders(int id)
 {
+	if (id < 0 || id > m_vShaders.size())
+	{
+		printf("WARNING: Can't find shader %d\n", id);
+		return NULL;
+	}
 	return m_vShaders.at(id);
 }
 
@@ -192,11 +207,6 @@ Shaders* ResourceManager::GetShaders(string name)
 CubeTexture* ResourceManager::GetCubeTexture(int id)
 {
 	return m_CubeTextures.at(id);
-}
-
-Model* ResourceManager::GetSpriteModel()
-{
-	return m_SpriteModel;
 }
 
 void ResourceManager::DeleteAllResources()

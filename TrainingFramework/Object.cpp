@@ -65,15 +65,22 @@ void Object::SetRenderer(string name)
 
 void Object::Draw()
 {
-	m_Renderer->Draw(m_Transform);
+	if (m_Renderer == NULL)
+		printf("WARNING: object %s have no renderer", m_Name.c_str());
+	else
+		m_Renderer->Draw(m_Transform);
 }
 
 void Object::Update(float deltaTime)
 {
-	m_Renderer->Update(deltaTime);
+	if (m_Renderer == NULL)
+		printf("WARNING: object %s have no renderer", m_Name.c_str());
+	else
+		m_Renderer->Update(deltaTime);
 }
 
 Object::~Object()
 {	
-	delete m_Renderer;
+	if (m_Renderer != NULL)
+		delete m_Renderer;
 }

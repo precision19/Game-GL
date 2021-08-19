@@ -35,6 +35,7 @@ Renderer* Animation2D::Clone()
 	result->m_CurrentSpriteId = m_CurrentSpriteId;
 	result->m_animationCurrent = m_animationCurrent;
 	result->m_FramePerSec = m_FramePerSec;
+	result->m_Loop = m_Loop;
 	return result;
 }
 

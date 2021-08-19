@@ -13,8 +13,6 @@ protected:
 	vector<Texture*> m_Textures;
 	vector<CubeTexture*> m_CubeTextures;
 	vector<Shaders*> m_vShaders;
-
-	Model* m_SpriteModel;
 public:
 	static void CreateInstance();
 	static ResourceManager* GetInstance();
@@ -31,7 +29,6 @@ public:
 	Shaders* GetShaders(int);
 	Shaders* GetShaders(string);
 	CubeTexture* GetCubeTexture(int);
-	Model* GetSpriteModel();
 
 	void DeleteAllResources();
 	~ResourceManager();

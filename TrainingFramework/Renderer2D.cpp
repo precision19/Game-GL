@@ -30,6 +30,12 @@ Renderer* Renderer2D::Clone()
 
 void Renderer2D::Draw(Transform transform)
 {
+	if (m_Model == NULL || m_Shaders == NULL || m_Texture == NULL)
+	{
+		printf("WARNING: An 2D object isn't renderered");
+		return;
+	}
+
 	m_Model->BindBuffer();
 	m_Texture->BindBuffer();
 	glUseProgram(m_Shaders->program);

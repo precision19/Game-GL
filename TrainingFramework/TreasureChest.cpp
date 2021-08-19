@@ -3,7 +3,7 @@
 
 TreasureChest::TreasureChest()
 {
-	m_Name = "Bullet";
+	m_Name = "Chest";
 	m_ID = ms_IDMaker;
 	ms_IDMaker++;
 	m_Collider = NULL;
@@ -32,6 +32,12 @@ void TreasureChest::AddAnimations(Renderer* renderer)
 void TreasureChest::SetRenderer(int id)
 {
 	m_Renderer = PrefabManager::GetInstance()->GetRenderer(id)->Clone();
+	m_Animations.push_back(m_Renderer);
+}
+
+void TreasureChest::SetRenderer(string name)
+{
+	m_Renderer = PrefabManager::GetInstance()->GetRenderer(name)->Clone();
 	m_Animations.push_back(m_Renderer);
 }
 
