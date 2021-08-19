@@ -11,6 +11,7 @@
 #include <thread>
 #include "../Utilities/Math.h" // if you use STL, please include this line AFTER all other include
 #include <iostream>
+#include "vld/vld.h"
 
 int Init ( ESContext *esContext )
 {
@@ -23,7 +24,6 @@ int Init ( ESContext *esContext )
 	ContactManager::CreateInstance();
 	MyContactListener::CreateInstance();
 	Physic::CreateInstance();
-
 	PlayerPrefs::CreateInstance();
 	PlayerPrefs::GetInstance()->LoadData();
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -88,6 +88,7 @@ void CleanUp()
 	ContactManager::DestroyInstance();
 	MyContactListener::DestroyInstance();
 	AudioManager::DestroyInstance();
+	PlayerPrefs::DestroyInstance();
 }
 
 
@@ -114,7 +115,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	CleanUp();
 
 	//identifying memory leaks
-	MemoryDump();
+	//MemoryDump();
 	printf("Press any key...\n");
 	_getch();
 
