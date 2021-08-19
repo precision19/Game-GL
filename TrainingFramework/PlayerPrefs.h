@@ -16,7 +16,7 @@ public:
 	PlayerPrefs();
 	void LoadData();
 	void GetData(int);
-	void SetData(int);
+	void SetData(int, int);
 	void SaveData();
 	~PlayerPrefs();
 };

@@ -19,6 +19,7 @@ protected:
 	Sensor* foot, * right, * left;
 	bool m_IsFacingRight;
 	Vector3 m_GatePosition;
+	bool m_IsReset;
 public:
 	Player();
 	void CreateCollider();

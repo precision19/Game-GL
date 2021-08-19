@@ -23,6 +23,7 @@ Player::Player()
 	foot = NULL;
 	left = NULL;
 	right = NULL;
+	m_IsReset = false;
 }
 
 void Player::CreateCollider()
@@ -58,9 +59,10 @@ void Player::CreateSensorCollider() {
 
 void Player::Reset()
 {
-	b2Body* body = ((DynamicBox*)m_Collider)->getBody();
-	body->SetTransform(b2Vec2(m_GatePosition.x, m_GatePosition.y), 0.0f);
+	((DynamicBox*)m_Collider)->getBody()->SetTransform(b2Vec2(m_GatePosition.x, m_GatePosition.y), 0.0f);
+	((DynamicBox*)m_Collider)->SetVelocity(Vector2());
 	m_IsRunning = false;
+	m_IsReset = false;
 }
 
 void Player::SetSpeed(float speed)
@@ -85,6 +87,12 @@ void Player::Update(float deltaTime)
 {
 	m_Renderer->Update(deltaTime);
 
+	DynamicBox* db = (DynamicBox*)m_Collider;
+	SetPosition(Vector3(db->getBody()->GetPosition().x, db->getBody()->GetPosition().y, GetPosition().z));
+
+	if (m_IsReset)
+		Reset();
+
 	if (!m_Enable)
 		return;
 	
@@ -98,9 +106,6 @@ void Player::Update(float deltaTime)
 		else
 			return;
 	}
-
-	DynamicBox* db = (DynamicBox*)m_Collider;
-	SetPosition(Vector3(db->getBody()->GetPosition().x, db->getBody()->GetPosition().y, GetPosition().z));
 
 	UpdateSensorOfPlayer(deltaTime);
 	UpdateAnimation(deltaTime);
@@ -157,10 +162,10 @@ void Player::UpdateAnimation(float deltaTime)
 void Player::OnColliderEnter(GameObject* other) 
 {
 	if (other->m_Name == "Saw Blade")
-		Die();
+		m_IsReset = true;
 
 	if (other->m_Name == "Chest")
-		Reset();
+		m_IsReset = true;
 }
 
 void Player::OnColliderExit(GameObject* other) 
