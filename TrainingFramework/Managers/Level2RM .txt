@@ -1,0 +1,19 @@
+#Models: 1
+NAME Sprite
+
+#2DTextures: 8
+0. Block	REPEAT LINEAR LINEAR
+1. Rect	REPEAT LINEAR LINEAR
+2. Player/Idle/0	REPEAT LINEAR LINEAR
+3. Player/Idle/1	REPEAT LINEAR LINEAR
+4. Player/Idle/2	REPEAT LINEAR LINEAR
+5. Player/Idle/3	REPEAT LINEAR LINEAR
+6. Player/Jump/up   REPEAT LINEAR LINEAR
+7. Player/Jump/down REPEAT LINEAR LINEAR
+
+#CubeTextures: 0
+
+#Shaders: 1
+NAME Sprite - 2 STATE(S)
+GL_DEPTH_TEST 1
+GL_CULL_FACE 0

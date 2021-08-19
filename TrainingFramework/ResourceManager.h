@@ -1,5 +1,4 @@
 #pragma once
-#include "EventManager.h"
 #include <vector>
 #include "Shaders.h"
 #include "Model.h"

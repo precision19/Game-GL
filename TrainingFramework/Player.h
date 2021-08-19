@@ -8,7 +8,6 @@ class Player : public GameObject
 protected:
 	bool m_Enable;
 	bool m_IsRunning;
-	bool m_ReadyForInput;
 	int canJump;
 	vector<Renderer*> m_Animations;
 	int m_currentAnimationId;
@@ -20,6 +19,7 @@ protected:
 	Sensor* foot, * right, * left;
 	bool m_IsFacingRight;
 	Vector3 m_GatePosition;
+	bool m_IsReset;
 public:
 	Player();
 	void CreateCollider();

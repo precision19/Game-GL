@@ -11,13 +11,10 @@
 #include "PlayerPrefs.h"
 #include "../Utilities/Math.h" // if you use STL, please include this line AFTER all other include
 #include <iostream>
-#include "vld/vld.h"
-#include "vld/vld_def.h"
 
 int Init ( ESContext *esContext )
 {
 	Input::CreateInstance();
-	EventManager::CreateInstance();
 	Camera::CreateInstance();
 	AudioManager::CreateInstance();
 	ResourceManager::CreateInstance();
@@ -86,7 +83,6 @@ void TouchActionMove(ESContext* esContext, int x, int y)
 void CleanUp()
 {
 	Input::DestroyInstance();
-	EventManager::DestroyInstance();
 	Camera::DestroyInstance();
 	ResourceManager::DestroyInstance();
 	PrefabManager::DestroyInstance();
@@ -120,7 +116,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	CleanUp();
 
 	//identifying memory leaks
-	//MemoryDump();
+	MemoryDump();
 	printf("Press any key...\n");
 	_getch();
 
