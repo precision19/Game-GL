@@ -16,6 +16,7 @@
 int Init ( ESContext *esContext )
 {
 	Input::CreateInstance();
+	EventManager::CreateInstance();
 	Camera::CreateInstance();
 	AudioManager::CreateInstance();
 	ResourceManager::CreateInstance();
@@ -80,6 +81,7 @@ void TouchActionMove(ESContext* esContext, int x, int y)
 void CleanUp()
 {
 	Input::DestroyInstance();
+	EventManager::DestroyInstance();
 	Camera::DestroyInstance();
 	ResourceManager::DestroyInstance();
 	PrefabManager::DestroyInstance();

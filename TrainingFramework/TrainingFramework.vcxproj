@@ -110,6 +110,7 @@
     <ClCompile Include="CubeTexture.cpp" />
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="DynamicBox.cpp" />
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GroundBox.cpp" />
     <ClCompile Include="Guard.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="Switch.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="TrainingFramework.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -159,6 +161,7 @@
     <ClInclude Include="CubeTexture.h" />
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="DynamicBox.h" />
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="GroundBox.h" />
@@ -189,6 +192,7 @@
     <ClInclude Include="Switch.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TreasureChest.h" />
     <ClInclude Include="Vertex.h" />
@@ -203,6 +207,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Textures\Chest.tga" />
+    <Image Include="Textures\ChestBeOpened.tga" />
+    <Image Include="Textures\ChestOpened.tga" />
     <Image Include="Textures\Chest\chest_00.tga" />
     <Image Include="Textures\Chest\chest_01.tga" />
     <Image Include="Textures\Chest\chest_02.tga" />
@@ -234,7 +241,20 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Managers\GameObjectPrefab.txt" />
+    <Text Include="Managers\Level0SM.txt" />
+    <Text Include="Managers\Level1SM.txt" />
+    <Text Include="Managers\Level2SM.txt" />
+    <Text Include="Managers\Level3SM.txt" />
+    <Text Include="Managers\Level4SM.txt" />
+    <Text Include="Managers\Level5SM.txt" />
+    <Text Include="Managers\Level6SM.txt" />
+    <Text Include="Managers\Level7SM.txt" />
+    <Text Include="Managers\Level8SM.txt" />
+    <Text Include="Managers\LevelsMapSM.txt" />
+    <Text Include="Managers\MenuSM.txt" />
     <Text Include="Managers\PlayerPref.txt" />
+    <Text Include="Managers\PM.txt" />
+    <Text Include="Managers\RM.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -19,11 +19,10 @@ Player::Player()
 	m_SlideSpeed = -80.0f;
 	m_IsRunning = false;
 	m_JumpForce = 300;
-	m_Enable = true;
 	foot = NULL;
 	left = NULL;
 	right = NULL;
-	m_IsReset = false;
+	m_ReadyForInput = true;
 }
 
 void Player::CreateCollider()
@@ -31,6 +30,7 @@ void Player::CreateCollider()
 	if (m_Collider == NULL)
 	{
 		m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_PLAYER);
+		((DynamicBox*)m_Collider)->getBody()->SetGravityScale(0);;
 		m_GatePosition = m_Transform.position;
 	}
 	else
@@ -60,9 +60,10 @@ void Player::CreateSensorCollider() {
 void Player::Reset()
 {
 	((DynamicBox*)m_Collider)->getBody()->SetTransform(b2Vec2(m_GatePosition.x, m_GatePosition.y), 0.0f);
+	((DynamicBox*)m_Collider)->getBody()->SetGravityScale(0);;
 	((DynamicBox*)m_Collider)->SetVelocity(Vector2());
 	m_IsRunning = false;
-	m_IsReset = false;
+	m_ReadyForInput = false;
 }
 
 void Player::SetSpeed(float speed)
@@ -85,31 +86,28 @@ void Player::SetRenderer(string name)
 
 void Player::Update(float deltaTime)
 {
+	if (!Input::GetTouch()) m_ReadyForInput = true;
+
+	UpdateAnimation(deltaTime);
 	m_Renderer->Update(deltaTime);
+	UpdateSensorOfPlayer(deltaTime);
 
 	DynamicBox* db = (DynamicBox*)m_Collider;
 	SetPosition(Vector3(db->getBody()->GetPosition().x, db->getBody()->GetPosition().y, GetPosition().z));
 	Physic::GetInstance()->SetPositionPlayer(Vector2(GetPosition().x, GetPosition().y));
 
-	if (m_IsReset)
-		Reset();
-
-	if (!m_Enable)
-		return;
-	
 	if (!m_IsRunning)
 	{
-		if (Input::GetTouch())
+		if (Input::GetTouch() && m_ReadyForInput)
 		{
 			m_IsRunning = true;
-			Input::SetTouchStatus(false);
+			m_ReadyForInput = false;
+			((DynamicBox*)m_Collider)->getBody()->SetGravityScale(1);;
 		}
 		else
 			return;
 	}
 
-	UpdateSensorOfPlayer(deltaTime);
-	UpdateAnimation(deltaTime);
 	ConsiderJumpAndSlide();
 	//printf("%f %f\n", db->GetVelocity().x, db->GetVelocity().y);
 	HandleJumpAndSlide();
@@ -162,11 +160,15 @@ void Player::UpdateAnimation(float deltaTime)
 
 void Player::OnColliderEnter(GameObject* other) 
 {
-	if (other->m_Name == "Saw Blade" || other->m_Name == "Chaser")
-		m_IsReset = true;
+	if (other->m_Name == "Saw Blade" || other->m_Name == "Guard" || other->m_Name == "Chaser")
+	{
+		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_DIE);
+	}
 
 	if (other->m_Name == "Chest")
-		m_IsReset = true;
+	{
+		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_WIN);
+	}
 }
 
 void Player::OnColliderExit(GameObject* other) 
@@ -179,12 +181,9 @@ Player::~Player()
 	for each (Renderer * renderer in m_Animations)
 		delete renderer;
 	m_Renderer = NULL;
-	if (foot)
-		delete foot;
-	if (left)
-		delete left;
-	if (right)
-		delete right;
+	if (foot) delete foot;
+	if (left) delete left;
+	//if (right) delete right;
 }
 
 void Player::ConsiderJumpAndSlide() {
@@ -201,14 +200,14 @@ void Player::ConsiderJumpAndSlide() {
 
 void Player::HandleJumpAndSlide() {
 	DynamicBox* db = (DynamicBox*)m_Collider;
-	if (canSlide && !canJump) onTheGround = 0;
-	else if (canJump && !onTheGround && db->GetVelocity().y < 0) onTheGround = 1;
-	if (canJump) {
-		if (Input::GetTouch()) {
-			/*float impulse;
-			if(canSlide) impulse = db->getBody()->GetMass() * 400;
-			else impulse = db->getBody()->GetMass() * 350;
-			db->ApplyForce(Vector2(0.0f, impulse));*/
+	if (canSlide && !canJump)
+		onTheGround = 0;
+	else if (canJump && !onTheGround && db->GetVelocity().y < 0)
+		onTheGround = 1;
+	if (canJump)
+	{
+		if (Input::GetTouch() && m_ReadyForInput)
+		{
 			if (canSlide)
 				db->SetVelocity(Vector2(0.0, m_JumpForce * 1.2));
 			else
@@ -216,13 +215,14 @@ void Player::HandleJumpAndSlide() {
 
 			onTheGround = 0;
 			AudioManager::GetInstance()->PlaySoundEffect("Jump", false);
-			Input::SetTouchStatus(false);
+			//Input::SetTouchStatus(false);
+			m_ReadyForInput = false;
 		}
 	}
-	else if (Input::GetTouch() && canSlide && !onTheGround) {
-		Input::SetTouchStatus(false);
-		//float impulse = db->getBody()->GetMass() * 224;
-		//db->ApplyForce(Vector2(0.0f, impulse));
+	else if (Input::GetTouch() && m_ReadyForInput && canSlide && !onTheGround)
+	{
+		//Input::SetTouchStatus(false);
+		m_ReadyForInput = false;
 		db->SetVelocity(Vector2(0.0, m_JumpForce));
 		AudioManager::GetInstance()->PlaySoundEffect("Jump", false);
 		SetSpeed(-m_SpeedX);
@@ -239,6 +239,7 @@ void Player::Stop()
 {
 	m_IsRunning = false;
 	((DynamicBox*)m_Collider)->SetVelocity(Vector2());
+	((DynamicBox*)m_Collider)->getBody()->SetGravityScale(0);
 }
 
 void Player::Die()

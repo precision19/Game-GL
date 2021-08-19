@@ -18,6 +18,8 @@
 class LevelState : public StateBase 
 {
 protected:
+	StateManager* m_StateManager;
+
 	Player* m_Player;
 	Object* m_Gate;
 	TreasureChest* m_Chest;
@@ -30,18 +32,19 @@ protected:
 	Chaser* m_Chaser;
 	int m_i;
 	float m_Time;
+	int m_LevelID;
 
-	vector<GameObject*> m_BulletObjects;
-	vector<Object*> m_Decorations;
-	StateManager* m_StateManager;
 	vector<Object*> m_GameObjects;
 	vector<Object*> m_PauseMenu;
 public:
 	LevelState();
 	void SetStateManager(StateManager*);
+	void SetLevel(int);
 	void OnStart();
+	void LoadLevel();
 	void Restart();
 	void Draw();
 	void Update(float);
+	void ClearLevel();
 	~LevelState();
 };

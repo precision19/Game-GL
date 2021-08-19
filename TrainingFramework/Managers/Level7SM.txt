@@ -1,4 +1,4 @@
-+#Objects: 2
+#Objects: 2
 1. DungeonBackground
 RENDERER DungeonBackground
 POSITION 0 0 -2
