@@ -48,8 +48,3 @@ void PlayerPrefs::SaveData()
 PlayerPrefs::~PlayerPrefs()
 {
 }
-
-void PlayerPrefs::SetData(int levelID, int score)
-{
-
-}

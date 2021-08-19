@@ -4,8 +4,8 @@
 LevelState::LevelState() 
 {
 	m_Name = "Level";
+	m_LevelID = 0;
 
-	// TO DO: load game object prefabs
 	string path0 = "Managers/GameObjectPrefab.txt";
 	FILE* f = fopen(path0.c_str(), "r+");
 
@@ -125,18 +125,28 @@ void LevelState::SetStateManager(StateManager* stateManager)
 	m_StateManager = stateManager;
 }
 
+void LevelState::SetLevel(int levelId)
+{
+	m_LevelID = levelId;
+}
+
 void LevelState::OnStart()
 {
 	// TODO: goi PlayerPrefs de lay data
 	// DestroyAllObjects();
 	Camera::GetInstance()->SetDefault();
 	AudioManager::GetInstance()->PlayBackgroundMusic(m_Name);
+	LoadLevel();
+}
+
+void LevelState::LoadLevel()
+{
 
 	int amount, id, iBool, numBullets;
 	float x, y, z, speed;
 	char keyword[30], name[20];
 
-	string path = "Managers/Level3SM.txt";
+	string path = "Managers/Level" + to_string(m_LevelID) + "SM.txt";
 	FILE* fileMap = fopen(path.c_str(), "r+");
 	if (fileMap == NULL)
 	{
@@ -160,7 +170,7 @@ void LevelState::OnStart()
 					{
 						fscanf(fileMap, "%d\n", &iBool);
 					}
-					else 
+					else
 					{
 						fscanf(fileMap, "%d ", &iBool);
 					}
@@ -174,7 +184,7 @@ void LevelState::OnStart()
 					}
 					else if (iBool == 2)
 					{
-						GameObject* gun = (GameObject*) m_GunPrefab->Clone();
+						GameObject* gun = (GameObject*)m_GunPrefab->Clone();
 						gun->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
 						gun->CreateCollider();
 						m_GameObjects.push_back(gun);
@@ -221,7 +231,7 @@ void LevelState::OnStart()
 		}
 		else if (strcmp(name, "Gate") == 0)
 		{
-			
+
 		}
 		else
 		{
@@ -245,11 +255,27 @@ void LevelState::OnStart()
 
 void LevelState::Restart()
 {
-
+	m_Player->Reset();
 }
 
 void LevelState::Update(float deltaTime)
 {
+	if (EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_WIN))
+	{
+		/*Restart();
+		printf("complete level %d", m_LevelID);
+		m_LevelID++;
+		ClearLevel();
+		OnStart();
+		return;*/
+		m_Player->Stop();
+	}
+
+	if (EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_DIE))
+	{
+		Restart();
+	}
+
 	for each (Object * object in m_GameObjects)
 		object->Update(deltaTime);
 
@@ -269,6 +295,13 @@ void LevelState::Draw()
 	m_Chest->Draw();
 }
 
+void LevelState::ClearLevel()
+{
+	for each (Object * object in m_GameObjects)
+		delete object;
+	m_GameObjects.clear();
+}
+
 LevelState::~LevelState()
 {
 	//for each (Object * object in m_GameObjects)
@@ -276,15 +309,10 @@ LevelState::~LevelState()
 	for (int i = 0; i < m_GameObjects.size(); i++)
 		delete m_GameObjects.at(i);
 
-	for each (Object * object in m_BulletObjects)
-		delete object;
-
-	for each (Object * object in m_Decorations)
-		delete object;
-
 	delete m_Player;
 	delete m_Gate;
 	delete m_Chest;
+
 	delete m_BlockPrefab;
 	delete m_StarPrefab;
 	delete m_SawPrefab;
