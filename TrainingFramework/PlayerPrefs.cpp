@@ -27,6 +27,28 @@ PlayerPrefs::PlayerPrefs()
 {
 }
 
+void PlayerPrefs::LoadData()
+{
+}
+
+void PlayerPrefs::GetData(int levelId)
+{
+
+}
+
+void PlayerPrefs::SetData(int levelId, int score)
+{
+
+}
+
+void PlayerPrefs::SaveData()
+{
+}
+
+PlayerPrefs::~PlayerPrefs()
+{
+}
+
 void PlayerPrefs::SetData(int levelID, int score)
 {
 
