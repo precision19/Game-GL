@@ -1,4 +1,4 @@
-#PrefabObject: 9
+#PrefabObject: 10
 0. Block
 COLLIDER_SIZE 64
 RENDERER Block
@@ -41,3 +41,7 @@ RENDERER ChestOpen
 
 8. Gate
 RENDERER Gate
+
+9. Chaser
+COLLIDER_SIZE 30
+RENDERER Guard

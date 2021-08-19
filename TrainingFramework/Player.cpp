@@ -89,6 +89,7 @@ void Player::Update(float deltaTime)
 
 	DynamicBox* db = (DynamicBox*)m_Collider;
 	SetPosition(Vector3(db->getBody()->GetPosition().x, db->getBody()->GetPosition().y, GetPosition().z));
+	Physic::GetInstance()->SetPositionPlayer(Vector2(GetPosition().x, GetPosition().y));
 
 	if (m_IsReset)
 		Reset();
@@ -161,7 +162,7 @@ void Player::UpdateAnimation(float deltaTime)
 
 void Player::OnColliderEnter(GameObject* other) 
 {
-	if (other->m_Name == "Saw Blade")
+	if (other->m_Name == "Saw Blade" || other->m_Name == "Chaser")
 		m_IsReset = true;
 
 	if (other->m_Name == "Chest")

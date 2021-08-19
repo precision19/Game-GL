@@ -13,6 +13,7 @@
 #include "SawBlade.h"
 #include "TreasureChest.h"
 #include "AudioManager.h"
+#include "Chaser.h"
 
 class LevelState : public StateBase 
 {
@@ -26,6 +27,7 @@ protected:
 	Guard* m_GuardPrefab;
 	Bullet* m_BulletPrefab;
 	Gun* m_GunPrefab;
+	Chaser* m_Chaser;
 	int m_i;
 	float m_Time;
 

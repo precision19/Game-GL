@@ -104,6 +104,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Chaser.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ContactManager.cpp" />
     <ClCompile Include="CubeTexture.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Chaser.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ContactManager.h" />
     <ClInclude Include="CubeTexture.h" />

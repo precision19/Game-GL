@@ -115,6 +115,15 @@ LevelState::LevelState()
 			fscanf(f, "RENDERER %s\n", name);
 			m_Chest->SetRenderer(name);
 		}
+
+		if (strcmp(name, "Chaser") == 0)
+		{
+			m_Chaser = new Chaser();
+			fscanf(f, "COLLIDER_SIZE %d\n", &number);
+			m_Chaser->SetCollider(number);
+			fscanf(f, "RENDERER %s\n", name);
+			m_Chaser->SetRenderer(name);
+		}
 	}
 
 	fclose(f);
@@ -216,6 +225,15 @@ void LevelState::OnStart()
 						m_Chest->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
 						m_Chest->CreateCollider();
 					}
+					else if (iBool == 8)
+					{
+						Chaser* chaser = m_Chaser->Clone();
+						chaser->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
+						chaser->SetPositionStart(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
+						chaser->SetPositionTarget(Vector2(0.0f, 0.0f));
+						chaser->CreateCollider();
+						m_GameObjects.push_back(chaser);
+					}
 				}
 			}
 		}
@@ -253,10 +271,10 @@ void LevelState::Update(float deltaTime)
 	for each (Object * object in m_GameObjects)
 		object->Update(deltaTime);
 
+	Physic::GetInstance()->Update(deltaTime);
+
 	m_Player->Update(deltaTime);
 	m_Chest->Update(deltaTime);
-
-	Physic::GetInstance()->Update(deltaTime);
 }
 
 void LevelState::Draw()
@@ -291,4 +309,5 @@ LevelState::~LevelState()
 	delete m_GuardPrefab;
 	delete m_GunPrefab;
 	delete m_BulletPrefab;
+	delete m_Chaser;
 }

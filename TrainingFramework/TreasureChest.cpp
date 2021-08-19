@@ -45,7 +45,7 @@ void TreasureChest::CreateCollider()
 {
 	if (m_Collider == NULL)
 	{
-		m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_NOTGRAVITY);
+		m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_SENSOR);
 	}
 	else
 	{

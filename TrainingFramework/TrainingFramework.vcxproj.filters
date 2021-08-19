@@ -150,6 +150,9 @@
     <ClCompile Include="SawBlade.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Chaser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -285,6 +288,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SawBlade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Chaser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

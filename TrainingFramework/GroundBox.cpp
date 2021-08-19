@@ -16,7 +16,7 @@ GroundBox::GroundBox(Object* object, Vector2 dimension, Category category)
 		fixtureDef.shape = &groundBox;
 		fixtureDef.density = 0.0f;
 		fixtureDef.filter.categoryBits = category;
-		fixtureDef.filter.categoryBits = MASK_GROUND;
+		/*fixtureDef.filter.categoryBits = MASK_GROUND;*/
 	}
 	else if (category == CATEGORY_NONE)
 	{
