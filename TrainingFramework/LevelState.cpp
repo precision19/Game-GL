@@ -124,6 +124,18 @@ LevelState::LevelState()
 			m_Chaser->SetCollider(number);
 			fscanf(f, "RENDERER %s\n", name);
 			m_Chaser->SetRenderer(name);
+			m_Chaser->SetScale(Vector3(0.4, 0.4, 0.4));
+		}
+
+		if (strcmp(name, "Spinner") == 0)
+		{
+			m_SpinnerPrefab = new SpinnerFly();
+			fscanf(f, "COLLIDER_SIZE %d\n", &number);
+			m_SpinnerPrefab->SetCollider(number);
+			fscanf(f, "RENDERER %s\n", name);
+			m_SpinnerPrefab->SetRenderer(name);
+			fscanf(f, "SPEED %d\n", &number);
+			m_SpinnerPrefab->SetSpeed(number * PI / 180);
 		}
 	}
 
@@ -210,7 +222,7 @@ void LevelState::LoadLevel()
 						guard->SetPositionStart(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
 						guard->SetPositionEnd(Dungeon::GirdToWord(j + 1, Dungeon::Height - i - 1, 0));
 						guard->CreateCollider();
-						m_GameObjects.push_back(guard);
+//						m_GameObjects.push_back(guard);
 					}
 
 					if (iBool == 5)
@@ -250,6 +262,40 @@ void LevelState::LoadLevel()
 		{
 			
 		}
+		else if (strcmp(name, "Guard") == 0)
+		{
+			fscanf(fileMap, "NUMBERGUARDS %d\n", &iBool);
+			printf("%d", iBool);
+			for (int i = 0; i < iBool; i++)
+			{
+				Guard* guard = m_GuardPrefab->Clone();
+				fscanf(fileMap, "POSITIONSTART %f %f\n", &x, &y);
+				guard->SetPosition(Dungeon::GirdToWord(x, y, 0));
+				guard->SetPositionStart(Dungeon::GirdToWord(x, y, 0));
+				fscanf(fileMap, "POSITIONEND %f %f\n", &x, &y);
+				guard->SetPositionEnd(Dungeon::GirdToWord(x, y, 0));
+				guard->CreateCollider();
+				m_GameObjects.push_back(guard);
+			}
+		}
+		else if (strcmp(name, "Spinner") == 0)
+		{
+			fscanf(fileMap, "NUMBERSPINNERS %d\n", &iBool);
+			printf("%d", iBool);
+			for (int i = 0; i < iBool; i++)
+			{
+				SpinnerFly* spinner = m_SpinnerPrefab->Clone();
+				fscanf(fileMap, "POSITION %f %f\n", &x, &y);
+				spinner->SetPosition(Dungeon::GirdToWord(x, y, 0));
+				fscanf(fileMap, "POSITIONCENTER %f %f\n", &x, &y);
+				spinner->SetPositionCenter(Dungeon::GirdToWord(x, y, 0));
+				spinner->SetRadius();
+				spinner->CreateCollider();
+				m_GameObjects.push_back(spinner);
+			}
+			
+		}
+
 		else
 		{
 			Object* object = new Object(name);
@@ -337,5 +383,7 @@ LevelState::~LevelState()
 	delete m_GuardPrefab;
 	delete m_GunPrefab;
 	delete m_BulletPrefab;
+
 	delete m_Chaser;
+	delete m_SpinnerPrefab;
 }

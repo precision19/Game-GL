@@ -1,4 +1,4 @@
-#Objects: 2
+#Objects: 4
 1. DungeonBackground
 RENDERER DungeonBackground
 POSITION 0 0 -2
@@ -17,7 +17,12 @@ SCALE 1 1 1
 1 3 0 0 0 1 1 0 0 6 0 0 6 1 1 1
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 
-3. Gate
-POSITION 0 0
+3. Spinner
+NUMBERSPINNERS 1
+POSITION 4 4
+POSITIONCENTER 4 5
 
-4. Star
+4. Guard
+NUMBERGUARDS 1
+POSITIONSTART 6 7
+POSITIONEND 7 7

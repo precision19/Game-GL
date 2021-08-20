@@ -131,6 +131,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sensor.cpp" />
     <ClCompile Include="Shaders.cpp" />
+    <ClCompile Include="SpinnerFly.cpp" />
     <ClCompile Include="Star.cpp" />
     <ClCompile Include="StateBase.cpp" />
     <ClCompile Include="StateManager.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sensor.h" />
     <ClInclude Include="Shaders.h" />
+    <ClInclude Include="SpinnerFly.h" />
     <ClInclude Include="Star.h" />
     <ClInclude Include="StateBase.h" />
     <ClInclude Include="StateManager.h" />
@@ -225,6 +227,18 @@
     <Image Include="Textures\DEAD\Dead__6.tga" />
     <Image Include="Textures\DEAD\Dead__7.tga" />
     <Image Include="Textures\DEAD\Dead__8.tga" />
+    <Image Include="Textures\Ghost\1.tga" />
+    <Image Include="Textures\Ghost\10.tga" />
+    <Image Include="Textures\Ghost\11.tga" />
+    <Image Include="Textures\Ghost\12.tga" />
+    <Image Include="Textures\Ghost\2.tga" />
+    <Image Include="Textures\Ghost\3.tga" />
+    <Image Include="Textures\Ghost\4.tga" />
+    <Image Include="Textures\Ghost\5.tga" />
+    <Image Include="Textures\Ghost\6.tga" />
+    <Image Include="Textures\Ghost\7.tga" />
+    <Image Include="Textures\Ghost\8.tga" />
+    <Image Include="Textures\Ghost\9.tga" />
     <Image Include="Textures\Guard\1.tga" />
     <Image Include="Textures\Guard\2.tga" />
     <Image Include="Textures\Guard\3.tga" />

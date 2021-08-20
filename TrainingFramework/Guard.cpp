@@ -35,7 +35,6 @@ void Guard::SetPositionEnd(Vector3 end)
 void Guard::SetSpeed(float speed)
 {
 	m_speed = speed;
-	m_error = speed / 100;
 }
 
 void Guard::CreateCollider()
@@ -53,14 +52,13 @@ void Guard::CreateCollider()
 void Guard::Update(float deltaTime)
 {
 	SetPosition(Vector3(m_Collider->getBody()->GetPosition().x, m_Collider->getBody()->GetPosition().y, GetPosition().z));
-
-	if (m_Collider->getBody()->GetPosition().x > (m_positionStart.x - m_error * 2 ) && m_Collider->getBody()->GetPosition().x < (m_positionStart.x + m_error * 2) && vectorX == true )
+	if (m_Collider->getBody()->GetPosition().x < m_positionStart.x && vectorX == true)
 	{
 		boolX = true;
 		m_Transform.rotation += m_rotate * PI;
 		vectorX = false;
 	}
-	else if (m_Collider->getBody()->GetPosition().x > (m_positionEnd.x - m_error * 2) && m_Collider->getBody()->GetPosition().x < (m_positionEnd.x + m_error * 2) && vectorX == false)
+	else if (m_Collider->getBody()->GetPosition().x > m_positionEnd.x && vectorX == false)
 	{
 		boolX = false;
 		m_Transform.rotation += m_rotate * PI;

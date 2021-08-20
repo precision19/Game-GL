@@ -1,4 +1,4 @@
-#PrefabObject: 10
+#PrefabObject: 11
 0. Block
 COLLIDER_SIZE 64
 RENDERER Block
@@ -44,4 +44,9 @@ RENDERER Gate
 
 9. Chaser
 COLLIDER_SIZE 15
+RENDERER Ghost
+
+10. Spinner
+COLLIDER_SIZE 15
 RENDERER Guard
+SPEED 3

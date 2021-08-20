@@ -2,7 +2,6 @@
 #include "StateManager.h"
 #include "Button.h"
 #include "Dungeon.h"
-#include "Trap.h"
 #include "GameObject.h"
 #include "Block.h"
 #include "Player.h"
@@ -12,6 +11,7 @@
 #include "Star.h"
 #include "SawBlade.h"
 #include "TreasureChest.h"
+#include "SpinnerFly.h"
 #include "AudioManager.h"
 #include "Chaser.h"
 
@@ -30,6 +30,7 @@ protected:
 	Bullet* m_BulletPrefab;
 	Gun* m_GunPrefab;
 	Chaser* m_Chaser;
+	SpinnerFly* m_SpinnerPrefab;
 	int m_i;
 	float m_Time;
 	int m_LevelID;

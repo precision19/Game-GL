@@ -11,7 +11,6 @@ public:
 	float veloX;
 	bool boolX;
 	bool vectorX;
-	float m_error; // Sai so
 
 	Vector3 m_positionStart;
 	Vector3 m_positionEnd;

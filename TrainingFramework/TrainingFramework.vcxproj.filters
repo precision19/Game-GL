@@ -153,6 +153,9 @@
     <ClCompile Include="Ghost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SpinnerFly.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -293,6 +296,9 @@
     <ClInclude Include="Ghost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SpinnerFly.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Readme.doc" />
@@ -329,6 +335,18 @@
     <Image Include="Textures\Chest.tga" />
     <Image Include="Textures\ChestBeOpened.tga" />
     <Image Include="Textures\ChestOpened.tga" />
+    <Image Include="Textures\Ghost\1.tga" />
+    <Image Include="Textures\Ghost\2.tga" />
+    <Image Include="Textures\Ghost\3.tga" />
+    <Image Include="Textures\Ghost\4.tga" />
+    <Image Include="Textures\Ghost\5.tga" />
+    <Image Include="Textures\Ghost\6.tga" />
+    <Image Include="Textures\Ghost\7.tga" />
+    <Image Include="Textures\Ghost\8.tga" />
+    <Image Include="Textures\Ghost\9.tga" />
+    <Image Include="Textures\Ghost\10.tga" />
+    <Image Include="Textures\Ghost\11.tga" />
+    <Image Include="Textures\Ghost\12.tga" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Managers\GameObjectPrefab.txt" />

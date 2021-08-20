@@ -38,7 +38,7 @@ void Chaser::CreateCollider() {
 	}
 }
 
-void Chaser::Update(float) {
+void Chaser::Update(float deltaTime) {
 	if (m_IsReset) {
 		m_IsReset = 0;
 		Reset();
@@ -59,6 +59,7 @@ void Chaser::Update(float) {
 	else power = 1;
 	m_Collider->SetVelocity(Vector2(direction.x / power, direction.y / power));
 	//printf("%f %f\n", direction.x, direction.y);
+	m_Renderer->Update(deltaTime);
 }
 
 void Chaser::OnColliderEnter(GameObject* other) {
