@@ -109,10 +109,8 @@
     <ClCompile Include="ContactManager.cpp" />
     <ClCompile Include="CubeTexture.cpp" />
     <ClCompile Include="Dungeon.cpp" />
-    <ClCompile Include="DynamicBox.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GroundBox.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -160,11 +158,9 @@
     <ClInclude Include="ContactManager.h" />
     <ClInclude Include="CubeTexture.h" />
     <ClInclude Include="Dungeon.h" />
-    <ClInclude Include="DynamicBox.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
-    <ClInclude Include="GroundBox.h" />
     <ClInclude Include="Guard.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Input.h" />

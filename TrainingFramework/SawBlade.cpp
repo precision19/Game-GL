@@ -20,7 +20,7 @@ void SawBlade::CreateCollider()
 {
 	if (m_Collider == NULL)
 	{
-		m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_SENSOR);
+		m_Collider = new Box(this, m_ColliderSize, CATEGORY_SENSOR, true, "Circle");
 	}
 	else
 	{

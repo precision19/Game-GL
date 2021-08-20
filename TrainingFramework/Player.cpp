@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
-#include "DynamicBox.h"
-#include "GroundBox.h"
 #include "Sensor.h"
+#include "Physic.h"
 
 Player::Player()
 {
@@ -29,8 +28,8 @@ void Player::CreateCollider()
 {
 	if (m_Collider == NULL)
 	{
-		m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_PLAYER);
-		((DynamicBox*)m_Collider)->getBody()->SetGravityScale(0);;
+		m_Collider = new Box(this, m_ColliderSize, CATEGORY_PLAYER, true, "Circle");
+		//m_Collider->getBody()->SetGravityScale(0);;
 		m_GatePosition = m_Transform.position;
 	}
 	else
@@ -59,9 +58,9 @@ void Player::CreateSensorCollider() {
 
 void Player::Reset()
 {
-	((DynamicBox*)m_Collider)->getBody()->SetTransform(b2Vec2(m_GatePosition.x, m_GatePosition.y), 0.0f);
-	((DynamicBox*)m_Collider)->getBody()->SetGravityScale(0);;
-	((DynamicBox*)m_Collider)->SetVelocity(Vector2());
+	m_Collider->getBody()->SetTransform(b2Vec2(m_GatePosition.x, m_GatePosition.y), 0.0f);
+	m_Collider->getBody()->SetGravityScale(0);;
+	m_Collider->SetVelocity(Vector2());
 	m_IsRunning = false;
 	m_ReadyForInput = false;
 }
@@ -92,8 +91,7 @@ void Player::Update(float deltaTime)
 	m_Renderer->Update(deltaTime);
 	UpdateSensorOfPlayer(deltaTime);
 
-	DynamicBox* db = (DynamicBox*)m_Collider;
-	SetPosition(Vector3(db->getBody()->GetPosition().x, db->getBody()->GetPosition().y, GetPosition().z));
+	SetPosition(Vector3(m_Collider->getBody()->GetPosition().x, m_Collider->getBody()->GetPosition().y, GetPosition().z));
 	Physic::GetInstance()->SetPositionPlayer(Vector2(GetPosition().x, GetPosition().y));
 
 	if (!m_IsRunning)
@@ -102,7 +100,7 @@ void Player::Update(float deltaTime)
 		{
 			m_IsRunning = true;
 			m_ReadyForInput = false;
-			((DynamicBox*)m_Collider)->getBody()->SetGravityScale(1);;
+			m_Collider->getBody()->SetGravityScale(1);;
 		}
 		else
 			return;
@@ -114,24 +112,19 @@ void Player::Update(float deltaTime)
 }
 
 void Player::UpdateSensorOfPlayer(float deltaTime) {
-	DynamicBox* db = (DynamicBox*)m_Collider;
-	DynamicBox* fdb = (DynamicBox*)(foot->GetColliderBox());
-	DynamicBox* ldb = (DynamicBox*)(left->GetColliderBox());
-	DynamicBox* rdb = (DynamicBox*)(right->GetColliderBox());
-
-	fdb->getBody()->SetTransform(b2Vec2(db->getBody()->GetPosition().x, db->getBody()->GetPosition().y - m_ColliderSize), 0.0f);
-	ldb->getBody()->SetTransform(b2Vec2(db->getBody()->GetPosition().x - m_ColliderSize, db->getBody()->GetPosition().y), 0.0f);
-	rdb->getBody()->SetTransform(b2Vec2(db->getBody()->GetPosition().x + m_ColliderSize, db->getBody()->GetPosition().y), 0.0f);
+	
+	foot->GetColliderBox()->getBody()->SetTransform(b2Vec2(m_Collider->getBody()->GetPosition().x, m_Collider->getBody()->GetPosition().y - m_ColliderSize), 0.0f);
+	left->GetColliderBox()->getBody()->SetTransform(b2Vec2(m_Collider->getBody()->GetPosition().x - m_ColliderSize, m_Collider->getBody()->GetPosition().y), 0.0f);
+	right->GetColliderBox()->getBody()->SetTransform(b2Vec2(m_Collider->getBody()->GetPosition().x + m_ColliderSize, m_Collider->getBody()->GetPosition().y), 0.0f);
 }
 
 void Player::UpdateAnimation(float deltaTime)
 {
-	DynamicBox* db = ((DynamicBox*)m_Collider);
-	Vector2 velocity = db->GetVelocity();
+	Vector2 velocity = m_Collider->GetVelocity();
 
 	if (canJump)
 	{
-		if (db->GetVelocity().x > 1)
+		if (m_Collider->GetVelocity().x > 1)
 		{
 			m_Renderer = m_Animations.at(1);
 		}
@@ -183,7 +176,7 @@ Player::~Player()
 	m_Renderer = NULL;
 	if (foot) delete foot;
 	if (left) delete left;
-	//if (right) delete right;
+	if (right) delete right;
 }
 
 void Player::ConsiderJumpAndSlide() {
@@ -199,19 +192,18 @@ void Player::ConsiderJumpAndSlide() {
 }
 
 void Player::HandleJumpAndSlide() {
-	DynamicBox* db = (DynamicBox*)m_Collider;
 	if (canSlide && !canJump)
 		onTheGround = 0;
-	else if (canJump && !onTheGround && db->GetVelocity().y < 0)
+	else if (canJump && !onTheGround && m_Collider->GetVelocity().y < 0)
 		onTheGround = 1;
 	if (canJump)
 	{
 		if (Input::GetTouch() && m_ReadyForInput)
 		{
 			if (canSlide)
-				db->SetVelocity(Vector2(0.0, m_JumpForce * 1.2));
+				m_Collider->SetVelocity(Vector2(0.0, m_JumpForce * 1.2));
 			else
-				db->SetVelocity(Vector2(0.0, m_JumpForce));
+				m_Collider->SetVelocity(Vector2(0.0, m_JumpForce));
 
 			onTheGround = 0;
 			AudioManager::GetInstance()->PlaySoundEffect("Jump", false);
@@ -223,23 +215,23 @@ void Player::HandleJumpAndSlide() {
 	{
 		//Input::SetTouchStatus(false);
 		m_ReadyForInput = false;
-		db->SetVelocity(Vector2(0.0, m_JumpForce));
+		m_Collider->SetVelocity(Vector2(0.0, m_JumpForce));
 		AudioManager::GetInstance()->PlaySoundEffect("Jump", false);
 		SetSpeed(-m_SpeedX);
 	}
-	else if (canSlide && db->GetVelocity().y < 0) 
+	else if (canSlide && m_Collider->GetVelocity().y < 0)
 	{
-		db->SetVelocity(Vector2(m_SpeedX, m_SlideSpeed));
+		m_Collider->SetVelocity(Vector2(m_SpeedX, m_SlideSpeed));
 	}
 
-	db->SetVelocity(Vector2(m_SpeedX, db->GetVelocity().y));
+	m_Collider->SetVelocity(Vector2(m_SpeedX, m_Collider->GetVelocity().y));
 }
 
 void Player::Stop()
 {
 	m_IsRunning = false;
-	((DynamicBox*)m_Collider)->SetVelocity(Vector2());
-	((DynamicBox*)m_Collider)->getBody()->SetGravityScale(0);
+	m_Collider->SetVelocity(Vector2());
+	m_Collider->getBody()->SetGravityScale(0);
 }
 
 void Player::Die()

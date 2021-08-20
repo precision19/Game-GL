@@ -2,7 +2,6 @@
 
 #include "GameObject.h"
 #include "Physic.h"
-#include "GroundBox.h"
 
 class Guard : public GameObject
 {

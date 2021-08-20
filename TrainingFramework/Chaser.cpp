@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "Chaser.h"
-#include "DynamicBox.h"
+#include "Physic.h"
 
 Chaser::Chaser() {
 	m_Name = "Chaser";
 	m_ID = ms_IDMaker;
 	ms_IDMaker++;
 	m_Collider = NULL;
-	m_maxSpeed = 50.0f;
+	m_maxSpeed = 70.0f;
 	m_IsReset = 0;
 }
 
@@ -30,7 +30,7 @@ void Chaser::SetPositionStart(Vector3 start) {
 void Chaser::CreateCollider() {
 	if (m_Collider == NULL)
 	{
-		m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_NOTGRAVITY);
+		m_Collider = new Box(this, m_ColliderSize, CATEGORY_NOTGRAVITY, true, "Circle");
 	}
 	else
 	{
@@ -47,8 +47,7 @@ void Chaser::Update(float) {
 	SetPositionTarget(Physic::GetInstance()->GetPositionPlayer());
 	direction.x = m_positionTarget.x - GetPosition().x;
 	direction.y = m_positionTarget.y - GetPosition().y;
-	DynamicBox* db = (DynamicBox *) m_Collider;
-	SetPosition(Vector3(db->getBody()->GetPosition().x, db->getBody()->GetPosition().y, GetPosition().z));
+	SetPosition(Vector3(m_Collider->getBody()->GetPosition().x, m_Collider->getBody()->GetPosition().y, GetPosition().z));
 	float power;
 	if (fabs(direction.x) > m_maxSpeed && fabs(direction.x) > fabs(direction.y)) {
 		power = fabs(direction.x) / m_maxSpeed;
@@ -58,7 +57,7 @@ void Chaser::Update(float) {
 		power = fabs(direction.y) / m_maxSpeed;
 	}
 	else power = 1;
-	db->SetVelocity(Vector2(direction.x / power, direction.y / power));
+	m_Collider->SetVelocity(Vector2(direction.x / power, direction.y / power));
 	//printf("%f %f\n", direction.x, direction.y);
 }
 
@@ -73,7 +72,7 @@ void Chaser::OnColliderExit(GameObject* other) {
 }
 
 void Chaser::Reset() {
-	((DynamicBox*)m_Collider)->getBody()->SetTransform(b2Vec2(m_positionStart.x, m_positionStart.y), 0.0f);
+	m_Collider->getBody()->SetTransform(b2Vec2(m_positionStart.x, m_positionStart.y), 0.0f);
 }
 
 Chaser::~Chaser() {

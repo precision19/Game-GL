@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Block.h"
-#include "GroundBox.h"
 
 Block::Block()
 {
@@ -23,7 +22,7 @@ void Block::CreateCollider()
 {
 	if (m_Collider == NULL)
 	{
-		m_Collider = new GroundBox(this, Vector2(m_ColliderSize, m_ColliderSize), CATEGORY_GROUND);
+		m_Collider = new Box(this, m_ColliderSize, CATEGORY_GROUND, false, "Square");
 	}
 	else
 	{

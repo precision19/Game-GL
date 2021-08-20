@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-#include "DynamicBox.h"
 
 enum Pos {
 	HEAD,

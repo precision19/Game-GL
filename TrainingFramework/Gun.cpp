@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Gun.h"
-#include "GroundBox.h"
 
 Gun::Gun()
 {
@@ -24,7 +23,7 @@ void Gun::CreateCollider()
 {
 	if (m_Collider == NULL)
 	{
-		m_Collider = new GroundBox(this, Vector2(m_ColliderSize, m_ColliderSize), CATEGORY_GROUND);
+		m_Collider = new Box(this, m_ColliderSize, CATEGORY_SENSOR, true, "Circle");
 	}
 	else
 	{

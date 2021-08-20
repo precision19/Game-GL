@@ -42,7 +42,7 @@ void Guard::CreateCollider()
 {
 	if (m_Collider == NULL)
 	{
-		m_Collider = new DynamicBox(this, m_ColliderSize, CATEGORY_NOTGRAVITY);
+		m_Collider = new Box(this, m_ColliderSize, CATEGORY_NOTGRAVITY, true, "Circle");
 	}
 	else
 	{
@@ -52,16 +52,15 @@ void Guard::CreateCollider()
 
 void Guard::Update(float deltaTime)
 {
-	DynamicBox* db = (DynamicBox*)m_Collider;
-	SetPosition(Vector3(db->getBody()->GetPosition().x, db->getBody()->GetPosition().y, GetPosition().z));
+	SetPosition(Vector3(m_Collider->getBody()->GetPosition().x, m_Collider->getBody()->GetPosition().y, GetPosition().z));
 
-	if (db->getBody()->GetPosition().x > (m_positionStart.x - m_error * 2 ) && db->getBody()->GetPosition().x < (m_positionStart.x + m_error * 2) && vectorX == true )
+	if (m_Collider->getBody()->GetPosition().x > (m_positionStart.x - m_error * 2 ) && m_Collider->getBody()->GetPosition().x < (m_positionStart.x + m_error * 2) && vectorX == true )
 	{
 		boolX = true;
 		m_Transform.rotation += m_rotate * PI;
 		vectorX = false;
 	}
-	else if (db->getBody()->GetPosition().x > (m_positionEnd.x - m_error * 2) && db->getBody()->GetPosition().x < (m_positionEnd.x + m_error * 2) && vectorX == false)
+	else if (m_Collider->getBody()->GetPosition().x > (m_positionEnd.x - m_error * 2) && m_Collider->getBody()->GetPosition().x < (m_positionEnd.x + m_error * 2) && vectorX == false)
 	{
 		boolX = false;
 		m_Transform.rotation += m_rotate * PI;
@@ -70,11 +69,11 @@ void Guard::Update(float deltaTime)
 
 	if (boolX)
 	{
-		db->SetVelocity(Vector2(m_speed, db->GetVelocity().y));
+		m_Collider->SetVelocity(Vector2(m_speed, m_Collider->GetVelocity().y));
 	}
 	else
 	{
-		db->SetVelocity(Vector2(-m_speed, db->GetVelocity().y));
+		m_Collider->SetVelocity(Vector2(-m_speed, m_Collider->GetVelocity().y));
 	}
 	m_Renderer->Update(deltaTime);
 }

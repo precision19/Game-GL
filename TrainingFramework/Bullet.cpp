@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Bullet.h"
-#include "GroundBox.h"
 
 Bullet::Bullet()
 {
@@ -35,7 +34,7 @@ void Bullet::CreateCollider()
 {
 	if (m_Collider == NULL)
 	{
-		m_Collider = new GroundBox(this, Vector2(m_ColliderSize, m_ColliderSize), CATEGORY_GROUND);
+		m_Collider = new Box(this, m_ColliderSize, CATEGORY_NOTGRAVITY, true, "Circle");
 	}
 	else
 	{
