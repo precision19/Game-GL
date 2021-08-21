@@ -150,10 +150,10 @@
     <ClCompile Include="EventManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Ghost.cpp">
+    <ClCompile Include="SpinnerFly.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SpinnerFly.cpp">
+    <ClCompile Include="EffectManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -293,10 +293,10 @@
     <ClInclude Include="Chaser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ghost.h">
+    <ClInclude Include="SpinnerFly.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SpinnerFly.h">
+    <ClInclude Include="EffectManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

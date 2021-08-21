@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "LevelState.h"
+#include "EffectManager.h"
 
 LevelState::LevelState() 
 {
@@ -245,6 +246,8 @@ void LevelState::LoadLevel()
 					{
 						m_Chest->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
 						m_Chest->CreateCollider();
+						//EffectManager::GetInstance()->o.push_back(m_Chest);
+						
 					}
 					else if (iBool == 8)
 					{

@@ -78,7 +78,7 @@ void SpinnerFly::Update(float deltaTime)
 		m_Transform.rotation += m_rotate * PI;
 		vectorX = true;
 	}
-	printf("%f\n", m_Collider->getBody()->GetPosition().x);
+	//printf("%f\n", m_Collider->getBody()->GetPosition().x);
 //	printf("%f\n", m_positionCenter.x - m_radius);
 	m_Collider->SetVelocity(Vector2(m_radius * cos(m_angle) * 0.6, m_radius * sin(m_angle) / 2));
 

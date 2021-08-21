@@ -109,6 +109,7 @@
     <ClCompile Include="ContactManager.cpp" />
     <ClCompile Include="CubeTexture.cpp" />
     <ClCompile Include="Dungeon.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Guard.cpp" />
@@ -137,7 +138,6 @@
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="Switch.cpp" />
     <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="TrainingFramework.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -159,6 +159,7 @@
     <ClInclude Include="ContactManager.h" />
     <ClInclude Include="CubeTexture.h" />
     <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
@@ -190,7 +191,6 @@
     <ClInclude Include="Switch.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="Ghost.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TreasureChest.h" />
     <ClInclude Include="Vertex.h" />

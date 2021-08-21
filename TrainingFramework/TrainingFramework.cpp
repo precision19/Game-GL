@@ -11,6 +11,7 @@
 #include <thread>
 #include "../Utilities/Math.h" // if you use STL, please include this line AFTER all other include
 #include <iostream>
+#include "EffectManager.h"
 #include "vld/vld.h"
 
 int Init ( ESContext *esContext )
@@ -27,6 +28,8 @@ int Init ( ESContext *esContext )
 	Physic::CreateInstance();
 	PlayerPrefs::CreateInstance();
 	PlayerPrefs::GetInstance()->LoadData();
+	EffectManager::CreateInstance();
+	
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 
 	glEnable(GL_BLEND);
@@ -49,6 +52,7 @@ void Update ( ESContext *esContext, float deltaTime )
 {
 	Camera::GetInstance()->Update(deltaTime);
 	SceneManager::GetInstance()->Update(deltaTime);
+	EffectManager::GetInstance()->Update(deltaTime);
 	//AudioManager::GetInstance()->SetMusicFile(SceneManager::GetInstance()->getCurrentState());
 	//AudioManager::GetInstance()->PlayMusic();
 }
@@ -91,6 +95,7 @@ void CleanUp()
 	MyContactListener::DestroyInstance();
 	AudioManager::DestroyInstance();
 	PlayerPrefs::DestroyInstance();
+	EffectManager::DestroyInstance();
 }
 
 
