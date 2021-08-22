@@ -56,18 +56,35 @@ void PlayerPrefs::LoadData()
 	}
 }
 
+
 void PlayerPrefs::GetData(int levelId)
 {
 
 }
 
-void PlayerPrefs::SetData(int levelId, int score)
+void PlayerPrefs::SetData(int levelID, int stars)
 {
-
+	m_MapData[levelID - 1].levelID = levelID;
+	m_MapData[levelID - 1].stars = stars;
+	cout << "Level " << m_MapData[levelID - 1].levelID << " has " << m_MapData[levelID - 1].stars << endl;
 }
 
 void PlayerPrefs::SaveData()
 {
+	string path = "Managers/PlayerPref.txt";
+	FILE* f = fopen(path.c_str(), "w+");
+	if (f == NULL)
+	{
+		printf("Invalid file %s\n", path.c_str());
+		exit(1);
+	}
+	fprintf(f, "#NumberOfLevel: %d\n", m_MapData.size());
+	for (int i = 0; i < m_MapData.size(); i++) {
+		fprintf(f, "LevelID: %d\n", m_MapData.at(i).levelID);
+		fprintf(f, "Star: %d\n", m_MapData.at(i).stars);
+		fprintf(f, "\n");
+	}
+	fclose(f);
 }
 
 PlayerPrefs::~PlayerPrefs()

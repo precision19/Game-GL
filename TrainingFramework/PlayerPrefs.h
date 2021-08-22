@@ -20,8 +20,8 @@ public:
 
 	PlayerPrefs();
 	void LoadData();
-	void GetData(int);
-	void SetData(int, int);
+	void GetData(int levelID);
+	void SetData(int levelID, int stars);
 	void SaveData();
 	~PlayerPrefs();
 };

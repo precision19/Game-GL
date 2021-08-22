@@ -53,8 +53,6 @@ void Update ( ESContext *esContext, float deltaTime )
 	Camera::GetInstance()->Update(deltaTime);
 	SceneManager::GetInstance()->Update(deltaTime);
 	EffectManager::GetInstance()->Update(deltaTime);
-	//AudioManager::GetInstance()->SetMusicFile(SceneManager::GetInstance()->getCurrentState());
-	//AudioManager::GetInstance()->PlayMusic();
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
