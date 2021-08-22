@@ -25,6 +25,8 @@ public:
 	string GetName();
 	Vector3 GetPosition();
 
+	Renderer* GetRenderer();
+
 	virtual void Draw();
 	virtual void Update(float);
 

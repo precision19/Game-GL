@@ -18,6 +18,7 @@ public:
 	Renderer();
 	Renderer(string);
 	void SetOpacity(float);
+	float GetOpacity() { return m_Opacity; };
 	virtual Renderer* Clone();
 	void SetModel(int);
 	void SetModel(string);

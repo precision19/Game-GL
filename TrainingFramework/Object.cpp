@@ -63,6 +63,14 @@ void Object::SetRenderer(string name)
 	m_Renderer = PrefabManager::GetInstance()->GetRenderer(name)->Clone();
 }
 
+Renderer* Object::GetRenderer() {
+	if (m_Renderer) return m_Renderer;
+	else {
+		printf("NULL RENDERER\n");
+		return NULL;
+	}
+}
+
 void Object::Draw()
 {
 	if (m_Renderer == NULL)

@@ -232,6 +232,8 @@ void LevelState::LoadLevel()
 						star->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
 						star->CreateCollider();
 						m_GameObjects.push_back(star);
+						//star->GetRenderer()->SetOpacity(0.0f);
+						//EffectManager::GetInstance()->o.push_back(star);
 					}
 
 					if (iBool == 6)
@@ -246,7 +248,7 @@ void LevelState::LoadLevel()
 					{
 						m_Chest->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
 						m_Chest->CreateCollider();
-						//EffectManager::GetInstance()->o.push_back(m_Chest);
+						m_Chest->GetRenderer()->SetOpacity(0.0f);
 						
 					}
 					else if (iBool == 8)
