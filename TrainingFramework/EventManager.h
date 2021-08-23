@@ -9,6 +9,8 @@ using namespace std;
 #define EVENT_PLAYER_SCORE 2
 #define EVENT_GAME_STOP 3
 #define EVENT_GAME_RESTART 4
+#define EVENT_EFFECT_START 5
+#define EVENT_EFFECT_DONE 6
 
 #define ON_ d
 

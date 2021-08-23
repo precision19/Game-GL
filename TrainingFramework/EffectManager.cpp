@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "EffectManager.h"
+#include "EventManager.h"
 
 EffectManager* EffectManager::s_Instance = NULL;
 
@@ -78,17 +79,24 @@ void EffectManager::MoveObject(Object* object, Vector3 destination, float time, 
 }
 
 void EffectManager::Update(float deltaTime) {
+    int count = 0;
     for (int i = 0; i < m_effects.size(); i++) {
-        if (m_effects[i]->timeMove >= 0) {
+        if (m_effects[i]->timeMove > 0) {
             MoveObject(m_objects[i], m_effects[i]->destination, m_effects[i]->timeMove, deltaTime);
             m_effects[i]->timeMove -= deltaTime;
             if (m_effects[i]->timeMove < 0)  m_effects[i]->timeMove = 0;
         }
-        if (m_effects[i]->timeFaded >= 0) {
+        else count++;
+        if (m_effects[i]->timeFaded > 0) {
             Faded(m_objects[i], m_effects[i]->timeFaded, deltaTime, m_effects[i]->clearly);
             m_effects[i]->timeFaded -= deltaTime;
             if (m_effects[i]->timeFaded < 0)  m_effects[i]->timeFaded = 0;
         }
+        else count++;
+    }
+    printf("%d\n", count);
+    if (count == 2 * m_effects.size()) {
+        EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_EFFECT_DONE);
     }
 }
 

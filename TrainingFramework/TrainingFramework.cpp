@@ -13,6 +13,7 @@
 #include <iostream>
 #include "EffectManager.h"
 #include "vld/vld.h"
+#include "EventManager.h"
 #include "ObjectPool.h"
 
 int Init ( ESContext *esContext )
@@ -55,7 +56,11 @@ void Update ( ESContext *esContext, float deltaTime )
 {
 	Camera::GetInstance()->Update(deltaTime);
 	SceneManager::GetInstance()->Update(deltaTime);
-	EffectManager::GetInstance()->Update(deltaTime);
+	if(!EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_EFFECT_DONE))
+		EffectManager::GetInstance()->Update(deltaTime);
+	else {
+		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_EFFECT_DONE);
+	}
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
