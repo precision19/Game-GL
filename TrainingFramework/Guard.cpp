@@ -4,7 +4,7 @@
 Guard::Guard()
 {
 	m_time = 0;
-	m_Name = "Guard";
+	m_Name = GUARD;
 	m_ID = ms_IDMaker;
 	ms_IDMaker++;
 	m_Collider = NULL;

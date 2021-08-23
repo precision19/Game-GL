@@ -18,7 +18,7 @@ public:
 
 	void OnColliderEnter(GameObject*);
 	void OnColliderExit(GameObject*);
-
+	void Reset();
 	~Star();
 };
 

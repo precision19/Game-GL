@@ -14,6 +14,7 @@
 #include "SpinnerFly.h"
 #include "AudioManager.h"
 #include "Chaser.h"
+#include "ObjectPool.h"
 
 class LevelState : public StateBase 
 {
@@ -21,22 +22,15 @@ protected:
 	StateManager* m_StateManager;
 
 	Player* m_Player;
-	Object* m_Gate;
+	GameObject* m_Gate;
 	TreasureChest* m_Chest;
-	Star* m_StarPrefab;
-	Block* m_BlockPrefab;
-	SawBlade* m_SawPrefab;
-	Guard* m_GuardPrefab;
-	Bullet* m_BulletPrefab;
-	Gun* m_GunPrefab;
-	Chaser* m_Chaser;
-	SpinnerFly* m_SpinnerPrefab;
-	int m_i;
-	float m_Time;
 	int m_LevelID;
 
-	vector<Object*> m_GameObjects;
+	Object* m_TapToStartText;
+	vector<Object*> m_Backgrounds;
+	vector<GameObject*> m_GameObjects;
 	vector<Object*> m_PauseMenu;
+	vector<Object*> m_WinMenu;
 public:
 	LevelState();
 	void SetStateManager(StateManager*);

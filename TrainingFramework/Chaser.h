@@ -11,7 +11,7 @@ protected:
 public:
 	Chaser();
 	Chaser* Clone();
-
+	void SetSpeed(float);
 	void SetPositionStart(Vector3);
 	void SetPositionTarget(Vector2 target) { m_positionTarget = target; };
 

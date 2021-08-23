@@ -54,6 +54,7 @@ MenuState::MenuState()
 	SoundButton->SetRenderer(name);
 	fscanf(f, "RENDERER %s\n", name);
 	SoundButton->SetRenderer(name);
+	SoundButton->GetRenderere()->SetOpacity(0.1);
 	fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
 	SoundButton->SetPosition(Vector3(x, y, z));
 	fscanf(f, "ROTATION %f %f %f\n", &x, &y, &z);

@@ -69,15 +69,6 @@ void MapState::Update(float deltaTime)
 {
 	for each (Object * object in m_Objects)
 		object->Update(deltaTime);
-
-	for (int i = 1; i <= 21; i++)
-	{
-		if (Input::CheckButtonBuffer(i))
-		{
-			printf("open level %d\n", i);
-			m_StateManager->SwitchState("Level");
-		}
-	}
 }
 
 void MapState::Draw() 

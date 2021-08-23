@@ -13,15 +13,18 @@
 #include <iostream>
 #include "EffectManager.h"
 #include "vld/vld.h"
+#include "ObjectPool.h"
 
 int Init ( ESContext *esContext )
 {
+	FlagManager::CreateInstance();
 	Input::CreateInstance();
 	EventManager::CreateInstance();
 	Camera::CreateInstance();
 	AudioManager::CreateInstance();
 	ResourceManager::CreateInstance();
 	PrefabManager::CreateInstance();
+	ObjectPool::CreateInstance();
 	SceneManager::CreateInstance();
 	ContactManager::CreateInstance();
 	MyContactListener::CreateInstance();
@@ -82,11 +85,13 @@ void TouchActionMove(ESContext* esContext, int x, int y)
 
 void CleanUp()
 {
+	FlagManager::DestroyInstance();
 	Input::DestroyInstance();
 	EventManager::DestroyInstance();
 	Camera::DestroyInstance();
 	ResourceManager::DestroyInstance();
 	PrefabManager::DestroyInstance();
+	ObjectPool::DestroyInstance();
 	SceneManager::DestroyInstance();
 	Physic::DestroyInstance();
 	ContactManager::DestroyInstance();

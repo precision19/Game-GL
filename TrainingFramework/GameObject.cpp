@@ -11,6 +11,12 @@ GameObject::GameObject(string name)
     m_Collider = NULL;
 }
 
+void GameObject::SetPosition(Vector3 position)
+{
+    m_Transform.position = position;
+    m_ResetPosition = position;
+}
+
 void GameObject::SetCollider(float size)
 {
     m_ColliderSize = size;
@@ -18,9 +24,10 @@ void GameObject::SetCollider(float size)
 
 GameObject::GameObject()
 {
-    m_Name = "Untitled";
+    m_Name = "Untitled Game Object";
     m_ID = ms_IDMaker;
     ms_IDMaker++;
+    m_Collider = NULL;
 }
 
 Object* GameObject::Clone()
@@ -35,7 +42,7 @@ Object* GameObject::Clone()
 
 void GameObject::Reset()
 {
-
+    m_Transform.position = m_ResetPosition;
 }
 
 void GameObject::CreateCollider()
@@ -73,6 +80,17 @@ void GameObject::OnColliderExit(GameObject* other)
     //printf("Object %d and object %d exit contact\n", m_ID, other->m_ID);
 }
 
-GameObject::~GameObject() {
-    delete m_Collider;
+void GameObject::DestroyCollider()
+{
+    if (m_Collider)
+    {
+        delete m_Collider;
+        m_Collider = NULL;
+    }
+}
+
+GameObject::~GameObject()
+{
+    if (m_Collider)
+        delete m_Collider;
 }

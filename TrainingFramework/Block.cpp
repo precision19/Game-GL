@@ -3,7 +3,7 @@
 
 Block::Block()
 {
-	m_Name = "Block";
+	m_Name = BLOCK;
 	m_ID = ms_IDMaker;
 	ms_IDMaker++;
 	m_Collider = NULL;

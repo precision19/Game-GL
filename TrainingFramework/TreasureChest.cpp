@@ -3,7 +3,7 @@
 
 TreasureChest::TreasureChest()
 {
-	m_Name = "Chest";
+	m_Name = TREASURE_CHEST;
 	m_ID = ms_IDMaker;
 	ms_IDMaker++;
 	m_Collider = NULL;
@@ -69,13 +69,7 @@ void TreasureChest::Update(float deltaTime)
 
 void TreasureChest::OnColliderEnter(GameObject* other)
 {
-	int cnt = 0;
-	if (other->GetName() == "Player")
-	{
-		isWinner = true;
-		m_currentAnimation = 1;
-		m_Animations.at(m_currentAnimation)->SetLoop(false);
-	}
+	
 }
 
 void TreasureChest::OnColliderExit(GameObject*)

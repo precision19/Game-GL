@@ -13,6 +13,7 @@ public:
 	Gun();
 
 	Gun* Clone();
+	void SetAttackSpeed(float);
 	void CreateCollider();
 	void Update(float);
 	void Draw();

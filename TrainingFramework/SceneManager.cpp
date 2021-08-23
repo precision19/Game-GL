@@ -35,100 +35,11 @@ SceneManager::SceneManager()
 	mapState->SetStateManager(this);
 	AddState(mapState);
 
-	LevelState* levelState = new LevelState();
-	levelState->SetStateManager(this);
-	AddState(levelState);
+	m_LevelState = new LevelState();
+	m_LevelState->SetStateManager(this);
+	AddState(m_LevelState);
 
 }
-
-
-//void SceneManager::LoadScene(string sceneName)
-//{
-//	DestroyAllObjects();
-//
-//	string path = "Managers/" + sceneName + "SM.txt";
-//
-//	FILE* f = fopen(path.c_str(), "r+");
-//
-//	if (f == NULL)
-//	{
-//		printf("Invalid file %s\n", path.c_str());
-//		exit(1);
-//	}
-//
-//	int amount, id;
-//	float x, y, z;
-//	char keyword[30];
-//
-//	fscanf(f, "#Camera %d\n", &id);
-//	Camera::GetInstance()->SetPerspective(id);
-//	fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
-//	Camera::GetInstance()->SetPosition(Vector3(x, y, z));
-//	fscanf(f, "TARGET %f %f %f\n", &x, &y, &z);
-//	Camera::GetInstance()->SetTarget(Vector3(x, y, z));
-//	if (id)
-//	{
-//		fscanf(f, "FOVY %f\n", &x);
-//		Camera::GetInstance()->SetFOVY(x);
-//	}
-//	fscanf(f, "MOVE_SPEED %f\n", &x);
-//	Camera::GetInstance()->SetMoveSpeed(x);
-//
-//	Camera::GetInstance()->Init();
-//
-//	fscanf(f, "#Objects: %d\n", &amount);
-//	for (int i = 0; i < amount; i++)
-//	{
-//		fscanf(f, "ID %d\n", &id);
-//		if (id != i)
-//			printf("WARNING: Object's ID is not correct");
-//		Object* object = new Object();
-//		object->SetID(id);
-//
-//		char type[10];
-//		fscanf(f, "TYPE %s\n", type);
-//		if (strncmp(type, "GROUND", 6) == 0) {
-//			object->type = GROUND;
-//		}
-//		if (strncmp(type, "PLAYER", 6) == 0) {
-//			object->type = PLAYER;
-//		}
-//		if (strncmp(type, "GROUND", 6) == 0) {
-//			object->type = GROUND;
-//		}
-//		if (strncmp(type, "NONE", 6) == 0) {
-//			object->type = NONE;
-//		}
-//		if (strncmp(type, "SENSOR", 6) == 0) {
-//			object->type = SENSOR;
-//		}
-//		fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
-//		object->SetPosition(Vector3(x, y, z));
-//
-//		fscanf(f, "ROTATION %f %f %f\n", &x, &y, &z);
-//		object->SetRotation(Vector3(x, y, z));
-//
-//		fscanf(f, "SCALE %f %f %f\n", &x, &y, &z);
-//		object->SetScale(Vector3(x, y, z));
-//
-//		fscanf(f, "DIMENSION %f %f\n", &x, &y);
-//		object->SetDimension(Vector2(x, y));
-//
-//		fscanf(f, "RENDERER %d\n", &id);
-//		object->SetRenderer(id);
-//
-//		object->SetNativeSize();
-//
-//		m_vObjects.push_back(object);
-//	}
-//
-//	fclose(f);
-//}
-
-//void SceneManager::AddPhysicsToScene()
-//{
-//	Physic::GetInstance()->InitBox(m_vObjects);
-//}
 
 void SceneManager::Draw()
 {
@@ -138,21 +49,18 @@ void SceneManager::Draw()
 void SceneManager::Update(float deltaTime)
 {
 	m_CurrentState->Update(deltaTime);
+	
+	for (int i = 0; i < 21; i++)
+		if (Input::CheckButtonBuffer(i))
+		{
+			m_LevelState->SetLevel(i);
+			SwitchState("Level");
+			return;
+		}
 }
 
 
-StateBase* SceneManager::getCurrentState() {
+StateBase* SceneManager::getCurrentState() 
+{
 	return m_CurrentState;
 }
-//void SceneManager::DestroyAllObjects()
-//{
-//	//for (auto it = m_vObjects.begin(); it != m_vObjects.end(); it++)
-//	//{
-//	//	delete (*it);
-//	//}
-//
-//	for each (Object * object in m_vObjects)
-//		delete object;
-//
-//	m_vObjects.clear();
-//}

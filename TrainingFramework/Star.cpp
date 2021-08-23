@@ -59,10 +59,16 @@ bool Star::isCollistion()
 	return isCollisted;
 }
 
-void Star::OnColliderEnter(GameObject* other) {
+void Star::OnColliderEnter(GameObject* other) 
+{
 	if (other->GetName() == "Player")
 		isCollisted = true;
 }
 
 void Star::OnColliderExit(GameObject* other) {
+}
+
+void Star::Reset()
+{
+	isCollisted = false;
 }

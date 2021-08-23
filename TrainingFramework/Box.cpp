@@ -4,7 +4,7 @@
 
 Box::Box() 
 {
-
+	body = NULL;
 }
 
 Box::Box(Object* object, float colliderSize, Category category, bool isDynamic, string hitbox) {
@@ -70,6 +70,7 @@ void Box::SetVelocity(Vector2 velo) {
 
 Box::~Box() 
 {
-	body->GetWorld()->DestroyBody(body);
+	if (body)
+		body->GetWorld()->DestroyBody(body);
 }
 

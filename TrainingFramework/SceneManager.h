@@ -13,8 +13,7 @@ class SceneManager : public StateManager
 protected:
 	static SceneManager* ms_Instance;
 	int m_TargetLevel;
-	//AudioManager* audioManager;
-	//MyContactListener* myContactListenerInstance;
+	LevelState* m_LevelState;
 public:
 	static void CreateInstance();
 	static SceneManager* GetInstance();

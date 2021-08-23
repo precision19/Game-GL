@@ -23,6 +23,11 @@ Chaser* Chaser::Clone()
 	return copy;
 }
 
+void Chaser::SetSpeed(float speed)
+{
+	m_maxSpeed = speed;
+}
+
 void Chaser::SetPositionStart(Vector3 start) {
 	m_positionStart = start;
 }
@@ -38,16 +43,18 @@ void Chaser::CreateCollider() {
 	}
 }
 
-void Chaser::Update(float deltaTime) {
-	if (m_IsReset) {
-		m_IsReset = 0;
-		Reset();
-	}
+void Chaser::Update(float deltaTime) 
+{
+	m_Renderer->Update(deltaTime);
+
+	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_READY, GAME_ON_WIN))
+		return;
+
 	Vector2 direction;
 	SetPositionTarget(Physic::GetInstance()->GetPositionPlayer());
 	direction.x = m_positionTarget.x - GetPosition().x;
 	direction.y = m_positionTarget.y - GetPosition().y;
-	SetPosition(Vector3(m_Collider->getBody()->GetPosition().x, m_Collider->getBody()->GetPosition().y, GetPosition().z));
+	m_Transform.position = Vector3(m_Collider->getBody()->GetPosition().x, m_Collider->getBody()->GetPosition().y, m_Transform.position.z);
 	float power;
 	if (fabs(direction.x) > m_maxSpeed && fabs(direction.x) > fabs(direction.y)) {
 		power = fabs(direction.x) / m_maxSpeed;
@@ -58,24 +65,26 @@ void Chaser::Update(float deltaTime) {
 	}
 	else power = 1;
 	m_Collider->SetVelocity(Vector2(direction.x / power, direction.y / power));
-	//printf("%f %f\n", direction.x, direction.y);
-	m_Renderer->Update(deltaTime);
 }
 
-void Chaser::OnColliderEnter(GameObject* other) {
-	if (other->GetName() == "Player") {
-		m_IsReset = 1;
-	}
-}
-
-void Chaser::OnColliderExit(GameObject* other) {
+void Chaser::OnColliderEnter(GameObject* other) 
+{
 	
 }
 
-void Chaser::Reset() {
+void Chaser::OnColliderExit(GameObject* other) 
+{
+	
+}
+
+void Chaser::Reset() 
+{
+	m_Transform.position = m_ResetPosition;
+	m_Transform.rotation = Vector3(0, 0, 0);
 	m_Collider->getBody()->SetTransform(b2Vec2(m_positionStart.x, m_positionStart.y), 0.0f);
 }
 
-Chaser::~Chaser() {
+Chaser::~Chaser() 
+{
 
 }

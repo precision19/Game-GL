@@ -111,6 +111,7 @@
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="FlagManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="Gun.cpp" />
@@ -121,6 +122,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="MyContactListener.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="Physic.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerPrefs.cpp" />
@@ -161,6 +163,7 @@
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EventManager.h" />
+    <ClInclude Include="FlagManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Guard.h" />
@@ -172,6 +175,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="MyContactListener.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="Physic.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerPrefs.h" />

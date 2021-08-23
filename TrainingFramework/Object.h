@@ -3,6 +3,7 @@
 #include "Renderer2D.h"
 #include "PrefabManager.h"
 #include <map>
+#include "FlagManager.h"
 
 class Object
 {
@@ -16,7 +17,7 @@ public:
 	Object(string);
 	virtual Object* Clone();
 
-	void SetPosition(Vector3);
+	virtual void SetPosition(Vector3);
 	void SetScale(Vector3);
 	void SetRotation(Vector3);
 	virtual void SetRenderer(int);
@@ -24,6 +25,7 @@ public:
 	
 	string GetName();
 	Vector3 GetPosition();
+	Renderer* GetRenderere();
 
 	Renderer* GetRenderer();
 

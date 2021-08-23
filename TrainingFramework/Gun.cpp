@@ -19,6 +19,10 @@ Gun* Gun::Clone()
 	return copy;
 }
 
+void Gun::SetAttackSpeed(float)
+{
+}
+
 void Gun::CreateCollider()
 {
 	if (m_Collider == NULL)

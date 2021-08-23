@@ -4,7 +4,7 @@
 SpinnerFly::SpinnerFly()
 {
 	m_Time = 0;
-	m_Name = "Spinner";
+	m_Name = SPINNER;
 	m_ID = ms_IDMaker;
 	ms_IDMaker++;
 	m_Collider = NULL;

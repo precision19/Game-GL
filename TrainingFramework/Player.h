@@ -6,8 +6,8 @@
 class Player : public GameObject
 {
 protected:
+	static Player* ms_Instance;
 	bool m_Enable;
-	bool m_IsRunning;
 	bool m_ReadyForInput;
 	int canJump;
 	vector<Renderer*> m_Animations;
@@ -19,7 +19,6 @@ protected:
 	bool onTheGround;
 	Sensor* foot, * right, * left;
 	bool m_IsFacingRight;
-	Vector3 m_GatePosition;
 public:
 	Player();
 	void CreateCollider();
@@ -34,7 +33,6 @@ public:
 	void UpdateAnimation(float);
 	void ConsiderJumpAndSlide();
 	void HandleJumpAndSlide();
-	void Stop();
 	void Die();
 	void SetJump(int jump) { canJump = jump; };
 	int GetJump() { return canJump; };

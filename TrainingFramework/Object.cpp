@@ -43,6 +43,11 @@ Vector3 Object::GetPosition()
 	return m_Transform.position;
 }
 
+Renderer* Object::GetRenderere()
+{
+	return m_Renderer;
+}
+
 void Object::SetScale(Vector3 scale)
 {
 	m_Transform.scale = scale;

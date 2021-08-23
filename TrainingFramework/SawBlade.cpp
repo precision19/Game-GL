@@ -3,7 +3,7 @@
 
 SawBlade::SawBlade()
 {
-	m_Name = "Saw Blade";
+	m_Name = SAW_BLADE;
 	m_ID = ms_IDMaker;
 	ms_IDMaker++;
 	m_Collider = NULL;
@@ -44,7 +44,6 @@ void SawBlade::Draw()
 
 void SawBlade::Update(float deltaTime)
 {
-
 	m_Time += deltaTime;
 	if (m_Time > 0.1)
 	{
