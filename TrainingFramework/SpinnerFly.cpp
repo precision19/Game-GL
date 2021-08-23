@@ -25,7 +25,7 @@ SpinnerFly* SpinnerFly::Clone()
 
 void SpinnerFly::SetSpeed(float speed)
 {
-	m_speed = speed;
+	m_speed = speed * PI / 180;
 }
 
 void SpinnerFly::SetPositionCenter(Vector3 center)
@@ -78,12 +78,7 @@ void SpinnerFly::Update(float deltaTime)
 		m_Transform.rotation += m_rotate * PI;
 		vectorX = true;
 	}
-	//printf("%f\n", m_Collider->getBody()->GetPosition().x);
-//	printf("%f\n", m_positionCenter.x - m_radius);
 	m_Collider->SetVelocity(Vector2(m_radius * cos(m_angle) * 0.6, m_radius * sin(m_angle) / 2));
-
-//	m_Collider->SetVelocity(Vector2(m_radius * cos(m_angle) * 0.5, m_Collider->GetVelocity().y));
-//	m_Collider->SetVelocity(Vector2(m_Collider->GetVelocity().x, m_radius * sin(m_angle) * 0.5));
 
 	m_Renderer->Update(deltaTime);
 

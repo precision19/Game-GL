@@ -209,6 +209,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Textures\Block3.tga" />
+    <Image Include="Textures\Block4.tga" />
+    <Image Include="Textures\Block\Block_L.tga" />
+    <Image Include="Textures\Block\Block_L_Up.tga" />
+    <Image Include="Textures\Block\Block_R.tga" />
+    <Image Include="Textures\Block\Block_R_Up.tga" />
+    <Image Include="Textures\Block\Ice.tga" />
+    <Image Include="Textures\Block\Rock1.tga" />
+    <Image Include="Textures\Block\Rock2.tga" />
+    <Image Include="Textures\Block\Rock3.tga" />
+    <Image Include="Textures\Block\Rock4.tga" />
+    <Image Include="Textures\Block\Soil1.tga" />
+    <Image Include="Textures\Block\Soil2.tga" />
+    <Image Include="Textures\Block\Soil3.tga" />
+    <Image Include="Textures\Block\Soil4.tga" />
+    <Image Include="Textures\Block\Wood.tga" />
     <Image Include="Textures\Chest.tga" />
     <Image Include="Textures\ChestBeOpened.tga" />
     <Image Include="Textures\ChestOpened.tga" />

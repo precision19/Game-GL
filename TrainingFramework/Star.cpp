@@ -3,7 +3,7 @@
 
 Star::Star()
 {
-	m_Name = "Star";
+	m_Name = STAR;
 	m_ID = ms_IDMaker;
 	ms_IDMaker++;
 	m_Collider = NULL;
@@ -52,6 +52,11 @@ void Star::Update(float deltaTime)
 	{
 		isCollisted = true;
 	}	
+
+	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_READY))
+	{
+		isCollisted = false;
+	}
 }
 
 bool Star::isCollistion()

@@ -5,6 +5,9 @@
 
 class Player : public GameObject
 {
+public:
+	int m_Score;
+	int m_StartScore;
 protected:
 	static Player* ms_Instance;
 	bool m_Enable;

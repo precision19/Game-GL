@@ -3,7 +3,7 @@
 #include "Physic.h"
 
 Chaser::Chaser() {
-	m_Name = "Chaser";
+	m_Name = CHASER;
 	m_ID = ms_IDMaker;
 	ms_IDMaker++;
 	m_Collider = NULL;

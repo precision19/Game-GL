@@ -156,6 +156,12 @@
     <ClCompile Include="EffectManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FlagManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectPool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -299,6 +305,12 @@
     <ClInclude Include="EffectManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FlagManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Readme.doc" />
@@ -347,6 +359,22 @@
     <Image Include="Textures\Ghost\10.tga" />
     <Image Include="Textures\Ghost\11.tga" />
     <Image Include="Textures\Ghost\12.tga" />
+    <Image Include="Textures\Block3.tga" />
+    <Image Include="Textures\Block4.tga" />
+    <Image Include="Textures\Block\Block_L.tga" />
+    <Image Include="Textures\Block\Block_L_Up.tga" />
+    <Image Include="Textures\Block\Block_R.tga" />
+    <Image Include="Textures\Block\Block_R_Up.tga" />
+    <Image Include="Textures\Block\Ice.tga" />
+    <Image Include="Textures\Block\Rock1.tga" />
+    <Image Include="Textures\Block\Rock2.tga" />
+    <Image Include="Textures\Block\Rock3.tga" />
+    <Image Include="Textures\Block\Rock4.tga" />
+    <Image Include="Textures\Block\Soil1.tga" />
+    <Image Include="Textures\Block\Soil2.tga" />
+    <Image Include="Textures\Block\Soil3.tga" />
+    <Image Include="Textures\Block\Soil4.tga" />
+    <Image Include="Textures\Block\Wood.tga" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Managers\GameObjectPrefab.txt" />

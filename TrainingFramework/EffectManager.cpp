@@ -94,7 +94,7 @@ void EffectManager::Update(float deltaTime) {
         }
         else count++;
     }
-    printf("%d\n", count);
+//    printf("%d\n", count);
     if (count == 2 * m_effects.size()) {
         EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_EFFECT_DONE);
     }

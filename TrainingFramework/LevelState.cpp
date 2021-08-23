@@ -5,7 +5,7 @@
 LevelState::LevelState() 
 {
 	m_Name = "Level";
-	m_LevelID = 0;
+	m_LevelID = 1;
 
 	//// TO DO: load game object prefabs
 	//string path0 = "Managers/GameObjectPrefab.txt";
@@ -198,14 +198,7 @@ void LevelState::LoadLevel()
 						block->CreateCollider();
 						m_GameObjects.push_back(block);
 					}
-					else if (iBool == 2)
-					{
-						//GameObject* gun = (GameObject*)m_GunPrefab->Clone();
-						GameObject* gun = ObjectPool::GetInstance()->GetPooledObject(GUN);
-						gun->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
-						gun->CreateCollider();
-						m_GameObjects.push_back(gun);
-					}
+
 					else if (iBool == 3)
 					{
 						m_Gate->SetPosition(Dungeon::GridToWorld(j, Dungeon::Height - i - 1));
@@ -214,16 +207,6 @@ void LevelState::LoadLevel()
 						m_Player->SetPosition(Dungeon::GridToWorld(j, Dungeon::Height - i - 1));
 						m_Player->CreateCollider();
 						m_GameObjects.push_back(m_Player);
-					}
-					else if (iBool == 4)
-					{
-						//Guard* guard = m_GuardPrefab->Clone();
-						Guard* guard = (Guard*)ObjectPool::GetInstance()->GetPooledObject(GUARD);
-						guard->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
-						guard->SetPositionStart(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
-						guard->SetPositionEnd(Dungeon::GirdToWord(j + 1, Dungeon::Height - i - 1, 0));
-						guard->CreateCollider();
-//						m_GameObjects.push_back(guard);
 					}
 
 					if (iBool == 5)
@@ -237,15 +220,6 @@ void LevelState::LoadLevel()
 						//EffectManager::GetInstance()->o.push_back(star);
 					}
 
-					if (iBool == 6)
-					{
-						//GameObject* blade = (GameObject*)m_SawPrefab->Clone();
-						GameObject* blade = ObjectPool::GetInstance()->GetPooledObject(SAW_BLADE);
-						blade->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
-						blade->CreateCollider();
-						m_GameObjects.push_back(blade);
-					}
-
 					if (iBool == 7)
 					{
 						m_Chest->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
@@ -254,26 +228,55 @@ void LevelState::LoadLevel()
 						m_GameObjects.push_back(m_Chest);
 						
 					}
-					else if (iBool == 8)
-					{
-						//Chaser* chaser = m_Chaser->Clone();
-						Chaser* chaser = (Chaser*)ObjectPool::GetInstance()->GetPooledObject(CHASER);
-						chaser->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
-						chaser->SetPositionStart(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
-						chaser->SetPositionTarget(Vector2(0.0f, 0.0f));
-						chaser->CreateCollider();
-						m_GameObjects.push_back(chaser);
-					}
 				}
 			}
 		}
+
+		else if (strcmp(name, "Gun") == 0)
+		{
+			GameObject* gun = ObjectPool::GetInstance()->GetPooledObject(GUN);
+			fscanf(fileMap, "POSITION %f %f\n", &x, &y);
+			gun->SetPosition(Dungeon::GirdToWord(x, y, 0));
+			gun->CreateCollider();
+			m_GameObjects.push_back(gun);
+		}
+
+		else if (strcmp(name, "Chaser") == 0)
+		{
+			fscanf(fileMap, "NUMBERCHASERS %d\n", &iBool);
+			for (int i = 0; i < iBool; i++)
+			{
+				Chaser* chaser = (Chaser*)ObjectPool::GetInstance()->GetPooledObject(CHASER);
+				fscanf(fileMap, "POSITION %f %f\n", &x, &y);
+				chaser->SetPosition(Dungeon::GirdToWord(x, y, 0));
+				chaser->SetPositionStart(Dungeon::GirdToWord(x, y, 0));
+				chaser->SetPositionTarget(Vector2(0.0f, 0.0f));
+				chaser->SetScale(Vector3(0.35, 0.35, 0.35));
+				chaser->CreateCollider();
+				m_GameObjects.push_back(chaser);
+			}
+		}
+
+		else if (strcmp(name, "SawBlade") == 0)
+		{
+			fscanf(fileMap, "NUMBERBLADES %d\n", &iBool);
+			for (int i = 0; i < iBool; i++)
+			{
+				//Guard* guard = m_GuardPrefab->Clone();
+				SawBlade* blade = (SawBlade*)ObjectPool::GetInstance()->GetPooledObject(SAW_BLADE);
+				fscanf(fileMap, "POSITION %f %f\n", &x, &y);
+				blade->SetPosition(Dungeon::GirdToWord(x, y, 0));
+				blade->CreateCollider();
+				m_GameObjects.push_back(blade);
+			}
+		}
+
 		else if (strcmp(name, "Guard") == 0)
 		{
 			fscanf(fileMap, "NUMBERGUARDS %d\n", &iBool);
 			printf("%d", iBool);
 			for (int i = 0; i < iBool; i++)
 			{
-				//Guard* guard = m_GuardPrefab->Clone();
 				Guard* guard = (Guard*)ObjectPool::GetInstance()->GetPooledObject(GUARD);
 				fscanf(fileMap, "POSITIONSTART %f %f\n", &x, &y);
 				guard->SetPosition(Dungeon::GirdToWord(x, y, 0));
@@ -287,20 +290,18 @@ void LevelState::LoadLevel()
 		else if (strcmp(name, "Spinner") == 0)
 		{
 			fscanf(fileMap, "NUMBERSPINNERS %d\n", &iBool);
-			printf("%d", iBool);
 			for (int i = 0; i < iBool; i++)
 			{
-				//SpinnerFly* spinner = (SpinnerFly) m_SpinnerPrefab->Clone();
 				SpinnerFly* spinner = (SpinnerFly*)ObjectPool::GetInstance()->GetPooledObject(SPINNER);
 				fscanf(fileMap, "POSITION %f %f\n", &x, &y);
 				spinner->SetPosition(Dungeon::GirdToWord(x, y, 0));
 				fscanf(fileMap, "POSITIONCENTER %f %f\n", &x, &y);
 				spinner->SetPositionCenter(Dungeon::GirdToWord(x, y, 0));
 				spinner->SetRadius();
+				spinner->SetScale(Vector3(0.3, 0.3, 0.3));
 				spinner->CreateCollider();
 				m_GameObjects.push_back(spinner);
-			}
-			
+			}		
 		}
 		else
 		{
