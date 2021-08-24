@@ -27,11 +27,18 @@ MapState::MapState()
 		fscanf(f, "TYPE %s\n", name);
 		if (strcmp(name, "LEVEL_BUTTON") == 0)
 		{
-			object = new Button(name);
+			//object = new Button(name);
+			object = new LevelButton(name);
 			fscanf(f, "BUTTON_ID %d\n", &id);
 			((Button*)object)->SetButtonID(id);
 			fscanf(f, "RENDERER %s\n", name);
 			object->SetRenderer(name);
+			fscanf(f, "RENDERER %s\n", name);
+			object->SetRenderer(name);
+			fscanf(f, "RENDERER %s\n", name);
+			object->SetRenderer(name);
+
+			m_LevelButtons.push_back((LevelButton*)object);
 		}
 		else
 		{
@@ -63,6 +70,8 @@ void MapState::OnStart()
 	// Refresh level button
 	Camera::GetInstance()->SetDefault();
 	AudioManager::GetInstance()->PlayBackgroundMusic(m_Name);
+	for each (LevelButton * button in m_LevelButtons)
+		button->SetStar();
 }
 
 void MapState::Update(float deltaTime) 

@@ -1,4 +1,4 @@
-#Renderers: 22
+#Renderers: 24
 0. Block
 TYPE 2D
 MODEL 0
@@ -157,3 +157,15 @@ FRAMES 7
 50 51 52 53 54 55 56
 FPS 10
 LOOP 1
+
+22. LevelButtonOnLock
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 57
+
+23. Gem
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 58

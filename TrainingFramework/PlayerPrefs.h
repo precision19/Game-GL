@@ -21,7 +21,7 @@ public:
 
 	PlayerPrefs();
 	void LoadData();
-	void GetData(int levelID);
+	int GetData(int levelID);
 	void SetData(int levelID, int stars);
 	void SaveData();
 	~PlayerPrefs();

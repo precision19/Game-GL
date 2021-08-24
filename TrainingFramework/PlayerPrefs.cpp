@@ -57,8 +57,15 @@ void PlayerPrefs::LoadData()
 }
 
 
-void PlayerPrefs::GetData(int levelId)
+int PlayerPrefs::GetData(int levelId)
 {	
+	for each (mapData data in m_MapData)
+	{
+		if (data.levelID == levelId)
+			return data.stars;
+	}
+	printf("WARNING: level's ID is invalid");
+	return -1;
 }
 
 void PlayerPrefs::SetData(int levelID, int stars)
@@ -66,6 +73,13 @@ void PlayerPrefs::SetData(int levelID, int stars)
 	m_MapData[levelID - 1].levelID = levelID;
 	m_MapData[levelID - 1].stars = stars;
 	cout << "Level " << m_MapData[levelID - 1].levelID << " has " << m_MapData[levelID - 1].stars << endl;
+
+	// HACK
+	if (stars > 0)
+	{
+		m_MapData[levelID].stars = 0;
+		printf("Unlock level %d", levelID + 1);
+	}
 }
 
 void PlayerPrefs::SaveData()

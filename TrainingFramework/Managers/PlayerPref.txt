@@ -6,16 +6,16 @@ LevelID: 2
 Star: 2
 
 LevelID: 3
-Star: -1
+Star: 3
 
 LevelID: 4
-Star: -1
+Star: 2
 
 LevelID: 5
-Star: -1
+Star: 3
 
 LevelID: 6
-Star: -1
+Star: 0
 
 LevelID: 7
 Star: -1

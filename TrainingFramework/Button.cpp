@@ -124,5 +124,8 @@ void Button::OnClicked()
 
 Button::~Button()
 {
+	delete m_IdleRenderer;
 	delete m_OnPressRenerer;
+
+	m_Renderer = NULL;
 }
