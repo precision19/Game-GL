@@ -65,6 +65,7 @@ void TreasureChest::Update(float deltaTime)
 		isWinner = true;                                                                                                                                       
 	}
 	m_Animations.at(m_currentAnimation)->Update(deltaTime);
+	printf("%d\n", m_currentAnimation);
 }
 
 void TreasureChest::OnColliderEnter(GameObject* other)

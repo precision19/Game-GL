@@ -19,6 +19,8 @@ public:
 	virtual void SetPosition(Vector3);
 	void SetScale(Vector3);
 	void SetRotation(Vector3);
+
+	virtual void SetRenderer(Renderer* renderer) { m_Renderer = renderer; };
 	virtual void SetRenderer(int);
 	virtual void SetRenderer(string);
 	
