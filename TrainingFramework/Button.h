@@ -28,5 +28,5 @@ public:
 	virtual void SetRenderer(string);
 	void SetButtonID(int);
 	void Update(float);
-	~Button();
+	virtual ~Button();
 };

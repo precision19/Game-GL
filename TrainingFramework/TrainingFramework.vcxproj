@@ -116,6 +116,7 @@
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="LevelButton.cpp" />
     <ClCompile Include="LevelState.cpp" />
     <ClCompile Include="MapState.cpp" />
     <ClCompile Include="MenuState.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="Guard.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="LevelButton.h" />
     <ClInclude Include="LevelState.h" />
     <ClInclude Include="MapState.h" />
     <ClInclude Include="MenuState.h" />
