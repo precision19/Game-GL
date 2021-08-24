@@ -8,6 +8,7 @@ Star::Star()
 	ms_IDMaker++;
 	m_Collider = NULL;
 	isCollisted = false;
+	isCollistedOneTime = false;
 }
 
 Star* Star::Clone()
@@ -46,28 +47,31 @@ void Star::Draw()
 }
 
 void Star::Update(float deltaTime)
-{
-	m_Renderer->Update(deltaTime);
-	if (isCollistion())
-	{
-		isCollisted = true;
-	}	
-
+{	
 	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_READY))
 	{
 		isCollisted = false;
+		isCollistedOneTime = false;
 	}
-}
 
-bool Star::isCollistion()
-{
-	return isCollisted;
+	m_Renderer->Update(deltaTime);
 }
 
 void Star::OnColliderEnter(GameObject* other) 
 {
-	if (other->GetName() == "Player")
-		isCollisted = true;
+	if (!isCollistedOneTime)
+	{
+		if (other->m_Name == PLAYER)
+		{
+			isCollisted = true;
+			isCollistedOneTime = true;
+			EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_SCORE);
+		}
+	}
+	else
+	{
+		return;
+	}
 }
 
 void Star::OnColliderExit(GameObject* other) {
@@ -76,4 +80,5 @@ void Star::OnColliderExit(GameObject* other) {
 void Star::Reset()
 {
 	isCollisted = false;
+	isCollistedOneTime = false;
 }

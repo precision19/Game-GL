@@ -15,16 +15,20 @@
 #include "AudioManager.h"
 #include "Chaser.h"
 #include "ObjectPool.h"
+#include "PlayerPrefs.h"
 
 class LevelState : public StateBase 
 {
 protected:
+	int m_LevelID;
+	int m_Score;
+	int m_ScoreEnd;
+
 	StateManager* m_StateManager;
 
 	Player* m_Player;
 	GameObject* m_Gate;
 	TreasureChest* m_Chest;
-	int m_LevelID;
 
 	Object* m_TapToStartText;
 	vector<Object*> m_Backgrounds;
@@ -33,6 +37,7 @@ protected:
 	vector<Object*> m_WinMenu;
 public:
 	LevelState();
+	int GetLevel();
 	void SetStateManager(StateManager*);
 	void SetLevel(int);
 	void OnStart();

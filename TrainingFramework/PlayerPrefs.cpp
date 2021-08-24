@@ -58,8 +58,7 @@ void PlayerPrefs::LoadData()
 
 
 void PlayerPrefs::GetData(int levelId)
-{
-
+{	
 }
 
 void PlayerPrefs::SetData(int levelID, int stars)

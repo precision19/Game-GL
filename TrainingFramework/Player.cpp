@@ -28,7 +28,6 @@ Player::Player()
 		ms_Instance = this;
 	else
 		printf("WARNING: there are more than one player");
-	m_Score = 0;
 }
 
 void Player::CreateCollider()
@@ -78,7 +77,6 @@ void Player::Reset()
 	m_Collider->getBody()->SetGravityScale(0);;
 	m_Collider->SetVelocity(Vector2());
 	m_ReadyForInput = false;
-	m_Score = m_StartScore;
 	FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_READY);
 }
 
@@ -113,7 +111,6 @@ void Player::Update(float deltaTime)
 			m_ReadyForInput = false;
 			m_Collider->getBody()->SetGravityScale(1);
 			FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_PLAYING);
-			m_StartScore = m_Score;
 		}
 		else
 			return;
@@ -128,11 +125,6 @@ void Player::Update(float deltaTime)
 		Physic::GetInstance()->SetPositionPlayer(Vector2(GetPosition().x, GetPosition().y));
 		ConsiderJumpAndSlide();
 		HandleJumpAndSlide();
-	}
-
-	if (EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_SCORE))
-	{
-		m_Score++;
 	}
 }
 
@@ -186,11 +178,6 @@ void Player::OnColliderEnter(GameObject* other)
 	if (other->m_Name == TREASURE_CHEST)
 	{
 		FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_WIN);
-	}
-
-	if (other->m_Name == STAR)
-	{
-		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_SCORE);
 	}
 }
 

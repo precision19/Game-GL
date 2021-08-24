@@ -8,13 +8,13 @@ class Star : public GameObject
 public:
 
 	bool isCollisted;
+	bool isCollistedOneTime;
 	Star();
 
 	Star* Clone();
 	void CreateCollider();
 	void Draw();
 	void Update(float);
-	bool isCollistion();
 
 	void OnColliderEnter(GameObject*);
 	void OnColliderExit(GameObject*);

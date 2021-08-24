@@ -6,6 +6,8 @@ LevelState::LevelState()
 {
 	m_Name = "Level";
 	m_LevelID = 1;
+	m_Score = 0;
+	m_ScoreEnd = 0;
 
 	//// TO DO: load game object prefabs
 	//string path0 = "Managers/GameObjectPrefab.txt";
@@ -131,6 +133,11 @@ LevelState::LevelState()
 	//	}
 	//}
 	//fclose(f);
+}
+
+int LevelState::GetLevel()
+{
+	return m_LevelID;
 }
 
 void LevelState::SetStateManager(StateManager* stateManager)
@@ -336,14 +343,19 @@ void LevelState::Update(float deltaTime)
 	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_WIN))
 	{
 		ClearLevel();
+		m_ScoreEnd = m_Score;
+		PlayerPrefs::GetInstance()->SetData(m_LevelID, m_ScoreEnd);
+		PlayerPrefs::GetInstance()->SaveData();
 		m_LevelID++;
 		LoadLevel();
+		m_Score = 0;
 		return;
 	}
 
 	if (EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_DIE))
 	{
 		Restart();
+		m_Score = 0;
 	}
 
 	for each (Object * object in m_Backgrounds)
@@ -355,6 +367,10 @@ void LevelState::Update(float deltaTime)
 	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_PLAYING, GAME_ON_READY))
 		Physic::GetInstance()->Update(deltaTime);
 
+	if (EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_SCORE))
+	{
+		m_Score++;
+	} 
 }
 
 void LevelState::Draw()

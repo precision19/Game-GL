@@ -18,6 +18,9 @@
 
 int Init ( ESContext *esContext )
 {
+	PlayerPrefs::CreateInstance();
+	PlayerPrefs::GetInstance()->LoadData();
+//	PlayerPrefs::GetInstance()->SaveData();
 	FlagManager::CreateInstance();
 	Input::CreateInstance();
 	EventManager::CreateInstance();
@@ -30,8 +33,6 @@ int Init ( ESContext *esContext )
 	ContactManager::CreateInstance();
 	MyContactListener::CreateInstance();
 	Physic::CreateInstance();
-	PlayerPrefs::CreateInstance();
-	PlayerPrefs::GetInstance()->LoadData();
 	EffectManager::CreateInstance();
 	
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );

@@ -1,4 +1,4 @@
-#Objects: 2
+#Objects: 3
 1. DungeonBackground
 RENDERER DungeonBackground
 POSITION 0 0 -2
@@ -16,3 +16,7 @@ SCALE 1 1 1
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+3. SawBlade
+NUMBERBLADES 1
+POSITION 3 3
