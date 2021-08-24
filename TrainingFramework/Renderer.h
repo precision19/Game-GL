@@ -31,6 +31,7 @@ public:
 	virtual void Draw(Transform);
 	virtual void Update(float);
 	virtual void SetLoop(bool);
+	virtual void Reset();
 	virtual ~Renderer();
 };
 

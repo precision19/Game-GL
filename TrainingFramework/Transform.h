@@ -13,5 +13,7 @@ public:
 
 	Matrix GetWorldMatrix();
 	Matrix GetWorldMatrix(Vector3);
+
+	void Reset();
 };
 

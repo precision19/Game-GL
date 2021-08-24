@@ -43,6 +43,7 @@ Object* GameObject::Clone()
 void GameObject::Reset()
 {
     m_Transform.position = m_ResetPosition;
+    m_Renderer->Reset();
 }
 
 void GameObject::CreateCollider()

@@ -52,3 +52,10 @@ Matrix Transform::GetWorldMatrix(Vector3 multiScale)
 
 	return scaleMatrix * rotationZ * rotationX * rotationY * translation;
 }
+
+void Transform::Reset()
+{
+	position = Vector3(0, 0, 0);
+	rotation = Vector3(0, 0, 0);
+	scale = Vector3(1, 1, 1);
+}

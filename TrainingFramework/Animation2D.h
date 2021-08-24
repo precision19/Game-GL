@@ -19,6 +19,8 @@ public:
 	void SetFPS(int);
 	void SetLoop(bool);
 	void Update(float);
+	void Reset();
+	bool End();
 	~Animation2D();
 };
 

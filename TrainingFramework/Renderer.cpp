@@ -133,6 +133,11 @@ void Renderer::SetLoop(bool)
 {
 }
 
+void Renderer::Reset()
+{
+	m_Opacity = 1.0;
+}
+
 Renderer::~Renderer()
 {
 	m_Model = NULL;

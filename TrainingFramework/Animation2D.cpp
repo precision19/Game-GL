@@ -65,7 +65,7 @@ void Animation2D::SetLoop(bool isLoop)
 
 void Animation2D::Update(float deltaTime)
 {
-	if (!m_Loop && m_CurrentSpriteId == m_Sprites.size() - 1)
+	if (!m_Loop && End())
 		return;
 
 	m_animationCurrent += deltaTime;
@@ -78,10 +78,18 @@ void Animation2D::Update(float deltaTime)
 	}
 }
 
+void Animation2D::Reset()
+{
+	m_Opacity = 1.0;
+	m_animationCurrent = 0;
+}
+
+bool Animation2D::End()
+{
+	return m_animationCurrent == m_Sprites.size() - 1;
+}
+
 Animation2D::~Animation2D()
 {
-	//m_Model = NULL;
-	//m_Texture = NULL;
-	//m_Sprites.clear();
-	//m_Shaders = NULL;
+	
 }
