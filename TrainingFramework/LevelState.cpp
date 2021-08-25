@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "LevelState.h"
 #include "EffectManager.h"
+#include "Input.h"
 
 LevelState::LevelState() 
 {
@@ -11,6 +12,76 @@ LevelState::LevelState()
 
 	m_PauseButton = NULL;
 	m_TapToStartText = NULL;
+
+	string path = "Managers/LevelBaseSM.txt";
+
+	FILE* f = fopen(path.c_str(), "r+");
+
+	if (f == NULL)
+	{
+		printf("Invalid file %s\n", path.c_str());
+		exit(1);
+	}
+
+	int amount, id;
+	float x[3], y[3], z[3];
+	char keyword[20], name[20], nameRender[20];
+
+	fscanf(f, "#Objects: %d\n", &amount);
+	for (int i = 0; i < amount; i++)
+	{
+		fscanf(f, "%s %s\n", keyword, name);
+		fscanf(f, "RENDERER %s\n", nameRender);
+		fscanf(f, "POSITION %f %f %f\n", &x[0], &y[0], &z[0]);
+		fscanf(f, "ROTATION %f %f %f\n", &x[1], &y[1], &z[1]);
+		fscanf(f, "SCALE %f %f %f\n", &x[2], &y[2], &z[2]);
+		if (strcmp(name, "TapToStart") == 0) {
+			m_TapToStartText = new Object();
+			m_TapToStartText->SetRenderer(nameRender);
+			m_TapToStartText->SetPosition(Vector3(x[0], y[0], z[0]));
+			m_TapToStartText->SetRotation(Vector3(x[1], y[1], z[1]));
+			m_TapToStartText->SetScale(Vector3(x[2], y[2], z[2]));
+		}
+		else if (strcmp(name, "PauseButton") == 0) {
+			m_PauseButton = new Button();
+			m_PauseButton->SetRenderer(nameRender);
+			m_PauseButton->SetPosition(Vector3(x[0], y[0], z[0]));
+			m_PauseButton->SetRotation(Vector3(x[1], y[1], z[1]));
+			m_PauseButton->SetScale(Vector3(x[2], y[2], z[2]));
+			m_PauseButton->SetButtonID(BUTTON_PAUSE);
+		}
+		else {
+			Button* button = new Button();
+			//button->SetRenderer(nameRender);
+			button->SetPosition(Vector3(x[0], y[0], z[0]));
+			button->SetRotation(Vector3(x[1], y[1], z[1]));
+			button->SetScale(Vector3(x[2], y[2], z[2]));
+			if (strcmp(name, "ContinueButton") == 0) {
+				button->SetButtonID(BUTTON_CONTINUE);
+				m_PauseMenu.push_back(button->Clone());
+				m_PauseMenu[m_PauseMenu.size() - 1]->SetRenderer(nameRender);
+			}
+			if (strcmp(name, "RestartButton") == 0) {
+				button->SetButtonID(BUTTON_RESTART);
+				m_PauseMenu.push_back(button->Clone());
+				m_PauseMenu[m_PauseMenu.size() - 1]->SetRenderer(nameRender);
+				m_WinMenu.push_back(button->Clone());
+				m_WinMenu[m_WinMenu.size() - 1]->SetRenderer(nameRender);
+			}
+			if (strcmp(name, "QuitButton") == 0) {
+				button->SetButtonID(BUTTON_QUIT);
+				m_PauseMenu.push_back(button->Clone());
+				m_PauseMenu[m_PauseMenu.size() - 1]->SetRenderer(nameRender);
+				m_WinMenu.push_back(button->Clone());
+				m_WinMenu[m_WinMenu.size() - 1]->SetRenderer(nameRender);
+			}
+			if (strcmp(name, "NextLevelButton") == 0) {
+				m_WinMenu.push_back(button->Clone());
+				m_WinMenu[m_WinMenu.size() - 1]->SetRenderer(nameRender);
+			}
+			delete button;
+		}
+	}
 }
 
 int LevelState::GetLevel()
@@ -334,4 +405,15 @@ LevelState::~LevelState()
 
 	for each (Object * object in m_GameObjects)
 		delete object;
+
+	delete m_TapToStartText;
+	delete m_PauseButton;
+	
+	for (int i = 0; i < m_PauseMenu.size(); i++) {
+		delete m_PauseMenu[i];
+	}
+
+	for (int i = 0; i < m_WinMenu.size(); i++) {
+		delete m_WinMenu[i];
+	}
 }

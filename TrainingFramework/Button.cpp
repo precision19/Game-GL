@@ -19,6 +19,18 @@ Button::Button(string name)
 	m_IsPressing = false;
 }
 
+Button* Button::Clone()
+{
+	Button* result = new Button();
+
+	result->m_Name = m_Name;
+	result->m_Transform = m_Transform;
+	if(m_Renderer)result->m_Renderer = m_Renderer->Clone();
+	result->m_ButtonID = m_ButtonID;
+
+	return result;
+}
+
 void Button::SetRenderer(int id)
 {
 	if (m_IdleRenderer == NULL)

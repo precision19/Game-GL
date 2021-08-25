@@ -23,6 +23,7 @@ protected:
 	virtual void OnClicked();
 public:
 	Button();
+	Button* Clone();
 	Button(string);
 	virtual void SetRenderer(int);
 	virtual void SetRenderer(string);

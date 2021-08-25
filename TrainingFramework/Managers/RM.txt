@@ -1,7 +1,7 @@
 #Models: 1
 0. Sprite
 
-#2D Textures: 66
+#2D Textures: 72
 0. Block4	REPEAT LINEAR LINEAR
 1. Bullet	REPEAT LINEAR LINEAR
 2. Player/Idle/0	REPEAT LINEAR LINEAR
@@ -68,6 +68,12 @@
 63. Block/Block_DOWN   REPEAT LINEAR LINEAR
 64. Block/Soil1        REPEAT LINEAR LINEAR
 65. Block/Soil3        REPEAT LINEAR LINEAR
+66. TapToStart 	       REPEAT LINEAR LINEAR
+67. SoundButtonOn	REPEAT LINEAR LINEAR
+68. ContinueButton	REPEAT LINEAR LINEAR
+69. RestartButton	REPEAT LINEAR LINEAR
+70. QuitButton	REPEAT LINEAR LINEAR
+71. PlayButton	REPEAT LINEAR LINEAR
 
 
 #Cube Textures: 0

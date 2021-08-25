@@ -14,6 +14,7 @@ using namespace std;
 #define BUTTON_CONTINUE -7
 #define BUTTON_NEXT_LEVEL -8
 #define BUTTON_RETURN_MAP -9
+#define BUTTON_QUIT -10
 
 class Input
 {
