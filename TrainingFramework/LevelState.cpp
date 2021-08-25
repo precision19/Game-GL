@@ -168,7 +168,7 @@ void LevelState::LoadLevel()
 	float x, y, z, speed;
 	char keyword[30], name[20];
 
-	string path = "Managers/Level" + to_string(m_LevelID) + "SM.txt";
+	string path = "Managers/LevelMap/Level" + to_string(m_LevelID) + "SM.txt";
 	FILE* fileMap = fopen(path.c_str(), "r+");
 	if (fileMap == NULL)
 	{
@@ -205,8 +205,63 @@ void LevelState::LoadLevel()
 						block->CreateCollider();
 						m_GameObjects.push_back(block);
 					}
-
-					else if (iBool == 3)
+					if (iBool == 2)
+					{
+						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
+						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK_L);
+						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
+						block->CreateCollider();
+						m_GameObjects.push_back(block);
+					}
+					if (iBool == 3)
+					{
+						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
+						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK_L_UP);
+						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
+						block->CreateCollider();
+						m_GameObjects.push_back(block);
+					}
+					if (iBool == 4)
+					{
+						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
+						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK_R);
+						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
+						block->CreateCollider();
+						m_GameObjects.push_back(block);
+					}
+					if (iBool == 5)
+					{
+						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
+						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK_R_UP);
+						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
+						block->CreateCollider();
+						m_GameObjects.push_back(block);
+					}
+					if (iBool == 6)
+					{
+						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
+						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(SOIL1);
+						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
+						block->CreateCollider();
+						m_GameObjects.push_back(block);
+					}
+					if (iBool == 7)
+					{
+						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
+						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(SOIL3);
+						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
+						block->CreateCollider();
+						m_GameObjects.push_back(block);
+					}
+					if (iBool == 8)
+					{
+						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
+						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK_DOWN);
+						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
+						block->CreateCollider();
+						m_GameObjects.push_back(block);
+					}
+					else if (iBool == 9)
 					{
 						m_Gate->SetPosition(Dungeon::GridToWorld(j, Dungeon::Height - i - 1));
 						m_GameObjects.push_back(m_Gate);
@@ -216,25 +271,6 @@ void LevelState::LoadLevel()
 						m_GameObjects.push_back(m_Player);
 					}
 
-					if (iBool == 5)
-					{
-						//GameObject* star = (GameObject*)m_StarPrefab->Clone();
-						GameObject* star = ObjectPool::GetInstance()->GetPooledObject(STAR);
-						star->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
-						star->CreateCollider();
-						m_GameObjects.push_back(star);
-						//star->GetRenderer()->SetOpacity(0.0f);
-						//EffectManager::GetInstance()->o.push_back(star);
-					}
-
-					if (iBool == 7)
-					{
-						m_Chest->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 0));
-						m_Chest->CreateCollider();
-						m_Chest->GetRenderer()->SetOpacity(0.0f);
-						m_GameObjects.push_back(m_Chest);
-						
-					}
 				}
 			}
 		}
@@ -309,6 +345,19 @@ void LevelState::LoadLevel()
 				spinner->CreateCollider();
 				m_GameObjects.push_back(spinner);
 			}		
+		}
+
+		else if (strcmp(name, "Star") == 0)
+		{
+		fscanf(fileMap, "NUMBERSTARS %d\n", &iBool);
+		for (int i = 0; i < iBool; i++)
+		{
+			Star* star = (Star*)ObjectPool::GetInstance()->GetPooledObject(STAR);
+			fscanf(fileMap, "POSITION %f %f\n", &x, &y);
+			star->SetPosition(Dungeon::GirdToWord(x, y, 0));
+			star->CreateCollider();
+			m_GameObjects.push_back(star);
+		}
 		}
 		else
 		{

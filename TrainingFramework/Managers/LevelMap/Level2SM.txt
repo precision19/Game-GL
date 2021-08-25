@@ -1,0 +1,22 @@
+#Objects: 3
+1. DungeonBackground
+RENDERER DungeonBackground
+POSITION 0 0 -2
+ROTATION 0 0 0
+SCALE 1 1 1
+
+2. Dungeon
+7 8 8 8 8 8 8 8 8 8 8 8 8 8 8 7
+4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2
+4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2
+7 1 1 1 5 0 0 0 0 0 0 3 1 1 1 6
+6 7 7 7 4 0 0 0 0 0 0 2 7 7 7 6
+6 7 7 7 4 0 0 3 5 0 0 2 7 7 7 6
+7 8 8 8 4 0 0 2 4 0 0 2 8 8 8 6
+4 0 0 0 0 0 0 2 4 0 0 0 0 0 0 2
+4 0 9 0 0 0 0 2 4 0 0 0 0 0 0 2
+6 1 1 1 1 1 1 7 7 1 1 1 1 1 1 6
+
+3. SawBlade
+NUMBERBLADES 1
+POSITION 3 3
