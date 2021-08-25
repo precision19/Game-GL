@@ -17,6 +17,7 @@
 #define BULLET "Bullet"
 #define GUN "Gun"
 #define GUARD "Guard"
+#define DYNAMIC_BLADE "DynamicBlade"
 #define SPINNER "Spinner"
 #define SAW_BLADE "SawBlade"
 #define CHASER "Chaser"

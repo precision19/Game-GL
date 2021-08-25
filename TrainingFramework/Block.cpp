@@ -25,7 +25,6 @@ void Block::SetRenderer(int D, int T, int N , int B)
 	}
 	else if (count == 3)
 	{
-		printf("%d", T);
 		if (B == 0)
 			SetRenderer(2);
 		else if (N == 0)

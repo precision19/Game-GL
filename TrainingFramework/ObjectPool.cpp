@@ -125,7 +125,7 @@ ObjectPool::ObjectPool()
 			guard->SetRenderer(name);
 			fscanf(f, "SPEED %d\n", &number);
 			guard->SetSpeed(number);
-
+			guard->SetScale(Vector3(1.5, 1.5, 1.5));
 			prefab = guard;
 		}
 		else if (strcmp(type, SAW_BLADE) == 0)
@@ -135,6 +135,19 @@ ObjectPool::ObjectPool()
 			sawBlade->SetCollider(number);
 			fscanf(f, "RENDERER %s\n", name);
 			sawBlade->SetRenderer(name);
+			sawBlade->SetScale(Vector3(0.1, 0.1, 0.1));
+
+			prefab = sawBlade;
+		}
+		else if (strcmp(type, DYNAMIC_BLADE) == 0)
+		{
+			DynamicBlade* sawBlade = new DynamicBlade();
+			fscanf(f, "COLLIDER_SIZE %d\n", &number);
+			sawBlade->SetCollider(number);
+			fscanf(f, "RENDERER %s\n", name);
+			sawBlade->SetRenderer(name);
+			fscanf(f, "SPEED %d\n", &number);
+			sawBlade->SetSpeed(number);
 			sawBlade->SetScale(Vector3(0.1, 0.1, 0.1));
 
 			prefab = sawBlade;

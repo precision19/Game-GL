@@ -240,6 +240,23 @@ void LevelState::LoadLevel()
 			}
 		}
 
+		else if (strcmp(name, "DynamicBlade") == 0)
+		{
+			fscanf(fileMap, "NUMBERBLADES %d\n", &iBool);
+			printf("%d", iBool);
+			for (int i = 0; i < iBool; i++)
+			{
+				DynamicBlade* blade = (DynamicBlade*)ObjectPool::GetInstance()->GetPooledObject(DYNAMIC_BLADE);
+				fscanf(fileMap, "POSITIONSTART %f %f\n", &x, &y);
+				blade->SetPosition(Dungeon::GirdToWord(x, y, 0));
+				blade->SetPositionStart(Dungeon::GirdToWord(x, y, 0));
+				fscanf(fileMap, "POSITIONEND %f %f\n", &x, &y);
+				blade->SetPositionEnd(Dungeon::GirdToWord(x, y, 0));
+				blade->CreateCollider();
+				m_GameObjects.push_back(blade);
+			}
+		}
+
 		else if (strcmp(name, "Guard") == 0)
 		{
 			fscanf(fileMap, "NUMBERGUARDS %d\n", &iBool);
