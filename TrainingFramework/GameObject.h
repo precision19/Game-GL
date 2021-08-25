@@ -6,6 +6,13 @@
 #define TREASURE_CHEST "TreasureChest"
 #define GATE "Gate"
 #define BLOCK "Block"
+#define BLOCK_L "Block_L"
+#define BLOCK_L_UP "Block_L_Up"
+#define BLOCK_R "Block_R"
+#define BLOCK_R_UP "Block_R_Up"
+#define SOIL1 "Soil1"
+#define SOIL3 "Soil3"
+#define BLOCK_DOWN "Block_Down"
 #define STAR "Star"
 #define BULLET "Bullet"
 #define GUN "Gun"
@@ -13,6 +20,7 @@
 #define SPINNER "Spinner"
 #define SAW_BLADE "SawBlade"
 #define CHASER "Chaser"
+
 
 class GameObject :
     public Object

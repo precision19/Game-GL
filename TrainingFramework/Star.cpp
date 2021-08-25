@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Star.h"
+#include "AudioManager.h"
 
 Star::Star()
 {
@@ -63,6 +64,7 @@ void Star::OnColliderEnter(GameObject* other)
 	{
 		if (other->m_Name == PLAYER)
 		{
+			AudioManager::GetInstance()->PlaySoundEffect("Star", false, 100.0f);
 			isCollisted = true;
 			isCollistedOneTime = true;
 			EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_SCORE);

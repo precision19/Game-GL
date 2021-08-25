@@ -1,7 +1,7 @@
 #Models: 1
 0. Sprite
 
-#2D Textures: 59
+#2D Textures: 66
 0. Block4	REPEAT LINEAR LINEAR
 1. Bullet	REPEAT LINEAR LINEAR
 2. Player/Idle/0	REPEAT LINEAR LINEAR
@@ -61,6 +61,14 @@
 56. Fly/7     REPEAT LINEAR LINEAR
 57. LevelButtonOnLock   REPEAT LINEAR LINEAR
 58. Gem REPEAT LINEAR LINEAR
+59. Block/Block_L      REPEAT LINEAR LINEAR
+60. Block/Block_L_Up   REPEAT LINEAR LINEAR
+61. Block/Block_R      REPEAT LINEAR LINEAR
+62. Block/Block_R_Up   REPEAT LINEAR LINEAR
+63. Block/Block_DOWN   REPEAT LINEAR LINEAR
+64. Block/Soil1        REPEAT LINEAR LINEAR
+65. Block/Soil3        REPEAT LINEAR LINEAR
+
 
 #Cube Textures: 0
 

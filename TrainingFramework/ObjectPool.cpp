@@ -32,7 +32,7 @@ ObjectPool::ObjectPool()
 		printf("Invalid file %s\n", "Managers/GameObjectPrefab.txt");
 		exit(1);
 	}
-	char keyword[20], name[20], type[20];
+	char keyword[20], name[20], type[20], enums[20];
 	int numberOfPrefabs, number, amount;
 	fscanf(f, "#PrefabObject: %d\n", &numberOfPrefabs);
 
@@ -81,16 +81,6 @@ ObjectPool::ObjectPool()
 			treasureChest->SetRenderer(name);
 
 			prefab = treasureChest;
-		}
-		else if (strcmp(type, BLOCK) == 0)
-		{
-			Block* block = new Block();
-			fscanf(f, "COLLIDER_SIZE %d\n", &number);
-			block->SetCollider(number);
-			fscanf(f, "RENDERER %s\n", name);
-			block->SetRenderer(name);
-
-			prefab = block;
 		}
 		else if (strcmp(type, STAR) == 0)
 		{
@@ -171,6 +161,86 @@ ObjectPool::ObjectPool()
 			spinner->SetSpeed(number);
 
 			prefab = spinner;
+		}
+		else if (strcmp(type, BLOCK) == 0)
+		{
+			Block* block = new Block();
+			fscanf(f, "COLLIDER_SIZE %d\n", &number);
+			block->SetCollider(number);
+			fscanf(f, "RENDERER %s\n", name);
+			block->SetRenderer(name);
+
+			prefab = block;
+		}
+		else if (strcmp(type, BLOCK_L) == 0)
+		{
+			Block* block = new Block();
+			fscanf(f, "COLLIDER_SIZE %d\n", &number);
+			block->SetCollider(number);
+			fscanf(f, "RENDERER %s\n", name);
+			block->SetRenderer(name);
+
+			prefab = block;
+		}
+		else if (strcmp(type, BLOCK_L_UP) == 0)
+		{
+			Block* block = new Block();
+			fscanf(f, "COLLIDER_SIZE %d\n", &number);
+			block->SetCollider(number);
+			fscanf(f, "RENDERER %s\n", name);
+			block->SetRenderer(name);
+
+			prefab = block;
+		}
+		else if (strcmp(type, BLOCK_R) == 0)
+		{
+			Block* block = new Block();
+			fscanf(f, "COLLIDER_SIZE %d\n", &number);
+			block->SetCollider(number);
+			fscanf(f, "RENDERER %s\n", name);
+			block->SetRenderer(name);
+
+			prefab = block;
+		}
+		else if (strcmp(type, BLOCK_R_UP) == 0)
+		{
+			Block* block = new Block();
+			fscanf(f, "COLLIDER_SIZE %d\n", &number);
+			block->SetCollider(number);
+			fscanf(f, "RENDERER %s\n", name);
+			block->SetRenderer(name);
+
+			prefab = block;
+		}
+		else if (strcmp(type, BLOCK_DOWN) == 0)
+		{
+			Block* block = new Block();
+			fscanf(f, "COLLIDER_SIZE %d\n", &number);
+			block->SetCollider(number);
+			fscanf(f, "RENDERER %s\n", name);
+			block->SetRenderer(name);
+
+			prefab = block;
+		}
+		else if (strcmp(type, SOIL1) == 0)
+		{
+			Block* block = new Block();
+			fscanf(f, "COLLIDER_SIZE %d\n", &number);
+			block->SetCollider(number);
+			fscanf(f, "RENDERER %s\n", name);
+			block->SetRenderer(name);
+
+			prefab = block;
+		}
+		else if (strcmp(type, SOIL3) == 0)
+		{
+			Block* block = new Block();
+			fscanf(f, "COLLIDER_SIZE %d\n", &number);
+			block->SetCollider(number);
+			fscanf(f, "RENDERER %s\n", name);
+			block->SetRenderer(name);
+
+			prefab = block;
 		}
 		else
 		{

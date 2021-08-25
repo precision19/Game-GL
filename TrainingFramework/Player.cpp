@@ -173,11 +173,13 @@ void Player::OnColliderEnter(GameObject* other)
 {
 	if (other->m_Name == SAW_BLADE || other->m_Name == GUARD || other->m_Name == CHASER || other->GetName() == SPINNER)
 	{
+		AudioManager::GetInstance()->PlaySoundEffect("Hit", false, 100.0f);
 		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_DIE);
 	}
 
 	if (other->m_Name == TREASURE_CHEST)
 	{
+		AudioManager::GetInstance()->PlaySoundEffect("ChestOpen", false, 100.0f);
 		FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_WIN);
 	}
 	/*if (other->GetName() == SAW_BLADE) {
@@ -237,7 +239,7 @@ void Player::HandleJumpAndSlide() {
 				m_Collider->SetVelocity(Vector2(0.0, m_JumpForce));
 
 			onTheGround = 0;
-			AudioManager::GetInstance()->PlaySoundEffect("Jump", false);
+			AudioManager::GetInstance()->PlaySoundEffect("Jump", false, 100.0f);
 			//Input::SetTouchStatus(false);
 			m_ReadyForInput = false;
 		}
@@ -247,7 +249,7 @@ void Player::HandleJumpAndSlide() {
 		//Input::SetTouchStatus(false);
 		m_ReadyForInput = false;
 		m_Collider->SetVelocity(Vector2(0.0, m_JumpForce));
-		AudioManager::GetInstance()->PlaySoundEffect("Jump", false);
+		AudioManager::GetInstance()->PlaySoundEffect("Jump", false, 100.0f);
 		SetSpeed(-m_SpeedX);
 	}
 	else if (canSlide && m_Collider->GetVelocity().y < 0)

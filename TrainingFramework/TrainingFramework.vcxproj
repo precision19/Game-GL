@@ -203,6 +203,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Readme.doc" />
+    <None Include="Sounds\Level.ogg" />
+    <None Include="Sounds\Map.ogg" />
+    <None Include="Sounds\Menu.ogg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">
@@ -287,6 +290,19 @@
     <Text Include="Managers\PlayerPref.txt" />
     <Text Include="Managers\PM.txt" />
     <Text Include="Managers\RM.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Sounds\Ambiance.wav" />
+    <Media Include="Sounds\ChestOpen.wav" />
+    <Media Include="Sounds\Click.wav" />
+    <Media Include="Sounds\Die.wav" />
+    <Media Include="Sounds\Gun.wav" />
+    <Media Include="Sounds\Hit.wav" />
+    <Media Include="Sounds\Jump.wav" />
+    <Media Include="Sounds\Saw1.wav" />
+    <Media Include="Sounds\Saw2.wav" />
+    <Media Include="Sounds\Saw3.wav" />
+    <Media Include="Sounds\Star.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
