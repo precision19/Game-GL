@@ -167,78 +167,12 @@ ObjectPool::ObjectPool()
 			Block* block = new Block();
 			fscanf(f, "COLLIDER_SIZE %d\n", &number);
 			block->SetCollider(number);
-			fscanf(f, "RENDERER %s\n", name);
-			block->SetRenderer(name);
-
-			prefab = block;
-		}
-		else if (strcmp(type, BLOCK_L) == 0)
-		{
-			Block* block = new Block();
-			fscanf(f, "COLLIDER_SIZE %d\n", &number);
-			block->SetCollider(number);
-			fscanf(f, "RENDERER %s\n", name);
-			block->SetRenderer(name);
-
-			prefab = block;
-		}
-		else if (strcmp(type, BLOCK_L_UP) == 0)
-		{
-			Block* block = new Block();
-			fscanf(f, "COLLIDER_SIZE %d\n", &number);
-			block->SetCollider(number);
-			fscanf(f, "RENDERER %s\n", name);
-			block->SetRenderer(name);
-
-			prefab = block;
-		}
-		else if (strcmp(type, BLOCK_R) == 0)
-		{
-			Block* block = new Block();
-			fscanf(f, "COLLIDER_SIZE %d\n", &number);
-			block->SetCollider(number);
-			fscanf(f, "RENDERER %s\n", name);
-			block->SetRenderer(name);
-
-			prefab = block;
-		}
-		else if (strcmp(type, BLOCK_R_UP) == 0)
-		{
-			Block* block = new Block();
-			fscanf(f, "COLLIDER_SIZE %d\n", &number);
-			block->SetCollider(number);
-			fscanf(f, "RENDERER %s\n", name);
-			block->SetRenderer(name);
-
-			prefab = block;
-		}
-		else if (strcmp(type, BLOCK_DOWN) == 0)
-		{
-			Block* block = new Block();
-			fscanf(f, "COLLIDER_SIZE %d\n", &number);
-			block->SetCollider(number);
-			fscanf(f, "RENDERER %s\n", name);
-			block->SetRenderer(name);
-
-			prefab = block;
-		}
-		else if (strcmp(type, SOIL1) == 0)
-		{
-			Block* block = new Block();
-			fscanf(f, "COLLIDER_SIZE %d\n", &number);
-			block->SetCollider(number);
-			fscanf(f, "RENDERER %s\n", name);
-			block->SetRenderer(name);
-
-			prefab = block;
-		}
-		else if (strcmp(type, SOIL3) == 0)
-		{
-			Block* block = new Block();
-			fscanf(f, "COLLIDER_SIZE %d\n", &number);
-			block->SetCollider(number);
-			fscanf(f, "RENDERER %s\n", name);
-			block->SetRenderer(name);
+			fscanf(f, "NUMBERRENDERERS %d\n", &number);
+			for (int i = 0; i < number; i++)
+			{
+				fscanf(f, "RENDERER %s\n", name);
+				block->SetListRenderer(name);
+			}
 
 			prefab = block;
 		}

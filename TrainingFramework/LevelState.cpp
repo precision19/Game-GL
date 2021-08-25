@@ -56,13 +56,26 @@ void LevelState::LoadLevel()
 
 	fscanf(fileMap, "#Objects: %d\n", &amount);
 
+	int dungeon[10][16] = {
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	};
+
 	for (int i = 0; i < amount; i++)
 	{
 		fscanf(fileMap, "%s %s\n", keyword, name);
 
 		if (strcmp(name, "Dungeon") == 0)
 		{
-			for (int i = -1; i <= Dungeon::Height; i++)
+			for (int k = -1; k <= Dungeon::Height; k++)
 			{
 				for (int j = -1; j <= Dungeon::Width; j++)
 				{
@@ -70,85 +83,49 @@ void LevelState::LoadLevel()
 					{
 						fscanf(fileMap, "%d\n", &iBool);
 					}
-					else 
+					else
 					{
 						fscanf(fileMap, "%d ", &iBool);
 					}
 
 					if (iBool == 1)
 					{
-						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
-						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK);
-						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
-						block->CreateCollider();
-						m_GameObjects.push_back(block);
-					}
-					if (iBool == 2)
-					{
-						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
-						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK_L);
-						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
-						block->CreateCollider();
-						m_GameObjects.push_back(block);
-					}
-					if (iBool == 3)
-					{
-						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
-						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK_L_UP);
-						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
-						block->CreateCollider();
-						m_GameObjects.push_back(block);
-					}
-					if (iBool == 4)
-					{
-						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
-						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK_R);
-						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
-						block->CreateCollider();
-						m_GameObjects.push_back(block);
-					}
-					if (iBool == 5)
-					{
-						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
-						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK_R_UP);
-						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
-						block->CreateCollider();
-						m_GameObjects.push_back(block);
-					}
-					if (iBool == 6)
-					{
-						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
-						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(SOIL1);
-						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
-						block->CreateCollider();
-						m_GameObjects.push_back(block);
-					}
-					if (iBool == 7)
-					{
-						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
-						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(SOIL3);
-						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
-						block->CreateCollider();
-						m_GameObjects.push_back(block);
-					}
-					if (iBool == 8)
-					{
-						//GameObject* block = (GameObject*)m_BlockPrefab->Clone();
-						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK_DOWN);
-						block->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - i - 1, 1));
-						block->CreateCollider();
-						m_GameObjects.push_back(block);
+						dungeon[k + 1][j + 1] = 1;
 					}
 					else if (iBool == 9)
 					{
-						m_Gate->SetPosition(Dungeon::GridToWorld(j, Dungeon::Height - i - 1));
+						m_Gate->SetPosition(Dungeon::GridToWorld(j, Dungeon::Height - k - 1));
 						m_GameObjects.push_back(m_Gate);
-
-						m_Player->SetPosition(Dungeon::GridToWorld(j, Dungeon::Height - i - 1));
+						m_Player->SetPosition(Dungeon::GridToWorld(j, Dungeon::Height - k - 1));
 						m_Player->CreateCollider();
 						m_GameObjects.push_back(m_Player);
 					}
+					else if (iBool == 8)
+					{
+						m_Chest->SetPosition(Dungeon::GirdToWord(j, Dungeon::Height - k - 1, 1));
+						m_Chest->CreateCollider();
+						m_GameObjects.push_back(m_Chest);
+					}
+				}
+			}
 
+			for (int k = 0; k < 10; k++)
+			{
+				for (int j = 0; j < 16; j++)
+				{
+					if (dungeon[k][j] == 1)
+					{
+						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK);
+						block->SetPosition(Dungeon::GirdToWord(j - 1, Dungeon::Height - k, 1));
+						block->CreateCollider();
+						int B = (k == 0) ? k : k - 1;
+						int N = (k == 9) ? k : k + 1;
+						int T = (j == 0) ? j : j - 1;
+						int D = (j == 15) ? j : j + 1;
+						((Block*)block)->SetRenderer(dungeon[k][D], dungeon[k][T], dungeon[N][j], dungeon[B][j]);
+						//													 dungeon[B][D], dungeon[N][D], dungeon[B][T], dungeon[N][T]);
+						m_GameObjects.push_back(block);
+					}
 				}
 			}
 		}

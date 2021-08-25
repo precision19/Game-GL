@@ -4,6 +4,7 @@
 Object::Object()
 {
 	m_Name = "Object";
+	m_Renderer = NULL;
 }
 
 Object::Object(string name)
