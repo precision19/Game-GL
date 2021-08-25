@@ -31,6 +31,7 @@ protected:
 	TreasureChest* m_Chest;
 
 	Object* m_TapToStartText;
+	Button* m_PauseButton;
 	vector<Object*> m_Backgrounds;
 	vector<GameObject*> m_GameObjects;
 	vector<Object*> m_PauseMenu;

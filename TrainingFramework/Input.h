@@ -10,6 +10,10 @@ using namespace std;
 #define BUTTON_MENU -3
 #define BUTTON_START -4
 #define BUTTON_PAUSE -5
+#define BUTTON_RESTART -6
+#define BUTTON_CONTINUE -7
+#define BUTTON_NEXT_LEVEL -8
+#define BUTTON_RETURN_MAP -9
 
 class Input
 {
