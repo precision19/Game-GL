@@ -320,6 +320,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Readme.doc" />
+    <None Include="Sounds\Level.ogg" />
+    <None Include="Sounds\Map.ogg" />
+    <None Include="Sounds\Menu.ogg" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\DEAD\Dead__0.tga" />
@@ -398,5 +401,40 @@
     <Text Include="Managers\PM.txt" />
     <Text Include="Managers\RM.txt" />
     <Text Include="Managers\MenuSM.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Sounds\Ambiance.wav">
+      <Filter>Win32Res</Filter>
+    </Media>
+    <Media Include="Sounds\ChestOpen.wav">
+      <Filter>Win32Res</Filter>
+    </Media>
+    <Media Include="Sounds\Click.wav">
+      <Filter>Win32Res</Filter>
+    </Media>
+    <Media Include="Sounds\Die.wav">
+      <Filter>Win32Res</Filter>
+    </Media>
+    <Media Include="Sounds\Gun.wav">
+      <Filter>Win32Res</Filter>
+    </Media>
+    <Media Include="Sounds\Hit.wav">
+      <Filter>Win32Res</Filter>
+    </Media>
+    <Media Include="Sounds\Jump.wav">
+      <Filter>Win32Res</Filter>
+    </Media>
+    <Media Include="Sounds\Saw1.wav">
+      <Filter>Win32Res</Filter>
+    </Media>
+    <Media Include="Sounds\Saw2.wav">
+      <Filter>Win32Res</Filter>
+    </Media>
+    <Media Include="Sounds\Saw3.wav">
+      <Filter>Win32Res</Filter>
+    </Media>
+    <Media Include="Sounds\Star.wav">
+      <Filter>Win32Res</Filter>
+    </Media>
   </ItemGroup>
 </Project>

@@ -75,13 +75,7 @@ std::string AudioManager::GetMusicStatus()
 void AudioManager::PlayBackgroundMusic(string name)
 {
 	musicFile = "Sounds/" + name + ".ogg";
-	PlayMusic();
-}
-
-
-void AudioManager::PlayMusic()
-{
-	if (!music.openFromFile(musicFile)) 
+	if (!music.openFromFile(musicFile))
 	{
 		std::cout << "Error: Can not play music in file " << musicFile << std::endl;
 	}
@@ -90,30 +84,21 @@ void AudioManager::PlayMusic()
 	std::cout << "Playing music in file: " << musicFile << std::endl;
 }
 
-void AudioManager::StopMusic() 
-{
-	this->music.stop();
-}
+
 //Sound effect
-void AudioManager::SetSoundFile(string name)
-{
+void AudioManager::PlaySoundEffect(string name, bool isLoop, float volume) {
 	soundFile = "Sounds/" + name + ".wav";
-	std::cout << this->soundFile << std::endl;
+	SoundData tmpData;
+	soundList.push_back(tmpData);
+	soundList.back().soundBuffer.loadFromFile(soundFile);
+	soundList.back().sound.setBuffer(soundList.back().soundBuffer);
+	soundList.back().sound.setLoop(isLoop);
+	soundList.back().sound.setVolume(volume);
+	soundList.back().sound.play();
 }
 
-void AudioManager::PlaySound(bool isLoop) {
-	if (!soundBuffer.loadFromFile(soundFile)) {
-		std::cout << "Error: Can not play sound in file " << soundFile << std::endl;
+void AudioManager::CheckPlay() {
+	for (int i = 0; i < soundList.size(); i++) {
+		if (soundList[i].sound.getStatus() != 2) soundList.erase(soundList.begin() + i);
 	}
-	sound.setBuffer(soundBuffer);
-	if (isLoop) sound.setLoop(true);
-	sound.play();
-	std::cout << "Playing sound in file: " << soundFile << std::endl;
 }
-
-void AudioManager::PlaySoundEffect(string name, bool isLoop)
-{
-	soundFile = "Sounds/" + name + ".wav";
-	PlaySound(isLoop);
-}
-

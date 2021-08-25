@@ -163,7 +163,7 @@ void LevelState::LoadLevel()
 	m_Player = (Player*)ObjectPool::GetInstance()->GetPooledObject(PLAYER);
 	m_Gate = ObjectPool::GetInstance()->GetPooledObject(GATE);
 	m_Chest = (TreasureChest*)ObjectPool::GetInstance()->GetPooledObject(TREASURE_CHEST);
-
+	AudioManager::GetInstance()->PlaySoundEffect("Ambiance", true, 20.0f);
 	int amount, id, iBool, numBullets;
 	float x, y, z, speed;
 	char keyword[30], name[20];
