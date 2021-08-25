@@ -16,6 +16,7 @@
 #include "Chaser.h"
 #include "ObjectPool.h"
 #include "PlayerPrefs.h"
+#include "DynamicBlade.h"
 
 class LevelState : public StateBase 
 {

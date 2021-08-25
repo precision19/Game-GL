@@ -13,6 +13,7 @@
 #include "SawBlade.h"
 #include "Chaser.h"
 #include "SpinnerFly.h"
+#include "DynamicBlade.h"
 
 class ObjectPool
 {

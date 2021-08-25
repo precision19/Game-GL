@@ -15,13 +15,13 @@ LevelID: 5
 Star: 3
 
 LevelID: 6
-Star: 0
+Star: 2
 
 LevelID: 7
-Star: -1
+Star: 3
 
 LevelID: 8
-Star: -1
+Star: 0
 
 LevelID: 9
 Star: -1
