@@ -100,6 +100,8 @@ void Object::Update(float deltaTime)
 
 Object::~Object()
 {	
-	if (m_Renderer != NULL)
+	if (m_Renderer != NULL) {
 		delete m_Renderer;
+		m_Renderer = NULL;
+	}
 }

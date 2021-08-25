@@ -25,64 +25,32 @@ void EffectManager::DestroyInstance()
 }
 
 EffectManager::EffectManager() {
-    string path = "Managers/EM.txt";
-    FILE* f = fopen(path.c_str(), "r+");
-    if (f == NULL)
-    {
-        printf("Invalid file %s\n", path.c_str());
-        exit(1);
-    }
-    int amount, id;
-    float x, y, z;
-    char name[20];
-    float timeMove, timeFaded;
-    int clearly;
-    Vector3 destination;
     
-    fscanf(f, "#Effects: %d\n", &amount);
-    for (int i = 0; i < amount; i++)
-    {
-        fscanf(f, "ID %d\n", &id);
-
-        Object* object = new Object();
-        int numRender;
-        fscanf(f, "RENDER %d\n", &numRender);
-        m_NumRenders.push_back(numRender);
-        for (int j = 0; j < numRender; j++) {
-            fscanf(f, "RENDERER %s\n", name);
-            if(j==0)object->SetRenderer(name);
-            m_Animations.push_back({ name,i });
-        }
-        m_IndexAnimations.push_back(0);
-        fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
-        object->SetPosition(Vector3(x, y, z));
-        fscanf(f, "ROTATION %f %f %f\n", &x, &y, &z);
-        object->SetRotation(Vector3(x, y, z));
-        fscanf(f, "SCALE %f %f %f\n", &x, &y, &z);
-        object->SetScale(Vector3(x, y, z));
-        fscanf(f, "DESTINATION %f %f %f\n", &x, &y, &z);
-        destination = Vector3(x, y, z);
-        fscanf(f, "TIMEMOVE %f\n", &timeMove);
-        fscanf(f, "TIMEFADED %f\n", &timeFaded);
-        fscanf(f, "CLEARLY %d\n", &clearly);
-        if (clearly == 1) {
-            object->GetRenderer()->SetOpacity(0.0f);
-        }
-        else {
-            object->GetRenderer()->SetOpacity(1.0f);
-        }
-        AddEffect(object, destination, timeMove, timeFaded, clearly);
-    }
 }
 
-void EffectManager::AddEffect(Object* object, Vector3 destination, float timeMove, float timeFaded, bool clearly) {
-    m_objects.push_back(object);
-    Effect* e = new Effect();
-    e->destination = destination;
-    e->timeFaded = timeFaded;
-    e->timeMove = timeMove;
-    e->clearly = clearly;
-    m_effects.push_back(e);
+void EffectManager::AddMoveEffect(Object* object, Vector3 destination, float timeRemain) {
+    MoveEffect* me = new MoveEffect();
+    me->object = object;
+    me->destination = destination;
+    me->timeRemain = timeRemain;
+    m_MoveEffects.push_back(me);
+}
+
+void EffectManager::AddFadedEffect(Object* object, float targetOpacity, float timeRemain) {
+    FadedEffect* fe = new FadedEffect();
+    fe->object = object;
+    fe->targetOpacity = targetOpacity;
+    fe->timeRemain = timeRemain;
+    m_FadedEffects.push_back(fe);
+}
+
+void EffectManager::AddAnimationEffect(Object* object, vector<string>& nameAnimation) {
+    AnimationEffect* ae = new AnimationEffect();
+    ae->object = object;
+    for (int i = 0; i < nameAnimation.size(); i++) {
+        ae->nameAnimation.push_back({ nameAnimation[i], 0 });
+    }
+    m_AnimationEffects.push_back(ae);
 }
 
 void EffectManager::MoveObject(Object* object, Vector3 destination, float time, float deltaTime) {
@@ -95,81 +63,89 @@ void EffectManager::MoveObject(Object* object, Vector3 destination, float time, 
 }
 
 void EffectManager::Update(float deltaTime) {
-    int count = 0;
-    for (int i = 0; i < m_effects.size(); i++) {
-        if (m_effects[i]->timeMove > 0) {
-            MoveObject(m_objects[i], m_effects[i]->destination, m_effects[i]->timeMove, deltaTime);
-            m_effects[i]->timeMove -= deltaTime;
-            if (m_effects[i]->timeMove < 0)  m_effects[i]->timeMove = 0;
+    //int count = 0;
+    for (int i = 0; i < m_MoveEffects.size(); i++) {
+        if (m_MoveEffects[i]->timeRemain > 0) {
+            MoveObject(m_MoveEffects[i]->object, m_MoveEffects[i]->destination, m_MoveEffects[i]->timeRemain, deltaTime);
+            m_MoveEffects[i]->timeRemain -= deltaTime;
+            if (m_MoveEffects[i]->timeRemain < 0)  m_MoveEffects[i]->timeRemain = 0;
         }
-        else count++;
-        if (m_effects[i]->timeFaded > 0) {
-            Faded(m_objects[i], m_effects[i]->timeFaded, deltaTime, m_effects[i]->clearly);
-            m_effects[i]->timeFaded -= deltaTime;
-            if (m_effects[i]->timeFaded < 0)  m_effects[i]->timeFaded = 0;
+        //else count++;
+    }
+    for(int i=0; i<m_FadedEffects.size(); i++){
+        if (m_FadedEffects[i]->timeRemain > 0) {
+            Faded(m_FadedEffects[i]->object, m_FadedEffects[i]->timeRemain, deltaTime, m_FadedEffects[i]->targetOpacity);
+            m_FadedEffects[i]->timeRemain -= deltaTime;
+            if (m_FadedEffects[i]->timeRemain < 0)  m_FadedEffects[i]->timeRemain = 0;
         }
-        else count++;
+        //else count++;
     }
     LoadAnimation();
 //    printf("%d\n", count);
-    if (count == 2 * m_effects.size()) {
+    /*if (count == 2 * m_MoveEffects.size()) {
         EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_EFFECT_DONE);
-    }
+    }*/
 }
 
-void EffectManager::Faded(Object* object, float time, float deltaTime, bool clearly) {
+void EffectManager::Faded(Object* object, float time, float deltaTime, float targetOpacity) {
     if (time <= deltaTime) {
-        object->GetRenderer()->SetOpacity((float)clearly);
+        object->GetRenderer()->SetOpacity((float)targetOpacity);
         return;
     }
     float opacity = object->GetRenderer()->GetOpacity();
-    if (clearly) {
-        float speed = (1.0f - opacity) / time;
-        object->GetRenderer()->SetOpacity(opacity + speed * deltaTime);
-    }
-    else {
-        float speed = opacity / time;
-        object->GetRenderer()->SetOpacity(opacity - speed * deltaTime);
-    }
-    //printf("%f\n", opacity);
+    float speed = (targetOpacity - opacity) / time;
+    object->GetRenderer()->SetOpacity(opacity + speed * deltaTime);
 }
 
 void EffectManager::Draw() {
-    for (int i = 0; i < m_objects.size(); i++) {
-        if (m_objects[i] != NULL) {
-            m_objects[i]->Draw();
+    //("%d %d %d\n", m_AnimationEffects.size(), m_FadedEffects.size(), m_MoveEffects.size());
+    for (int i = 0; i < m_MoveEffects.size(); i++) {
+        if (m_MoveEffects[i]->object != NULL) {
+            m_MoveEffects[i]->object->Draw();
+        }
+    }
+    for (int i = 0; i < m_FadedEffects.size(); i++) {
+        if (m_FadedEffects[i]->object != NULL) {
+            m_FadedEffects[i]->object->Draw();
+        }
+    }
+    for (int i = 0; i < m_AnimationEffects.size(); i++) {
+        if (m_AnimationEffects[i]->object != NULL) {
+            m_AnimationEffects[i]->object->Draw();
         }
     }
 }
 
 void EffectManager::LoadAnimation() {
-    int tmp = -1;
-    int indexObject = -1;
-    for (int i = 0; i < m_Animations.size(); i++) {
-        if (m_Animations[i].second != indexObject) {
-            tmp = 0;
+    for (int i = 0; i < m_AnimationEffects.size(); i++) {
+        for (int j = 0; j < m_AnimationEffects[i]->nameAnimation.size(); j++) {
+            if (m_AnimationEffects[i]->nameAnimation[j].second == 0) {
+                m_AnimationEffects[i]->nameAnimation[j].second = 1;
+                m_AnimationEffects[i]->object->SetRenderer(m_AnimationEffects[i]->nameAnimation[j].first);
+                break;
+            }
+            /*else {
+                m_AnimationEffects[i]->nameAnimation[j].second = 0;
+            }*/
         }
-        indexObject = m_Animations[i].second;
-        if (m_IndexAnimations[indexObject] == tmp) {
-            m_IndexAnimations[indexObject]++;
-            m_IndexAnimations[indexObject] = m_IndexAnimations[indexObject] % m_NumRenders[indexObject];
-            delete m_objects[indexObject]->GetRenderer();
-            m_objects[indexObject]->SetRenderer(m_Animations[i].first);
-            tmp = -100;
-        }
-        tmp++;
     }
 }
 
 void EffectManager::DestroyAllEffect() {
-    for (int i = 0; i < m_effects.size(); i++) {
-        delete m_effects[i];
-        if (m_objects[i])delete m_objects[i];
+    for (int i = 0; i < m_AnimationEffects.size(); i++) {
+        //if (m_AnimationEffects[i]->object) {
+        //    //delete m_AnimationEffects[i]->object;
+        //}
+        delete m_AnimationEffects[i];
     }
-    m_effects.clear();
-    m_objects.clear();
-    int indexObject = -1;
-
+    for (int i = 0; i < m_MoveEffects.size(); i++) {
+        //if (m_MoveEffects[i]->object != nullptr) delete m_MoveEffects[i]->object;
+        delete m_MoveEffects[i];
+    }
+    for (int i = 0; i < m_FadedEffects.size(); i++) {
+        //if (m_FadedEffects[i]->object != NULL) delete m_FadedEffects[i]->object;
+        delete m_FadedEffects[i];
+    }
 }
 
 EffectManager::~EffectManager() {

@@ -48,7 +48,7 @@ void Draw ( ESContext *esContext )
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	SceneManager::GetInstance()->Draw();
-	if (!EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_EFFECT_DONE))
+	//if (!EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_EFFECT_DONE))
 	EffectManager::GetInstance()->Draw();
 
 	eglSwapBuffers ( esContext->eglDisplay, esContext->eglSurface );
@@ -58,11 +58,11 @@ void Update ( ESContext *esContext, float deltaTime )
 {
 	Camera::GetInstance()->Update(deltaTime);
 	SceneManager::GetInstance()->Update(deltaTime);
-	if(!EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_EFFECT_DONE))
-		EffectManager::GetInstance()->Update(deltaTime);
-	else {
+	//if(!EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_EFFECT_DONE))
+	EffectManager::GetInstance()->Update(deltaTime);
+	/*else {
 		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_EFFECT_DONE);
-	}
+	}*/
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)

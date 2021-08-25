@@ -9,7 +9,7 @@ LevelID: 3
 Star: 3
 
 LevelID: 4
-Star: 2
+Star: 3
 
 LevelID: 5
 Star: 3

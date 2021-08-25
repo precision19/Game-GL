@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Sensor.h"
 #include "Physic.h"
+#include "EffectManager.h"
 
 Player* Player::ms_Instance = NULL;
 
@@ -179,6 +180,18 @@ void Player::OnColliderEnter(GameObject* other)
 	{
 		FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_WIN);
 	}
+	/*if (other->GetName() == SAW_BLADE) {
+		EffectManager::GetInstance()->AddFadedEffect(this, 0.1f, 3.0f);
+		EffectManager::GetInstance()->AddMoveEffect(this, Vector3(0.0f, 0.0f, 0.0f), 5.0f);
+		vector<string> nameAnimation;
+		nameAnimation.push_back("ChestIdle");
+		nameAnimation.push_back("ChestOpen");
+		nameAnimation.push_back("ChestIdle");
+		nameAnimation.push_back("ChestOpen");
+		nameAnimation.push_back("ChestIdle");
+	
+		EffectManager::GetInstance()->AddAnimationEffect(this, nameAnimation);
+	}*/
 }
 
 void Player::OnColliderExit(GameObject* other) 
@@ -190,6 +203,7 @@ Player::~Player()
 {
 	for each (Renderer * renderer in m_Animations)
 		delete renderer;
+	//printf("%d\n", m_Animations.size());
 	m_Renderer = NULL;
 	if (foot) delete foot;
 	if (left) delete left;
