@@ -9,130 +9,8 @@ LevelState::LevelState()
 	m_Score = 0;
 	m_ScoreEnd = 0;
 
-	//// TO DO: load game object prefabs
-	//string path0 = "Managers/GameObjectPrefab.txt";
-	//FILE* f = fopen(path0.c_str(), "r+");
-	//if (f == NULL)
-	//{
-	//	printf("Invalid file %s\n", path0.c_str());
-	//	exit(1);
-	//}
-	//char keyword[20], name[20];
-	//int amount, number;
-	//fscanf(f, "#PrefabObject: %d\n", &amount);
-	//for (int i = 0; i < amount; i++)
-	//{
-	//	fscanf(f, "%s %s\n", keyword, name);
-	//	if (strcmp(name, "Block") == 0)
-	//	{
-	//		m_BlockPrefab = new Block();
-	//		fscanf(f, "COLLIDER_SIZE %d\n", &number);
-	//		m_BlockPrefab->SetCollider(number);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		m_BlockPrefab->SetRenderer(name);
-	//	}
-	//	else if (strcmp(name, "Bullet") == 0)
-	//	{
-	//		m_BulletPrefab = new Bullet();
-	//		fscanf(f, "COLLIDER_SIZE %d\n", &number);
-	//		m_BulletPrefab->SetCollider(number);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		m_BulletPrefab->SetRenderer(name);
-	//		fscanf(f, "SPEED %d\n", &number);
-	//		m_BulletPrefab->SetSpeed(number);			
-	//	}
-	//	else if (strcmp(name, "Gun") == 0)
-	//	{
-	//		m_GunPrefab = new Gun();
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		m_GunPrefab->SetRenderer(name);
-	//	}
-	//	else if (strcmp(name, "Player") == 0)
-	//	{
-	//		//m_Player = new Player();
-	//		fscanf(f, "COLLIDER_SIZE %d\n", &number);
-	//		//m_Player->SetCollider(number);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		//m_Player->SetRenderer(name);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		//m_Player->SetRenderer(name);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		//m_Player->SetRenderer(name);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		//m_Player->SetRenderer(name);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		//m_Player->SetRenderer(name);
-	//		fscanf(f, "SPEED %d\n", &number);
-	//		//m_Player->SetSpeed(number);
-	//		// Set speed
-	//		fscanf(f, "JUMP_FORCE %d\n", &number);
-	//		//m_Player->SetJumpForce(number);
-	//	}
-	//	else if (strcmp(name, "Gate") == 0)
-	//	{
-	//		//m_Gate = new Object();
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		//m_Gate->SetRenderer(name);
-	//	}
-	//	else if (strcmp(name, "Guard") == 0)
-	//	{
-	//		m_GuardPrefab = new Guard();
-	//		fscanf(f, "COLLIDER_SIZE %d\n", &number);
-	//		m_GuardPrefab->SetCollider(number);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		m_GuardPrefab->SetRenderer(name);
-	//		fscanf(f, "SPEED %d\n", &number);
-	//		m_GuardPrefab->SetSpeed(number);
-	//	}
-	//	if (strcmp(name, "Star") == 0)
-	//	{
-	//		m_StarPrefab = new Star();
-	//		fscanf(f, "COLLIDER_SIZE %d\n", &number);
-	//		m_StarPrefab->SetCollider(number);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		m_StarPrefab->SetRenderer(name);
-	//		m_StarPrefab->SetScale(Vector3(0.12, 0.12, 0.12));
-	//	}
-	//	if (strcmp(name, "SawBlade") == 0)
-	//	{
-	//		m_SawPrefab = new SawBlade();
-	//		fscanf(f, "COLLIDER_SIZE %d\n", &number);
-	//		m_SawPrefab->SetCollider(number);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		m_SawPrefab->SetRenderer(name);
-	//		m_SawPrefab->SetScale(Vector3(0.1, 0.1, 0.1));
-	//	}
-	//	if (strcmp(name, "TreasureChest") == 0)
-	//	{
-	//		//m_Chest = new TreasureChest();
-	//		fscanf(f, "COLLIDER_SIZE %d\n", &number);
-	//		//m_Chest->SetCollider(number);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		//m_Chest->SetRenderer(name);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		//m_Chest->SetRenderer(name);
-	//	}
-	//	if (strcmp(name, "Chaser") == 0)
-	//	{
-	//		m_Chaser = new Chaser();
-	//		fscanf(f, "COLLIDER_SIZE %d\n", &number);
-	//		m_Chaser->SetCollider(number);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		m_Chaser->SetRenderer(name);
-	//		m_Chaser->SetScale(Vector3(0.4, 0.4, 0.4));
-	//	}
-	//	if (strcmp(name, "Spinner") == 0)
-	//	{
-	//		m_SpinnerPrefab = new SpinnerFly();
-	//		fscanf(f, "COLLIDER_SIZE %d\n", &number);
-	//		m_SpinnerPrefab->SetCollider(number);
-	//		fscanf(f, "RENDERER %s\n", name);
-	//		m_SpinnerPrefab->SetRenderer(name);
-	//		fscanf(f, "SPEED %d\n", &number);
-	//		m_SpinnerPrefab->SetSpeed(number * PI / 180);
-	//	}
-	//}
-	//fclose(f);
+	m_PauseButton = NULL;
+	m_TapToStartText = NULL;
 }
 
 int LevelState::GetLevel()
@@ -420,6 +298,20 @@ void LevelState::Update(float deltaTime)
 	{
 		m_Score++;
 	} 
+
+	if (!FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_PAUSE, GAME_ON_WIN))
+		if (m_PauseButton) m_PauseButton->Update(deltaTime);
+
+	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_READY))
+		if (m_TapToStartText) m_TapToStartText->Update(deltaTime);
+
+	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_PAUSE))
+		for each (Object * object in m_PauseMenu)
+			object->Update(deltaTime);
+
+	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_WIN))
+		for each (Object * object in m_WinMenu)
+			object->Update(deltaTime);
 }
 
 void LevelState::Draw()
@@ -429,6 +321,20 @@ void LevelState::Draw()
 
 	for each (GameObject * object in m_GameObjects)
 		object->Draw();
+
+	if (!FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_PAUSE, GAME_ON_WIN))
+		if (m_PauseButton) m_PauseButton->Draw();
+
+	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_READY))
+		if (m_TapToStartText) m_TapToStartText->Draw();
+
+	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_PAUSE))
+		for each (Object * object in m_PauseMenu)
+			object->Draw();
+
+	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_WIN))
+		for each (Object * object in m_WinMenu)
+			object->Draw();
 }
 
 void LevelState::ClearLevel() 
