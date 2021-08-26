@@ -332,6 +332,11 @@ void LevelState::Restart()
 
 void LevelState::Update(float deltaTime)
 {
+	if (Input::CheckButtonBuffer(BUTTON_PAUSE))
+	{
+		FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_PAUSE);
+	}
+
 	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_WIN))
 	{
 		ClearLevel();
@@ -353,8 +358,11 @@ void LevelState::Update(float deltaTime)
 	for each (Object * object in m_Backgrounds)
 		object->Update(deltaTime);
 
-	for each (GameObject * object in m_GameObjects)
-		object->Update(deltaTime);
+	if (!FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_PAUSE))
+	{
+		for each (GameObject * object in m_GameObjects)
+			object->Update(deltaTime);
+	}
 
 	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_PLAYING, GAME_ON_READY))
 		Physic::GetInstance()->Update(deltaTime);
