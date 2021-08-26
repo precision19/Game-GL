@@ -8,8 +8,6 @@ LevelState::LevelState()
 	m_Name = "Level";
 	m_LevelID = 1;
 	m_Score = 0;
-	m_ScoreEnd = 0;
-
 	m_PauseButton = NULL;
 	m_TapToStartText = NULL;
 
@@ -75,9 +73,12 @@ LevelState::LevelState()
 				m_WinMenu.push_back(button->Clone());
 				m_WinMenu[m_WinMenu.size() - 1]->SetRenderer(nameRender);
 			}
-			if (strcmp(name, "NextLevelButton") == 0) {
-				m_WinMenu.push_back(button->Clone());
-				m_WinMenu[m_WinMenu.size() - 1]->SetRenderer(nameRender);
+			if (strcmp(name, "NextLevelButton") == 0) 
+			{
+				Button* nextLevel = button->Clone();
+				nextLevel->SetButtonID(BUTTON_NEXT_LEVEL);
+				nextLevel->SetRenderer(nameRender);
+				m_WinMenu.push_back(nextLevel);
 			}
 			delete button;
 		}
@@ -326,52 +327,13 @@ void LevelState::LoadLevel()
 
 void LevelState::Restart()
 {
+	m_Score = 0;
 	for each (GameObject * object in m_GameObjects)
 		object->Reset();
 }
 
 void LevelState::Update(float deltaTime)
 {
-	if (Input::CheckButtonBuffer(BUTTON_PAUSE))
-	{
-		FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_PAUSE);
-	}
-
-	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_WIN))
-	{
-		ClearLevel();
-		m_ScoreEnd = m_Score;
-		PlayerPrefs::GetInstance()->SetData(m_LevelID, m_ScoreEnd);
-		PlayerPrefs::GetInstance()->SaveData();
-		m_LevelID++;
-		LoadLevel();
-		m_Score = 0;
-		return;
-	}
-
-	if (EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_DIE))
-	{
-		Restart();
-		m_Score = 0;
-	}
-
-	for each (Object * object in m_Backgrounds)
-		object->Update(deltaTime);
-
-	if (!FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_PAUSE))
-	{
-		for each (GameObject * object in m_GameObjects)
-			object->Update(deltaTime);
-	}
-
-	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_PLAYING, GAME_ON_READY))
-		Physic::GetInstance()->Update(deltaTime);
-
-	if (EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_SCORE))
-	{
-		m_Score++;
-	} 
-
 	if (!FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_PAUSE, GAME_ON_WIN))
 		if (m_PauseButton) m_PauseButton->Update(deltaTime);
 
@@ -385,6 +347,66 @@ void LevelState::Update(float deltaTime)
 	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_WIN))
 		for each (Object * object in m_WinMenu)
 			object->Update(deltaTime);
+
+	if (Input::CheckButtonBuffer(BUTTON_RETURN_MAP))
+	{
+		ClearLevel();
+		m_StateManager->SwitchState("Map");
+		return;
+	}
+
+	if (Input::CheckButtonBuffer(BUTTON_PAUSE))
+	{
+		FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_PAUSE);
+	}
+
+	if (EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_DIE) || Input::CheckButtonBuffer(BUTTON_RESTART))
+	{
+		Restart();
+	}
+
+	if (EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_WIN))
+	{
+		PlayerPrefs::GetInstance()->SetData(m_LevelID, m_Score);
+		PlayerPrefs::GetInstance()->SaveData();
+	}
+
+	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_WIN))
+	{
+		if (Input::CheckButtonBuffer(BUTTON_NEXT_LEVEL))
+		{
+			m_LevelID++;
+			ClearLevel();
+			LoadLevel();
+			m_Score = 0;
+			return;
+		}
+	}
+
+	if (Input::CheckButtonBuffer(BUTTON_CONTINUE))
+	{
+		// EffectManager::AddAnimationEffect();
+		FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_PLAYING);
+	}
+
+
+	if (!FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_PAUSE))
+	{
+		for each (Object * object in m_Backgrounds)
+			object->Update(deltaTime);
+
+		for each (GameObject * object in m_GameObjects)
+			object->Update(deltaTime);
+	}
+
+	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_PLAYING, GAME_ON_READY))
+		Physic::GetInstance()->Update(deltaTime);
+
+	if (EventManager::GetInstance()->CheckEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_SCORE))
+	{
+		m_Score++;
+	} 
+
 }
 
 void LevelState::Draw()

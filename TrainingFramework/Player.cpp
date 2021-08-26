@@ -182,6 +182,7 @@ void Player::OnColliderEnter(GameObject* other)
 	{
 		AudioManager::GetInstance()->PlaySoundEffect("ChestOpen", false, 100.0f);
 		FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_WIN);
+		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_WIN);
 	}
 	/*if (other->GetName() == SAW_BLADE) {
 		EffectManager::GetInstance()->AddFadedEffect(this, 0.1f, 3.0f);

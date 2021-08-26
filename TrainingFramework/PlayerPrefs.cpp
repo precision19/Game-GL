@@ -71,11 +71,11 @@ int PlayerPrefs::GetData(int levelId)
 void PlayerPrefs::SetData(int levelID, int stars)
 {
 	m_MapData[levelID - 1].levelID = levelID;
-	m_MapData[levelID - 1].stars = stars;
+	if (stars > m_MapData[levelID - 1].stars)
+		m_MapData[levelID - 1].stars = stars;
 	cout << "Level " << m_MapData[levelID - 1].levelID << " has " << m_MapData[levelID - 1].stars << endl;
 
-	// HACK
-	if (stars > 0)
+	if (stars > 0 && m_MapData[levelID].stars < 0)
 	{
 		m_MapData[levelID].stars = 0;
 		printf("Unlock level %d", levelID + 1);

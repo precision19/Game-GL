@@ -48,6 +48,11 @@ void SceneManager::Draw()
 
 void SceneManager::Update(float deltaTime)
 {
+	if (Input::CheckButtonBuffer(BUTTON_QUIT))
+	{
+		// Tat game
+	}
+
 	m_CurrentState->Update(deltaTime);
 	
 	for (int i = 0; i < 21; i++)

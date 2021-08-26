@@ -48,7 +48,10 @@ void Chaser::Update(float deltaTime)
 	m_Renderer->Update(deltaTime);
 
 	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_READY, GAME_ON_WIN))
+	{
+		m_Collider->SetVelocity(Vector2(0, 0));
 		return;
+	}
 
 	Vector2 direction;
 	SetPositionTarget(Physic::GetInstance()->GetPositionPlayer());
