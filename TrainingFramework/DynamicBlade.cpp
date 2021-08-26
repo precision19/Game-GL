@@ -51,25 +51,50 @@ void DynamicBlade::CreateCollider()
 void DynamicBlade::Update(float deltaTime)
 {
 	SetPosition(Vector3(m_Collider->getBody()->GetPosition().x, m_Collider->getBody()->GetPosition().y, GetPosition().z));
-	if (m_Collider->getBody()->GetPosition().y < m_positionStart.y && vectorY == true)
-	{
-		boolY = true;
-		vectorY = false;
-	}
-	else if (m_Collider->getBody()->GetPosition().y > m_positionEnd.y && vectorY == false)
-	{
-		boolY = false;
-		vectorY = true;
-	}
 	m_Transform.rotation += m_rotate * 3 * PI / 180;
-	if (boolY)
+	if (m_positionStart.y < m_positionEnd.y)
 	{
-		m_Collider->SetVelocity(Vector2(m_Collider->GetVelocity().x, m_speed));
+		if (m_Collider->getBody()->GetPosition().y < m_positionStart.y && vectorY == true)
+		{
+			boolY = true;
+			vectorY = false;
+		}
+		else if (m_Collider->getBody()->GetPosition().y > m_positionEnd.y && vectorY == false)
+		{
+			boolY = false;
+			vectorY = true;
+		}
+		if (boolY)
+		{
+			m_Collider->SetVelocity(Vector2(m_Collider->GetVelocity().x, m_speed));
+		}
+		else
+		{
+			m_Collider->SetVelocity(Vector2(m_Collider->GetVelocity().x, -m_speed));
+		}
 	}
 	else
 	{
-		m_Collider->SetVelocity(Vector2(m_Collider->GetVelocity().x, -m_speed));
+		if (m_Collider->getBody()->GetPosition().y < m_positionEnd.y && vectorY == true)
+		{
+			boolY = true;
+			vectorY = false;
+		}
+		else if (m_Collider->getBody()->GetPosition().y > m_positionStart.y && vectorY == false)
+		{
+			boolY = false;
+			vectorY = true;
+		}
+		if (boolY)
+		{
+			m_Collider->SetVelocity(Vector2(m_Collider->GetVelocity().x, m_speed));
+		}
+		else
+		{
+			m_Collider->SetVelocity(Vector2(m_Collider->GetVelocity().x, -m_speed));
+		}
 	}
+	
 	m_Renderer->Update(deltaTime);
 }
 
