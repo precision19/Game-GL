@@ -216,6 +216,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Textures\bg.tga" />
     <Image Include="Textures\Block3.tga" />
     <Image Include="Textures\Block4.tga" />
     <Image Include="Textures\Block\Block_L.tga" />
@@ -254,6 +255,11 @@
     <Image Include="Textures\DEAD\Dead__6.tga" />
     <Image Include="Textures\DEAD\Dead__7.tga" />
     <Image Include="Textures\DEAD\Dead__8.tga" />
+    <Image Include="Textures\Decoration\bg.tga" />
+    <Image Include="Textures\Decoration\table_1_test.tga" />
+    <Image Include="Textures\Decoration\table_1.tga" />
+    <Image Include="Textures\Decoration\table_2.tga" />
+    <Image Include="Textures\Decoration\You_win.tga" />
     <Image Include="Textures\Ghost\1.tga" />
     <Image Include="Textures\Ghost\10.tga" />
     <Image Include="Textures\Ghost\11.tga" />

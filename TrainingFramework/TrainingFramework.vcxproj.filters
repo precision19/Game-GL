@@ -390,6 +390,12 @@
     <Image Include="Textures\Block\Soil3.tga" />
     <Image Include="Textures\Block\Soil4.tga" />
     <Image Include="Textures\Block\Wood.tga" />
+    <Image Include="Textures\bg.tga" />
+    <Image Include="Textures\Decoration\bg.tga" />
+    <Image Include="Textures\Decoration\table_1.tga" />
+    <Image Include="Textures\Decoration\table_2.tga" />
+    <Image Include="Textures\Decoration\You_win.tga" />
+    <Image Include="Textures\Decoration\table_1_test.tga" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Managers\GameObjectPrefab.txt" />

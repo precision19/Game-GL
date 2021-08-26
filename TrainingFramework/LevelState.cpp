@@ -126,7 +126,31 @@ void LevelState::LoadLevel()
 		exit(1);
 	}
 
-	fscanf(fileMap, "#Objects: %d\n", &amount);
+	fscanf(fileMap, "#%s\n", name);
+
+	printf("%s", name);
+
+	if (strcmp(name, "DungeonBackground") == 0)
+	{
+		Object* object = new Object(name);
+
+		fscanf(fileMap, "RENDERER %s\n", name);
+		object->SetRenderer(name);
+		fscanf(fileMap, "POSITION %f %f %f\n", &x, &y, &z);
+		object->SetPosition(Vector3(x, y, z));
+		fscanf(fileMap, "ROTATION %f %f %f\n", &x, &y, &z);
+		object->SetRotation(Vector3(x, y, z));
+		fscanf(fileMap, "SCALE %f %f %f\n", &x, &y, &z);
+		object->SetScale(Vector3(x, y, z));
+
+		m_Backgrounds.push_back(object);
+	}
+	else 
+	{
+		printf("Can't find BackGround!");
+	}
+
+	fscanf(fileMap, "#GameObjects: %d\n", &amount);
 
 	int dungeon[10][16] = {
 		{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -293,17 +317,25 @@ void LevelState::LoadLevel()
 
 		else if (strcmp(name, "Star") == 0)
 		{
-		fscanf(fileMap, "NUMBERSTARS %d\n", &iBool);
-		for (int i = 0; i < iBool; i++)
-		{
-			Star* star = (Star*)ObjectPool::GetInstance()->GetPooledObject(STAR);
-			fscanf(fileMap, "POSITION %f %f\n", &x, &y);
-			star->SetPosition(Dungeon::GirdToWord(x, y, 0));
-			star->CreateCollider();
-			m_GameObjects.push_back(star);
+			fscanf(fileMap, "NUMBERSTARS %d\n", &iBool);
+			for (int i = 0; i < iBool; i++)
+			{
+				Star* star = (Star*)ObjectPool::GetInstance()->GetPooledObject(STAR);
+				fscanf(fileMap, "POSITION %f %f\n", &x, &y);
+				star->SetPosition(Dungeon::GirdToWord(x, y, 0));
+				star->CreateCollider();
+				m_GameObjects.push_back(star);
+			}
 		}
-		}
-		else
+
+	}
+
+	fscanf(fileMap, "#%s\n", name);
+
+	if (strcmp(name, "Decoration") == 0)
+	{
+		fscanf(fileMap, "NUMBERS %d\n", &amount);
+		for (int i = 0; i < amount; i++)
 		{
 			Object* object = new Object(name);
 
@@ -318,7 +350,9 @@ void LevelState::LoadLevel()
 
 			m_Backgrounds.push_back(object);
 		}
+		
 	}
+
 
 	fclose(fileMap);
 
