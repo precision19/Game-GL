@@ -1,4 +1,4 @@
-#Renderers: 33
+#Renderers: 36
 0. Block
 TYPE 2D
 MODEL 0
@@ -223,3 +223,21 @@ TYPE 2D
 MODEL 0
 SHADER 0
 TEXTURE 71
+
+33. BackgroundPause3
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 72
+
+34. BackgroundPause2
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 73
+
+35. BackgroundWin1
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 74

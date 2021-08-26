@@ -59,26 +59,47 @@ LevelState::LevelState()
 				m_PauseMenu.push_back(button->Clone());
 				m_PauseMenu[m_PauseMenu.size() - 1]->SetRenderer(nameRender);
 			}
-			if (strcmp(name, "RestartButton") == 0) {
+			else if (strcmp(name, "RestartButton") == 0) {
 				button->SetButtonID(BUTTON_RESTART);
 				m_PauseMenu.push_back(button->Clone());
 				m_PauseMenu[m_PauseMenu.size() - 1]->SetRenderer(nameRender);
 				m_WinMenu.push_back(button->Clone());
 				m_WinMenu[m_WinMenu.size() - 1]->SetRenderer(nameRender);
 			}
-			if (strcmp(name, "QuitButton") == 0) {
+			else if (strcmp(name, "QuitButton") == 0) {
 				button->SetButtonID(BUTTON_QUIT);
 				m_PauseMenu.push_back(button->Clone());
 				m_PauseMenu[m_PauseMenu.size() - 1]->SetRenderer(nameRender);
 				m_WinMenu.push_back(button->Clone());
 				m_WinMenu[m_WinMenu.size() - 1]->SetRenderer(nameRender);
 			}
-			if (strcmp(name, "NextLevelButton") == 0) 
+			else if (strcmp(name, "NextLevelButton") == 0) 
 			{
 				Button* nextLevel = button->Clone();
 				nextLevel->SetButtonID(BUTTON_NEXT_LEVEL);
 				nextLevel->SetRenderer(nameRender);
 				m_WinMenu.push_back(nextLevel);
+			}
+			else {
+				Object* object = new Object();
+				object->SetRenderer(nameRender);
+				object->SetPosition(Vector3(x[0], y[0], z[0]));
+				object->SetRotation(Vector3(x[1], y[1], z[1]));
+				object->SetScale(Vector3(x[2], y[2], z[2]));
+				if (strcmp(name, "Background") == 0)
+				{
+					m_PauseMenu.push_back(object->Clone());
+					m_WinMenu.push_back(object->Clone());
+				}
+				if (strcmp(name, "BackgroundPause") == 0)
+				{
+					m_PauseMenu.push_back(object->Clone());
+				}
+				if (strcmp(name, "BackgroundWin") == 0)
+				{
+					m_WinMenu.push_back(object->Clone());
+				}
+				delete object;
 			}
 			delete button;
 		}
@@ -493,6 +514,7 @@ LevelState::~LevelState()
 	for (int i = 0; i < m_PauseMenu.size(); i++) {
 		delete m_PauseMenu[i];
 	}
+	printf("%d %d\n", m_PauseMenu.size(), m_WinMenu.size());
 
 	for (int i = 0; i < m_WinMenu.size(); i++) {
 		delete m_WinMenu[i];
