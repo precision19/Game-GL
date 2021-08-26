@@ -3,6 +3,7 @@
 #include "Sensor.h"
 #include "Physic.h"
 #include "EffectManager.h"
+#include <ctime>
 
 Player* Player::ms_Instance = NULL;
 
@@ -225,6 +226,7 @@ void Player::ConsiderJumpAndSlide() {
 }
 
 void Player::HandleJumpAndSlide() {
+	int random = rand() % 2 + 1;
 	if (canSlide && !canJump)
 		onTheGround = 0;
 	else if (canJump && !onTheGround && m_Collider->GetVelocity().y < 0)
@@ -239,7 +241,7 @@ void Player::HandleJumpAndSlide() {
 				m_Collider->SetVelocity(Vector2(0.0, m_JumpForce));
 
 			onTheGround = 0;
-			AudioManager::GetInstance()->PlaySoundEffect("Jump", false, 100.0f);
+			AudioManager::GetInstance()->PlaySoundEffect("Jump" + to_string(random), false, 70.0f);
 			//Input::SetTouchStatus(false);
 			m_ReadyForInput = false;
 		}
@@ -249,7 +251,7 @@ void Player::HandleJumpAndSlide() {
 		//Input::SetTouchStatus(false);
 		m_ReadyForInput = false;
 		m_Collider->SetVelocity(Vector2(0.0, m_JumpForce));
-		AudioManager::GetInstance()->PlaySoundEffect("Jump", false, 100.0f);
+		AudioManager::GetInstance()->PlaySoundEffect("Jump" + to_string(random), false, 70.0f);
 		SetSpeed(-m_SpeedX);
 	}
 	else if (canSlide && m_Collider->GetVelocity().y < 0)

@@ -3,7 +3,7 @@
 
 DynamicBlade::DynamicBlade()
 {
-	m_Name = GUARD;
+	m_Name = DYNAMIC_BLADE;
 	m_ID = ms_IDMaker;
 	ms_IDMaker++;
 	m_Collider = NULL;

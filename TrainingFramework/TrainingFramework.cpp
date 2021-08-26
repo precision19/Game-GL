@@ -63,6 +63,7 @@ void Update ( ESContext *esContext, float deltaTime )
 	/*else {
 		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_EFFECT_DONE);
 	}*/
+	AudioManager::GetInstance()->CheckPlay();
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
@@ -127,7 +128,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	esRegisterMouseMoveFunc(&esContext, TouchActionMove);
 
 	esMainLoop ( &esContext );
-
+	PlayerPrefs::GetInstance()->ResetData();
 	//releasing OpenGL resources
 	CleanUp();
 

@@ -24,6 +24,7 @@ public:
 	int GetData(int levelID);
 	void SetData(int levelID, int stars);
 	void SaveData();
+	void ResetData();
 	~PlayerPrefs();
 };
 

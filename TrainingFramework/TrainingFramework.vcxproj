@@ -300,7 +300,8 @@
     <Media Include="Sounds\Die.wav" />
     <Media Include="Sounds\Gun.wav" />
     <Media Include="Sounds\Hit.wav" />
-    <Media Include="Sounds\Jump.wav" />
+    <Media Include="Sounds\Jump1.wav" />
+    <Media Include="Sounds\Jump2.wav" />
     <Media Include="Sounds\Saw1.wav" />
     <Media Include="Sounds\Saw2.wav" />
     <Media Include="Sounds\Saw3.wav" />

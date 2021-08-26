@@ -242,7 +242,7 @@ void LevelState::LoadLevel()
 
 		else if (strcmp(name, "DynamicBlade") == 0)
 		{
-			fscanf(fileMap, "NUMBERBLADES %d\n", &iBool);
+			fscanf(fileMap, "NUMBERDYNAMICBLADES %d\n", &iBool);
 			printf("%d", iBool);
 			for (int i = 0; i < iBool; i++)
 			{

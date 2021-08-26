@@ -100,6 +100,13 @@ void PlayerPrefs::SaveData()
 	fclose(f);
 }
 
+void PlayerPrefs::ResetData()
+{
+	for (int i = 0; i < m_MapData.size(); i++) {
+		m_MapData[i].stars = -1;
+	}
+}
+
 PlayerPrefs::~PlayerPrefs()
 {
 }

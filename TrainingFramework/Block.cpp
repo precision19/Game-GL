@@ -7,7 +7,7 @@ Block::Block()
 	m_ID = ms_IDMaker;
 	ms_IDMaker++;
 	m_Collider = NULL;
-	m_Rotate = Vector3(0,0, 0.5);
+	m_Rotate = Vector3(0, 0, 0.5);
 }
 
 void Block::SetRenderer(int id)
@@ -17,7 +17,8 @@ void Block::SetRenderer(int id)
 
 void Block::SetRenderer(int D, int T, int N , int B)
 {
-	int count = D + T + N + B;
+	int count;
+	count = D + T + N + B;
 	if (count == 4)
 	{
 		int r = rand() % 2;
@@ -107,10 +108,11 @@ void Block::CreateCollider()
 	}
 	else
 	{
-		printf("%s already have a collider", m_Name.c_str());
+		printf("%s already have a collider", m_Name.c_str()); 
 	}
 }
 
 Block::~Block()
 {
+//	m_Renderer == NULL;
 }
