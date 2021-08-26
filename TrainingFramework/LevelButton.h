@@ -11,6 +11,8 @@ protected:
     int m_Star;
     Renderer* m_OnLockRenderer;
     Renderer* m_StarRenderer;
+    virtual void OnPressing();
+    virtual void OnClicked();
 public:
     LevelButton();
     LevelButton(string);
