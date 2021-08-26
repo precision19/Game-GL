@@ -1,23 +1,35 @@
-#Objects: 2
-1. DungeonBackground
+#DungeonBackground
 RENDERER DungeonBackground
 POSITION 0 0 -2
 ROTATION 0 0 0
 SCALE 1 1 1
 
-2. Dungeon
-7 8 8 8 8 8 8 8 8 8 8 8 8 8 8 7
-4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2
-4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2
-4 0 1 1 0 1 1 0 1 1 0 1 1 0 0 2
-4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2
-6 1 1 1 5 0 0 0 0 0 0 3 1 1 1 7
-6 7 6 7 4 0 1 1 1 1 0 2 6 7 6 7
-7 7 6 7 4 0 0 0 0 0 0 2 7 7 6 7
-7 6 7 6 4 0 0 0 0 9 0 2 7 6 7 6
-6 6 7 7 6 1 1 1 1 1 1 6 6 7 7 6
+#GameObjects: 4
+1. Dungeon
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1   
+1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 1   
+1 0 0 0 1 1 0 0 1 1 0 1 1 0 0 1   
+1 0 0 8 1 1 0 0 1 1 0 1 1 0 0 1   
+1 0 1 1 1 1 0 0 1 1 0 1 1 0 0 1   
+1 0 1 1 1 1 0 0 0 0 0 1 1 0 0 1
+1 0 0 0 0 0 0 0 0 0 0 1 1 0 9 1	
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 
-3. Gate
-POSITION 0 0
+2. SawBlade
+NUMBERBLADES 3
+POSITION 5 3
+POSITION 6 3
+POSITION 2 5
+
+3. Spinner
+NUMBERSPINNERS 1
+POSITION 7 2
+POSITIONCENTER 8 1
 
 4. Star
+NUMBERSTARS 3
+POSITION 5 4
+POSITION 9 2
+POSITION 2 1
