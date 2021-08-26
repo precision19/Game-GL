@@ -95,7 +95,7 @@ void Block::DestroyCollider()
 	if (m_Collider) delete m_Collider;
 	m_Collider = NULL;
 	if (m_Renderer) delete m_Renderer;
-	m_Renderer == NULL;
+	m_Renderer = NULL;
 
 	m_Transform.rotation = Vector3(0, 0, 0);
 }
