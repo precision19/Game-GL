@@ -1,7 +1,7 @@
 #Models: 1
 0. Sprite
 
-#2D Textures: 75
+#2D Textures: 80
 0. Block4	REPEAT LINEAR LINEAR
 1. Decoration/table_1_test	REPEAT LINEAR LINEAR
 2. Player/Idle/0	REPEAT LINEAR LINEAR
@@ -77,6 +77,11 @@
 72. BackgroundPause3	REPEAT LINEAR LINEAR
 73. BackgroundPause2	REPEAT LINEAR LINEAR
 74. BackgroundWin1	REPEAT LINEAR LINEAR
+75. BackGround/BackGround2 REPEAT LINEAR LINEAR
+76. BackGround/BackGround3 REPEAT LINEAR LINEAR
+77. BackGround/BackGround4 REPEAT LINEAR LINEAR
+78. BackGround/BackGround5 REPEAT LINEAR LINEAR
+79. BackGround/BackGround7 REPEAT LINEAR LINEAR
 
 #Cube Textures: 0
 
