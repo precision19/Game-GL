@@ -52,7 +52,7 @@ void Player::CreateSensorCollider()
 	{
 		foot = new Sensor(FOOT);
 		foot->SetCollider(0.1f);
-		foot->SetPosition(Vector3(GetPosition().x, GetPosition().y - m_ColliderSize + 0.1f, GetPosition().z));
+		foot->SetPosition(Vector3(GetPosition().x, GetPosition().y - m_ColliderSize + 0.1f , GetPosition().z));
 		foot->CreateCollider();
 	}
 
@@ -102,6 +102,7 @@ void Player::SetRenderer(string name)
 
 void Player::Update(float deltaTime)
 {
+
 	m_Renderer->Update(deltaTime);
 
 	if (!Input::GetTouch()) m_ReadyForInput = true;
@@ -126,6 +127,7 @@ void Player::Update(float deltaTime)
 		m_Transform.position = Vector3(m_Collider->getBody()->GetPosition().x, m_Collider->getBody()->GetPosition().y, m_Transform.position.z);
 		Physic::GetInstance()->SetPositionPlayer(Vector2(GetPosition().x, GetPosition().y));
 		ConsiderJumpAndSlide();
+		//printf("%d %d\n", canJump, canSlide);
 		HandleJumpAndSlide();
 	}
 }
@@ -218,9 +220,9 @@ void Player::ConsiderJumpAndSlide() {
 	if (foot->GetNumContact()) canJump = 1;
 	else canJump = 0;
 
-	if (left->GetNumContact())
+	if (left->GetNumContact() && m_SpeedX < 0)
 		canSlide = 1;
-	else if (right->GetNumContact())
+	else if (right->GetNumContact() && m_SpeedX > 0)
 		canSlide = 1;
 	else 
 		canSlide = 0;
