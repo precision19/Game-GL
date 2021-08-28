@@ -216,6 +216,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Textures\BackgroundPause1.tga" />
+    <Image Include="Textures\BackgroundPause2.tga" />
+    <Image Include="Textures\BackgroundPause3.tga" />
+    <Image Include="Textures\BackgroundWin.tga" />
+    <Image Include="Textures\BackgroundWin1.tga" />
+    <Image Include="Textures\BackGround\BackGround2.tga" />
+    <Image Include="Textures\BackGround\BackGround3.tga" />
+    <Image Include="Textures\BackGround\BackGround4.tga" />
+    <Image Include="Textures\BackGround\BackGround5.tga" />
+    <Image Include="Textures\BackGround\BackGround7.tga" />
     <Image Include="Textures\bg.tga" />
     <Image Include="Textures\Block3.tga" />
     <Image Include="Textures\Block4.tga" />
@@ -256,6 +266,10 @@
     <Image Include="Textures\DEAD\Dead__7.tga" />
     <Image Include="Textures\DEAD\Dead__8.tga" />
     <Image Include="Textures\Decoration\bg.tga" />
+    <Image Include="Textures\Decoration\cloud1.tga" />
+    <Image Include="Textures\Decoration\cloud2.tga" />
+    <Image Include="Textures\Decoration\cloud3.tga" />
+    <Image Include="Textures\Decoration\cloud4.tga" />
     <Image Include="Textures\Decoration\table_1_test.tga" />
     <Image Include="Textures\Decoration\table_1.tga" />
     <Image Include="Textures\Decoration\table_2.tga" />

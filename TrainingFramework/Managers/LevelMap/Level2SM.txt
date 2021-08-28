@@ -1,5 +1,5 @@
 #DungeonBackground
-RENDERER DungeonBackground
+RENDERER BackGround3
 POSITION 0 0 -2
 ROTATION 0 0 0
 SCALE 1 1 1

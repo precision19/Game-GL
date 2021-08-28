@@ -149,8 +149,6 @@ void LevelState::LoadLevel()
 
 	fscanf(fileMap, "#%s\n", name);
 
-	printf("%s", name);
-
 	if (strcmp(name, "DungeonBackground") == 0)
 	{
 		Object* object = new Object(name);
