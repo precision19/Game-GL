@@ -249,11 +249,46 @@ void LevelState::LoadLevel()
 
 		else if (strcmp(name, "Gun") == 0)
 		{
-			GameObject* gun = ObjectPool::GetInstance()->GetPooledObject(GUN);
-			fscanf(fileMap, "POSITION %f %f\n", &x, &y);
-			gun->SetPosition(Dungeon::GirdToWord(x, y, 0));
-			gun->CreateCollider();
-			m_GameObjects.push_back(gun);
+			fscanf(fileMap, "NUMBERGUNS %d\n", &iBool);
+			for (int i = 0; i < iBool; i++)
+			{
+				Gun* gun = (Gun*)ObjectPool::GetInstance()->GetPooledObject(GUN);
+				fscanf(fileMap, "POSITION %f %f\n", &x, &y);
+				gun->SetPosition(Dungeon::GirdToWord(x, y, 0));
+				char dir[10];
+				fscanf(fileMap, "DIRECTION %s\n", dir);
+				if (strncmp(dir, "EAST", 4) == 0) gun->SetDirection(EAST);
+				if (strncmp(dir, "WEST", 4) == 0) gun->SetDirection(WEST);
+				if (strncmp(dir, "NORTH", 5) == 0) gun->SetDirection(NORTH);
+				if (strncmp(dir, "SOUTH", 5) == 0) gun->SetDirection(SOUTH);
+				int numBullets;
+				fscanf(fileMap, "NUMBULLETS %d\n", &numBullets);
+				for (int j = 0; j < numBullets; j++) {
+					Bullet* b = (Bullet*)ObjectPool::GetInstance()->GetPooledObject(BULLET);
+					if (strcmp(dir, "EAST") == 0) {
+						b->SetVectorSpeed(Vector2(1.0f, 0.0f));
+						b->SetPosition(Vector3(gun->GetPosition().x + 44.0f, gun->GetPosition().y, gun->GetPosition().z));
+					}
+					if (strcmp(dir, "WEST") == 0) {
+						b->SetVectorSpeed(Vector2(-1.0f, 0.0f));
+						b->SetPosition(Vector3(gun->GetPosition().x - 44.0f, gun->GetPosition().y, gun->GetPosition().z));
+					}
+					if (strcmp(dir, "NORTH") == 0) {
+						b->SetVectorSpeed(Vector2(0.0f, 1.0f));
+						b->SetPosition(Vector3(gun->GetPosition().x, gun->GetPosition().y + 44.0f, gun->GetPosition().z));
+					}
+					if (strcmp(dir, "SOUTH") == 0) {
+						b->SetVectorSpeed(Vector2(0.0f, -1.0f));
+						b->SetPosition(Vector3(gun->GetPosition().x, gun->GetPosition().y - 44.0f, gun->GetPosition().z));
+					}
+					b->SetBasePosition(b->GetPosition());
+					b->CreateCollider();
+					gun->bullets.push_back(b);
+					m_GameObjects.push_back(b);
+				}
+				gun->CreateCollider();
+				m_GameObjects.push_back(gun);
+			}
 		}
 
 		else if (strcmp(name, "Chaser") == 0)

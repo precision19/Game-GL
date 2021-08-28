@@ -3,7 +3,7 @@
 
 Bullet::Bullet()
 {
-	m_time = 0;
+	m_IsRender = false;
 	m_Name = "Bullet";
 	m_ID = ms_IDMaker;
 	ms_IDMaker++;
@@ -13,6 +13,7 @@ Bullet::Bullet()
 
 Bullet::~Bullet()
 {
+
 }
 
 Bullet* Bullet::Clone()
@@ -42,20 +43,29 @@ void Bullet::CreateCollider()
 	}
 }
 
+void Bullet::Draw() {
+	if (m_IsRender) {
+		m_Renderer->Draw(m_Transform);
+	}
+}
+
 void Bullet::Update(float deltaTime)
 {
-	m_time += deltaTime;
-	if (m_time > 0.1)
-	{
-		m_Transform.position.y -= m_speed;
-		m_time = 0;
+	if (m_IsRender) {
+		m_Collider->SetVelocity(Vector2(m_speed * m_VectorSpeed.x, m_speed * m_VectorSpeed.y));
+		SetPosition(Vector3(m_Collider->getBody()->GetPosition().x, m_Collider->getBody()->GetPosition().y, GetPosition().z));
+		m_Renderer->Update(deltaTime);
 	}
+}
 
-	if (m_Transform.position.y == -200)
-	{
-		m_Transform.position.y += 400;
+void Bullet::OnColliderEnter(GameObject* other)
+{
+	if (other->GetName() == "Block") {
+		m_IsRender = false;
 	}
-	m_Renderer->Update(deltaTime);
+}
 
-
+void Bullet::OnColliderExit(GameObject* other)
+{
+	
 }
