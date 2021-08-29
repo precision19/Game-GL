@@ -1,7 +1,7 @@
 #Models: 1
 0. Sprite
 
-#2D Textures: 80
+#2D Textures: 81
 0. Block4	REPEAT LINEAR LINEAR
 1. Bullet	REPEAT LINEAR LINEAR
 2. Player/Idle/0	REPEAT LINEAR LINEAR
@@ -82,6 +82,7 @@
 77. BackGround/BackGround4 REPEAT LINEAR LINEAR
 78. BackGround/BackGround5 REPEAT LINEAR LINEAR
 79. BackGround/BackGround7 REPEAT LINEAR LINEAR
+80. Logo    REPEAT LINEAR LINEAR
 
 #Cube Textures: 0
 

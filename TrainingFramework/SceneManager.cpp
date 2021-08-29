@@ -55,7 +55,7 @@ void SceneManager::Update(float deltaTime)
 
 	m_CurrentState->Update(deltaTime);
 	
-	for (int i = 0; i < 21; i++)
+	for (int i = 0; i < 22; i++)
 		if (Input::CheckButtonBuffer(i))
 		{
 			m_LevelState->SetLevel(i);

@@ -4,6 +4,7 @@
 MenuState::MenuState()
 {
 	m_Name = "Menu";
+	m_IsFirst = true;
 	string path = "Managers/MenuSM.txt";
 	FILE* f = fopen(path.c_str(), "r+");
 	if (f == NULL)
@@ -31,7 +32,14 @@ MenuState::MenuState()
 		fscanf(f, "SCALE %f %f %f\n", &x, &y, &z);
 		object->SetScale(Vector3(x, y, z));
 
-		m_Objects.push_back(object);
+		if (object->GetName() == "Logo")
+		{
+			m_Logo = object;
+		}
+		else
+		{
+			m_Objects.push_back(object);
+		}
 	}
 
 	fscanf(f, "#PlayButton\n");
@@ -54,7 +62,6 @@ MenuState::MenuState()
 	SoundButton->SetRenderer(name);
 	fscanf(f, "RENDERER %s\n", name);
 	SoundButton->SetRenderer(name);
-	SoundButton->GetRenderere()->SetOpacity(0.1);
 	fscanf(f, "POSITION %f %f %f\n", &x, &y, &z);
 	SoundButton->SetPosition(Vector3(x, y, z));
 	fscanf(f, "ROTATION %f %f %f\n", &x, &y, &z);
@@ -67,6 +74,7 @@ MenuState::MenuState()
 	m_Objects.push_back(SoundButton);
 
 	fclose(f);
+
 }
 
 void MenuState::SetStateManager(StateManager* stateManager)
@@ -78,34 +86,72 @@ void MenuState::OnStart()
 {
 	Camera::GetInstance()->SetDefault();
 	AudioManager::GetInstance()->PlayBackgroundMusic(m_Name);
+
+	if (m_IsFirst)
+	{
+		m_Logo->GetRenderer()->SetOpacity(0.0);
+		EffectManager::GetInstance()->AddFadedEffect(m_Logo, 1.0, 3.0, EVENT_LOGO_SHOWNED);
+		FlagManager::GetInstance()->Set(FLAG_MENU_STATUS, MENU_ON_WELCOME);
+	}
+	else
+	{
+		FlagManager::GetInstance()->Set(FLAG_MENU_STATUS, MENU_ON_DEFAULT);
+	}
 }
 
 
 void MenuState::Update(float deltaTime)
 {
-	for each (Object * object in m_Objects)
-			object->Update(deltaTime);
-
-	if (Input::CheckButtonBuffer(BUTTON_SOUND))
+	if (FlagManager::GetInstance()->Check(FLAG_MENU_STATUS, MENU_ON_WELCOME))
 	{
-		// TODO: turn on/off sound
-		printf("Sound button is clicked");
+		if (EventManager::GetInstance()->CheckEvent(EVENT_GROUP_EFFECT, EVENT_LOGO_SHOWNED))
+		{
+			EffectManager::GetInstance()->AddFadedEffect(m_Logo, 0.0, 2.0, EVENT_LOGO_HIDED);
+			//EffectManager::GetInstance()->AddMoveEffect(m_Logo, Vector3(1024, 0, -1), 2.0, EVENT_LOGO_HIDED);
+			FlagManager::GetInstance()->Set(FLAG_MENU_STATUS, MENU_ON_HIDING_WELCOME);
+		}
 	}
-	if (Input::CheckButtonBuffer(BUTTON_PLAY))
+	else if (FlagManager::GetInstance()->Check(FLAG_MENU_STATUS, MENU_ON_HIDING_WELCOME))
 	{
-		// TODO: switch state
-		m_StateManager->SwitchState("Map");	// TEMP
+		if (EventManager::GetInstance()->CheckEvent(EVENT_GROUP_EFFECT, EVENT_LOGO_HIDED))
+		{
+			FlagManager::GetInstance()->Set(FLAG_MENU_STATUS, MENU_ON_DEFAULT);
+		}
+	}
+	else if (FlagManager::GetInstance()->Check(FLAG_MENU_STATUS, MENU_ON_DEFAULT))
+	{
+		for each (Object * object in m_Objects)
+				object->Update(deltaTime);
+
+		if (Input::CheckButtonBuffer(BUTTON_SOUND))
+		{
+			// TODO: turn on/off sound
+			printf("Sound button is clicked");
+		}
+		if (Input::CheckButtonBuffer(BUTTON_PLAY))
+		{
+			// TODO: switch state
+			m_StateManager->SwitchState("Map");	// TEMP
+		}
 	}
 }
 
 void MenuState::Draw() 
 {
-	for each (Object * object in m_Objects)
-		object->Draw();
+	if (FlagManager::GetInstance()->Check(FLAG_MENU_STATUS, MENU_ON_DEFAULT, MENU_ON_HIDING_WELCOME))
+	{
+		for each (Object * object in m_Objects)
+			object->Draw();
+	}
+
+	if (FlagManager::GetInstance()->Check(FLAG_MENU_STATUS, MENU_ON_WELCOME, MENU_ON_HIDING_WELCOME))
+		m_Logo->Draw();
 }
 
 MenuState::~MenuState()
 {
 	for each (Object * object in m_Objects)
 		delete object;
+
+	delete m_Logo;
 }

@@ -46,7 +46,7 @@ bool FlagManager::Check(int flagId, int value)
 		return false;
 	}
 	if (m_Flags.at(flagId) == 0)
-		printf("WARNING: flag %d is not setted", flagId);
+		printf("WARNING: flag %d is not setted\n", flagId);
 	return m_Flags.at(flagId) == value;
 }
 
@@ -58,6 +58,6 @@ bool FlagManager::Check(int flagId, int value1, int value2)
 		return false;
 	}
 	if (m_Flags.at(flagId) == 0)
-		printf("WARNING: flag %d is not setted", flagId);
+		printf("WARNING: flag %d is not setted\n", flagId);
 	return m_Flags.at(flagId) == value1 || m_Flags.at(flagId) == value2;
 }

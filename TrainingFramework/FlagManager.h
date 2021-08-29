@@ -10,6 +10,12 @@ using namespace std;
 #define GAME_ON_WIN 4
 #define GAME_ON_RESTARTING 5
 
+#define FLAG_MENU_STATUS 1
+#define MENU_ON_WELCOME 1
+#define MENU_ON_HIDING_WELCOME 2
+#define MENU_ON_DEFAULT 3
+#define MENU_ON_CREDIT 4
+
 class FlagManager
 {
 protected:

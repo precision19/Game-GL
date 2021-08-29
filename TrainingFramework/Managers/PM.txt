@@ -1,4 +1,4 @@
-#Renderers: 41
+#Renderers: 42
 0. Block
 TYPE 2D
 MODEL 0
@@ -271,3 +271,9 @@ TYPE 2D
 MODEL 0
 SHADER 0
 TEXTURE 79
+
+41. Logo
+TYPE 2D
+MODEL 0
+SHADER 0
+TEXTURE 80

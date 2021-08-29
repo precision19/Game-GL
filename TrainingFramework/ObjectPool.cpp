@@ -191,7 +191,23 @@ ObjectPool::ObjectPool()
 		}
 		else
 		{
-			printf("WARNING: prefab %s is not defined\n", type);
+			float x, y, z;
+			Object* object = new Object(type);
+			fscanf(f, "RENDERER %s\n", &name);
+			object->SetRenderer(name);
+			fscanf(f, "POSITION %f %f %f", &x, &y, &z);
+			object->SetPosition(Vector3(x, y, z));
+			fscanf(f, "ROTATION %f %f %f", &x, &y, &z);
+			object->SetRotation(Vector3(x, y, z));
+			fscanf(f, "SCALE %f %f %f", &x, &y, &z);
+			object->SetScale(Vector3(x, y, z));
+			
+			stack<Object*> pool;
+			pool.push(object);
+			for (int i = 0; i < amount; i++)
+				pool.push(object->Clone());
+
+			m_ObjectPool[type] = pool;
 			continue;
 		}
 
@@ -206,7 +222,7 @@ ObjectPool::ObjectPool()
 	fclose(f);
 }
 
-GameObject* ObjectPool::GetPooledObject(string objectType)
+GameObject* ObjectPool::GetGameObject(string objectType)
 {
 	if (!(m_Pool.count(objectType) > 0))
 	{
@@ -223,7 +239,7 @@ GameObject* ObjectPool::GetPooledObject(string objectType)
 	return object;
 }
 
-void ObjectPool::ReturnObject(GameObject* object)
+void ObjectPool::ReturnGameObject(GameObject* object)
 {
 	if (!(m_Pool.count(object->GetName()) > 0))
 	{

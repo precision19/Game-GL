@@ -20,14 +20,17 @@ class ObjectPool
 protected:
 	static ObjectPool* ms_Instance;
 	map<string, stack<GameObject*>> m_Pool;
+	map<string, stack<Object*>> m_ObjectPool;
 public:
 	static void CreateInstance();
 	static ObjectPool* GetInstance();
 	static void DestroyInstance();
 
 	ObjectPool();
-	GameObject* GetPooledObject(string);
-	void ReturnObject(GameObject*);
+	Object* GetPooledObject(string);
+	void ReturnPooledObject(Object*);
+	GameObject* GetGameObject(string);
+	void ReturnGameObject(GameObject*);
 	~ObjectPool();
 };
 

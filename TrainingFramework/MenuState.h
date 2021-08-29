@@ -1,4 +1,5 @@
 #pragma once
+#include "EffectManager.h"
 #include "StateManager.h"
 #include "Button.h"
 #include "PrefabManager.h"
@@ -7,10 +8,10 @@
 class MenuState : public StateBase 
 {
 protected:
+	bool m_IsFirst;
 	StateManager* m_StateManager;
 	vector<Object*> m_Objects;
-	//Button* m_PlayButton;
-	//Button* m_SoundButton;
+	Object* m_Logo;
 public:
 	MenuState();
 	void SetStateManager(StateManager*);

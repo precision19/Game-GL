@@ -131,9 +131,9 @@ void LevelState::OnStart()
 
 void LevelState::LoadLevel()
 {
-	m_Player = (Player*)ObjectPool::GetInstance()->GetPooledObject(PLAYER);
-	m_Gate = ObjectPool::GetInstance()->GetPooledObject(GATE);
-	m_Chest = (TreasureChest*)ObjectPool::GetInstance()->GetPooledObject(TREASURE_CHEST);
+	m_Player = (Player*)ObjectPool::GetInstance()->GetGameObject(PLAYER);
+	m_Gate = ObjectPool::GetInstance()->GetGameObject(GATE);
+	m_Chest = (TreasureChest*)ObjectPool::GetInstance()->GetGameObject(TREASURE_CHEST);
 	AudioManager::GetInstance()->PlaySoundEffect("Ambiance", true, 20.0f);
 	int amount, id, iBool, numBullets;
 	float x, y, z, speed;
@@ -230,7 +230,7 @@ void LevelState::LoadLevel()
 				{
 					if (dungeon[k][j] == 1)
 					{
-						GameObject* block = ObjectPool::GetInstance()->GetPooledObject(BLOCK);
+						GameObject* block = ObjectPool::GetInstance()->GetGameObject(BLOCK);
 						block->SetPosition(Dungeon::GirdToWord(j - 1, Dungeon::Height - k, 1));
 						block->CreateCollider();
 						int B = (k == 0) ? k : k - 1;
@@ -250,7 +250,7 @@ void LevelState::LoadLevel()
 			fscanf(fileMap, "NUMBERGUNS %d\n", &iBool);
 			for (int i = 0; i < iBool; i++)
 			{
-				Gun* gun = (Gun*)ObjectPool::GetInstance()->GetPooledObject(GUN);
+				Gun* gun = (Gun*)ObjectPool::GetInstance()->GetGameObject(GUN);
 				fscanf(fileMap, "POSITION %f %f\n", &x, &y);
 				gun->SetPosition(Dungeon::GirdToWord(x, y, 0));
 				char dir[10];
@@ -262,7 +262,7 @@ void LevelState::LoadLevel()
 				int numBullets;
 				fscanf(fileMap, "NUMBULLETS %d\n", &numBullets);
 				for (int j = 0; j < numBullets; j++) {
-					Bullet* b = (Bullet*)ObjectPool::GetInstance()->GetPooledObject(BULLET);
+					Bullet* b = (Bullet*)ObjectPool::GetInstance()->GetGameObject(BULLET);
 					if (strcmp(dir, "EAST") == 0) {
 						b->SetVectorSpeed(Vector2(1.0f, 0.0f));
 						b->SetPosition(Vector3(gun->GetPosition().x + 44.0f, gun->GetPosition().y, gun->GetPosition().z));
@@ -294,7 +294,7 @@ void LevelState::LoadLevel()
 			fscanf(fileMap, "NUMBERCHASERS %d\n", &iBool);
 			for (int i = 0; i < iBool; i++)
 			{
-				Chaser* chaser = (Chaser*)ObjectPool::GetInstance()->GetPooledObject(CHASER);
+				Chaser* chaser = (Chaser*)ObjectPool::GetInstance()->GetGameObject(CHASER);
 				fscanf(fileMap, "POSITION %f %f\n", &x, &y);
 				chaser->SetPosition(Dungeon::GirdToWord(x, y, 0));
 				chaser->SetPositionStart(Dungeon::GirdToWord(x, y, 0));
@@ -311,7 +311,7 @@ void LevelState::LoadLevel()
 			for (int i = 0; i < iBool; i++)
 			{
 				//Guard* guard = m_GuardPrefab->Clone();
-				SawBlade* blade = (SawBlade*)ObjectPool::GetInstance()->GetPooledObject(SAW_BLADE);
+				SawBlade* blade = (SawBlade*)ObjectPool::GetInstance()->GetGameObject(SAW_BLADE);
 				fscanf(fileMap, "POSITION %f %f\n", &x, &y);
 				blade->SetPosition(Dungeon::GirdToWord(x, y, 0));
 				blade->CreateCollider();
@@ -325,7 +325,7 @@ void LevelState::LoadLevel()
 			printf("%d", iBool);
 			for (int i = 0; i < iBool; i++)
 			{
-				DynamicBlade* blade = (DynamicBlade*)ObjectPool::GetInstance()->GetPooledObject(DYNAMIC_BLADE);
+				DynamicBlade* blade = (DynamicBlade*)ObjectPool::GetInstance()->GetGameObject(DYNAMIC_BLADE);
 				fscanf(fileMap, "POSITIONSTART %f %f\n", &x, &y);
 				blade->SetPosition(Dungeon::GirdToWord(x, y, 0));
 				blade->SetPositionStart(Dungeon::GirdToWord(x, y, 0));
@@ -342,7 +342,7 @@ void LevelState::LoadLevel()
 			printf("%d", iBool);
 			for (int i = 0; i < iBool; i++)
 			{
-				Guard* guard = (Guard*)ObjectPool::GetInstance()->GetPooledObject(GUARD);
+				Guard* guard = (Guard*)ObjectPool::GetInstance()->GetGameObject(GUARD);
 				fscanf(fileMap, "POSITIONSTART %f %f\n", &x, &y);
 				guard->SetPosition(Dungeon::GirdToWord(x, y, 0));
 				guard->SetPositionStart(Dungeon::GirdToWord(x, y, 0));
@@ -357,7 +357,7 @@ void LevelState::LoadLevel()
 			fscanf(fileMap, "NUMBERSPINNERS %d\n", &iBool);
 			for (int i = 0; i < iBool; i++)
 			{
-				SpinnerFly* spinner = (SpinnerFly*)ObjectPool::GetInstance()->GetPooledObject(SPINNER);
+				SpinnerFly* spinner = (SpinnerFly*)ObjectPool::GetInstance()->GetGameObject(SPINNER);
 				fscanf(fileMap, "POSITION %f %f\n", &x, &y);
 				spinner->SetPosition(Dungeon::GirdToWord(x, y, 0));
 				fscanf(fileMap, "POSITIONCENTER %f %f\n", &x, &y);
@@ -374,7 +374,7 @@ void LevelState::LoadLevel()
 			fscanf(fileMap, "NUMBERSTARS %d\n", &iBool);
 			for (int i = 0; i < iBool; i++)
 			{
-				Star* star = (Star*)ObjectPool::GetInstance()->GetPooledObject(STAR);
+				Star* star = (Star*)ObjectPool::GetInstance()->GetGameObject(STAR);
 				fscanf(fileMap, "POSITION %f %f\n", &x, &y);
 				star->SetPosition(Dungeon::GirdToWord(x, y, 0));
 				star->CreateCollider();
@@ -528,7 +528,7 @@ void LevelState::ClearLevel()
 	for each (GameObject * object in m_GameObjects)
 	{
 		object->DestroyCollider();
-		ObjectPool::GetInstance()->ReturnObject(object);
+		ObjectPool::GetInstance()->ReturnGameObject(object);
 	}
 	m_GameObjects.clear();
 }

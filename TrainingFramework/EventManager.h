@@ -12,7 +12,9 @@ using namespace std;
 #define EVENT_EFFECT_START 5
 #define EVENT_EFFECT_DONE 6
 
-#define ON_ d
+#define EVENT_GROUP_EFFECT 1
+#define EVENT_LOGO_SHOWNED 1
+#define EVENT_LOGO_HIDED 2
 
 class EventManager
 {

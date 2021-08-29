@@ -20,7 +20,7 @@ int Init ( ESContext *esContext )
 {
 	PlayerPrefs::CreateInstance();
 	PlayerPrefs::GetInstance()->LoadData();
-//	PlayerPrefs::GetInstance()->SaveData();
+	EffectManager::CreateInstance();
 	FlagManager::CreateInstance();
 	Input::CreateInstance();
 	EventManager::CreateInstance();
@@ -35,7 +35,7 @@ int Init ( ESContext *esContext )
 	Physic::CreateInstance();
 	EffectManager::CreateInstance();
 	
-	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
+	glClearColor ( 0.0f, 0.0f, 0.0f, 0.0f );
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
