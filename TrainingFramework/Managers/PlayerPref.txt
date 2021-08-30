@@ -33,7 +33,7 @@ LevelID: 11
 Star: 1
 
 LevelID: 12
-Star: 1
+Star: 2
 
 LevelID: 13
 Star: 2
@@ -42,7 +42,7 @@ LevelID: 14
 Star: 2
 
 LevelID: 15
-Star: 1
+Star: 2
 
 LevelID: 16
 Star: 3

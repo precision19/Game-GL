@@ -35,7 +35,7 @@ void Bullet::CreateCollider()
 {
 	if (m_Collider == NULL)
 	{
-		m_Collider = new Box(this, m_ColliderSize, CATEGORY_NOTGRAVITY, true, "Circle");
+		m_Collider = new Box(this, m_ColliderSize, CATEGORY_SENSOR, true, "Circle");
 	}
 	else
 	{

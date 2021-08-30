@@ -67,7 +67,7 @@ LevelState::LevelState()
 				m_WinMenu[m_WinMenu.size() - 1]->SetRenderer(nameRender);
 			}
 			else if (strcmp(name, "QuitButton") == 0) {
-				button->SetButtonID(BUTTON_QUIT);
+				button->SetButtonID(BUTTON_RETURN_MAP);
 				m_PauseMenu.push_back(button->Clone());
 				m_PauseMenu[m_PauseMenu.size() - 1]->SetRenderer(nameRender);
 				m_WinMenu.push_back(button->Clone());

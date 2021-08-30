@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Sensor.h"
 #include "Physic.h"
+#include "Bullet.h"
 #include "EffectManager.h"
 #include <ctime>
 
@@ -174,7 +175,7 @@ void Player::UpdateAnimation(float deltaTime)
 
 void Player::OnColliderEnter(GameObject* other) 
 {
-	if (other->m_Name == SAW_BLADE || other->m_Name == GUARD || other->m_Name == CHASER || other->GetName() == SPINNER || other->GetName() == DYNAMIC_BLADE || other->GetName() == BULLET)
+	if (other->m_Name == SAW_BLADE || other->m_Name == GUARD || other->m_Name == CHASER || other->GetName() == SPINNER || other->GetName() == DYNAMIC_BLADE || (other->GetName() == BULLET && ((Bullet*)other)->GetIsRender() == true))
 	{
 		AudioManager::GetInstance()->PlaySoundEffect("Hit", false, 100.0f);
 		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_DIE);
