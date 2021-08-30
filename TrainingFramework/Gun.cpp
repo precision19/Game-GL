@@ -55,7 +55,7 @@ void Gun::Update(float deltaTime)
 {	
 	//printf("%d\n", direction);
 	m_time += deltaTime;
-	if (m_time > 1.0f) {
+	if (m_time > 1.4f) {
 		for each (Bullet * b in bullets) {
 			//b->Update(deltaTime);
 			if (b->GetIsRender() == false) {
@@ -63,7 +63,7 @@ void Gun::Update(float deltaTime)
 				break;
 			}
 		}
-		m_time -= 1.0f;
+		m_time = 0;
 	}
 	for each (Bullet * b in bullets) {
 		if (b->GetIsRender() == false) {

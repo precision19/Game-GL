@@ -292,6 +292,7 @@
     <Image Include="Textures\Guard\4.tga" />
     <Image Include="Textures\Guard\5.tga" />
     <Image Include="Textures\Guard\6.tga" />
+    <Image Include="Textures\Gun\Bullet2.tga" />
     <Image Include="Textures\Gun\Gun.tga" />
     <Image Include="Textures\Idle__000.tga" />
     <Image Include="Textures\SawBlade\Blade4.tga" />

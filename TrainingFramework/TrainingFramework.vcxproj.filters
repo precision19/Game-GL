@@ -410,6 +410,7 @@
     <Image Include="Textures\BackGround\BackGround4.tga" />
     <Image Include="Textures\BackGround\BackGround3.tga" />
     <Image Include="Textures\BackGround\BackGround5.tga" />
+    <Image Include="Textures\Gun\Bullet2.tga" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Managers\GameObjectPrefab.txt" />
