@@ -159,12 +159,12 @@ void Player::UpdateAnimation(float deltaTime)
 
 	if (canJump)
 	{
-		if (velocity.x > 1)
+		if (m_SpeedX > 1)
 		{
 			m_Renderer = m_Animations.at(1);
 			m_Transform.rotation.y = 0;
 		}
-		else if (velocity.x < -1)
+		else if (m_SpeedX < -1)
 		{
 			m_Renderer = m_Animations.at(1);
 			m_Transform.rotation.y = PI;
