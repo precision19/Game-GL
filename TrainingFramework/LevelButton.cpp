@@ -3,9 +3,15 @@
 
 Vector3 LevelButton::m_StarPosition[3] = {Vector3(-22, -26, 0), Vector3(2, -26, 0), Vector3(26, -26,0)};
 
+void LevelButton::Idle()
+{
+	if (m_Star >= 0)
+		m_Renderer = m_IdleRenderer;
+}
+
 void LevelButton::OnPressing()
 {
-	if (m_Star > 0)
+	if (m_Star >= 0)
 	{
 		if (m_OnPressRenerer != NULL)
 			m_Renderer = m_OnPressRenerer;
@@ -14,7 +20,7 @@ void LevelButton::OnPressing()
 
 void LevelButton::OnClicked()
 {
-	if (m_Star > 0)
+	if (m_Star >= 0)
 		Input::SetButtonBuffer(m_ButtonID);
 }
 

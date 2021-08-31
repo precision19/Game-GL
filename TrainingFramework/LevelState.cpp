@@ -464,9 +464,16 @@ void LevelState::Update(float deltaTime)
 		if (Input::CheckButtonBuffer(BUTTON_NEXT_LEVEL))
 		{
 			m_LevelID++;
-			ClearLevel();
-			LoadLevel();
-			m_Score = 0;
+			if (m_LevelID > 21)
+			{
+				m_StateManager->SwitchState("Map");
+			}
+			else 
+			{
+				ClearLevel();
+				LoadLevel();
+				m_Score = 0;
+			}
 			return;
 		}
 	}
