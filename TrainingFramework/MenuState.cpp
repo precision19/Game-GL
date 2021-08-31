@@ -122,11 +122,16 @@ void MenuState::Update(float deltaTime)
 	{
 		for each (Object * object in m_Objects)
 				object->Update(deltaTime);
-
 		if (Input::CheckButtonBuffer(BUTTON_SOUND))
 		{
+
 			// TODO: turn on/off sound
-			printf("Sound button is clicked");
+			/*if (AudioManager::GetInstance()->IsMusicMute() == false) AudioManager::GetInstance()->MuteMusic();
+			else AudioManager::GetInstance()->UnmuteMusic();
+			if (AudioManager::GetInstance()->IsSoundMute() == false) AudioManager::GetInstance()->MuteSound();
+			else AudioManager::GetInstance()->UnmuteSound();*/
+			if (AudioManager::GetInstance()->IsMuteAll()) AudioManager::GetInstance()->UnmuteAll();
+			else AudioManager::GetInstance()->MuteAll();
 		}
 		if (Input::CheckButtonBuffer(BUTTON_PLAY))
 		{

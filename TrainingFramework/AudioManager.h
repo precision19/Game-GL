@@ -21,26 +21,31 @@ public:
 	static void DestroyInstance();
 
 	AudioManager();
-	void SetVolume(float);
-	float GetVolume();
-	void SetPitch(float);
-	float GetPitch();
-
+	bool IsMuteAll();
+	void MuteAll();
+	void UnmuteAll();
+	bool isMuteAll;
 	//Music 
 	sf::Music music;
 	string musicFile;
-	float volume;
-	float pitch;
-	string GetMusicStatus();
+	float musicVolume;
+	bool isMusicMute;
 	void PlayBackgroundMusic(string);
 	void SetMusicFile(string);
-	
+	void SetMusicVolume(float);
+	float GetMusicVolume();
+	void MuteMusic();
+	void UnmuteMusic();
+	bool IsMusicMute();
 	//Sound effect
+	float soundVolume;
 	sf::Sound sound;
-	//vector<sf::Sound> soundList;
 	sf::SoundBuffer soundBuffer ;
 	string soundFile;
-
+	bool isSoundMute;
 	void PlaySoundEffect(string name, bool loop, float volume);
 	void CheckPlay();
+	void MuteSound();
+	void UnmuteSound();
+	bool IsSoundMute();
 };

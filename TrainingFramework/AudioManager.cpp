@@ -24,35 +24,35 @@ void AudioManager::DestroyInstance()
 	}
 }
 
-void AudioManager::SetVolume(float volume) 
-{
-	volume = volume;
-	music.setVolume(volume);
-}
-
-void AudioManager::SetPitch(float pitch) 
-{
-	pitch = pitch;
-	music.setVolume(pitch);
-}
-
 AudioManager::AudioManager()
 {
 	musicFile = "";
 	soundFile = "";
-	volume = 1;
-	pitch = 1;
-}
-
-float AudioManager::GetVolume() {
-	return volume;
-}
-
-float AudioManager::GetPitch() {
-	return pitch;
+	musicVolume = 100.0f;
+	soundVolume = 100.0f;
+	isMusicMute = false;
+	isSoundMute = false;
+	isMuteAll = false;
 }
 
 //Music
+void AudioManager::SetMusicVolume(float volume) 
+{
+	//if (volume == 0.0f) isMusicMute = true;
+	//else isMusicMute = false;
+	musicVolume = volume;
+	music.setVolume(volume);
+}
+
+
+float AudioManager::GetMusicVolume() {
+	return musicVolume;
+}
+
+bool AudioManager::IsMusicMute() {
+	return isMusicMute;
+}
+
 void AudioManager::SetMusicFile(string name) 
 {
 	if (name == "Menu") 
@@ -65,13 +65,6 @@ void AudioManager::SetMusicFile(string name)
 	std::cout << this->musicFile << std::endl;
 }
 
-std::string AudioManager::GetMusicStatus() 
-{
-	if (music.getStatus() == 0) return "Stopped";
-	if (music.getStatus() == 1) return "Paused";
-	if (music.getStatus() == 2) return "Playing";
-}
-
 void AudioManager::PlayBackgroundMusic(string name)
 {
 	musicFile = "Sounds/" + name + ".ogg";
@@ -82,10 +75,32 @@ void AudioManager::PlayBackgroundMusic(string name)
 	music.play();
 	music.setLoop(true);
 	std::cout << "Playing music in file: " << musicFile << std::endl;
+	
 }
 
+void AudioManager::MuteMusic() {
+	isMusicMute = true;
+	SetMusicVolume(0.0f);
+}
+
+void AudioManager::UnmuteMusic() {
+	isMusicMute = false;
+	SetMusicVolume(100.0f);
+}
 
 //Sound effect
+bool AudioManager::IsSoundMute() {
+	return isSoundMute;
+}
+
+void AudioManager::MuteSound() {
+	isSoundMute = true;
+}
+
+void AudioManager::UnmuteSound() {
+	isSoundMute = false;
+}
+
 void AudioManager::PlaySoundEffect(string name, bool isLoop, float volume) {
 	soundFile = "Sounds/" + name + ".wav";
 	SoundData tmpData;
@@ -93,7 +108,8 @@ void AudioManager::PlaySoundEffect(string name, bool isLoop, float volume) {
 	soundList.back().soundBuffer.loadFromFile(soundFile);
 	soundList.back().sound.setBuffer(soundList.back().soundBuffer);
 	soundList.back().sound.setLoop(isLoop);
-	soundList.back().sound.setVolume(volume);
+	if(isSoundMute == false) soundList.back().sound.setVolume(volume);
+	else soundList.back().sound.setVolume(0.0f);
 	soundList.back().sound.play();
 }
 
@@ -101,4 +117,19 @@ void AudioManager::CheckPlay() {
 	for (int i = 0; i < soundList.size(); i++) {
 		if (soundList[i].sound.getStatus() != 2) soundList.erase(soundList.begin() + i);
 	}
+}
+
+bool AudioManager::IsMuteAll() {
+	if (isMusicMute == true && isSoundMute == true) return true;
+	else return false;
+}
+
+void AudioManager::MuteAll() {
+	MuteMusic();
+	MuteSound();
+}
+
+void AudioManager::UnmuteAll() {
+	UnmuteMusic();
+	UnmuteSound();
 }
