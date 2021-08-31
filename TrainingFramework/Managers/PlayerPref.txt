@@ -12,13 +12,13 @@ LevelID: 4
 Star: 3
 
 LevelID: 5
-Star: 2
+Star: 3
 
 LevelID: 6
 Star: 3
 
 LevelID: 7
-Star: 2
+Star: 3
 
 LevelID: 8
 Star: 2
@@ -27,10 +27,10 @@ LevelID: 9
 Star: 2
 
 LevelID: 10
-Star: 2
+Star: 6
 
 LevelID: 11
-Star: 1
+Star: 4
 
 LevelID: 12
 Star: 2

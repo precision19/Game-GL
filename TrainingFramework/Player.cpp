@@ -79,6 +79,7 @@ void Player::Reset()
 	m_Collider->getBody()->SetTransform(b2Vec2(m_ResetPosition.x, m_ResetPosition.y), 0.0f);
 	m_Collider->getBody()->SetGravityScale(0);;
 	m_Collider->SetVelocity(Vector2());
+	SetSpeed(fabs(m_SpeedX));
 	m_ReadyForInput = false;
 	FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_READY);
 }
@@ -160,13 +161,13 @@ void Player::UpdateAnimation(float deltaTime)
 		else
 			m_Renderer = m_Animations.at(3);
 	}
-
-	if (velocity.x > 1 && !m_IsFacingRight)
+	//printf("%f\n", velocity.x);
+	if (m_SpeedX > 1 && !m_IsFacingRight)
 	{
 		m_Transform.rotation.y += PI;
 		m_IsFacingRight = true;
 	}
-	else if (velocity.x < -1 && m_IsFacingRight)
+	else if (m_SpeedX < -1 && m_IsFacingRight)
 	{
 		m_Transform.rotation.y -= PI;
 		m_IsFacingRight = false;
@@ -186,19 +187,13 @@ void Player::OnColliderEnter(GameObject* other)
 		AudioManager::GetInstance()->PlaySoundEffect("ChestOpen", false, 100.0f);
 		FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_WIN);
 		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_WIN);
+		if (!m_IsFacingRight)
+		{
+			SetSpeed(fabs(m_SpeedX));
+			m_Transform.rotation.y += PI;
+			m_IsFacingRight = true;
+		}
 	}
-	/*if (other->GetName() == SAW_BLADE) {
-		EffectManager::GetInstance()->AddFadedEffect(this, 0.1f, 3.0f);
-		EffectManager::GetInstance()->AddMoveEffect(this, Vector3(0.0f, 0.0f, 0.0f), 5.0f);
-		vector<string> nameAnimation;
-		nameAnimation.push_back("ChestIdle");
-		nameAnimation.push_back("ChestOpen");
-		nameAnimation.push_back("ChestIdle");
-		nameAnimation.push_back("ChestOpen");
-		nameAnimation.push_back("ChestIdle");
-	
-		EffectManager::GetInstance()->AddAnimationEffect(this, nameAnimation);
-	}*/
 }
 
 void Player::OnColliderExit(GameObject* other) 
