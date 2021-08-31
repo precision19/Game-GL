@@ -146,11 +146,17 @@ void Player::UpdateAnimation(float deltaTime)
 
 	if (canJump)
 	{
-		if (m_Collider->GetVelocity().x > 1)
+		if (velocity.x > 1)
 		{
 			m_Renderer = m_Animations.at(1);
+			m_Transform.rotation.y = 0;
 		}
-		else 
+		else if (velocity.x < -1)
+		{
+			m_Renderer = m_Animations.at(1);
+			m_Transform.rotation.y = PI;
+		}
+		else
 			m_Renderer = m_Animations.at(0);
 	}
 	else
@@ -177,6 +183,7 @@ void Player::OnColliderEnter(GameObject* other)
 {
 	if (other->m_Name == SAW_BLADE || other->m_Name == GUARD || other->m_Name == CHASER || other->GetName() == SPINNER || other->GetName() == DYNAMIC_BLADE || (other->GetName() == BULLET && ((Bullet*)other)->GetIsRender() == true))
 	{
+		m_Renderer = m_Animations.at(4);
 		AudioManager::GetInstance()->PlaySoundEffect("Hit", false, 100.0f);
 		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_DIE);
 	}
