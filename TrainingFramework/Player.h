@@ -9,6 +9,7 @@ protected:
 	static Player* ms_Instance;
 	bool m_Enable;
 	bool m_ReadyForInput;
+	bool m_IsReset;
 	int canJump;
 	vector<Renderer*> m_Animations;
 	int m_currentAnimationId;

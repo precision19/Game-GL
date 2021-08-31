@@ -530,6 +530,7 @@ void LevelState::ClearLevel()
 		object->DestroyCollider();
 		ObjectPool::GetInstance()->ReturnGameObject(object);
 	}
+	m_Score = 0;
 	m_GameObjects.clear();
 }
 

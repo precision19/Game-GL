@@ -1,6 +1,6 @@
 #NumberOfLevel: 21
 LevelID: 1
-Star: 3
+Star: 6
 
 LevelID: 2
 Star: 3

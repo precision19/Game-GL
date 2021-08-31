@@ -17,6 +17,7 @@ Player::Player()
 	m_Renderer = NULL;
 	m_currentAnimationId = 0;
 	canJump = 0;
+	m_IsReset = false;
 	canSlide = 0;
 	onTheGround = 1;
 	m_SpeedX = 100.0f;
@@ -79,7 +80,8 @@ void Player::Reset()
 	m_Collider->getBody()->SetTransform(b2Vec2(m_ResetPosition.x, m_ResetPosition.y), 0.0f);
 	m_Collider->getBody()->SetGravityScale(0);;
 	m_Collider->SetVelocity(Vector2());
-	SetSpeed(fabs(m_SpeedX));
+	m_IsReset = true;
+	/*SetSpeed(fabs(m_SpeedX));*/
 	m_ReadyForInput = false;
 	FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_READY);
 }
@@ -111,8 +113,18 @@ void Player::Update(float deltaTime)
 
 	if (FlagManager::GetInstance()->Check(FLAG_GAME_STATUS, GAME_ON_READY))
 	{
+		if (!m_IsFacingRight)
+		{
+			SetSpeed(fabs(m_SpeedX));
+			if(!m_IsReset)m_Transform.rotation.y = 0;
+			m_IsFacingRight = true;
+		}
 		if (Input::GetTouch() && m_ReadyForInput)
 		{
+			if (m_IsReset) {
+				m_IsReset = false;
+				m_Transform.rotation.y = 0;
+			}
 			m_ReadyForInput = false;
 			m_Collider->getBody()->SetGravityScale(1);
 			FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_PLAYING);
@@ -187,12 +199,6 @@ void Player::OnColliderEnter(GameObject* other)
 		AudioManager::GetInstance()->PlaySoundEffect("ChestOpen", false, 100.0f);
 		FlagManager::GetInstance()->Set(FLAG_GAME_STATUS, GAME_ON_WIN);
 		EventManager::GetInstance()->InvokeEvent(EVENT_GROUP_GAMEPLAY, EVENT_PLAYER_WIN);
-		if (!m_IsFacingRight)
-		{
-			SetSpeed(fabs(m_SpeedX));
-			m_Transform.rotation.y += PI;
-			m_IsFacingRight = true;
-		}
 	}
 }
 
