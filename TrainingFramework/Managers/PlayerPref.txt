@@ -27,38 +27,38 @@ LevelID: 9
 Star: 0
 
 LevelID: 10
-Star: -1
+Star: 1
 
 LevelID: 11
-Star: -1
+Star: 1
 
 LevelID: 12
-Star: -1
+Star: 1
 
 LevelID: 13
-Star: -1
+Star: 1
 
 LevelID: 14
-Star: -1
+Star: 1
 
 LevelID: 15
-Star: -1
+Star: 1
 
 LevelID: 16
-Star: -1
+Star: 1
 
 LevelID: 17
-Star: -1
+Star: 1
 
 LevelID: 18
-Star: -1
+Star: 1
 
 LevelID: 19
-Star: -1
+Star: 1
 
 LevelID: 20
-Star: -1
+Star: 1
 
 LevelID: 21
-Star: -1
+Star: 1
 

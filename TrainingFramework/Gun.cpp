@@ -82,6 +82,16 @@ void Gun::Draw()
 	}
 }
 
+void Gun::DestroyCollider()
+{
+	bullets.clear();
+	if (m_Collider)
+	{
+		delete m_Collider;
+		m_Collider = NULL;
+	}
+}
+
 Gun::~Gun()
 {
 	/*for each (Bullet * bullet in bullets) {

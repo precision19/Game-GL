@@ -30,6 +30,7 @@ public:
 	void CreateCollider();
 	void Update(float);
 	void Draw();
+	void DestroyCollider();
 	~Gun();
 
 };
